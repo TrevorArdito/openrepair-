@@ -79,7 +79,7 @@
   "diagnostic_steps": [
    "Inspect the air filter and the intake duct between the MAF and throttle body for cracks or loose clamps.",
    "Clean the MAF sensor with MAF-safe spray only.",
-   "Compare MAF grams/second at idle to the expected value (roughly engine liters × 2–3 g/s at warm idle on many engines).",
+   "Compare MAF grams/second with the engine size: at warm idle most engines read roughly 1 g/s per liter of displacement (about 2–3 g/s for a 2.0L, 5–6 g/s for a 5.3L), and the reading should rise smoothly with RPM.",
    "Check the wiring and connector."
   ],
   "severity": "medium",
@@ -295,7 +295,7 @@
   ],
   "diagnostic_steps": [
    "Check the oxygen sensor heater fuse.",
-   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "Unplug the sensor and measure heater resistance across the heater pins (typically about 2–20 Ω depending on the sensor — check the spec for yours).",
    "With the key on, check for battery voltage at the heater supply wire.",
    "Inspect the wiring along the exhaust for melted insulation.",
    "Replace the sensor if the heater is open or out of spec."
@@ -324,7 +324,7 @@
   ],
   "diagnostic_steps": [
    "Check the oxygen sensor heater fuse.",
-   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "Unplug the sensor and measure heater resistance across the heater pins (typically about 2–20 Ω depending on the sensor — check the spec for yours).",
    "With the key on, check for battery voltage at the heater supply wire.",
    "Inspect the wiring along the exhaust for melted insulation.",
    "Replace the sensor if the heater is open or out of spec."
@@ -382,7 +382,7 @@
   ],
   "diagnostic_steps": [
    "Check the oxygen sensor heater fuse.",
-   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "Unplug the sensor and measure heater resistance across the heater pins (typically about 2–20 Ω depending on the sensor — check the spec for yours).",
    "With the key on, check for battery voltage at the heater supply wire.",
    "Inspect the wiring along the exhaust for melted insulation.",
    "Replace the sensor if the heater is open or out of spec."
@@ -411,7 +411,7 @@
   ],
   "diagnostic_steps": [
    "Check the oxygen sensor heater fuse.",
-   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "Unplug the sensor and measure heater resistance across the heater pins (typically about 2–20 Ω depending on the sensor — check the spec for yours).",
    "With the key on, check for battery voltage at the heater supply wire.",
    "Inspect the wiring along the exhaust for melted insulation.",
    "Replace the sensor if the heater is open or out of spec."

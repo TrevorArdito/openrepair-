@@ -435,3 +435,20 @@ def test_deleted_author_shown_as_former_member(client, db_session_factory):
     assert body["revision"]["author"]["display_name"] == "Former member"
     with db_session_factory() as db:
         assert db.scalar(select(func.count()).select_from(User)) == 0
+
+
+def test_builtin_guides_seed_and_link_to_codes(client, db_session_factory):
+    from app.seed.__main__ import seed_guides
+
+    with db_session_factory() as db:
+        added = seed_guides(db)
+        db.commit()
+        assert added >= 10
+        assert seed_guides(db) == 0  # idempotent
+    related = client.get("/api/v1/dtcs/P0302").json()["related_entries"]
+    assert any("Misfire" in r["title"] for r in related)
+    listed = client.get("/api/v1/entries", params={"vehicle_id": f150(client)[2]}).json()
+    assert listed["total"] == added  # general guides apply to every vehicle
+    first = client.get(f"/api/v1/entries/{listed['items'][0]['id']}").json()
+    assert first["revision"]["author"]["display_name"] == "ChrystalClear Team"
+    assert first["revision"]["data"]["sources"][0]["type"] == "industry_standard"

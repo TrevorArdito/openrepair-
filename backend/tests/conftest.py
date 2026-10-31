@@ -121,7 +121,7 @@ def db_session_factory():
     Base.metadata.create_all(engine)
     factory = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
     with factory() as db:
-        run_seed(db)
+        run_seed(db, guides=False)  # tests create their own content
     yield factory
     engine.dispose()
 

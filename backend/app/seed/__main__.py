@@ -9,8 +9,12 @@ from pathlib import Path
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.security import hash_password, new_token
 from app.db import SessionLocal
-from app.modules.community.service import seed_systems
+from app.modules.accounts.models import Role, User, UserStatus
+from app.modules.community.models import Entry, Kind
+from app.modules.community.schemas import Tags
+from app.modules.community.service import create_entry, seed_systems
 from app.modules.dtc.models import Dtc
 from app.modules.vehicles import service
 from app.modules.vehicles.models import Make
@@ -73,13 +77,57 @@ def seed_dtcs(db: Session) -> int:
     return count
 
 
-def run(db: Session) -> dict[str, int]:
+TEAM_EMAIL = "team@chrystalclear.invalid"
+
+
+def team_user(db: Session) -> User:
+    """Author for built-in content. It can't log in (random unknown password)."""
+    user = db.scalar(select(User).where(User.email == TEAM_EMAIL))
+    if user is None:
+        user = User(
+            email=TEAM_EMAIL,
+            password_hash=hash_password(new_token()),
+            display_name="ChrystalClear Team",
+            role=Role.pro,
+            status=UserStatus.active,
+        )
+        db.add(user)
+        db.flush()
+    return user
+
+
+def seed_guides(db: Session) -> int:
+    """Add built-in general guides/specs once. Never overwrites community edits."""
+    author = team_user(db)
+    added = 0
+    for row in load("guides.json"):
+        exists = db.scalar(
+            select(Entry.id).where(Entry.title == row["title"], Entry.created_by_id == author.id)
+        )
+        if exists:
+            continue
+        create_entry(
+            db,
+            author,
+            Kind(row["kind"]),
+            row["title"],
+            row["data"],
+            Tags(**row["tags"]),
+            "Initial version",
+        )
+        added += 1
+    return added
+
+
+def run(db: Session, guides: bool = True) -> dict[str, int]:
     result = {
         "makes_added": seed_makes(db),
         "vehicles": seed_vehicles(db),
         "dtcs": seed_dtcs(db),
         "systems": seed_systems(db),
     }
+    if guides:
+        result["guides_added"] = seed_guides(db)
     db.commit()
     return result
 

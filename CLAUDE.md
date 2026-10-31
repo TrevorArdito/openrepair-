@@ -105,6 +105,26 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
 - 2026-10-31: Production = one Docker image (`/Dockerfile`) serving API + built PWA.
   Seed data lives in `backend/app/seed/data/`.
 
+- 2026-10-31: Owner wants content to be **EXTENSIVE** and match the depth techs expect from
+  ALLDATA/Mitchell/Identifix. Industry-standard procedures, step order, terminology and
+  diagram conventions are fine to follow (they're the trade's standard, not anyone's
+  copyright). Don't water down or make content counterintuitive out of caution — just
+  never copy competitors' or OEM text, images, diagrams or databases.
+- **Accuracy policy (owner: "no mistakes"):** general procedures are written to standard
+  shop practice with typical values clearly labeled "typical — check the manufacturer's
+  spec". Vehicle-specific numbers (torque, capacities, gaps, pressures) are NEVER invented
+  or recalled from memory: each must cite a source (owner's manual, public OEM document,
+  measured, or verified pro). Re-check seeded content for errors; fix immediately.
+- **Labor times:** shown from several sources side by side — warranty time and labor-guide
+  time (as reported by techs), real pro time, real DIY time — each split by rust level
+  (none / some / heavy). Numbers come from many individual reports (median, range,
+  count), never a copied labor database.
+- **Wiring diagrams:** owner wants interactive, color-coded circuit schematics (tap a
+  wire/circuit to highlight it, real wire colors, connector pinouts) for as many vehicles
+  as possible. Build as the `wiring` module: our own structured circuit format + SVG viewer.
+  Content = standard/generic circuits we draw + community-traced vehicle circuits
+  (pinouts/colors are facts). Never trace or redraw OEM diagrams.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
 - Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.

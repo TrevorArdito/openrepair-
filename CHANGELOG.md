@@ -26,6 +26,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   own words (meaning, symptoms, likely causes, step-by-step diagnosis as a tap-to-check checklist,
   urgency); any valid code is decoded by structure even without a write-up. Every code records
   its source and license.
+- **Community guides & specs**: repair guides, torque specs (multi-stage, torque-to-yield), fluid
+  capacities, other specs, part notes and labor times — with sources, revision history, restore,
+  "verified by a pro", votes, report-wrong-info, moderation queue, photos (location data
+  stripped), and a safety banner on safety-critical items.
+- **Labor times from several sources**: warranty time, labor-guide time, real pro time and real
+  DIY time, each split by rust level, built from individual tech reports.
+- **15 built-in general guides and specs**: misfire swap test, smoke testing, battery/charging,
+  voltage drop, parasitic draw, cooling pressure + block test, thermostat, fuel pressure, O2 heater,
+  MAF, fuel trims, and key electrical specs — linked to the trouble codes they help diagnose.
 - NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
   `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
 - Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),
@@ -34,6 +43,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `docs/HOSTING.md` with free / low-cost hosting options.
 - `.gitignore` and `.env.example`.
 - Contributor License Agreement draft (`CLA.md`); community content licensed CC BY-SA 4.0.
+### Fixed
+- P0101 write-up: corrected the MAF airflow rule of thumb (about 1 g/s per liter at warm idle).
 ### Changed
 - Project renamed from OpenRepair to **ChrystalClear**.
 - Business model clarified: all repair information free forever; optional paid business tools may come later.

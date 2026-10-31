@@ -1,0 +1,756 @@
+[
+ {
+  "kind": "procedure",
+  "title": "Misfire diagnosis: swap test for coil, plug and injector",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.ignition",
+    "engine.fuel"
+   ],
+   "dtcs": [
+    "P0300",
+    "P0301",
+    "P0302",
+    "P0303",
+    "P0304",
+    "P0305",
+    "P0306",
+    "P0307",
+    "P0308",
+    "P0309",
+    "P0310",
+    "P0311",
+    "P0312"
+   ]
+  },
+  "data": {
+   "summary": "Find out whether a single-cylinder misfire is caused by the ignition coil, spark plug, injector or the engine itself by moving parts between cylinders and watching whether the misfire follows.",
+   "difficulty": 2,
+   "time_minutes": 45,
+   "tools": [
+    "Scan tool with misfire counters (Mode 6 or live data)",
+    "Ratchet, extensions and spark plug socket",
+    "Torque wrench",
+    "Dielectric grease",
+    "Compression gauge (if needed)"
+   ],
+   "warnings": [
+    "Let the engine cool before removing spark plugs from an aluminum head — hot threads strip easily.",
+    "Disconnect coil connectors with the ignition off.",
+    "A flashing check-engine light means the misfire is severe enough to damage the catalytic converter — avoid driving under load."
+   ],
+   "steps": [
+    {
+     "text": "Read and save all codes and freeze-frame data. Note which cylinder(s) are misfiring and the conditions (idle, load, cold, hot)."
+    },
+    {
+     "text": "With a scan tool, check the per-cylinder misfire counters at idle and at 2,000–2,500 rpm to confirm which cylinder is affected right now."
+    },
+    {
+     "text": "Remove the ignition coil from the misfiring cylinder and swap it with the coil from a neighboring cylinder. Apply a thin film of dielectric grease inside the boots."
+    },
+    {
+     "text": "Clear codes, run the engine under the same conditions as before and watch the misfire counters. If the misfire moved to the other cylinder, the coil is the cause — replace it."
+    },
+    {
+     "text": "If the misfire stayed put, remove the spark plug from that cylinder. Inspect it: worn or eroded electrode, wide gap, carbon or oil fouling, wet with fuel, or cracked insulator.",
+     "caution": "Thread the new or swapped plug in by hand first to avoid cross-threading."
+    },
+    {
+     "text": "Swap the spark plug with a neighboring cylinder (or install a new one gapped to spec) and tighten to the manufacturer's torque. Retest. If the misfire follows the plug, replace the plugs (usually as a set)."
+    },
+    {
+     "text": "If it still stays on the same cylinder, check the injector: listen for clicking with a stethoscope, check its resistance against spec, or swap it with a neighbor if access is reasonable. A misfire that follows the injector means a bad injector."
+    },
+    {
+     "text": "If coil, plug and injector are all ruled out, do a compression test (and leak-down test if low) on that cylinder to check for valve, ring or head-gasket problems. Also check for a vacuum leak near that cylinder's intake runner."
+    },
+    {
+     "text": "After the repair, clear codes and confirm the misfire counters stay at zero on a test drive covering idle, cruise and acceleration."
+    }
+   ],
+   "notes": "Random misfires on several cylinders (P0300) usually point to something shared — a vacuum leak, fuel pressure, a MAF problem or worn plugs on all cylinders — rather than one coil.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Smoke test for vacuum and EVAP leaks",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.air_intake",
+    "fuel.evap"
+   ],
+   "dtcs": [
+    "P0171",
+    "P0174",
+    "P0440",
+    "P0442",
+    "P0455",
+    "P0456",
+    "P0507"
+   ]
+  },
+  "data": {
+   "summary": "Fill the intake or EVAP system with low-pressure visible smoke and watch where it escapes. This is the fastest reliable way to find vacuum leaks and small EVAP leaks.",
+   "difficulty": 2,
+   "time_minutes": 30,
+   "tools": [
+    "Smoke machine (EVAP-rated, low-pressure)",
+    "Adapters / cone plugs for the intake",
+    "Bright flashlight",
+    "EVAP service port adapter or cap adapter"
+   ],
+   "warnings": [
+    "Only use a smoke machine designed for automotive EVAP testing — it uses inert-safe, low-pressure smoke. Never use open flame or improvised smoke near fuel vapor.",
+    "Don't exceed the EVAP test pressure the machine is designed for (roughly 0.5 psi / 3.4 kPa) — higher pressure can damage EVAP valves and seals."
+   ],
+   "steps": [
+    {
+     "text": "Engine off and key off. For intake leaks: disconnect the intake duct after the MAF sensor (or before the throttle body) and seal the opening, leaving a port for the smoke hose."
+    },
+    {
+     "text": "Introduce smoke into the intake. On many engines you need to open the throttle plate slightly (or command it open on electronic throttles) so smoke reaches the manifold."
+    },
+    {
+     "text": "Look and shine your light around the intake manifold gasket, throttle body, PCV valve and hoses, brake booster hose, vacuum lines, injector O-rings and the oil filler cap/dipstick tube."
+    },
+    {
+     "text": "For EVAP leaks: connect to the EVAP service port (or use a fuel-cap adapter), command the vent valve closed with a scan tool (or clamp the vent hose), then introduce smoke."
+    },
+    {
+     "text": "Check the gas cap seal, filler neck, purge and vent valves, charcoal canister, and every EVAP hose along the frame and near the tank."
+    },
+    {
+     "text": "Mark every leak you find. After repairs, smoke-test again to confirm, then clear codes. For EVAP codes, let the computer re-run its leak monitor (may take several drive cycles) or run the EVAP self-test from a capable scan tool."
+    }
+   ],
+   "notes": "Many smoke machines have a flow gauge: if the flow ball drops to zero once the system is full, it's sealed. Some intake leaks only open up when hot or under engine torque — retest warm if needed.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Battery and charging system test",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.battery",
+    "electrical.charging"
+   ],
+   "dtcs": [
+    "P0562"
+   ]
+  },
+  "data": {
+   "summary": "Check battery state of charge and health, then confirm the alternator charges correctly. Do this before replacing any electrical part or computer — low voltage causes many strange problems.",
+   "difficulty": 1,
+   "time_minutes": 20,
+   "tools": [
+    "Digital multimeter",
+    "Battery tester (conductance tester or carbon-pile load tester)",
+    "Battery terminal cleaning brush",
+    "Safety glasses and gloves"
+   ],
+   "warnings": [
+    "Batteries can release explosive hydrogen gas — no sparks or flames nearby, and connect clamps carefully.",
+    "Wear eye protection; battery acid burns."
+   ],
+   "steps": [
+    {
+     "text": "Inspect terminals and cables for corrosion, looseness or damage. Clean and tighten before testing — a loose clamp gives false results."
+    },
+    {
+     "text": "With the engine off for at least an hour (or after removing surface charge by turning the headlights on for a minute), measure voltage across the battery posts. About 12.6 V or more is fully charged, about 12.4 V is roughly 75%, and about 12.2 V is roughly 50%."
+    },
+    {
+     "text": "If the battery is low, charge it fully before load-testing — testing a discharged battery gives a false 'bad' result."
+    },
+    {
+     "text": "Test battery health with a conductance tester (enter the battery's CCA rating) or a load tester: load at half the CCA rating for 15 seconds — voltage should stay at or above about 9.6 V at around 70°F (21°C)."
+    },
+    {
+     "text": "Start the engine. With everything off, measure voltage at the battery at about 1,500–2,000 rpm. Most systems charge at roughly 13.5–14.8 V. Some newer 'smart charging' systems vary voltage on purpose — check the manufacturer's spec before condemning the alternator."
+    },
+    {
+     "text": "Turn on headlights (high beam), blower on high and rear defrost. Voltage should stay above about 13 V on most vehicles; a big drop suggests a weak alternator or a bad connection."
+    },
+    {
+     "text": "If charging voltage is low, do a voltage drop test on the alternator output cable and ground before replacing the alternator (see the voltage drop guide)."
+    }
+   ],
+   "notes": "Many vehicles with battery monitoring sensors need a 'battery reset/registration' with a scan tool after installing a new battery, or the charging system may overcharge or undercharge it.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Voltage drop testing (cables, grounds and connections)",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical",
+    "electrical.starting",
+    "electrical.charging"
+   ],
+   "dtcs": [
+    "P0562"
+   ]
+  },
+  "data": {
+   "summary": "Find hidden resistance in a circuit by measuring voltage across a wire or connection while the circuit is working. This finds bad grounds and corroded cables that an ohmmeter will miss.",
+   "difficulty": 2,
+   "time_minutes": 20,
+   "tools": [
+    "Digital multimeter with long leads",
+    "Remote starter switch or a helper"
+   ],
+   "warnings": [
+    "Keep hands, leads and clothing clear of belts and fans if the engine may start.",
+    "Disable fuel or ignition if you need to crank without starting (per manufacturer instructions)."
+   ],
+   "steps": [
+    {
+     "text": "The circuit must be ON and carrying current — voltage drop can't be measured with the circuit off."
+    },
+    {
+     "text": "Starter positive side: put the red lead on the battery positive POST (not the clamp) and the black lead on the starter's battery terminal. Crank the engine. Typical maximum is about 0.5 V."
+    },
+    {
+     "text": "Ground side: red lead on the engine block (or starter case), black lead on the battery negative POST. Crank. Typical maximum is about 0.2–0.3 V."
+    },
+    {
+     "text": "Alternator output: red lead on the alternator output stud, black on the battery positive post, engine running with a load on (lights, blower). Typical maximum is about 0.5 V."
+    },
+    {
+     "text": "Any single connection (a clamp, a ground bolt, a connector) should show very little drop — typically under about 0.1 V."
+    },
+    {
+     "text": "If a reading is too high, move one lead step by step along the circuit (post → clamp → cable → terminal) until you find the spot where the voltage jumps. Clean, repair or replace that part, then retest."
+    }
+   ],
+   "notes": "The same method works on any circuit: a fuel pump, a blower motor, a sensor ground. Compare the two ends of a wire while it's working; more than a few tenths of a volt usually means trouble.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Parasitic battery drain (draw) test",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.battery",
+    "electrical.body_control"
+   ],
+   "dtcs": []
+  },
+  "data": {
+   "summary": "Find what is draining the battery while the vehicle is parked, by measuring current draw after all modules go to sleep and then isolating the circuit responsible.",
+   "difficulty": 3,
+   "time_minutes": 90,
+   "tools": [
+    "Digital multimeter with 10 A range, or a DC clamp-on amp meter",
+    "Fused jumper / test lead",
+    "Fuse puller",
+    "Wiring diagram / fuse chart for the vehicle"
+   ],
+   "warnings": [
+    "Never crank the engine or turn on high-current loads with the meter in series on its amps range — it will blow the meter's fuse.",
+    "Disconnecting the battery can reset radio codes and adaptive memory on some vehicles."
+   ],
+   "steps": [
+    {
+     "text": "Make sure the battery is fully charged and tests good first (see the battery test guide)."
+    },
+    {
+     "text": "Set up for 'everything off': close doors but latch the door switches closed with a screwdriver (so the vehicle thinks doors are shut), open the hood and defeat the hood switch if equipped, and keep the key fob far away."
+    },
+    {
+     "text": "Connect the meter in series at the negative battery terminal (or use a clamp-on amp meter around the negative cable). Use a jumper across the meter while connecting so you don't wake the modules up by breaking the circuit."
+    },
+    {
+     "text": "Lock the vehicle and wait for modules to go to sleep. This can take 20 minutes to over an hour on newer vehicles."
+    },
+    {
+     "text": "Read the draw. Most late-model vehicles settle below about 50 mA (0.05 A); many older vehicles are lower. Check the manufacturer's spec if available."
+    },
+    {
+     "text": "If the draw is too high, find the circuit: measure the small voltage drop across each fuse (in mV) without pulling them — the fuse with a reading is carrying current. Or pull fuses one at a time and watch the draw drop."
+    },
+    {
+     "text": "Once you know the circuit, use the wiring diagram to find what's on it (glovebox or trunk light, aftermarket accessory, stuck relay, module not sleeping) and fix the cause. Retest."
+    }
+   ],
+   "notes": "Watch for modules waking up while you test (draw jumps up again) — opening a door or pulling a fuse can restart the sleep timer.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Cooling system pressure test and combustion leak (block) test",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.cooling"
+   ],
+   "dtcs": [
+    "P0217",
+    "P0128"
+   ]
+  },
+  "data": {
+   "summary": "Find external and internal coolant leaks: pressurize the cooling system to check for leaks, test the radiator cap, and check the coolant for exhaust gas from a leaking head gasket.",
+   "difficulty": 2,
+   "time_minutes": 45,
+   "tools": [
+    "Cooling system pressure tester with adapters",
+    "Radiator cap adapter",
+    "Combustion leak (block) tester with test fluid",
+    "Flashlight, drain pan"
+   ],
+   "warnings": [
+    "Never open the radiator cap or coolant reservoir on a hot engine — pressurized coolant can cause severe burns.",
+    "Coolant is toxic to people and animals; clean up spills."
+   ],
+   "steps": [
+    {
+     "text": "With the engine cold, check coolant level and condition. Oil in the coolant or coolant in the oil (milky) points to an internal leak."
+    },
+    {
+     "text": "Attach the pressure tester to the radiator or reservoir and pump to the pressure stamped on the radiator cap (do not exceed it)."
+    },
+    {
+     "text": "Watch the gauge for 10–15 minutes. It should hold steady. If it drops, look for drips or wetness at hoses, radiator, water pump weep hole, heater core hoses, thermostat housing and intake gaskets. Check for coolant on the passenger floor (heater core)."
+    },
+    {
+     "text": "If pressure drops with no external leak, suspect an internal leak (head gasket, cracked head/block, EGR cooler on diesels)."
+    },
+    {
+     "text": "Test the radiator cap with the cap adapter — it should hold its rated pressure and release above it."
+    },
+    {
+     "text": "Combustion leak test: with the engine running and coolant slightly below the filler neck, place the block tester on the filler opening and draw air through the test fluid. If the blue fluid turns yellow (or green), exhaust gas is in the coolant — a head gasket or crack.",
+     "caution": "Don't let coolant get sucked into the tester fluid, or the result is invalid."
+    }
+   ],
+   "notes": "A system that keeps losing coolant with no visible leak, white sweet-smelling exhaust smoke, or bubbles in the reservoir at idle all point toward an internal leak.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Thermostat check (engine slow to warm up or overheating)",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.cooling"
+   ],
+   "dtcs": [
+    "P0128",
+    "P0217"
+   ]
+  },
+  "data": {
+   "summary": "Confirm whether the thermostat is opening at the right temperature, using a scan tool and touch/infrared checks on the radiator hoses.",
+   "difficulty": 1,
+   "time_minutes": 25,
+   "tools": [
+    "Scan tool (coolant temperature PID)",
+    "Infrared thermometer"
+   ],
+   "warnings": [
+    "Keep hands clear of the cooling fan — electric fans can start any time, even with the key off on some vehicles.",
+    "Don't open the cooling system while hot."
+   ],
+   "steps": [
+    {
+     "text": "Start with a cold engine. Watch coolant temperature on the scan tool and measure the upper radiator hose with the infrared thermometer."
+    },
+    {
+     "text": "The temperature should climb steadily. The upper hose should stay relatively cool until the engine reaches about the thermostat's rated temperature (often around 190–205°F / 88–96°C), then get hot quickly as the thermostat opens."
+    },
+    {
+     "text": "If the upper hose warms up early along with the engine and the engine never reaches normal temperature (or takes a very long time), the thermostat is stuck open — this causes P0128 and poor heat."
+    },
+    {
+     "text": "If the engine gets hotter than normal while the upper hose stays cool, the thermostat may be stuck closed — stop and diagnose before driving further."
+    },
+    {
+     "text": "Compare the scan tool coolant temperature with the infrared reading at the thermostat housing to rule out a bad coolant temperature sensor."
+    },
+    {
+     "text": "Replace the thermostat with the correct temperature rating and gasket/seal, refill and bleed air from the cooling system per the manufacturer's procedure."
+    }
+   ],
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Fuel pressure test (port fuel injection)",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.fuel",
+    "fuel"
+   ],
+   "dtcs": [
+    "P0171",
+    "P0174",
+    "P0172",
+    "P0175",
+    "P0300"
+   ]
+  },
+  "data": {
+   "summary": "Measure fuel pressure and check that it holds after shutdown, to diagnose lean or rich conditions, hard starting and misfires on port-injected engines.",
+   "difficulty": 3,
+   "time_minutes": 40,
+   "tools": [
+    "Fuel pressure gauge with the correct adapter (Schrader valve or inline)",
+    "Shop towels",
+    "Safety glasses",
+    "Fire extinguisher nearby",
+    "Manufacturer's fuel pressure spec"
+   ],
+   "warnings": [
+    "Fuel is under pressure and flammable. Work in a ventilated area, no sparks or flames, and have a fire extinguisher nearby.",
+    "This guide is for the low-pressure side only. Do NOT open or connect a gauge to the high-pressure side of a direct-injection (GDI) system — it runs at thousands of psi. Read GDI pressure with a scan tool."
+   ],
+   "steps": [
+    {
+     "text": "Look up the fuel pressure spec for the engine. Specs vary a lot: many returnless port-injection systems run roughly 50–65 psi, while older return-style systems often run around 35–45 psi."
+    },
+    {
+     "text": "With the engine off, wrap a towel around the test port and connect the gauge."
+    },
+    {
+     "text": "Turn the key on (engine off) to prime the pump. Pressure should come up to spec within a couple of seconds."
+    },
+    {
+     "text": "Start the engine and check pressure at idle. On systems with a vacuum-referenced regulator, pressure should rise a few psi when you pull the regulator's vacuum hose."
+    },
+    {
+     "text": "Check that pressure holds under load (snap the throttle or watch while driving with the gauge secured). Pressure that drops under load points to a weak pump, clogged filter or restricted line."
+    },
+    {
+     "text": "Shut off the engine and watch the gauge. Pressure should hold for several minutes. A fast drop means a leaking injector, a bad check valve in the pump, or a leaking regulator."
+    },
+    {
+     "text": "Relieve pressure into a container per the manufacturer's procedure before disconnecting the gauge."
+    }
+   ],
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Oxygen sensor heater circuit test",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.emissions",
+    "electrical"
+   ],
+   "dtcs": [
+    "P0135",
+    "P0141",
+    "P0155",
+    "P0161"
+   ]
+  },
+  "data": {
+   "summary": "Test the heater inside an oxygen (O2) or air-fuel ratio sensor and its power and ground circuits.",
+   "difficulty": 2,
+   "time_minutes": 25,
+   "tools": [
+    "Digital multimeter",
+    "Back-probe pins",
+    "Wiring diagram for the sensor connector",
+    "O2 sensor socket (if replacing)",
+    "Anti-seize (only if the new sensor doesn't come with it)"
+   ],
+   "warnings": [
+    "Exhaust parts get extremely hot — let them cool before touching the sensor or wiring."
+   ],
+   "steps": [
+    {
+     "text": "Check the fuse that feeds the O2 sensor heaters. A blown fuse usually means a shorted heater or wiring."
+    },
+    {
+     "text": "Unplug the sensor. Using the wiring diagram, identify the two heater pins on the sensor side (on many 4-wire sensors they're the two wires of the same color)."
+    },
+    {
+     "text": "Measure heater resistance across those two pins. It's typically a few ohms to about 20 Ω depending on the sensor — check the spec. An open circuit (OL) means a burned-out heater."
+    },
+    {
+     "text": "Key on: on the harness side, check for battery voltage on the heater supply wire."
+    },
+    {
+     "text": "The engine computer usually controls the heater on the ground side. With the engine running, back-probe and check that the computer pulls the control wire low (or a pulsing signal on a scope)."
+    },
+    {
+     "text": "Inspect the wiring along the exhaust for melted or chafed insulation. Repair wiring or replace the sensor as needed; clear codes and verify."
+    }
+   ],
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Mass airflow (MAF) sensor check and cleaning",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.air_intake"
+   ],
+   "dtcs": [
+    "P0101",
+    "P0102",
+    "P0171",
+    "P0174"
+   ]
+  },
+  "data": {
+   "summary": "Check whether the MAF sensor reads correctly, clean it, and rule out air leaks between the sensor and the engine.",
+   "difficulty": 1,
+   "time_minutes": 20,
+   "tools": [
+    "Scan tool with MAF (g/s) data",
+    "MAF sensor cleaner (spray made for MAF sensors only)",
+    "Screwdriver / security bit if needed"
+   ],
+   "warnings": [
+    "Never touch the sensing wires or film — they break easily.",
+    "Use only MAF sensor cleaner; brake or carb cleaner can damage the sensor."
+   ],
+   "steps": [
+    {
+     "text": "Inspect the air filter and the intake duct between the MAF and the throttle body. Any crack or loose clamp lets in air the sensor can't measure."
+    },
+    {
+     "text": "Warm the engine and read MAF on the scan tool. At idle, most engines read roughly 1 g/s per liter of displacement (about 2–3 g/s for a 2.0L, 5–6 g/s for a 5.3L)."
+    },
+    {
+     "text": "Raise RPM slowly and watch the reading rise smoothly. Dropouts or flat spots point to a bad sensor or wiring."
+    },
+    {
+     "text": "Turn the engine off, unplug and remove the MAF sensor. Spray the sensing element with MAF cleaner, don't touch it, and let it dry completely."
+    },
+    {
+     "text": "Reinstall, clear codes and recheck readings and fuel trims."
+    },
+    {
+     "text": "If readings are still off and there are no air leaks, check the sensor's power, ground and signal wiring before replacing it."
+    }
+   ],
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "procedure",
+  "title": "Reading fuel trims to diagnose lean or rich conditions",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "engine.fuel",
+    "engine.air_intake"
+   ],
+   "dtcs": [
+    "P0171",
+    "P0174",
+    "P0172",
+    "P0175"
+   ]
+  },
+  "data": {
+   "summary": "Use short-term and long-term fuel trim data to tell whether a lean or rich problem is a vacuum leak, a fuel delivery problem, or a sensor problem — before buying parts.",
+   "difficulty": 2,
+   "time_minutes": 20,
+   "tools": [
+    "Scan tool with live data (STFT, LTFT for each bank, MAF, O2/AFR sensors)"
+   ],
+   "steps": [
+    {
+     "text": "Warm the engine fully so the system is in closed loop."
+    },
+    {
+     "text": "Read short-term (STFT) and long-term (LTFT) fuel trims for each bank at idle. Add them for the total correction. Positive numbers mean the computer is adding fuel (it sees lean); negative means it's removing fuel (it sees rich)."
+    },
+    {
+     "text": "As a rough guide, total trim within about ±10% is normal. Beyond about ±20–25% the computer is near its limit and will usually set a lean or rich code."
+    },
+    {
+     "text": "Now hold 2,500 rpm. If trims are high at idle but get close to normal at 2,500 rpm, suspect a vacuum leak (a fixed leak matters less as airflow increases)."
+    },
+    {
+     "text": "If trims are high at idle AND at higher RPM/under load, suspect fuel delivery (pressure/volume) or a MAF sensor reading low."
+    },
+    {
+     "text": "If only one bank is off, look for something on that bank only: an intake gasket leak, an exhaust leak before that O2 sensor, or injectors on that side."
+    },
+    {
+     "text": "Confirm the theory with a direct test (smoke test, fuel pressure test, MAF check) before replacing parts."
+    }
+   ],
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "spec",
+  "title": "12 V battery resting voltage (fully charged)",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.battery"
+   ],
+   "dtcs": [
+    "P0562"
+   ]
+  },
+  "data": {
+   "name": "Resting voltage, fully charged 12 V lead-acid battery",
+   "quantity": "voltage",
+   "value": 12.6,
+   "condition": "Engine off for 1+ hour (or surface charge removed), about 70°F / 21°C",
+   "notes": "About 12.4 V ≈ 75% charged, 12.2 V ≈ 50%, 12.0 V ≈ 25%. AGM batteries can rest slightly higher (about 12.8 V).",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "spec",
+  "title": "Typical charging system voltage",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.charging"
+   ],
+   "dtcs": [
+    "P0562"
+   ]
+  },
+  "data": {
+   "name": "Charging voltage at the battery, engine running",
+   "quantity": "voltage",
+   "value": 13.5,
+   "value_max": 14.8,
+   "condition": "Engine at about 1,500–2,000 rpm, accessories off",
+   "notes": "Many newer vehicles use 'smart charging' that intentionally varies voltage (sometimes down near 12.5–13 V when the battery is full). Check the manufacturer's spec before replacing an alternator.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "spec",
+  "title": "Battery load test minimum voltage",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.battery"
+   ],
+   "dtcs": []
+  },
+  "data": {
+   "name": "Minimum voltage during a 15-second load test at half the CCA rating",
+   "quantity": "voltage",
+   "value": 9.6,
+   "condition": "Fully charged battery, about 70°F / 21°C (the minimum is lower in cold temperatures)",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ },
+ {
+  "kind": "spec",
+  "title": "Typical maximum parasitic draw (late-model vehicles)",
+  "tags": {
+   "applies_to": [],
+   "systems": [
+    "electrical.battery"
+   ],
+   "dtcs": []
+  },
+  "data": {
+   "name": "Battery draw after modules sleep",
+   "quantity": "current",
+   "value": 0.05,
+   "condition": "All modules asleep (20–60+ minutes after locking on many vehicles)",
+   "notes": "A general guide. Some vehicles specify less. Check the manufacturer's spec when available.",
+   "sources": [
+    {
+     "type": "industry_standard",
+     "citation": "Standard shop diagnostic practice (ChrystalClear team write-up)"
+    }
+   ]
+  }
+ }
+]
