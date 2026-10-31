@@ -1,3 +1,5 @@
+import os
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import sessionmaker
@@ -117,7 +119,10 @@ def nhtsa():
 
 @pytest.fixture
 def db_session_factory():
-    engine = make_engine("sqlite://", poolclass=StaticPool)
+    # Default: fast in-memory SQLite. CI also runs the suite on Postgres via TEST_DATABASE_URL.
+    url = os.environ.get("TEST_DATABASE_URL")
+    engine = make_engine(url) if url else make_engine("sqlite://", poolclass=StaticPool)
+    Base.metadata.drop_all(engine)
     Base.metadata.create_all(engine)
     factory = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
     with factory() as db:
