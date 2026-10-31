@@ -81,7 +81,13 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
 - Hosting must stay free or very cheap — see `docs/HOSTING.md`.
 - Develop on the designated feature branch; don't open PRs unless the owner asks.
 
+## Decision log
+- 2026-10-31: Owner approved docs/PLAN.md.
+
 ## Open decisions (waiting on owner)
-- Approve docs/PLAN.md before building app code.
+- Business model: keep "free forever, no pro tier" as-is, or leave room to charge later
+  for optional business add-ons (core repair info stays free). Affects whether we require
+  a Contributor License Agreement (CLA). Do not change the "Free forever" rule until decided.
+- Possible rename from "OpenRepair" to "ChrystalClear" (spelling + trademark check pending).
 - License for community-contributed content (recommended: **CC BY-SA 4.0**).
 - Project contact email for conduct/privacy reports (referenced in README "Contact").

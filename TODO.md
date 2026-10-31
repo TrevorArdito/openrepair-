@@ -1,9 +1,11 @@
 # TODO
 
 ## Waiting on the owner
-- [ ] **Approve the plan** in `docs/PLAN.md` (reply "OK" or tell us what to change)
+- [x] Approve the plan in `docs/PLAN.md` (approved 2026-10-31)
+- [ ] Decide business model: strict free-forever vs. free core + optional paid business add-ons later (decides whether we need a contributor agreement)
+- [ ] Confirm new name ("ChrystalClear"?): check spelling, USPTO trademark search, domain availability
 - [ ] Choose a license for community-contributed guides/specs/photos (recommended: CC BY-SA 4.0)
-- [ ] Pick a project contact email for conduct and privacy reports (a new free Gmail/Proton address is fine)
+- [ ] Create a project contact email (after the name is final)
 
 ## Next up (after approval) — v0.1 build order
 - [ ] Step 0: Docker Compose, backend + frontend skeletons, health check, GitHub Actions CI
