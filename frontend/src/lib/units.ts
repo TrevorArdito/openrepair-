@@ -1,7 +1,7 @@
 // Everything is stored in metric (SI) and converted only for display.
 
 export type UnitSystem = "metric" | "imperial";
-export type Quantity = "torque" | "volume" | "pressure" | "length" | "temperature" | "mass";
+export type Quantity = "torque" | "volume" | "volume_ml" | "pressure" | "length" | "temperature" | "mass" | "mass_g";
 
 const IMPERIAL: Record<Quantity, { unit: string; from: (si: number) => number; to: (v: number) => number }> = {
   torque: { unit: "lb·ft", from: (nm) => nm * 0.737562149, to: (v) => v / 0.737562149 },
@@ -10,6 +10,8 @@ const IMPERIAL: Record<Quantity, { unit: string; from: (si: number) => number; t
   length: { unit: "in", from: (mm) => mm / 25.4, to: (v) => v * 25.4 },
   temperature: { unit: "°F", from: (c) => (c * 9) / 5 + 32, to: (f) => ((f - 32) * 5) / 9 },
   mass: { unit: "lb", from: (kg) => kg * 2.204622622, to: (v) => v / 2.204622622 },
+  mass_g: { unit: "oz", from: (g) => g / 28.349523125, to: (v) => v * 28.349523125 },
+  volume_ml: { unit: "fl oz", from: (ml) => ml / 29.5735295625, to: (v) => v * 29.5735295625 },
 };
 const METRIC_UNIT: Record<Quantity, string> = {
   torque: "N·m",
@@ -18,6 +20,8 @@ const METRIC_UNIT: Record<Quantity, string> = {
   length: "mm",
   temperature: "°C",
   mass: "kg",
+  mass_g: "g",
+  volume_ml: "mL",
 };
 
 export function convert(si: number, q: Quantity, system: UnitSystem): { value: number; unit: string } {
@@ -33,4 +37,20 @@ export function formatQuantity(si: number, q: Quantity, system: UnitSystem, digi
   const { value, unit } = convert(si, q, system);
   const rounded = Number(value.toFixed(digits));
   return `${rounded} ${unit}`;
+}
+
+/** Units that are the same in both systems (volts, ohms, ...). */
+export const FIXED_UNITS: Record<string, string> = {
+  voltage: "V",
+  resistance: "Ω",
+  current: "A",
+  speed_rpm: "rpm",
+  percent: "%",
+  time_s: "s",
+};
+
+export const CONVERTIBLE = new Set<string>(["length", "pressure", "temperature", "mass", "volume"]);
+
+export function unitFor(q: Quantity, system: UnitSystem): string {
+  return convert(1, q, system).unit;
 }

@@ -104,3 +104,50 @@ export type Dtc = {
   source_license: string | null;
   related_entries: { id: number; title: string; kind: string }[];
 };
+
+export type Kind = "procedure" | "torque_spec" | "fluid_capacity" | "spec" | "part_note" | "labor_time";
+export const KINDS: Kind[] = ["procedure", "torque_spec", "fluid_capacity", "spec", "part_note", "labor_time"];
+export type Person = { id: number | null; display_name: string; role?: string | null };
+export type Source = { type: string; citation?: string };
+export type AppliesTo = { make_id: number; model_id?: number | null; year_from: number; year_to: number; displacement_l?: number | null };
+export type EntryTags = { applies_to: AppliesTo[]; systems: string[]; dtcs: string[] };
+export type Revision = {
+  id: number;
+  number: number;
+  title: string;
+  data: Record<string, any>; // eslint-disable-line @typescript-eslint/no-explicit-any
+  tags: EntryTags;
+  edit_summary: string | null;
+  status: "approved" | "pending" | "rejected";
+  author: Person;
+  created_at: string;
+};
+export type LaborCell = { reports: number; median?: number; min?: number; max?: number };
+export type Entry = {
+  id: number;
+  kind: Kind;
+  status: "published" | "pending" | "hidden";
+  title: string;
+  score: number;
+  my_vote: number;
+  safety_critical: boolean;
+  verification: { state: "verified" | "verified_older" | "none"; by?: Person | null; at?: string | null; revision_number?: number | null };
+  open_reports: number;
+  pending_revisions: number;
+  revision: Revision | null;
+  tags_display: { applies_to: (AppliesTo & { make: string; model: string | null })[]; systems: string[]; dtcs: string[] };
+  labor: Record<string, Record<string, LaborCell>> | null;
+  created_at: string;
+  updated_at: string;
+};
+export type EntrySummary = {
+  id: number;
+  kind: Kind;
+  title: string;
+  score: number;
+  verified: boolean;
+  safety_critical: boolean;
+  generic: boolean;
+  summary: string | null;
+  updated_at: string;
+};

@@ -78,6 +78,11 @@ export default function AccountPage() {
           <p className="text-base text-slate-600 dark:text-slate-400">
             {user.email} · {t(`account.role.${user.role}`)}
           </p>
+          {["moderator", "admin"].includes(user.role) && (
+            <LinkButton to="/mod" className="mt-3 w-full">
+              {t("nav.moderation")}
+            </LinkButton>
+          )}
           <Button variant="secondary" className="mt-3 w-full" onClick={() => logout().then(() => navigate("/"))}>
             {t("auth.logout")}
           </Button>

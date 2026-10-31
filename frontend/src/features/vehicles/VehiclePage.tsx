@@ -7,6 +7,7 @@ import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
 import CodeSearch from "../codes/CodeSearch";
+import EntryList from "../entries/EntryList";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
 import type { RecallList, VehicleProfile, VinDecode } from "../../lib/types";
 
@@ -162,6 +163,10 @@ export default function VehiclePage() {
           <TsbsTab vehicleId={id!} />
         ) : tab === "complaints" ? (
           <ComplaintsTab vehicleId={id!} />
+        ) : tab === "guides" ? (
+          <EntryList vehicleId={id!} kinds={["procedure"]} addKind="procedure" />
+        ) : tab === "specs" ? (
+          <EntryList vehicleId={id!} kinds={["torque_spec", "fluid_capacity", "spec", "labor_time", "part_note"]} addKind={null} />
         ) : tab === "codes" ? (
           <div className="space-y-2">
             <p className="text-lg">{t("codes.vehicleTabHint")}</p>

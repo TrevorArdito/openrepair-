@@ -48,3 +48,21 @@ export async function api<T>(path: string, opts: Options = {}): Promise<T> {
   }
   return data as T;
 }
+
+/** Upload a file (multipart). Used for photos. */
+export async function apiUpload<T>(path: string, file: File): Promise<T> {
+  const form = new FormData();
+  form.append("file", file);
+  const headers: Record<string, string> = {};
+  const csrf = readCookie("cc_csrf");
+  if (csrf) headers["X-CSRF-Token"] = csrf;
+  let res: Response;
+  try {
+    res = await fetch(`/api/v1${path}`, { method: "POST", body: form, headers, credentials: "same-origin" });
+  } catch {
+    throw new ApiError("network_error", 0);
+  }
+  const data = await res.json().catch(() => null);
+  if (!res.ok) throw new ApiError(data?.error?.code ?? "unknown_error", res.status, data?.error?.details ?? {});
+  return data as T;
+}
