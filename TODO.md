@@ -1,0 +1,22 @@
+# TODO
+
+## Waiting on the owner
+- [ ] **Approve the plan** in `docs/PLAN.md` (reply "OK" or tell us what to change)
+- [ ] Choose a license for community-contributed guides/specs/photos (recommended: CC BY-SA 4.0)
+- [ ] Pick a project contact email for conduct and privacy reports (a new free Gmail/Proton address is fine)
+
+## Next up (after approval) — v0.1 build order
+- [ ] Step 0: Docker Compose, backend + frontend skeletons, health check, GitHub Actions CI
+- [ ] Step 1: VIN decoder (vPIC) + YMM/engine picker + vehicle profile + My Garage (minimal accounts)
+- [ ] Step 2: Recalls, TSB index, complaints + NHTSA import scripts
+- [ ] Step 3: DTC search + seed generic OBD-II codes (our own wording)
+- [ ] Step 4: Community guides & specs (revisions, verify, votes, reports, photos, safety disclaimer)
+- [ ] Step 5: Unified search
+- [ ] Step 6: Roles, pro requests, moderation queue, anti-spam
+- [ ] Step 7: PWA offline cache, units toggle, dark mode polish, seed data, docs (HOSTING.md, DATA_SOURCES.md)
+
+## Ideas for later (not v0.1)
+- VIN barcode scanning with the phone camera
+- Spanish translation
+- Hardware module: ELM327 / J2534 live data and code reading (disabled by default)
+- Community-drawn wiring diagrams, key programming, ECU tuning, parts price lookup
