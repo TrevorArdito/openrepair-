@@ -17,10 +17,26 @@ from app.core.security import (
     verify_password,
 )
 from app.db import get_db
-from app.modules.accounts.models import User, UserSession
-from app.modules.accounts.schemas import LoginIn, MeOut, MeUpdate, RegisterIn
+from app.modules.accounts import tokens
+from app.modules.accounts.models import ProRequest, Role, User, UserSession
+from app.modules.accounts.schemas import (
+    ForgotIn,
+    LoginIn,
+    MeOut,
+    MeUpdate,
+    ProRequestIn,
+    RegisterIn,
+    ResetIn,
+    TokenIn,
+)
 
 router = APIRouter(tags=["accounts"])
+
+
+def me_out(user: User) -> MeOut:
+    out = MeOut.model_validate(user)
+    out.email_verified = user.email_verified_at is not None
+    return out
 
 
 def _start_session(db: Session, user: User, response: Response) -> None:
@@ -61,7 +77,8 @@ def register(data: RegisterIn, response: Response, db: Session = Depends(get_db)
     db.add(user)
     db.commit()
     _start_session(db, user, response)
-    return user
+    tokens.send_verification(db, user)
+    return me_out(user)
 
 
 @router.post(
@@ -79,7 +96,7 @@ def login(data: LoginIn, response: Response, db: Session = Depends(get_db)):
     if password_needs_rehash(user.password_hash):
         user.password_hash = hash_password(data.password)
     _start_session(db, user, response)
-    return user
+    return me_out(user)
 
 
 @router.post("/auth/logout", status_code=204, dependencies=[Depends(verify_csrf)])
@@ -94,7 +111,7 @@ def logout(response: Response, user: User = Depends(current_user), db: Session =
 
 @router.get("/me", response_model=MeOut)
 def me(user: User = Depends(current_user)):
-    return user
+    return me_out(user)
 
 
 @router.patch("/me", response_model=MeOut, dependencies=[Depends(verify_csrf)])
@@ -102,7 +119,7 @@ def update_me(data: MeUpdate, user: User = Depends(current_user), db: Session = 
     for field, value in data.model_dump(exclude_none=True).items():
         setattr(user, field, value)
     db.commit()
-    return user
+    return me_out(user)
 
 
 @router.get("/me/export")
@@ -112,7 +129,7 @@ def export_me(user: User = Depends(current_user), db: Session = Depends(get_db))
 
     garage = db.scalars(select(GarageVehicle).where(GarageVehicle.user_id == user.id)).all()
     return {
-        "account": MeOut.model_validate(user).model_dump(),
+        "account": me_out(user).model_dump(),
         "created_at": user.created_at,
         "garage": [
             {"vehicle_id": g.vehicle_id, "vin": g.vin, "nickname": g.nickname, "notes": g.notes}
@@ -129,3 +146,90 @@ def delete_me(
     db.commit()
     response.delete_cookie(SESSION_COOKIE)
     response.delete_cookie(CSRF_COOKIE)
+
+
+# ---- email verification & password reset ----------------------------------------
+
+
+@router.post(
+    "/auth/verify-email/request",
+    status_code=202,
+    dependencies=[Depends(verify_csrf), Depends(rate_limit("verify_email", 5, 3600))],
+)
+def resend_verification(user: User = Depends(current_user), db: Session = Depends(get_db)):
+    if user.email_verified_at is None:
+        tokens.send_verification(db, user)
+    return {"status": "sent"}
+
+
+@router.post(
+    "/auth/verify-email",
+    response_model=MeOut,
+    dependencies=[Depends(rate_limit("verify", 20, 3600))],
+)
+def verify_email(data: TokenIn, db: Session = Depends(get_db)):
+    user = tokens.consume(db, data.token, "verify")
+    user.email_verified_at = user.email_verified_at or datetime.now(UTC)
+    db.commit()
+    return me_out(user)
+
+
+@router.post(
+    "/auth/forgot-password", status_code=202, dependencies=[Depends(rate_limit("forgot", 5, 3600))]
+)
+def forgot_password(data: ForgotIn, db: Session = Depends(get_db)):
+    """Always answers the same way, so nobody can use it to find out who has an account."""
+    user = db.scalar(select(User).where(func.lower(User.email) == data.email.lower()))
+    if user is not None and user.status.value not in ("banned",):
+        tokens.send_reset(db, user)
+    return {"status": "sent_if_account_exists"}
+
+
+@router.post(
+    "/auth/reset-password", status_code=204, dependencies=[Depends(rate_limit("reset", 10, 3600))]
+)
+def reset_password(data: ResetIn, response: Response, db: Session = Depends(get_db)):
+    user = tokens.consume(db, data.token, "reset")
+    user.password_hash = hash_password(data.password)
+    user.email_verified_at = user.email_verified_at or datetime.now(UTC)  # they proved they own it
+    for s in list(user.sessions):  # log out everywhere
+        db.delete(s)
+    db.commit()
+    response.delete_cookie(SESSION_COOKIE)
+    response.delete_cookie(CSRF_COOKIE)
+
+
+# ---- "verified pro" applications ---------------------------------------------------
+
+
+@router.get("/pro-requests/mine")
+def my_pro_request(user: User = Depends(current_user), db: Session = Depends(get_db)):
+    r = db.scalar(
+        select(ProRequest).where(ProRequest.user_id == user.id).order_by(ProRequest.id.desc())
+    )
+    return (
+        None
+        if r is None
+        else {"id": r.id, "status": r.status, "note": r.note, "created_at": r.created_at}
+    )
+
+
+@router.post(
+    "/pro-requests",
+    status_code=201,
+    dependencies=[Depends(verify_csrf), Depends(rate_limit("pro_request", 3, 86400))],
+)
+def request_pro(
+    data: ProRequestIn, user: User = Depends(current_user), db: Session = Depends(get_db)
+):
+    if user.has_role(Role.pro):
+        raise AppError("already_pro", 409)
+    pending = db.scalar(
+        select(ProRequest.id).where(ProRequest.user_id == user.id, ProRequest.status == "pending")
+    )
+    if pending:
+        raise AppError("pro_request_pending", 409)
+    r = ProRequest(user_id=user.id, statement=data.statement)
+    db.add(r)
+    db.commit()
+    return {"id": r.id, "status": r.status}

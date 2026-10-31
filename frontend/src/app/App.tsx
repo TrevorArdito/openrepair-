@@ -8,6 +8,7 @@ import EntryPage from "../features/entries/EntryPage";
 import HistoryPage from "../features/entries/HistoryPage";
 import ModPage from "../features/entries/ModPage";
 import { LoginPage, RegisterPage } from "../features/account/LoginPage";
+import { ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage } from "../features/account/PasswordPages";
 import GaragePage from "../features/garage/GaragePage";
 import AboutPage from "../features/info/AboutPage";
 import NotFoundPage from "../features/info/NotFoundPage";
@@ -38,6 +39,9 @@ export default function App() {
               <Route path="account" element={<AccountPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
+              <Route path="forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="reset-password" element={<ResetPasswordPage />} />
+              <Route path="verify-email" element={<VerifyEmailPage />} />
               <Route path="about" element={<AboutPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Route>

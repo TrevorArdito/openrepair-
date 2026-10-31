@@ -7,6 +7,7 @@ import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { usePrefs, type Theme } from "../../lib/prefs";
 import type { Me } from "../../lib/types";
+import ProApplication from "./ProApplication";
 import type { UnitSystem } from "../../lib/units";
 
 function Choice<T extends string>({ legend, value, options, onChange }: { legend: string; value: T; options: { value: T; label: string }[]; onChange: (v: T) => void }) {
@@ -38,6 +39,7 @@ export default function AccountPage() {
   const { units, theme, setUnits, setTheme } = usePrefs();
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
+  const [resent, setResent] = useState(false);
 
   async function syncPref(body: Partial<Me>) {
     if (!user) return;
@@ -78,6 +80,21 @@ export default function AccountPage() {
           <p className="text-base text-slate-600 dark:text-slate-400">
             {user.email} · {t(`account.role.${user.role}`)}
           </p>
+          {user.email_verified ? (
+            <p className="mt-1 font-semibold text-green-700 dark:text-green-400">✓ {t("account.emailVerified")}</p>
+          ) : (
+            <div className="mt-2">
+              <Alert kind="warning">{t("account.emailNotVerified")}</Alert>
+              {resent ? (
+                <p className="mt-2 font-semibold">{t("account.verificationSent")}</p>
+              ) : (
+                <Button variant="secondary" className="mt-2 w-full"
+                  onClick={() => api("/auth/verify-email/request", { method: "POST" }).then(() => setResent(true)).catch((e) => setError(errorMessage(t, e)))}>
+                  {t("account.resendVerification")}
+                </Button>
+              )}
+            </div>
+          )}
           {["moderator", "admin"].includes(user.role) && (
             <LinkButton to="/mod" className="mt-3 w-full">
               {t("nav.moderation")}
@@ -124,6 +141,8 @@ export default function AccountPage() {
           }}
         />
       </Card>
+
+      {user && <ProApplication user={user} />}
 
       {user && (
         <Card className="space-y-3">

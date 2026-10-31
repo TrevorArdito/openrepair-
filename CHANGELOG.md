@@ -41,6 +41,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Vehicle pages without an engine now offer the known engines as one-tap choices.
 - Planned commerce modules designed (`docs/COMMERCE_DESIGN.md`): parts catalog, affiliate links,
   marketplace, state emissions info, tune store, catalytic converter section.
+- **Accounts & moderation**: email confirmation, "forgot password" reset links (one-time, expiring,
+  never reveal whether an account exists), "apply to be a verified pro", moderator tools to search
+  users and set probation / active / suspended / banned (logs them out everywhere), admin role
+  changes, and an action log recording every moderator decision with its reason. Optional
+  "confirm email before contributing" switch.
 - NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
   `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
 - Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),

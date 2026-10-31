@@ -25,6 +25,16 @@ class Settings(BaseSettings):
 
     session_days: int = 30
     storage_local_dir: str = "./data/uploads"
+
+    # Email: "console" prints emails to the server log (development); "smtp" sends them.
+    email_backend: str = "console"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_user: str = ""
+    smtp_password: str = ""
+    email_from: str = "no-reply@example.org"
+    # Anti-spam: require a verified email before contributing (turn on once email works).
+    require_verified_email: bool = False
     # Serve the built frontend (frontend/dist) from the API server. Used in production
     # so the whole app runs as one small container.
     frontend_dist_dir: str | None = None

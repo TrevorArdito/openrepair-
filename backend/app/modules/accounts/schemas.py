@@ -35,6 +35,7 @@ class MeOut(BaseModel):
     display_name: str
     role: Role
     status: str
+    email_verified: bool = False
     unit_pref: str
     locale: str
     theme: str
@@ -45,3 +46,34 @@ class MeUpdate(BaseModel):
     unit_pref: Literal["metric", "imperial"] | None = None
     locale: Literal["en", "es"] | None = None
     theme: Literal["system", "light", "dark"] | None = None
+
+
+class TokenIn(BaseModel):
+    token: str = Field(min_length=10, max_length=200)
+
+
+class ForgotIn(BaseModel):
+    email: EmailStr
+
+
+class ResetIn(BaseModel):
+    token: str = Field(min_length=10, max_length=200)
+    password: str = Field(min_length=10, max_length=200)
+
+
+class ProRequestIn(BaseModel):
+    statement: str = Field(min_length=20, max_length=2000)
+
+
+class StatusIn(BaseModel):
+    status: Literal["probation", "active", "suspended", "banned"]
+    reason: str = Field(min_length=3, max_length=500)
+
+
+class RoleIn(BaseModel):
+    role: Role
+    reason: str = Field(min_length=3, max_length=500)
+
+
+class ReviewIn(BaseModel):
+    note: str | None = Field(default=None, max_length=500)

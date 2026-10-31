@@ -20,7 +20,7 @@
 - [x] Step 3: DTC search + seed generic OBD-II codes (our own wording) — 57 codes so far
 - [x] Step 4: Community guides & specs (revisions, verify, votes, reports, photos, safety disclaimer, multi-source labor times)
 - [x] Step 5: Unified search (VINs, codes, vehicles, guides/specs, recalls/TSBs within a vehicle)
-- [ ] Step 6: Roles, pro requests, moderation queue, anti-spam
+- [x] Step 6: Email verification, password reset, pro applications, moderator user tools (suspend/ban/roles), action log
 - [ ] Step 7: PWA offline polish, seed data, docs (DATA_SOURCES.md, deploy guide)
 
 ## Next big modules (owner priorities)
@@ -60,7 +60,8 @@
 - TSB model-name matching: NHTSA sometimes uses names like "F150 PICKUP" or "SILVERADO 1500"; add a model alias table
 - Schedule the NHTSA refresh (e.g. free GitHub Actions cron or host cron): `python -m app.importers.nhtsa refresh` weekly, `tsbs --period 2025-2026` monthly
 - Engine list per model only knows engines we've seen (seed data + VIN decodes); community-added engines come with step 4
-- Email verification + password reset (needs a free email-sending account) — step 6
+- Email sending in production needs a free SMTP account (owner); then set EMAIL_BACKEND=smtp and REQUIRE_VERIFIED_EMAIL=true
+- Optional captcha (Cloudflare Turnstile, free) on sign-up if spam becomes a problem
 - Suppress the harmless 401 console message when logged out
 - Docker Hub rate-limits anonymous image pulls on some networks; mirror.gcr.io/library/<image> works as a fallback
 

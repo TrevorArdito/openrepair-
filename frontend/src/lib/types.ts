@@ -38,6 +38,7 @@ export type Me = {
   unit_pref: "metric" | "imperial";
   locale: string;
   theme: "system" | "light" | "dark";
+  email_verified: boolean;
 };
 
 export type GarageItem = {

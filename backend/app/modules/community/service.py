@@ -14,6 +14,7 @@ from pydantic import ValidationError
 from sqlalchemy import delete, func, or_, select
 from sqlalchemy.orm import Session
 
+from app.config import get_settings
 from app.core.errors import AppError, NotFound
 from app.modules.accounts.models import Role, User, UserStatus
 from app.modules.community.kinds import ALWAYS_SAFETY_CRITICAL, validate_data
@@ -64,6 +65,12 @@ def can_publish_directly(user: User) -> bool:
 def ensure_can_contribute(user: User) -> None:
     if user.status in (UserStatus.suspended, UserStatus.banned):
         raise AppError("account_disabled", 403)
+    if (
+        get_settings().require_verified_email
+        and user.email_verified_at is None
+        and not user.has_role(Role.pro)
+    ):
+        raise AppError("email_not_verified", 403)
 
 
 # ---- validation ----------------------------------------------------------------

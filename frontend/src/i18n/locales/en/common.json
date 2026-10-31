@@ -111,7 +111,19 @@
     "acceptTerms": "I agree to the <terms>contributor terms and privacy policy</terms>.",
     "noAccount": "New here?",
     "haveAccount": "Already have an account?",
-    "privacyNote": "We only store your email, display name and settings. We never sell data."
+    "privacyNote": "We only store your email, display name and settings. We never sell data.",
+    "forgot": "Forgot password?",
+    "forgotTitle": "Reset your password",
+    "forgotHelp": "Enter your email. If there's an account, we'll send a link to choose a new password.",
+    "sendLink": "Send reset link",
+    "linkSent": "If an account exists for that email, a reset link is on its way. Check your inbox (and spam).",
+    "resetTitle": "Choose a new password",
+    "newPassword": "New password",
+    "savePassword": "Save new password",
+    "resetDone": "Password changed. You can log in now.",
+    "verifyTitle": "Confirming your email…",
+    "verifyDone": "Thanks — your email is confirmed.",
+    "missingToken": "This link is incomplete. Open the link from your email again."
   },
   "account": {
     "title": "Account",
@@ -134,7 +146,19 @@
       "pro": "Verified pro",
       "moderator": "Moderator",
       "admin": "Admin"
-    }
+    },
+    "emailVerified": "Email confirmed",
+    "emailNotVerified": "Email not confirmed yet. Check your inbox for the link.",
+    "resendVerification": "Send the link again",
+    "verificationSent": "Sent! Check your inbox.",
+    "proTitle": "Verified pro",
+    "proIntro": "Professional techs can apply for the verified pro badge. Pros can verify guides and specs and publish without review. It's free — a trust badge, not a paid plan.",
+    "proStatement": "Tell us about your experience (certifications like ASE, years in the trade, shop type)",
+    "proApply": "Apply",
+    "proPending": "Your application is being reviewed.",
+    "proApproved": "You're a verified pro. Thank you!",
+    "proRejected": "Your last application wasn't approved.",
+    "proNote": "Moderator note: {{note}}"
   },
   "about": {
     "title": "About ChrystalClear",
@@ -191,7 +215,14 @@
     "entry_not_published": "This isn't published yet.",
     "not_labor_entry": "This isn't a labor-time entry.",
     "report_not_found": "Report not found.",
-    "search_empty": "Type something to search for."
+    "search_empty": "Type something to search for.",
+    "token_invalid": "This link has expired or was already used. Ask for a new one.",
+    "already_pro": "You're already a verified pro.",
+    "pro_request_pending": "You already have an application being reviewed.",
+    "pro_request_not_found": "That application was already handled.",
+    "user_not_found": "User not found.",
+    "cannot_moderate_self": "You can't change your own account here.",
+    "email_not_verified": "Please confirm your email address before contributing."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -601,7 +632,33 @@
     "view": "View",
     "by": "by {{name}}",
     "reason": "Reason",
-    "hide": "Hide entry"
+    "hide": "Hide entry",
+    "tabs": {
+      "queue": "Review queue",
+      "pro": "Pro applications",
+      "users": "Users",
+      "log": "Action log"
+    },
+    "searchUsers": "Search by email or name",
+    "status": "Status",
+    "role": "Role",
+    "reasonPrompt": "Reason (required, saved in the action log):",
+    "setStatus": {
+      "active": "Activate",
+      "probation": "Probation",
+      "suspended": "Suspend",
+      "banned": "Ban"
+    },
+    "setRole": "Change role",
+    "statusLabels": {
+      "active": "Active",
+      "probation": "Probation",
+      "suspended": "Suspended",
+      "banned": "Banned"
+    },
+    "verifiedEmail": "email confirmed",
+    "unverifiedEmail": "email not confirmed",
+    "logEntry": "{{actor}} · {{action}} · {{target}} #{{id}}"
   },
   "search": {
     "title": "Search",

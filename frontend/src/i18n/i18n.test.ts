@@ -10,6 +10,8 @@ const BACKEND_ERROR_CODES = [
   "edit_conflict", "unknown_system", "photo_not_found", "photo_too_large", "photo_bad_type", "cannot_vote_own",
   "already_reported", "forbidden", "make_not_found", "model_not_found", "revision_not_found",
   "revision_not_pending", "entry_not_published", "not_labor_entry", "report_not_found", "search_empty",
+  "token_invalid", "already_pro", "pro_request_pending", "pro_request_not_found", "user_not_found",
+  "cannot_moderate_self", "email_not_verified",
 ];
 
 describe("translations", () => {

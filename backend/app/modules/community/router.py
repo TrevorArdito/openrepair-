@@ -3,6 +3,7 @@ from fastapi.responses import FileResponse
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from app.core.audit import log_action
 from app.core.deps import current_user, optional_user, require_role, verify_csrf
 from app.core.errors import NotFound
 from app.core.ratelimit import rate_limit
@@ -254,6 +255,8 @@ def review(
     if rev is None:
         raise NotFound("revision_not_found")
     service.review_revision(db, user, rev, approve=action == "approve")
+    log_action(db, user, f"revision_{action}", "revision", rev.id)
+    db.commit()
     return {"status": rev.status.value}
 
 
@@ -276,6 +279,7 @@ def resolve_report(
     r.resolved_by_id = user.id
     r.resolved_at = service.now()
     r.resolution_note = note
+    log_action(db, user, f"report_{r.status}", "report", r.id, note)
     db.commit()
     return {"status": r.status}
 
@@ -292,6 +296,7 @@ def hide_restore(
     if action not in ("hide", "restore", "unverify"):
         raise NotFound()
     entry = service.get_entry(db, entry_id, user)
+    log_action(db, user, f"entry_{action}", "entry", entry.id)
     if action == "unverify":
         service.unverify(db, entry)
     else:

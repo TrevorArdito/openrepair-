@@ -46,6 +46,9 @@ export function LoginPage() {
           <Button type="submit" disabled={busy} className="w-full">
             {t("auth.login")}
           </Button>
+          <Link to="/forgot-password" className="flex min-h-12 items-center justify-center font-semibold underline">
+            {t("auth.forgot")}
+          </Link>
         </form>
       </Card>
       <p>
