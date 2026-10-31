@@ -1,0 +1,149 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Link, useLocation, useParams } from "react-router-dom";
+import { Alert, Button, Card, PageTitle, Spinner } from "../../components/ui";
+import { api } from "../../lib/api";
+import { useAuth } from "../../lib/auth";
+import { errorMessage } from "../../lib/errors";
+import { rememberVehicle } from "../../lib/recent";
+import type { VehicleProfile, VinDecode } from "../../lib/types";
+
+const TABS = ["overview", "recalls", "tsbs", "complaints", "codes", "guides", "specs"] as const;
+type Tab = (typeof TABS)[number];
+
+export default function VehiclePage() {
+  const { t } = useTranslation();
+  const { id } = useParams();
+  const location = useLocation();
+  const decode = (location.state as { decode?: VinDecode } | null)?.decode;
+  const { user } = useAuth();
+  const [vehicle, setVehicle] = useState<VehicleProfile | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [tab, setTab] = useState<Tab>("overview");
+  const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setVehicle(null);
+    setError(null);
+    api<VehicleProfile>(`/vehicles/${id}`)
+      .then((v) => {
+        setVehicle(v);
+        rememberVehicle(v);
+      })
+      .catch((e) => setError(errorMessage(t, e)));
+  }, [id, t]);
+
+  async function addToGarage() {
+    setSaveError(null);
+    try {
+      await api("/garage", {
+        method: "POST",
+        body: { vehicle_id: Number(id), vin: decode?.vin ?? null },
+      });
+      setSaved(true);
+    } catch (e) {
+      setSaveError(errorMessage(t, e));
+    }
+  }
+
+  if (error) return <Alert>{error}</Alert>;
+  if (!vehicle) return <Spinner label={t("app.loading")} />;
+
+  return (
+    <div className="space-y-5">
+      <div>
+        <p className="text-lg font-semibold text-slate-600 dark:text-slate-300">
+          {vehicle.year} · {vehicle.make.name}
+        </p>
+        <PageTitle>
+          {vehicle.model.name}
+          <span className="block text-xl font-bold text-slate-700 dark:text-slate-300">
+            {vehicle.engine.label ?? t("vehicle.engineNotSpecified")}
+          </span>
+        </PageTitle>
+        {decode && <p className="font-mono text-base">{t("vehicle.fromVin", { vin: decode.vin })}</p>}
+      </div>
+
+      {decode && !decode.check_digit_valid && <Alert kind="warning">{t("vehicle.checkDigitWarning")}</Alert>}
+
+      {user ? (
+        <Button variant={saved ? "secondary" : "primary"} disabled={saved} onClick={addToGarage} className="w-full">
+          {saved ? `✓ ${t("vehicle.inGarage")}` : t("vehicle.addToGarage")}
+        </Button>
+      ) : (
+        <Link to="/login" state={{ from: location.pathname }} className="flex min-h-12 items-center font-bold underline">
+          {t("vehicle.loginToSave")}
+        </Link>
+      )}
+      {saveError && <Alert>{saveError}</Alert>}
+
+      <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+        {TABS.map((key) => {
+          const count = vehicle.counts[key];
+          return (
+            <button
+              key={key}
+              role="tab"
+              aria-selected={tab === key}
+              onClick={() => setTab(key)}
+              className={`min-h-12 shrink-0 rounded-full border-2 px-4 font-bold ${
+                tab === key
+                  ? "border-amber-400 bg-amber-400 text-slate-950"
+                  : "border-slate-300 dark:border-slate-700"
+              }`}
+            >
+              {t(`vehicle.tabs.${key}`)}
+              {count ? ` (${count})` : ""}
+            </button>
+          );
+        })}
+      </div>
+
+      <div role="tabpanel">
+        {tab === "overview" ? (
+          <Card>
+            <h2 className="mb-2 text-xl font-bold">{t("vehicle.details")}</h2>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-lg">
+              <dt className="font-semibold">{t("picker.engine")}</dt>
+              <dd>
+                {vehicle.engine.label ?? t("vehicle.engineNotSpecified")}
+                {vehicle.engine.engine_code ? ` · ${vehicle.engine.engine_code}` : ""}
+              </dd>
+              {vehicle.engine.fuel_type && (
+                <>
+                  <dt className="font-semibold">{t("vehicle.fuel")}</dt>
+                  <dd>{t(`fuel.${vehicle.engine.fuel_type}`)}</dd>
+                </>
+              )}
+              {decode &&
+                Object.entries(decode.details)
+                  .filter(([k]) => k !== "engine_model")
+                  .map(([k, v]) => (
+                  <div key={k} className="contents">
+                    <dt className="font-semibold">{t(`vehicle.fields.${k}`, { defaultValue: k })}</dt>
+                    <dd>{v}</dd>
+                  </div>
+                ))}
+            </dl>
+            {decode && decode.warnings.length > 0 && (
+              <details className="mt-3">
+                <summary className="min-h-12 cursor-pointer font-semibold">{t("vehicle.nhtsaNotes")}</summary>
+                <ul className="list-disc pl-6 text-base">
+                  {decode.warnings.map((w) => (
+                    <li key={w}>{w}</li>
+                  ))}
+                </ul>
+              </details>
+            )}
+            {decode && <p className="mt-3 text-base text-slate-600 dark:text-slate-400">{t("vehicle.source", { source: decode.source })}</p>}
+          </Card>
+        ) : (
+          <Card>
+            <p className="text-lg">{t("vehicle.tabComingSoon")}</p>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
