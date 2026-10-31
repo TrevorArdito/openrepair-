@@ -34,6 +34,7 @@ addopts = "-q"
 [tool.ruff]
 line-length = 100
 target-version = "py312"
+extend-exclude = ["alembic/versions"]  # auto-generated migrations
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B", "UP", "S"]
@@ -41,3 +42,6 @@ ignore = ["B008", "E501"]  # line length is handled by `ruff format`
 
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S105", "S106", "S107"]
+
+[tool.ruff.lint.isort]
+known-third-party = ["alembic"]  # our alembic/ folder shouldn't make it look first-party
