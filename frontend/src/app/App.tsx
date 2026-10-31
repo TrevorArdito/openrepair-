@@ -12,6 +12,8 @@ import { ForgotPasswordPage, ResetPasswordPage, VerifyEmailPage } from "../featu
 import GaragePage from "../features/garage/GaragePage";
 import AboutPage from "../features/info/AboutPage";
 import NotFoundPage from "../features/info/NotFoundPage";
+import EngineDetailPage from "../features/engines/EngineDetailPage";
+import EnginesPage from "../features/engines/EnginesPage";
 import SearchPage from "../features/search/SearchPage";
 import HomePage from "../features/vehicles/HomePage";
 import VehiclePage from "../features/vehicles/VehiclePage";
@@ -31,6 +33,8 @@ export default function App() {
               <Route path="codes" element={<CodesPage />} />
               <Route path="codes/:code" element={<CodeDetailPage />} />
               <Route path="search" element={<SearchPage />} />
+              <Route path="engines" element={<EnginesPage />} />
+              <Route path="engines/:id" element={<EngineDetailPage />} />
               <Route path="entries/new" element={<EntryEditPage />} />
               <Route path="entries/:id" element={<EntryPage />} />
               <Route path="entries/:id/edit" element={<EntryEditPage />} />

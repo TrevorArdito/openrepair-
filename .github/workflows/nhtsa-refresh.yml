@@ -1,8 +1,9 @@
-# Keeps NHTSA recalls, complaints and the TSB index fresh in the live database, for free.
+# Keeps the live database's vehicle catalog (EPA) and NHTSA recalls, complaints and TSB index
+# fresh, for free. Run it once by hand right after the first deploy to load every vehicle.
 # Setup (owner): GitHub repo → Settings → Secrets and variables → Actions →
 #   New repository secret: PROD_DATABASE_URL = your Neon connection string.
 # Note: GitHub only runs scheduled workflows from the default branch (main).
-name: NHTSA data refresh
+name: Data refresh
 
 on:
   schedule:
@@ -37,6 +38,9 @@ jobs:
           python-version: "3.12"
       - if: steps.cfg.outputs.skip != 'true'
         run: pip install .
+      - name: Update the vehicle catalog (every car/engine since 1984, EPA)
+        if: steps.cfg.outputs.skip != 'true'
+        run: python -m app.importers.epa
       - name: Refresh recalls and complaints
         if: steps.cfg.outputs.skip != 'true'
         run: python -m app.importers.nhtsa refresh

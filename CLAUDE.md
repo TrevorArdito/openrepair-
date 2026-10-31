@@ -157,6 +157,19 @@ Legal guardrails for these modules (non-negotiable):
   `ADMIN_EMAILS`. Google-friendly pages are rendered server-side by `backend/app/seo.py`
   (titles, descriptions, content, sitemap) — keep new public page types in sync with it.
 
+- 2026-10-31: Owner wants the **most extensive vehicle database possible — every vehicle and
+  every commonly used engine, eventually heavy-equipment engines.** Built from EPA fuel economy
+  data (every light-duty vehicle/engine 1984+), NHTSA vPIC (all makes/models, VINs) and our
+  engine-family catalog (named engines + heavy-duty diesel pickups). Engines are first-class
+  (`engine_families`). Strict linking rules; never assume future model years. See
+  `docs/VEHICLE_CATALOG.md`.
+- 2026-10-31: **Owner's priority vehicles** (detailed content first, ~1990–2024):
+  F-150, Silverado 1500, Ram 1500, Sierra 1500, Camry, Accord, Civic, Corolla, RAV4, CR-V,
+  Altima, Tacoma, Explorer, Equinox, Grand Cherokee, Wrangler, Escape, Rogue, Elantra, Malibu;
+  their common engines (GM 5.3, Ford 5.0 & 3.5 EcoBoost, Ram 5.7 HEMI, Toyota 2.5, Honda 1.5T/2.4).
+  Next tier: Super Duty / HD diesels (Power Stroke, Cummins, Duramax). Stored in
+  `backend/app/seed/data/priority_models.json`.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
 - Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.

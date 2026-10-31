@@ -24,6 +24,7 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("accounts", "app.modules.accounts.router"),
     ModuleSpec("account_moderation", "app.modules.accounts.mod_router"),
     ModuleSpec("vehicles", "app.modules.vehicles.router"),
+    ModuleSpec("engines", "app.modules.vehicles.engines_router"),
     ModuleSpec("safety", "app.modules.safety.router"),
     ModuleSpec("dtc", "app.modules.dtc.router"),
     ModuleSpec("community", "app.modules.community.router"),

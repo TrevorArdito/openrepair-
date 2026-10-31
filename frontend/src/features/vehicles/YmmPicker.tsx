@@ -117,7 +117,7 @@ export default function YmmPicker() {
           {engines.map((v) => (
             <option key={v.id} value={v.id}>
               {v.engine.label}
-              {v.engine.engine_code ? ` (${v.engine.engine_code})` : ""}
+              {v.engine.family ? ` — ${v.engine.family.name}` : v.engine.engine_code ? ` (${v.engine.engine_code})` : ""}
             </option>
           ))}
           <option value={UNKNOWN}>{t("picker.engineUnknown")}</option>

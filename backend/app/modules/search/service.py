@@ -169,6 +169,15 @@ def search(
     if want("vehicles") and not out["vin"] and not looks_like_code:
         out["vehicles"] = find_vehicles(db, q)
 
+    if want("engines") and not out["vin"] and not looks_like_code:
+        from app.modules.vehicles.engines_router import search_families
+
+        raw_words = [w for w in q.lower().split() if w]
+        out["engines"] = [
+            {"id": f.id, "name": f.name, "codes": f.codes}
+            for f in search_families(db, raw_words, GROUP_LIMIT)
+        ]
+
     if want("entries") and ws:
         stmt = select(Entry).where(
             Entry.status == EntryStatus.published, _all_words(Entry.search_text, ws)

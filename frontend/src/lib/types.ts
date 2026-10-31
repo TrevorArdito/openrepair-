@@ -6,7 +6,9 @@ export type Engine = {
   layout: string | null;
   fuel_type: string | null;
   engine_code: string | null;
+  aspiration?: string | null;
   label: string | null;
+  family?: NamedRef | null;
 };
 
 export type Vehicle = {
@@ -151,4 +153,25 @@ export type EntrySummary = {
   generic: boolean;
   summary: string | null;
   updated_at: string;
+};
+
+export type EngineFamily = {
+  id: number;
+  slug: string;
+  name: string;
+  manufacturer: string;
+  displacement_l: number | null;
+  cylinders: number | null;
+  layout: string | null;
+  fuel_type: string | null;
+  aspiration: string | null;
+  codes: string | null;
+  year_from: number | null;
+  year_to: number | null;
+  applications: string[];
+  notes: string | null;
+  vehicle_count: number | null;
+};
+export type EngineDetail = EngineFamily & {
+  used_in: { make: string; model: string; model_id: number; year_from: number; year_to: number; vehicles: number }[];
 };

@@ -1,0 +1,1749 @@
+[
+ {
+  "slug": "ford-5-0-coyote",
+  "name": "Ford 5.0L V8 (Coyote)",
+  "manufacturer": "Ford",
+  "displacement_l": 5.0,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2011,
+  "year_to": null,
+  "codes": "Coyote",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Mustang",
+    "year_from": 2011,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "ford-3-5-ecoboost",
+  "name": "Ford 3.5L EcoBoost V6 (twin-turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2010,
+  "year_to": null,
+  "codes": "EcoBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Expedition",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Explorer",
+    "year_from": 2013,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Flex",
+    "year_from": 2010,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Taurus",
+    "year_from": 2010,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Transit",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Lincoln",
+    "model": "Navigator",
+    "year_from": 2018,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "ford-2-7-ecoboost",
+  "name": "Ford 2.7L EcoBoost V6 (twin-turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 2.7,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2015,
+  "year_to": null,
+  "codes": "EcoBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Edge",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Fusion",
+    "year_from": 2017,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Bronco",
+    "year_from": 2021,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "ford-3-5-cyclone",
+  "name": "Ford 3.5L V6 (Cyclone / Duratec, non-turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2007,
+  "year_to": 2019,
+  "codes": "Cyclone",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2015,
+    "year_to": 2017
+   },
+   {
+    "make": "Ford",
+    "model": "Explorer",
+    "year_from": 2011,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Edge",
+    "year_from": 2007,
+    "year_to": 2014
+   },
+   {
+    "make": "Ford",
+    "model": "Taurus",
+    "year_from": 2008,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Flex",
+    "year_from": 2009,
+    "year_to": 2019
+   }
+  ]
+ },
+ {
+  "slug": "ford-2-3-ecoboost",
+  "name": "Ford 2.3L EcoBoost I4 (turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 2.3,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2015,
+  "year_to": null,
+  "codes": "EcoBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "Mustang",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Explorer",
+    "year_from": 2016,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Ranger",
+    "year_from": 2019,
+    "year_to": null
+   },
+   {
+    "make": "Ford",
+    "model": "Bronco",
+    "year_from": 2021,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "ford-2-0-ecoboost",
+  "name": "Ford 2.0L EcoBoost I4 (turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 2.0,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2010,
+  "year_to": null,
+  "codes": "EcoBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "Escape",
+    "year_from": 2013,
+    "year_to": 2019
+   }
+  ]
+ },
+ {
+  "slug": "ford-1-5-ecoboost-i4",
+  "name": "Ford 1.5L EcoBoost I4 (turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 1.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2014,
+  "year_to": 2019,
+  "codes": "EcoBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "Escape",
+    "year_from": 2017,
+    "year_to": 2019
+   },
+   {
+    "make": "Ford",
+    "model": "Fusion",
+    "year_from": 2014,
+    "year_to": 2019
+   }
+  ]
+ },
+ {
+  "slug": "ford-5-4-modular",
+  "name": "Ford 5.4L V8 (Modular / Triton)",
+  "manufacturer": "Ford",
+  "displacement_l": 5.4,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1997,
+  "year_to": 2014,
+  "codes": "Triton",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 1997,
+    "year_to": 2010
+   },
+   {
+    "make": "Ford",
+    "model": "Expedition",
+    "year_from": 1997,
+    "year_to": 2014
+   },
+   {
+    "make": "Ford",
+    "model": "F-250",
+    "year_from": 1999,
+    "year_to": 2010
+   },
+   {
+    "make": "Ford",
+    "model": "F-350",
+    "year_from": 1999,
+    "year_to": 2010
+   }
+  ]
+ },
+ {
+  "slug": "ford-4-6-modular",
+  "name": "Ford 4.6L V8 (Modular)",
+  "manufacturer": "Ford",
+  "displacement_l": 4.6,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1991,
+  "year_to": 2014,
+  "codes": "Modular, Triton",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 1997,
+    "year_to": 2010
+   },
+   {
+    "make": "Ford",
+    "model": "Mustang",
+    "year_from": 1996,
+    "year_to": 2010
+   },
+   {
+    "make": "Ford",
+    "model": "Crown Victoria",
+    "year_from": 1992,
+    "year_to": 2011
+   },
+   {
+    "make": "Ford",
+    "model": "Explorer",
+    "year_from": 2002,
+    "year_to": 2010
+   }
+  ]
+ },
+ {
+  "slug": "ford-7-3-powerstroke",
+  "name": "Ford 7.3L Power Stroke V8 Turbo Diesel",
+  "manufacturer": "Navistar (for Ford)",
+  "displacement_l": 7.3,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 1994,
+  "year_to": 2003,
+  "codes": "Power Stroke, T444E",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": "Introduced partway through the 1994 model year.",
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-250",
+    "year_from": 1995,
+    "year_to": 2003,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "F-350",
+    "year_from": 1995,
+    "year_to": 2003,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "Excursion",
+    "year_from": 2000,
+    "year_to": 2003,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "ford-6-0-powerstroke",
+  "name": "Ford 6.0L Power Stroke V8 Turbo Diesel",
+  "manufacturer": "Navistar (for Ford)",
+  "displacement_l": 6.0,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2003,
+  "year_to": 2007,
+  "codes": "Power Stroke, VT365",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-250",
+    "year_from": 2003,
+    "year_to": 2007,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "F-350",
+    "year_from": 2003,
+    "year_to": 2007,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "Excursion",
+    "year_from": 2003,
+    "year_to": 2005,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "ford-6-4-powerstroke",
+  "name": "Ford 6.4L Power Stroke V8 Turbo Diesel",
+  "manufacturer": "Navistar (for Ford)",
+  "displacement_l": 6.4,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2008,
+  "year_to": 2010,
+  "codes": "Power Stroke",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-250",
+    "year_from": 2008,
+    "year_to": 2010,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "F-350",
+    "year_from": 2008,
+    "year_to": 2010,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "ford-6-7-powerstroke",
+  "name": "Ford 6.7L Power Stroke V8 Turbo Diesel",
+  "manufacturer": "Ford",
+  "displacement_l": 6.7,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2011,
+  "year_to": null,
+  "codes": "Power Stroke, Scorpion",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-250",
+    "year_from": 2011,
+    "year_to": null,
+    "create": true
+   },
+   {
+    "make": "Ford",
+    "model": "F-350",
+    "year_from": 2011,
+    "year_to": null,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "gm-5-3-v8",
+  "name": "GM 5.3L V8 (Vortec / EcoTec3)",
+  "manufacturer": "General Motors",
+  "displacement_l": 5.3,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1999,
+  "year_to": null,
+  "codes": "LM7, LMG, LC9, LH6, LMF, L83, L84, L82",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 1999,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 1999,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Tahoe",
+    "year_from": 2000,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Suburban",
+    "year_from": 2000,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Yukon",
+    "year_from": 2000,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Avalanche",
+    "year_from": 2002,
+    "year_to": 2013
+   }
+  ]
+ },
+ {
+  "slug": "gm-4-8-v8",
+  "name": "GM 4.8L V8 (Vortec)",
+  "manufacturer": "General Motors",
+  "displacement_l": 4.8,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1999,
+  "year_to": 2013,
+  "codes": "LR4, L20",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 1999,
+    "year_to": 2013
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 1999,
+    "year_to": 2013
+   }
+  ]
+ },
+ {
+  "slug": "gm-6-2-v8",
+  "name": "GM 6.2L V8",
+  "manufacturer": "General Motors",
+  "displacement_l": 6.2,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2007,
+  "year_to": null,
+  "codes": "L92, L9H, L86, L87, LS3, LT1, LT2",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 2009,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 2007,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Tahoe",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Suburban",
+    "year_from": 2015,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Yukon",
+    "year_from": 2007,
+    "year_to": null
+   },
+   {
+    "make": "Cadillac",
+    "model": "Escalade",
+    "year_from": 2007,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Camaro",
+    "year_from": 2010,
+    "year_to": 2024
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Corvette",
+    "year_from": 2008,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "gm-6-6-duramax",
+  "name": "GM 6.6L Duramax V8 Turbo Diesel",
+  "manufacturer": "General Motors",
+  "displacement_l": 6.6,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2001,
+  "year_to": null,
+  "codes": "Duramax LB7, LLY, LBZ, LMM, LML, L5P",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": "In Silverado / Sierra 2500HD and 3500 models.",
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 2001,
+    "year_to": null,
+    "create": true
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 2001,
+    "year_to": null,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "gm-1-5-turbo",
+  "name": "GM 1.5L Turbo I4",
+  "manufacturer": "General Motors",
+  "displacement_l": 1.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2016,
+  "year_to": null,
+  "codes": null,
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Malibu",
+    "year_from": 2016,
+    "year_to": null
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Equinox",
+    "year_from": 2018,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Terrain",
+    "year_from": 2018,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "gm-2-4-ecotec",
+  "name": "GM 2.4L I4 (Ecotec)",
+  "manufacturer": "General Motors",
+  "displacement_l": 2.4,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2006,
+  "year_to": 2017,
+  "codes": "LE5, LAF, LEA",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Equinox",
+    "year_from": 2010,
+    "year_to": 2017
+   },
+   {
+    "make": "Chevrolet",
+    "model": "Malibu",
+    "year_from": 2008,
+    "year_to": 2016
+   },
+   {
+    "make": "GMC",
+    "model": "Terrain",
+    "year_from": 2010,
+    "year_to": 2017
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-5-7-hemi",
+  "name": "Chrysler 5.7L HEMI V8",
+  "manufacturer": "Chrysler / Stellantis",
+  "displacement_l": 5.7,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2003,
+  "year_to": null,
+  "codes": "HEMI",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Dodge",
+    "model": "Ram",
+    "year_from": 2003,
+    "year_to": 2010
+   },
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Ram",
+    "model": "2500",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Ram",
+    "model": "3500",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Jeep",
+    "model": "Grand Cherokee",
+    "year_from": 2005,
+    "year_to": null
+   },
+   {
+    "make": "Dodge",
+    "model": "Charger",
+    "year_from": 2006,
+    "year_to": 2023
+   },
+   {
+    "make": "Dodge",
+    "model": "Challenger",
+    "year_from": 2009,
+    "year_to": 2023
+   },
+   {
+    "make": "Dodge",
+    "model": "Durango",
+    "year_from": 2004,
+    "year_to": null
+   },
+   {
+    "make": "Chrysler",
+    "model": "300",
+    "year_from": 2005,
+    "year_to": 2023
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-3-6-pentastar",
+  "name": "Chrysler 3.6L Pentastar V6",
+  "manufacturer": "Chrysler / Stellantis",
+  "displacement_l": 3.6,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2011,
+  "year_to": null,
+  "codes": "Pentastar",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Jeep",
+    "model": "Grand Cherokee",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Jeep",
+    "model": "Wrangler",
+    "year_from": 2012,
+    "year_to": null
+   },
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2013,
+    "year_to": null
+   },
+   {
+    "make": "Dodge",
+    "model": "Durango",
+    "year_from": 2011,
+    "year_to": null
+   },
+   {
+    "make": "Dodge",
+    "model": "Charger",
+    "year_from": 2011,
+    "year_to": 2023
+   },
+   {
+    "make": "Dodge",
+    "model": "Challenger",
+    "year_from": 2011,
+    "year_to": 2023
+   },
+   {
+    "make": "Chrysler",
+    "model": "300",
+    "year_from": 2011,
+    "year_to": 2023
+   },
+   {
+    "make": "Chrysler",
+    "model": "Pacifica",
+    "year_from": 2017,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "cummins-5-9",
+  "name": "Cummins 5.9L I6 Turbo Diesel",
+  "manufacturer": "Cummins",
+  "displacement_l": 5.9,
+  "cylinders": 6,
+  "layout": "inline",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 1989,
+  "year_to": 2007,
+  "codes": "6BT, ISB",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": "In Ram 2500 and 3500 pickups.",
+  "fitment": [
+   {
+    "make": "Dodge",
+    "model": "Ram",
+    "year_from": 1994,
+    "year_to": 2007,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "cummins-6-7",
+  "name": "Cummins 6.7L I6 Turbo Diesel",
+  "manufacturer": "Cummins",
+  "displacement_l": 6.7,
+  "cylinders": 6,
+  "layout": "inline",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2007,
+  "year_to": null,
+  "codes": "ISB 6.7",
+  "applications": [
+   "heavy_duty"
+  ],
+  "notes": "Introduced partway through the 2007 model year (\"2007.5\").",
+  "fitment": [
+   {
+    "make": "Dodge",
+    "model": "Ram",
+    "year_from": 2007,
+    "year_to": 2010,
+    "create": true
+   },
+   {
+    "make": "Ram",
+    "model": "2500",
+    "year_from": 2011,
+    "year_to": null,
+    "create": true
+   },
+   {
+    "make": "Ram",
+    "model": "3500",
+    "year_from": 2011,
+    "year_to": null,
+    "create": true
+   }
+  ]
+ },
+ {
+  "slug": "jeep-4-0-i6",
+  "name": "Jeep 4.0L I6",
+  "manufacturer": "AMC / Chrysler",
+  "displacement_l": 4.0,
+  "cylinders": 6,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1987,
+  "year_to": 2006,
+  "codes": null,
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Jeep",
+    "model": "Wrangler",
+    "year_from": 1991,
+    "year_to": 2006
+   },
+   {
+    "make": "Jeep",
+    "model": "Cherokee",
+    "year_from": 1987,
+    "year_to": 2001
+   },
+   {
+    "make": "Jeep",
+    "model": "Grand Cherokee",
+    "year_from": 1993,
+    "year_to": 2004
+   }
+  ]
+ },
+ {
+  "slug": "toyota-2-5-2ar",
+  "name": "Toyota 2.5L I4 (2AR-FE)",
+  "manufacturer": "Toyota",
+  "displacement_l": 2.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2009,
+  "year_to": 2018,
+  "codes": "2AR-FE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Camry",
+    "year_from": 2010,
+    "year_to": 2017
+   },
+   {
+    "make": "Toyota",
+    "model": "RAV4",
+    "year_from": 2009,
+    "year_to": 2018
+   }
+  ]
+ },
+ {
+  "slug": "toyota-2-5-a25a",
+  "name": "Toyota 2.5L I4 Dynamic Force (A25A)",
+  "manufacturer": "Toyota",
+  "displacement_l": 2.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2018,
+  "year_to": null,
+  "codes": "A25A-FKS",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Camry",
+    "year_from": 2018,
+    "year_to": null
+   },
+   {
+    "make": "Toyota",
+    "model": "RAV4",
+    "year_from": 2019,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "toyota-3-5-2gr",
+  "name": "Toyota 3.5L V6 (2GR)",
+  "manufacturer": "Toyota",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2005,
+  "year_to": null,
+  "codes": "2GR-FE, 2GR-FKS",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Camry",
+    "year_from": 2007,
+    "year_to": 2024
+   },
+   {
+    "make": "Toyota",
+    "model": "Tacoma",
+    "year_from": 2016,
+    "year_to": 2023
+   },
+   {
+    "make": "Toyota",
+    "model": "RAV4",
+    "year_from": 2006,
+    "year_to": 2012
+   },
+   {
+    "make": "Toyota",
+    "model": "Highlander",
+    "year_from": 2008,
+    "year_to": 2022
+   },
+   {
+    "make": "Toyota",
+    "model": "Sienna",
+    "year_from": 2007,
+    "year_to": 2020
+   },
+   {
+    "make": "Toyota",
+    "model": "Avalon",
+    "year_from": 2005,
+    "year_to": 2022
+   }
+  ]
+ },
+ {
+  "slug": "toyota-1-8-2zr",
+  "name": "Toyota 1.8L I4 (2ZR)",
+  "manufacturer": "Toyota",
+  "displacement_l": 1.8,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2009,
+  "year_to": 2022,
+  "codes": "2ZR-FE, 2ZR-FAE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Corolla",
+    "year_from": 2009,
+    "year_to": 2022
+   }
+  ]
+ },
+ {
+  "slug": "toyota-4-0-1gr",
+  "name": "Toyota 4.0L V6 (1GR-FE)",
+  "manufacturer": "Toyota",
+  "displacement_l": 4.0,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2003,
+  "year_to": 2024,
+  "codes": "1GR-FE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Tacoma",
+    "year_from": 2005,
+    "year_to": 2015
+   },
+   {
+    "make": "Toyota",
+    "model": "4Runner",
+    "year_from": 2003,
+    "year_to": 2024
+   },
+   {
+    "make": "Toyota",
+    "model": "FJ Cruiser",
+    "year_from": 2007,
+    "year_to": 2014
+   },
+   {
+    "make": "Toyota",
+    "model": "Tundra",
+    "year_from": 2005,
+    "year_to": 2014
+   }
+  ]
+ },
+ {
+  "slug": "toyota-2-7-2tr",
+  "name": "Toyota 2.7L I4 (2TR-FE)",
+  "manufacturer": "Toyota",
+  "displacement_l": 2.7,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2005,
+  "year_to": 2023,
+  "codes": "2TR-FE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Tacoma",
+    "year_from": 2005,
+    "year_to": 2023
+   }
+  ]
+ },
+ {
+  "slug": "honda-1-5-turbo",
+  "name": "Honda 1.5L Turbo I4 (L15B)",
+  "manufacturer": "Honda",
+  "displacement_l": 1.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2016,
+  "year_to": null,
+  "codes": "L15B7, L15BE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Civic",
+    "year_from": 2016,
+    "year_to": null
+   },
+   {
+    "make": "Honda",
+    "model": "Accord",
+    "year_from": 2018,
+    "year_to": null
+   },
+   {
+    "make": "Honda",
+    "model": "CR-V",
+    "year_from": 2017,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "honda-2-0-turbo",
+  "name": "Honda 2.0L Turbo I4 (K20C)",
+  "manufacturer": "Honda",
+  "displacement_l": 2.0,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2017,
+  "year_to": 2022,
+  "codes": "K20C1, K20C4",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Accord",
+    "year_from": 2018,
+    "year_to": 2022
+   },
+   {
+    "make": "Honda",
+    "model": "Civic",
+    "year_from": 2017,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "honda-2-4-k24",
+  "name": "Honda 2.4L I4 (K24)",
+  "manufacturer": "Honda",
+  "displacement_l": 2.4,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2002,
+  "year_to": 2019,
+  "codes": "K24A, K24Z, K24W",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Accord",
+    "year_from": 2003,
+    "year_to": 2017
+   },
+   {
+    "make": "Honda",
+    "model": "CR-V",
+    "year_from": 2002,
+    "year_to": 2019
+   },
+   {
+    "make": "Honda",
+    "model": "Element",
+    "year_from": 2003,
+    "year_to": 2011
+   },
+   {
+    "make": "Honda",
+    "model": "Civic",
+    "year_from": 2012,
+    "year_to": 2015
+   }
+  ]
+ },
+ {
+  "slug": "honda-1-8-r18",
+  "name": "Honda 1.8L I4 (R18)",
+  "manufacturer": "Honda",
+  "displacement_l": 1.8,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2006,
+  "year_to": 2015,
+  "codes": "R18A, R18Z",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Civic",
+    "year_from": 2006,
+    "year_to": 2015
+   }
+  ]
+ },
+ {
+  "slug": "honda-2-0-k20c2",
+  "name": "Honda 2.0L I4 (K20C2)",
+  "manufacturer": "Honda",
+  "displacement_l": 2.0,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2016,
+  "year_to": null,
+  "codes": "K20C2",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Civic",
+    "year_from": 2016,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "honda-3-5-j35",
+  "name": "Honda 3.5L V6 (J35)",
+  "manufacturer": "Honda",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1999,
+  "year_to": null,
+  "codes": "J35",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Honda",
+    "model": "Accord",
+    "year_from": 2008,
+    "year_to": 2017
+   },
+   {
+    "make": "Honda",
+    "model": "Pilot",
+    "year_from": 2003,
+    "year_to": null
+   },
+   {
+    "make": "Honda",
+    "model": "Odyssey",
+    "year_from": 1999,
+    "year_to": null
+   },
+   {
+    "make": "Honda",
+    "model": "Ridgeline",
+    "year_from": 2006,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "nissan-2-5-qr25",
+  "name": "Nissan 2.5L I4 (QR25DE)",
+  "manufacturer": "Nissan",
+  "displacement_l": 2.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2002,
+  "year_to": 2020,
+  "codes": "QR25DE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Nissan",
+    "model": "Altima",
+    "year_from": 2002,
+    "year_to": 2018
+   },
+   {
+    "make": "Nissan",
+    "model": "Rogue",
+    "year_from": 2008,
+    "year_to": 2020
+   },
+   {
+    "make": "Nissan",
+    "model": "Frontier",
+    "year_from": 2005,
+    "year_to": 2019
+   }
+  ]
+ },
+ {
+  "slug": "nissan-2-5-pr25",
+  "name": "Nissan 2.5L I4 (PR25DD)",
+  "manufacturer": "Nissan",
+  "displacement_l": 2.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2019,
+  "year_to": null,
+  "codes": "PR25DD",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Nissan",
+    "model": "Altima",
+    "year_from": 2019,
+    "year_to": null
+   },
+   {
+    "make": "Nissan",
+    "model": "Rogue",
+    "year_from": 2021,
+    "year_to": 2022
+   }
+  ]
+ },
+ {
+  "slug": "nissan-3-5-vq35",
+  "name": "Nissan 3.5L V6 (VQ35)",
+  "manufacturer": "Nissan",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2002,
+  "year_to": null,
+  "codes": "VQ35DE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Nissan",
+    "model": "Altima",
+    "year_from": 2002,
+    "year_to": 2018
+   },
+   {
+    "make": "Nissan",
+    "model": "Maxima",
+    "year_from": 2002,
+    "year_to": null
+   },
+   {
+    "make": "Nissan",
+    "model": "Murano",
+    "year_from": 2003,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "hyundai-1-8-nu",
+  "name": "Hyundai 1.8L I4 (Nu)",
+  "manufacturer": "Hyundai",
+  "displacement_l": 1.8,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2011,
+  "year_to": 2016,
+  "codes": "G4NB",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Hyundai",
+    "model": "Elantra",
+    "year_from": 2011,
+    "year_to": 2016
+   }
+  ]
+ },
+ {
+  "slug": "hyundai-2-0-nu",
+  "name": "Hyundai 2.0L I4 (Nu)",
+  "manufacturer": "Hyundai",
+  "displacement_l": 2.0,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2014,
+  "year_to": 2020,
+  "codes": "G4NA",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Hyundai",
+    "model": "Elantra",
+    "year_from": 2017,
+    "year_to": 2020
+   }
+  ]
+ },
+ {
+  "slug": "gm-4-3-v6",
+  "name": "GM 4.3L V6 (Vortec / EcoTec3)",
+  "manufacturer": "General Motors",
+  "displacement_l": 4.3,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1985,
+  "year_to": 2021,
+  "codes": "LU3, LV1, LV3",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": null,
+    "year_from": 1985,
+    "year_to": 2021
+   },
+   {
+    "make": "GMC",
+    "model": null,
+    "year_from": 1985,
+    "year_to": 2021
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-3-7-powertech",
+  "name": "Chrysler 3.7L PowerTech V6",
+  "manufacturer": "Chrysler",
+  "displacement_l": 3.7,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2002,
+  "year_to": 2012,
+  "codes": "EKG",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Dodge",
+    "model": null,
+    "year_from": 2002,
+    "year_to": 2012
+   },
+   {
+    "make": "Jeep",
+    "model": null,
+    "year_from": 2002,
+    "year_to": 2012
+   },
+   {
+    "make": "Ram",
+    "model": null,
+    "year_from": 2011,
+    "year_to": 2012
+   },
+   {
+    "make": "Chrysler",
+    "model": null,
+    "year_from": 2002,
+    "year_to": 2012
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-4-7-powertech",
+  "name": "Chrysler 4.7L PowerTech V8",
+  "manufacturer": "Chrysler",
+  "displacement_l": 4.7,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 1999,
+  "year_to": 2013,
+  "codes": "EVA, EVE",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Dodge",
+    "model": null,
+    "year_from": 1999,
+    "year_to": 2013
+   },
+   {
+    "make": "Jeep",
+    "model": null,
+    "year_from": 1999,
+    "year_to": 2013
+   },
+   {
+    "make": "Ram",
+    "model": null,
+    "year_from": 2011,
+    "year_to": 2013
+   },
+   {
+    "make": "Chrysler",
+    "model": null,
+    "year_from": 1999,
+    "year_to": 2013
+   }
+  ]
+ },
+ {
+  "slug": "ram-3-0-ecodiesel",
+  "name": "Ram / Jeep 3.0L EcoDiesel V6 Turbo Diesel",
+  "manufacturer": "VM Motori (for Stellantis)",
+  "displacement_l": 3.0,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2014,
+  "year_to": 2023,
+  "codes": "EcoDiesel",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2014,
+    "year_to": 2023
+   },
+   {
+    "make": "Jeep",
+    "model": "Grand Cherokee",
+    "year_from": 2014,
+    "year_to": 2019
+   },
+   {
+    "make": "Jeep",
+    "model": "Wrangler",
+    "year_from": 2020,
+    "year_to": 2023
+   },
+   {
+    "make": "Jeep",
+    "model": "Gladiator",
+    "year_from": 2021,
+    "year_to": 2023
+   }
+  ]
+ }
+]

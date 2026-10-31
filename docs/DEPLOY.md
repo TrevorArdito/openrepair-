@@ -69,13 +69,15 @@ Render's log (Render → your service → **Logs**), so password resets need you
    - `REQUIRE_VERIFIED_EMAIL` = `true` (new members must confirm their email before posting — cuts spam)
 5. Save — Render redeploys automatically. Test with "Forgot password?" on your site.
 
-## 4. Keep recall/TSB data fresh automatically (optional)
+## 4. Load every vehicle + keep data fresh automatically (recommended)
 
 1. GitHub → the `openrepair-` repo → **Settings** → **Secrets and variables** → **Actions**.
 2. **New repository secret**: name `PROD_DATABASE_URL`, value = the Neon connection string.
-3. That's it. Every Monday GitHub refreshes recalls/complaints for every vehicle people have looked
-   up and imports the newest TSB index. You can also run it by hand: **Actions** →
-   **NHTSA data refresh** → **Run workflow**.
+3. Run it once now: **Actions** → **Data refresh** → **Run workflow**. In about a minute your site
+   has every car and light truck since 1984 with its engines (~21,000 vehicles from EPA data,
+   plus the heavy-duty diesel trucks from our engine catalog).
+4. After that it runs by itself every Monday: updates the vehicle catalog, refreshes recalls and
+   complaints for vehicles people have looked up, and imports the newest TSB index.
 
 ## 5. Tell Google about the site (free)
 

@@ -8,7 +8,7 @@ from app.modules.search import service
 from app.modules.vehicles.models import Vehicle
 
 router = APIRouter(tags=["search"])
-TYPES = {"codes", "vehicles", "entries", "recalls", "tsbs"}
+TYPES = {"codes", "vehicles", "engines", "entries", "recalls", "tsbs"}
 
 
 @router.get("/search", dependencies=[Depends(rate_limit("search", 120, 60))])

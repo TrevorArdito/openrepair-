@@ -100,7 +100,7 @@ def test_garage_crud(client):
     assert r.status_code == 201, r.text
     item = r.json()
     assert item["vin"] == "1FTEW1EG5FFA00000"
-    assert item["vehicle"]["label"] == "2015 Ford F-150 3.5L V6"
+    assert item["vehicle"]["label"] == "2015 Ford F-150 3.5L V6 Turbo"
 
     r = client.patch(
         f"/api/v1/garage/{item['id']}", json={"notes": "Needs plugs"}, headers=csrf(client)

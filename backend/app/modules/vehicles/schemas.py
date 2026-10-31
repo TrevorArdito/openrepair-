@@ -5,7 +5,9 @@ from pydantic import BaseModel, Field, field_validator
 
 from app.modules.vehicles.vin import validate_vin
 
-FuelType = Literal["gasoline", "diesel", "electric", "hybrid", "flex", "cng", "lpg", "other"]
+FuelType = Literal[
+    "gasoline", "diesel", "electric", "hybrid", "flex", "cng", "lpg", "hydrogen", "other"
+]
 MIN_YEAR = 1981  # 17-character VINs became standard for model year 1981
 
 
@@ -24,7 +26,9 @@ class EngineOut(BaseModel):
     layout: str | None = None
     fuel_type: str | None = None
     engine_code: str | None = None
+    aspiration: str | None = None
     label: str | None = None
+    family: "NamedRef | None" = None
 
 
 class VehicleOut(BaseModel):

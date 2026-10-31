@@ -144,8 +144,11 @@ def test_tsb_import_all_models(db_session_factory, tmp_path):
         assert import_tsbs(db, [_zip(tmp_path)], all_models=True)["tsbs_added"] == 3
 
 
-def test_refresh_command(db_session_factory, nhtsa):
+def test_refresh_only_rechecks_vehicles_people_looked_up(client, db_session_factory, nhtsa):
+    vid = _f150_id(client)
+    client.get(f"/api/v1/vehicles/{vid}/recalls")  # someone looks up the F-150
+    calls_before = nhtsa.calls
     with db_session_factory() as db:
-        result = refresh_api(db, nhtsa, ["recalls", "complaints"])
-        assert result["recalls"]["failed"] == 0
-        assert result["recalls"]["vehicles"] == 8  # every seeded vehicle checked
+        result = refresh_api(db, nhtsa, ["recalls"], force=True)
+    assert result["recalls"] == {"vehicles": 1, "failed": 0}  # not every catalog vehicle
+    assert nhtsa.calls == calls_before + 1

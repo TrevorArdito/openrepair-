@@ -10,7 +10,7 @@ import json
 from dataclasses import dataclass, field
 from html import escape
 
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.config import get_settings
@@ -149,6 +149,42 @@ def page_for_codes_index(db: Session) -> Page:
     )
 
 
+def page_for_engine(db: Session, engine_id: str, url: str) -> Page | None:
+    from app.modules.vehicles.models import EngineFamily, Make, Model
+
+    if not engine_id.isdigit():
+        return None
+    f = db.get(EngineFamily, int(engine_id))
+    if f is None:
+        return None
+    rows = db.execute(
+        select(Make.name, Model.name, func.min(Vehicle.year), func.max(Vehicle.year))
+        .select_from(Vehicle).join(Model, Model.id == Vehicle.model_id).join(Make, Make.id == Model.make_id)
+        .where(Vehicle.engine_family_id == f.id).group_by(Make.name, Model.name).order_by(Make.name, Model.name)
+    ).all()  # fmt: skip
+    used = [
+        f"{mk} {mo} ({y1}–{y2})" if y1 != y2 else f"{mk} {mo} ({y1})" for mk, mo, y1, y2 in rows
+    ]
+    desc = _clip(
+        f"{f.name}: specs, engine codes ({f.codes or 'n/a'}) and the vehicles that use it: {', '.join(used)}."
+    )
+    body = f"<h1>{escape(f.name)}</h1><p>{escape(desc)}</p><h2>Used in</h2>{_list(used)}"
+    return Page(title=f"{f.name} — vehicles, codes & repair info | {SITE}", description=desc, body=body,
+                jsonld=_article(f.name, desc, url))  # fmt: skip
+
+
+def page_for_engines_index(db: Session) -> Page:
+    from app.modules.vehicles.models import EngineFamily
+
+    rows = db.scalars(
+        select(EngineFamily).order_by(EngineFamily.manufacturer, EngineFamily.name)
+    ).all()
+    links = "".join(f'<li><a href="/engines/{f.id}">{escape(f.name)}</a></li>' for f in rows)
+    return Page(title=f"Engines: specs and the vehicles that use them | {SITE}",
+                description="Engine families from Ford, GM, Stellantis, Toyota, Honda, Nissan, Cummins and more, with the vehicles that use each one.",
+                body=f"<h1>Engines</h1><ul>{links}</ul>")  # fmt: skip
+
+
 PRIVATE_PREFIXES = ("account", "mod", "login", "register", "garage", "entries/new", "forgot-password",
                     "reset-password", "verify-email")  # fmt: skip
 
@@ -166,10 +202,14 @@ def page_for_path(db: Session, path: str) -> Page:
         page = page_for_entry(db, segs[1], url)
     elif segs[0] == "vehicle" and len(segs) == 2:
         page = page_for_vehicle(db, segs[1], url)
+    elif segs[0] == "engines" and len(segs) == 1:
+        page = page_for_engines_index(db)
+    elif segs[0] == "engines" and len(segs) == 2:
+        page = page_for_engine(db, segs[1], url)
     if page is None:
         page = Page(title=f"{SITE} — free auto repair information")
         page.noindex = path.startswith(PRIVATE_PREFIXES) or (
-            bool(path) and segs[0] in ("entries", "vehicle", "codes")
+            bool(path) and segs[0] in ("entries", "vehicle", "codes", "engines")
         )
     return page
 
@@ -217,7 +257,12 @@ def _drop_tag(html: str, prefix: str) -> str:
 
 def sitemap(db: Session) -> str:
     base = get_settings().public_base_url
-    urls = [f"{base}/", f"{base}/codes"]
+    from app.modules.vehicles.models import EngineFamily
+
+    urls = [f"{base}/", f"{base}/codes", f"{base}/engines"]
+    urls += [
+        f"{base}/engines/{i}" for i in db.scalars(select(EngineFamily.id).order_by(EngineFamily.id))
+    ]
     urls += [
         f"{base}/codes/{c}"
         for c in db.scalars(select(Dtc.code).where(Dtc.make_id.is_(None)).order_by(Dtc.code))

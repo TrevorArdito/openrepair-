@@ -86,6 +86,11 @@ export default function VehiclePage() {
             {vehicle.engine.label ?? t("vehicle.engineNotSpecified")}
           </span>
         </PageTitle>
+        {vehicle.engine.family && (
+          <Link to={`/engines/${vehicle.engine.family.id}`} className="flex min-h-12 items-center text-lg font-semibold text-amber-700 underline dark:text-amber-400">
+            {t("engines.familyLink", { name: vehicle.engine.family.name })}
+          </Link>
+        )}
         {decode && <p className="font-mono text-base">{t("vehicle.fromVin", { vin: decode.vin })}</p>}
       </div>
 
@@ -96,7 +101,7 @@ export default function VehiclePage() {
             {engines.map((e) => (
               <Link key={e.id} to={`/vehicle/${e.id}`} className="inline-flex min-h-12 items-center rounded-lg border-2 border-amber-400 px-4 font-bold">
                 {e.engine.label}
-                {e.engine.engine_code ? ` · ${e.engine.engine_code}` : ""}
+                {e.engine.family ? ` · ${e.engine.family.name}` : e.engine.engine_code ? ` · ${e.engine.engine_code}` : ""}
               </Link>
             ))}
           </div>

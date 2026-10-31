@@ -90,6 +90,17 @@ def test_google_verification_tag(prod, monkeypatch):
     assert '<meta name="google-site-verification" content="abc123" />' in prod.get("/").text
 
 
+def test_engine_pages_are_google_friendly(prod, client):
+    eid = next(e["id"] for e in client.get("/api/v1/engines").json() if e["slug"] == "cummins-6-7")
+    html = prod.get(f"/engines/{eid}").text
+    assert (
+        "<title>Cummins 6.7L I6 Turbo Diesel — vehicles, codes &amp; repair info | ChrystalClear</title>"
+        in html
+    )
+    assert "Ram 2500 (2011–" in html
+    assert f"<loc>https://cc.example/engines/{eid}</loc>" in prod.get("/sitemap.xml").text
+
+
 def test_sitemap_and_robots(prod):
     sm = prod.get("/sitemap.xml")
     assert sm.headers["content-type"].startswith("application/xml")

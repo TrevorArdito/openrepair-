@@ -223,7 +223,8 @@
     "pro_request_not_found": "That application was already handled.",
     "user_not_found": "User not found.",
     "cannot_moderate_self": "You can't change your own account here.",
-    "email_not_verified": "Please confirm your email address before contributing."
+    "email_not_verified": "Please confirm your email address before contributing.",
+    "engine_not_found": "Engine not found."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -681,6 +682,49 @@
     "tsbs": "Technical service bulletins",
     "noResults": "No results for \"{{q}}\". Check the spelling or try fewer words.",
     "searching": "Searching…",
-    "unknownCode": "Look up this code"
+    "unknownCode": "Look up this code",
+    "engines": "Engines"
+  },
+  "engines": {
+    "title": "Engines",
+    "intro": "Engine families and every vehicle that uses them.",
+    "searchLabel": "Find an engine",
+    "searchPlaceholder": "e.g. 5.3, EcoBoost, Cummins, L83",
+    "filterAll": "All",
+    "apps": {
+      "light_duty": "Cars & light trucks",
+      "heavy_duty": "Heavy-duty / diesel trucks",
+      "off_road": "Heavy equipment",
+      "marine": "Marine",
+      "generator": "Generators"
+    },
+    "vehicles_one": "{{count}} vehicle",
+    "vehicles_other": "{{count}} vehicles",
+    "facts": "Engine facts",
+    "displacement": "Displacement",
+    "cylinders": "Cylinders",
+    "layout": "Layout",
+    "layouts": {
+      "v": "V",
+      "inline": "Inline",
+      "flat": "Flat (boxer)"
+    },
+    "fuel": "Fuel",
+    "induction": "Induction",
+    "aspiration": {
+      "none": "Naturally aspirated",
+      "turbo": "Turbocharged",
+      "supercharged": "Supercharged",
+      "twincharged": "Turbo + supercharged"
+    },
+    "codes": "Engine codes",
+    "years": "Model years",
+    "yearsValue": "{{from}}–{{to}}",
+    "present": "present",
+    "usedIn": "Used in",
+    "pickYear": "Pick a year",
+    "yearsNote": "Year ranges are typical model years. Confirm the engine with the VIN (8th character on most vehicles) or the emissions label under the hood.",
+    "browse": "Browse engines",
+    "familyLink": "Engine: {{name}}"
   }
 }

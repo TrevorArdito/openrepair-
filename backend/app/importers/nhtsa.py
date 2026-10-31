@@ -32,7 +32,7 @@ from sqlalchemy.orm import Session
 from app.core.errors import AppError
 from app.db import SessionLocal
 from app.modules.safety import service
-from app.modules.safety.models import DataImport, name_key
+from app.modules.safety.models import DataImport, SafetyFetch, name_key
 from app.modules.safety.nhtsa import NhtsaApi, get_nhtsa
 from app.modules.vehicles.models import Make, Model, Vehicle
 
@@ -60,19 +60,34 @@ def _finish(db: Session, log: DataImport, status: str = "ok", error: str | None 
 
 
 def refresh_api(db: Session, nhtsa: NhtsaApi, sources: list[str], force: bool = False) -> dict:
+    """Re-check recalls/complaints for every make/model/year someone has looked up.
+
+    (Not every vehicle in the catalog — that would be tens of thousands of NHTSA calls.)"""
+    models = {(name_key(m.make.name), name_key(m.name)): m for m in db.scalars(select(Model))}
     results = {}
     for source in sources:
         log = _start(db, source)
         done = failed = 0
-        for v in db.scalars(select(Vehicle)).all():
+        fetched = db.execute(
+            select(SafetyFetch.make_key, SafetyFetch.model_key, SafetyFetch.year).where(
+                SafetyFetch.source == source
+            )
+        ).all()
+        for mk, mo, year in fetched:
+            model = models.get((mk, mo))
+            vehicle = model and db.scalar(
+                select(Vehicle).where(Vehicle.model_id == model.id, Vehicle.year == year).limit(1)
+            )
+            if not vehicle:
+                continue
             try:
-                service.refresh(db, nhtsa, source, v, force=force)
+                service.refresh(db, nhtsa, source, vehicle, force=force)
                 done += 1
             except AppError:
                 failed += 1
         log.rows_updated = done
         _finish(
-            db, log, "partial" if failed else "ok", f"{failed} vehicles failed" if failed else None
+            db, log, "partial" if failed else "ok", f"{failed} lookups failed" if failed else None
         )
         results[source] = {"vehicles": done, "failed": failed}
     return results

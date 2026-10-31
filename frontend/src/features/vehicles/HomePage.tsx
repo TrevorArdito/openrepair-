@@ -24,6 +24,9 @@ export default function HomePage() {
       <Card>
         <h2 className="mb-3 text-2xl font-bold">{t("home.orPick")}</h2>
         <YmmPicker />
+        <Link to="/engines" className="mt-3 flex min-h-12 items-center font-bold text-amber-700 underline dark:text-amber-400">
+          {t("engines.browse")}
+        </Link>
       </Card>
       <Card>
         <h2 className="mb-3 text-2xl font-bold">{t("home.recent")}</h2>

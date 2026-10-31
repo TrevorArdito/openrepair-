@@ -29,6 +29,17 @@
 - [ ] Neon account + database; Render account + Blueprint deploy; sign up with your ADMIN_EMAILS address
 - [ ] Optional: Brevo email; GitHub secret PROD_DATABASE_URL; Google Search Console
 
+## Vehicle catalog (owner: "as extensive as possible")
+- [x] Every light-duty vehicle + engine 1984 → now from EPA data (~21,000), weekly refresh
+- [x] Engine family catalog (45 families) linked to vehicles; engine pages; engines in search
+- [x] Heavy-duty diesel pickups (Power Stroke, Cummins, Duramax) from the engine catalog
+- [x] Owner's top-20 priority vehicles recorded (priority_models.json)
+- [ ] More engine families: every engine in the top-20 vehicles 1990–2024 (incl. hybrids, older 1990s engines)
+- [ ] Gas engines in HD pickups (Ford 6.2/7.3 gas, GM 6.0/6.6 gas, Ram 6.4 HEMI) — vehicles come from VIN decodes until added
+- [ ] Medium/heavy trucks (class 4–8) + their diesel engines
+- [ ] Heavy-equipment engines + equipment table (see docs/VEHICLE_CATALOG.md)
+- [ ] Bulk-prefetch NHTSA model lists for all makes/years (so the picker never waits on NHTSA)
+
 ## Next big modules (owner priorities)
 - [ ] **Wiring diagrams module**: structured circuit format (components, connectors, pins, wires
       with real color codes, splices, grounds) + interactive SVG viewer (tap to highlight a

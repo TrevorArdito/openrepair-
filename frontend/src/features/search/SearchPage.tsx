@@ -15,6 +15,7 @@ type Results = {
   vin: { vin: string; check_digit_valid: boolean } | null;
   codes: { code: string; title: string | null; severity: "low" | "medium" | "high" | null }[];
   vehicles: { model_id: number; make: string; model: string; year: number | null; years: number[] }[];
+  engines: { id: number; name: string; codes: string | null }[];
   entries: { id: number; kind: Kind; title: string; safety_critical: boolean; verified: boolean }[];
   recalls: { campaign_number: string; component: string | null; summary: string; report_date: string | null; park_it: boolean; park_outside: boolean }[];
   tsbs: { nhtsa_id: number; bulletin_number: string | null; date: string | null; summary: string }[];
@@ -84,7 +85,7 @@ export default function SearchPage() {
     }
   }
 
-  const empty = res && !res.vin && !res.codes.length && !res.vehicles.length && !res.entries.length && !res.recalls.length && !res.tsbs.length;
+  const empty = res && !res.vin && !res.codes.length && !res.vehicles.length && !res.engines.length && !res.entries.length && !res.recalls.length && !res.tsbs.length;
 
   return (
     <div className="space-y-5">
@@ -149,6 +150,19 @@ export default function SearchPage() {
                   </div>
                 </>
               )}
+            </li>
+          ))}
+        </Group>
+      )}
+
+      {res && res.engines.length > 0 && (
+        <Group title={t("search.engines")}>
+          {res.engines.map((e) => (
+            <li key={e.id}>
+              <Link to={`/engines/${e.id}`} className={rowCls}>
+                <span className="text-lg font-bold">{e.name}</span>
+                {e.codes && <span className="text-base text-slate-600 dark:text-slate-400">{e.codes}</span>}
+              </Link>
             </li>
           ))}
         </Group>

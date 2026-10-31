@@ -1,5 +1,6 @@
 """Vehicle lookups: VIN decode, year/make/model/engine, find-or-create vehicles."""
 
+import re
 from collections.abc import Callable
 from typing import Any
 
@@ -21,8 +22,8 @@ FUEL_MAP = {
     "gasoline": "gasoline",
     "diesel": "diesel",
     "electric": "electric",
-    "flexible fuel vehicle (ffv)": "flex",
-    "ethanol (e85)": "flex",
+    "flexible fuel vehicle (ffv)": "gasoline",
+    "ethanol (e85)": "gasoline",
     "compressed natural gas (cng)": "cng",
     "liquefied petroleum gas (propane or lpg)": "lpg",
 }
@@ -51,9 +52,15 @@ def make_display_name(raw: str) -> str:
     return "-".join(part.title() for part in raw.split("-"))
 
 
-def config_key(year, model_id, displacement, cylinders, fuel) -> str:
+ASPIRATION_SUFFIX = {"turbo": "T", "supercharged": "S", "twincharged": "TS"}
+
+
+def config_key(year, model_id, displacement, cylinders, fuel, aspiration=None) -> str:
+    """Identity of a year/model/engine. Turbo/supercharged engines get a suffix so a
+    3.5L turbo V6 and a 3.5L non-turbo V6 in the same truck stay separate."""
     disp = f"{displacement:.1f}" if displacement else ""
-    return f"{year}|{model_id}|{disp}|{cylinders or ''}|{fuel or ''}"
+    key = f"{year}|{model_id}|{disp}|{cylinders or ''}|{fuel or ''}"
+    return f"{key}|{ASPIRATION_SUFFIX[aspiration]}" if aspiration in ASPIRATION_SUFFIX else key
 
 
 def engine_label(v: Vehicle) -> str | None:
@@ -64,7 +71,13 @@ def engine_label(v: Vehicle) -> str | None:
         parts.append(f"{LAYOUT_PREFIX.get(v.engine_layout or '', '')}{v.cylinders}".strip())
         if not v.engine_layout:
             parts[-1] = f"{v.cylinders}-cyl"
-    if v.fuel_type in ("diesel", "electric", "hybrid", "flex", "cng", "lpg"):
+    if v.aspiration == "turbo":
+        parts.append("Turbo")
+    elif v.aspiration == "supercharged":
+        parts.append("Supercharged")
+    elif v.aspiration == "twincharged":
+        parts.append("Turbo + Supercharged")
+    if v.fuel_type in ("diesel", "electric", "hybrid", "cng", "lpg", "hydrogen"):
         parts.append(v.fuel_type.capitalize())
     return " ".join(parts) or None
 
@@ -85,7 +98,11 @@ def vehicle_out(v: Vehicle) -> VehicleOut:
             layout=v.engine_layout,
             fuel_type=v.fuel_type,
             engine_code=v.engine_code,
+            aspiration=v.aspiration,
             label=elabel,
+            family=NamedRef(id=v.engine_family.id, name=v.engine_family.name)
+            if v.engine_family
+            else None,
         ),
         label=label,
     )
@@ -104,10 +121,23 @@ def get_or_create_make(db: Session, vpic_id: int | None, name: str) -> Make:
     return make
 
 
+def _name_key(text: str) -> str:
+    return re.sub(r"[^A-Z0-9]", "", (text or "").upper())
+
+
 def get_or_create_model(db: Session, make: Make, vpic_id: int | None, name: str) -> Model:
     model = db.scalar(select(Model).where(Model.vpic_model_id == vpic_id)) if vpic_id else None
     if model is None:
-        model = db.scalar(select(Model).where(Model.make_id == make.id, Model.name == name.strip()))
+        # Match ignoring punctuation/spaces: NHTSA "F-250" == EPA "F250".
+        key = _name_key(name)
+        model = next(
+            (
+                m
+                for m in db.scalars(select(Model).where(Model.make_id == make.id))
+                if _name_key(m.name) == key
+            ),
+            None,
+        )
         if model is not None and vpic_id and model.vpic_model_id is None:
             model.vpic_model_id = vpic_id  # e.g. a seeded model we can now link to NHTSA
     if model is None:
@@ -136,11 +166,23 @@ def get_or_create_vehicle(
     fuel_type: str | None = None,
     engine_layout: str | None = None,
     engine_code: str | None = None,
+    aspiration: str | None = None,
+    source: str | None = None,
 ) -> Vehicle:
     if displacement_l:
         displacement_l = round(displacement_l, 1)
-    key = config_key(year, model.id, displacement_l, cylinders, fuel_type)
+    if fuel_type == "flex":  # flex-fuel engines are gasoline engines that also take E85
+        fuel_type = "gasoline"
+    key = config_key(year, model.id, displacement_l, cylinders, fuel_type, aspiration)
     vehicle = db.scalar(select(Vehicle).where(Vehicle.config_key == key))
+    if vehicle is None and aspiration is None and displacement_l:
+        # Turbo unknown (common in VIN data): use the only matching engine if there is one.
+        base = config_key(year, model.id, displacement_l, cylinders, fuel_type)
+        candidates = db.scalars(
+            select(Vehicle).where(Vehicle.config_key.startswith(base + "|"))
+        ).all()
+        if len(candidates) == 1:
+            vehicle = candidates[0]
     if vehicle is None:
         vehicle = Vehicle(
             config_key=key,
@@ -151,6 +193,8 @@ def get_or_create_vehicle(
             fuel_type=fuel_type,
             engine_layout=engine_layout,
             engine_code=engine_code,
+            aspiration=aspiration,
+            source=source,
         )
         db.add(vehicle)
         db.flush()
@@ -221,6 +265,8 @@ def decode_vin(db: Session, vpic: VpicApi, raw_vin: str) -> VinDecodeOut:
         fuel_type=FUEL_MAP.get(fuel, "other" if fuel and fuel != "hybrid" else fuel or None),
         engine_layout=LAYOUT_MAP.get(raw.get("EngineConfiguration", "").lower()),
         engine_code=raw.get("EngineModel"),
+        aspiration="turbo" if raw.get("Turbo", "").lower() == "yes" else None,
+        source="vin",
     )
     record = VinDecode(vin=vin, vehicle_id=vehicle.id, raw=raw)
     db.add(record)

@@ -59,7 +59,7 @@ def test_decode_endpoint_creates_vehicle(client, vpic):
     assert v["engine"]["displacement_l"] == 3.5
     assert v["engine"]["cylinders"] == 6
     assert v["engine"]["fuel_type"] == "gasoline"
-    assert v["label"] == "2015 Ford F-150 3.5L V6"
+    assert v["label"] == "2015 Ford F-150 3.5L V6 Turbo"
     assert body["details"]["trim"] == "XLT"
     assert body["warnings"] == []
     assert body["source"] == "NHTSA vPIC"

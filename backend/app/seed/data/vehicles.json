@@ -7,7 +7,8 @@
   "cylinders": 6,
   "layout": "v",
   "fuel": "gasoline",
-  "engine_code": "EcoBoost"
+  "engine_code": "EcoBoost",
+  "aspiration": "turbo"
  },
  {
   "year": 2015,
@@ -71,6 +72,7 @@
   "cylinders": 6,
   "layout": "inline",
   "fuel": "diesel",
-  "engine_code": "Cummins"
+  "engine_code": "Cummins",
+  "aspiration": "turbo"
  }
 ]

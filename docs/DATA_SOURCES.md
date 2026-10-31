@@ -3,6 +3,8 @@
 | Data | Source | License | How it gets in |
 |---|---|---|---|
 | VIN decoding, makes, models | [NHTSA vPIC API](https://vpic.nhtsa.dot.gov/api/) | US government work (public domain) | Live on demand, cached in our DB |
+| Every light-duty vehicle + engine, 1984 → next model year | [EPA fuel economy data](https://www.fueleconomy.gov/feg/download.shtml) (`vehicles.csv`) | US government work (public domain) | `python -m app.importers.epa` (weekly via GitHub Actions) |
+| Engine families (names, codes, years, which vehicles) + heavy-duty diesel trucks | ChrystalClear team (`backend/app/seed/data/engine_families.json`) — well-established public facts only | CC BY-SA 4.0 | Seed script |
 | Recalls | [api.nhtsa.gov recalls](https://www.nhtsa.gov/nhtsa-datasets-and-apis#recalls) | Public domain | Live on demand, cached 7 days; `refresh` script |
 | Owner complaints | [api.nhtsa.gov complaints](https://www.nhtsa.gov/nhtsa-datasets-and-apis#complaints) | Public domain | Live on demand, cached 7 days; `refresh` script |
 | TSB index (manufacturer communications) | [NHTSA bulk files](https://www.nhtsa.gov/nhtsa-datasets-and-apis#manufacturer-communications), field list in [TSBS.txt](https://static.nhtsa.gov/odi/ffdd/tsbs/TSBS.txt) | Public domain index | `python -m app.importers.nhtsa tsbs` |

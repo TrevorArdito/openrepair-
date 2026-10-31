@@ -57,6 +57,8 @@ def seed_vehicles(db: Session) -> int:
             fuel_type=row.get("fuel"),
             engine_layout=row.get("layout"),
             engine_code=row.get("engine_code"),
+            aspiration=row.get("aspiration"),
+            source="seed",
         )
         count += 1
     return count
@@ -120,12 +122,16 @@ def seed_guides(db: Session) -> int:
 
 
 def run(db: Session, guides: bool = True) -> dict[str, int]:
+    from app.modules.vehicles.catalog import seed_engine_families, seed_priorities
+
     result = {
         "makes_added": seed_makes(db),
         "vehicles": seed_vehicles(db),
         "dtcs": seed_dtcs(db),
         "systems": seed_systems(db),
+        "priority_models": seed_priorities(db),
     }
+    result.update(seed_engine_families(db))
     if guides:
         result["guides_added"] = seed_guides(db)
     db.commit()
