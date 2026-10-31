@@ -7,6 +7,8 @@ import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { formatDate } from "../../lib/format";
 import type { Entry, Source } from "../../lib/types";
+import { rememberEntry } from "../../lib/recent";
+import { useDocumentTitle } from "../../lib/title";
 import { EntryBody } from "./Renderers";
 
 const REASONS = ["wrong_info", "unsafe", "spam", "copyright", "other"] as const;
@@ -58,8 +60,14 @@ export default function EntryPage() {
 
   useEffect(() => {
     setEntry(null);
-    api<Entry>(`/entries/${id}`).then(setEntry).catch((e) => setError(errorMessage(t, e)));
+    api<Entry>(`/entries/${id}`)
+      .then((e) => {
+        setEntry(e);
+        if (e.status === "published") rememberEntry(e); // readable offline later
+      })
+      .catch((e) => setError(errorMessage(t, e)));
   }, [id, t, user]);
+  useDocumentTitle(entry?.title);
 
   async function act(path: string, body?: unknown) {
     setActionError(null);
@@ -99,7 +107,7 @@ export default function EntryPage() {
       {entry.safety_critical && (
         <Alert kind="error">
           <h2 className="text-lg font-bold">⚠ {t("entry.safetyTitle")}</h2>
-          <p>{t("entry.safetyBody")}</p>
+          <p>{entry.kind === "torque_spec" ? t("entry.safetyBody") : t("entry.safetyBodyGeneral")}</p>
         </Alert>
       )}
 

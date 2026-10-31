@@ -1,0 +1,21 @@
+# One-click free deployment on Render (see docs/DEPLOY.md).
+# Render builds the root Dockerfile: one container serves the API and the app.
+services:
+  - type: web
+    name: chrystalclear
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/v1/health
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true # long random value, created by Render
+      - key: DATABASE_URL
+        sync: false # paste your Neon connection string when asked
+      - key: PUBLIC_BASE_URL
+        sync: false # e.g. https://chrystalclear.onrender.com (no trailing slash)
+      - key: ADMIN_EMAILS
+        sync: false # your email — that account becomes admin when you sign up
+      - key: STORAGE_BACKEND
+        value: database # free hosts wipe their disk on restart, so photos live in the database

@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import { errorMessage } from "../../lib/errors";
 import { load, save } from "../../lib/storage";
 import type { Dtc } from "../../lib/types";
+import { useDocumentTitle } from "../../lib/title";
 import { SEVERITY_STYLE } from "./CodeSearch";
 
 function List({ title, items }: { title: string; items: string[] }) {
@@ -77,6 +78,7 @@ export default function CodeDetailPage() {
   const { code = "" } = useParams();
   const [dtc, setDtc] = useState<Dtc | null>(null);
   const [error, setError] = useState<string | null>(null);
+  useDocumentTitle(dtc ? `${dtc.code}${dtc.title ? `: ${dtc.title}` : ""}` : code);
 
   useEffect(() => {
     setDtc(null);

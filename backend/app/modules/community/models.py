@@ -13,6 +13,7 @@ from sqlalchemy import (
     Float,
     ForeignKey,
     Integer,
+    LargeBinary,
     String,
     Text,
     UniqueConstraint,
@@ -224,3 +225,14 @@ class Photo(Base):
     caption: Mapped[str | None] = mapped_column(String(300))
     status: Mapped[str] = mapped_column(String(20), default="visible")
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class PhotoBlob(Base):
+    """Photo bytes when STORAGE_BACKEND=database (hosts without a permanent disk)."""
+
+    __tablename__ = "photo_blobs"
+
+    photo_id: Mapped[int] = mapped_column(
+        ForeignKey("photos.id", ondelete="CASCADE"), primary_key=True
+    )
+    data: Mapped[bytes] = mapped_column(LargeBinary)

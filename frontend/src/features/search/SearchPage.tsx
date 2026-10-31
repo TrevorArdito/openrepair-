@@ -7,6 +7,7 @@ import { errorMessage } from "../../lib/errors";
 import { formatDate } from "../../lib/format";
 import { rememberVehicle } from "../../lib/recent";
 import type { Kind, Vehicle } from "../../lib/types";
+import { useDocumentTitle } from "../../lib/title";
 import { SEVERITY_STYLE } from "../codes/CodeSearch";
 
 type Results = {
@@ -40,6 +41,7 @@ export default function SearchPage() {
   const [res, setRes] = useState<Results | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  useDocumentTitle(t("search.title"));
 
   useEffect(() => {
     const query = q.trim();

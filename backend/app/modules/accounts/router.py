@@ -5,7 +5,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.config import get_settings
-from app.core.deps import CSRF_COOKIE, SESSION_COOKIE, current_user, verify_csrf
+from app.core.deps import CSRF_COOKIE, SESSION_COOKIE, current_user, optional_user, verify_csrf
 from app.core.errors import AppError
 from app.core.ratelimit import rate_limit
 from app.core.security import (
@@ -18,7 +18,7 @@ from app.core.security import (
 )
 from app.db import get_db
 from app.modules.accounts import tokens
-from app.modules.accounts.models import ProRequest, Role, User, UserSession
+from app.modules.accounts.models import ProRequest, Role, User, UserSession, UserStatus
 from app.modules.accounts.schemas import (
     ForgotIn,
     LoginIn,
@@ -41,6 +41,9 @@ def me_out(user: User) -> MeOut:
 
 def _start_session(db: Session, user: User, response: Response) -> None:
     settings = get_settings()
+    if user.email.lower() in settings.admin_email_set and user.role != Role.admin:
+        user.role = Role.admin  # owner bootstrap via ADMIN_EMAILS (no shell on free hosts)
+        user.status = UserStatus.active
     token = new_token()
     expires = datetime.now(UTC) + timedelta(days=settings.session_days)
     db.add(UserSession(token_hash=hash_token(token), user_id=user.id, expires_at=expires))
@@ -107,6 +110,12 @@ def logout(response: Response, user: User = Depends(current_user), db: Session =
     db.commit()
     response.delete_cookie(SESSION_COOKIE)
     response.delete_cookie(CSRF_COOKIE)
+
+
+@router.get("/auth/session")
+def session(user: User | None = Depends(optional_user)):
+    """Who is logged in (or null). Unlike /me this never answers 401."""
+    return {"user": me_out(user).model_dump() if user else None}
 
 
 @router.get("/me", response_model=MeOut)

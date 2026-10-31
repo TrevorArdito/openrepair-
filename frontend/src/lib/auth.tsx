@@ -1,5 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
-import { api, ApiError } from "./api";
+import { api } from "./api";
 import type { Me } from "./types";
 
 type Auth = {
@@ -20,9 +20,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const refresh = useCallback(async () => {
     try {
-      setUser(await api<Me>("/me"));
-    } catch (e) {
-      if (e instanceof ApiError && e.status === 401) setUser(null);
+      setUser((await api<{ user: Me | null }>("/auth/session")).user);
+    } catch {
+      /* offline: keep whatever we had */
     } finally {
       setLoading(false);
     }

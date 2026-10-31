@@ -22,7 +22,7 @@ def storage_dir() -> Path:
     return d
 
 
-def process_upload(raw: bytes) -> tuple[str, int, int]:
+def process_upload(raw: bytes) -> tuple[str, int, int, bytes]:
     if len(raw) > MAX_BYTES:
         raise AppError("photo_too_large", 413, max_mb=MAX_BYTES // (1024 * 1024))
     try:
@@ -38,9 +38,26 @@ def process_upload(raw: bytes) -> tuple[str, int, int]:
     clean = Image.new("RGB", img.size)
     clean.paste(img)
     key = f"{secrets.token_hex(16)}.webp"
-    clean.save(storage_dir() / key, "WEBP", quality=82, method=4)
-    return key, clean.width, clean.height
+    out = io.BytesIO()
+    clean.save(out, "WEBP", quality=82, method=4)
+    return key, clean.width, clean.height, out.getvalue()
 
 
-def path_for(key: str) -> Path:
-    return storage_dir() / key
+def store(db, photo, data: bytes) -> None:
+    """Save the processed image with the configured storage backend."""
+    from app.modules.community.models import PhotoBlob
+
+    if get_settings().storage_backend == "database":
+        db.add(PhotoBlob(photo_id=photo.id, data=data))
+    else:
+        (storage_dir() / photo.storage_key).write_bytes(data)
+
+
+def load(db, photo) -> bytes | None:
+    from app.modules.community.models import PhotoBlob
+
+    blob = db.get(PhotoBlob, photo.id)
+    if blob is not None:
+        return blob.data
+    path = storage_dir() / photo.storage_key
+    return path.read_bytes() if path.is_file() else None

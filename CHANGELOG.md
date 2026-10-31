@@ -4,60 +4,61 @@ All notable changes to this project are recorded here.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
+
+## [0.1.0] — 2026-10-31
+First complete version: every v0.1 feature from the plan works, is tested, and can be deployed for free.
+
 ### Added
 - **VIN decoder**: instant typo checks (length, I/O/Q, check digit), live decoding via NHTSA vPIC,
   results cached in our database.
 - **Year / make / model / engine picker** with 45 common makes; model lists fetched once from NHTSA.
-- **Vehicle profile** page (details from the VIN; tabs ready for recalls, TSBs, codes, guides).
+  Vehicle pages without an engine offer the known engines as one-tap choices.
+- **Vehicle profile** with tabs for recalls, TSBs, complaints, codes, guides and specs.
 - **My Garage**: save vehicles with nickname, VIN and notes.
-- **Accounts**: sign up / log in with email; Argon2id password hashing; secure cookies with CSRF
-  protection; spam honeypot; rate limits; download-my-data and delete-my-account.
-- **Phone-first app**: installable PWA, big buttons, dark/light mode, metric/imperial setting,
-  offline access to recently viewed vehicles. All text in translation files (Spanish-ready).
-- **About page** with safety disclaimer, privacy summary, licenses and source-code link.
-- Hardware module placeholder (disabled) with an enforced confirm-before-write safety contract.
-- One-command dev setup (`docker compose up`), no-Docker script (`scripts/dev.sh`), sample data.
-- Single-container production image (`Dockerfile`).
-- GitHub Actions CI: lint, backend + frontend tests, Postgres migration check, Docker build.
-- `docs/FUNDING.md`: running on $0, donation options, free legal help.
 - **Recalls, TSBs and complaints** per vehicle from NHTSA: recall alert banner, "do not drive" /
   "park outside" warnings, filter by part, most-reported problems, links to NHTSA.gov.
-- **Trouble code lookup**: search by code or symptom; 57 common generic OBD-II codes written in our
-  own words (meaning, symptoms, likely causes, step-by-step diagnosis as a tap-to-check checklist,
-  urgency); any valid code is decoded by structure even without a write-up. Every code records
-  its source and license.
+  Refresh scripts: `python -m app.importers.nhtsa refresh` and `... tsbs`; every run is logged.
+- **Trouble code lookup**: 57 common generic OBD-II codes written in our own words (meaning,
+  symptoms, likely causes, tap-to-check diagnosis steps, urgency); any valid code is decoded by
+  structure even without a write-up; source and license recorded per code.
 - **Community guides & specs**: repair guides, torque specs (multi-stage, torque-to-yield), fluid
-  capacities, other specs, part notes and labor times — with sources, revision history, restore,
-  "verified by a pro", votes, report-wrong-info, moderation queue, photos (location data
-  stripped), and a safety banner on safety-critical items.
-- **Labor times from several sources**: warranty time, labor-guide time, real pro time and real
-  DIY time, each split by rust level, built from individual tech reports.
-- **15 built-in general guides and specs**: misfire swap test, smoke testing, battery/charging,
+  capacities, other specs, part notes and labor times — revision history, restore, "verified by a
+  pro", votes, report-wrong-info, moderation queue, photos (location data stripped), and safety
+  banners on safety-critical items.
+- **Labor times from several sources**: warranty time, labor-guide time, real pro time and real DIY
+  time, each split by rust level, built from individual tech reports.
+- **15 built-in general guides and specs** (misfire swap test, smoke testing, battery/charging,
   voltage drop, parasitic draw, cooling pressure + block test, thermostat, fuel pressure, O2 heater,
-  MAF, fuel trims, and key electrical specs — linked to the trouble codes they help diagnose.
-- **Search everything** from one box: VINs, trouble codes (by code or words), vehicles typed
-  naturally ("2015 f150", "chevy silverado"), guides and specs (including words inside steps),
-  and — when searching within a vehicle — its recalls and TSBs. Recall campaign numbers work too.
-- Vehicle pages without an engine now offer the known engines as one-tap choices.
-- Planned commerce modules designed (`docs/COMMERCE_DESIGN.md`): parts catalog, affiliate links,
-  marketplace, state emissions info, tune store, catalytic converter section.
-- **Accounts & moderation**: email confirmation, "forgot password" reset links (one-time, expiring,
-  never reveal whether an account exists), "apply to be a verified pro", moderator tools to search
-  users and set probation / active / suspended / banned (logs them out everywhere), admin role
-  changes, and an action log recording every moderator decision with its reason. Optional
-  "confirm email before contributing" switch.
-- NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
-  `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
-- Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),
-  Code of Conduct (Contributor Covenant 2.1), CLAUDE.md (project decisions), TODO, CHANGELOG.
-- v0.1 technical plan in `docs/PLAN.md` (folder structure, database schema, API routes, pages).
-- `docs/HOSTING.md` with free / low-cost hosting options.
-- `.gitignore` and `.env.example`.
-- Contributor License Agreement draft (`CLA.md`); community content licensed CC BY-SA 4.0.
-### Changed
-- Sources on specs are now a single small "Source:" line, and only numeric specs ask for one.
-### Fixed
-- P0101 write-up: corrected the MAF airflow rule of thumb (about 1 g/s per liter at warm idle).
+  MAF, fuel trims, electrical reference specs), linked to the codes they help diagnose.
+- **Search everything** from one box: VINs, codes (by code or words), vehicles typed naturally
+  ("2015 f150"), guides/specs (including words inside steps), and recalls/TSBs within a vehicle.
+- **Accounts & moderation**: email sign-up/login (Argon2id, secure cookies, CSRF protection,
+  honeypot, rate limits), email confirmation, password reset, "apply to be a verified pro",
+  moderator tools (probation / active / suspended / banned), admin role changes, action log,
+  optional "confirm email before contributing", download-my-data and delete-my-account.
+- **Phone-first installable app**: big buttons, dark/light mode, metric/imperial, all text in
+  translation files (Spanish-ready). **Works offline** for recently viewed vehicles, codes, guides
+  and their photos; home page lists recently viewed guides.
+- **Google-friendly pages**: titles, descriptions, link previews and readable content for code,
+  guide and vehicle pages; `sitemap.xml`, `robots.txt`; Search Console verification setting.
+- **Free deployment**: `render.yaml` (Render) + Neon Postgres, step-by-step `docs/DEPLOY.md`;
+  `ADMIN_EMAILS` to become admin without a command line; photos stored in the database on hosts
+  without a permanent disk; host-provided `PORT`; weekly NHTSA refresh via GitHub Actions.
+- About page with safety disclaimer, privacy summary, licenses and source-code link (AGPL).
+- Hardware module placeholder (disabled) with an enforced confirm-before-write safety contract.
+- Planned modules designed: parts catalog, affiliate links, marketplace, state emissions info,
+  tune store, catalytic converter section (`docs/COMMERCE_DESIGN.md`), with a shared vehicle
+  fitment matcher already in use.
+- Developer setup: `docker compose up`, `scripts/dev.sh`, `scripts/check.sh`, sample data,
+  single-container production image, GitHub Actions CI (lint, tests on SQLite and Postgres,
+  migration check, Docker build).
+- Project documents: AGPL-3.0 license, README, CONTRIBUTING (content rules), Code of Conduct,
+  CLAUDE.md, CLA draft, PLAN, HOSTING, FUNDING, DATA_SOURCES, BUSINESS_IDEAS.
+
 ### Changed
 - Project renamed from OpenRepair to **ChrystalClear**.
-- Business model clarified: all repair information free forever; optional paid business tools may come later.
+- Business model: all repair information free forever; optional paid business tools may come later.
+- Sources on specs are a single small "Source:" line; only numeric specs ask for one.
+
+### Fixed
+- P0101 write-up: corrected the MAF airflow rule of thumb (about 1 g/s per liter at warm idle).

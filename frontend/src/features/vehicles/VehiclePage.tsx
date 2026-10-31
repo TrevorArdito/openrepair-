@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
+import { useDocumentTitle } from "../../lib/title";
 import CodeSearch from "../codes/CodeSearch";
 import EntryList from "../entries/EntryList";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
@@ -27,6 +28,7 @@ export default function VehiclePage() {
   const [saveError, setSaveError] = useState<string | null>(null);
   const [recallCount, setRecallCount] = useState<number | null>(null);
   const [engines, setEngines] = useState<Vehicle[]>([]);
+  useDocumentTitle(vehicle?.label);
 
   useEffect(() => {
     // No engine chosen yet? Offer the engines we know for this year + model.

@@ -11,7 +11,7 @@ RUN npm run build
 
 FROM python:3.12-slim
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PIP_NO_CACHE_DIR=1 \
-    APP_ENV=production FRONTEND_DIST_DIR=/app/static
+    APP_ENV=production FRONTEND_DIST_DIR=/app/static STORAGE_BACKEND=database
 WORKDIR /app
 COPY backend/pyproject.toml ./
 RUN mkdir app && touch app/__init__.py && pip install . && rm -rf app
@@ -20,4 +20,6 @@ COPY --from=web /web/dist ./static
 RUN useradd --create-home appuser
 USER appuser
 EXPOSE 8000
-CMD ["sh", "-c", "alembic upgrade head && python -m app.seed && uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers"]
+# PORT is set by most hosts (Render, Railway, Fly, Cloud Run); 8000 otherwise.
+# The host's proxy passes the real visitor address, which rate limiting needs.
+CMD ["sh", "-c", "alembic upgrade head && python -m app.seed && exec uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000} --proxy-headers --forwarded-allow-ips='*'"]

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, File, Query, UploadFile
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -186,9 +186,11 @@ async def upload_photo(
 ):
     service.ensure_can_contribute(user)
     raw = await file.read(photos.MAX_BYTES + 1)
-    key, w, h = photos.process_upload(raw)
+    key, w, h, data = photos.process_upload(raw)
     photo = Photo(uploader_id=user.id, storage_key=key, width=w, height=h)
     db.add(photo)
+    db.flush()
+    photos.store(db, photo, data)
     db.commit()
     return PhotoOut(id=photo.id, url=f"/api/v1/photos/{photo.id}", width=w, height=h)
 
@@ -198,8 +200,11 @@ def get_photo(photo_id: int, db: Session = Depends(get_db)):
     photo = db.get(Photo, photo_id)
     if photo is None or photo.status != "visible":
         raise NotFound("photo_not_found")
-    return FileResponse(photos.path_for(photo.storage_key), media_type="image/webp",
-                        headers={"Cache-Control": "public, max-age=31536000, immutable"})  # fmt: skip
+    data = photos.load(db, photo)
+    if data is None:
+        raise NotFound("photo_not_found")
+    return Response(content=data, media_type="image/webp",
+                    headers={"Cache-Control": "public, max-age=31536000, immutable"})  # fmt: skip
 
 
 # ---- moderation (review queue + reports) ----------------------------------------

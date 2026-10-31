@@ -10,17 +10,19 @@ your phone like an app, with offline access to what you've recently viewed.
 > **Repair information is free forever.** Vehicle lookups, recalls, TSBs, trouble codes, and
 > every community-written guide and spec will always be free — never paywalled.
 
-> **Status:** v0.1 in progress — VIN decoder, vehicle picker and My Garage work today. See [docs/PLAN.md](docs/PLAN.md),
-> [TODO.md](TODO.md), and [CHANGELOG.md](CHANGELOG.md).
+> **Status:** v0.1.0 complete — see [CHANGELOG.md](CHANGELOG.md). Next steps in [TODO.md](TODO.md).
+> Put it online for free: [docs/DEPLOY.md](docs/DEPLOY.md).
 
-## Planned v0.1 features
+## Features (v0.1)
 - **VIN decoder** (NHTSA vPIC) and year/make/model/engine picker; vehicle profiles; **My Garage**
 - **Recalls, TSB index, and complaints** from public NHTSA data
 - **Trouble code (DTC) lookup** with plain-English meaning, symptoms, causes, and diagnostic steps
 - **Community repair guides & specs** — procedures, torque specs, fluid capacities, part
   notes, labor estimates, photos — with revision history, pro verification, voting, and
   "report wrong info"
+- **Labor times** from several sources: warranty, labor guide, real pro and real DIY time, by rust level
 - **Fast search** across vehicles, codes, recalls, and guides
+- **Accounts & moderation:** verified pros, review queue, reports, action log
 - **Shop-friendly design:** big buttons, high contrast, dark mode, metric/imperial toggle, works offline
 
 ## Quick start (developers)

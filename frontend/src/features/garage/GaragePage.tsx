@@ -5,6 +5,7 @@ import { Alert, Button, Card, Input, Label, LinkButton, PageTitle, Spinner } fro
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
+import { useDocumentTitle } from "../../lib/title";
 import type { GarageItem } from "../../lib/types";
 
 function GarageRow({ item, onChange, onRemove }: { item: GarageItem; onChange: (g: GarageItem) => void; onRemove: () => void }) {
@@ -85,6 +86,7 @@ export default function GaragePage() {
   const { user, loading } = useAuth();
   const [items, setItems] = useState<GarageItem[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  useDocumentTitle(t("garage.title"));
 
   useEffect(() => {
     if (!user) return;

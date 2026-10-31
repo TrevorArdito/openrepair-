@@ -5,7 +5,7 @@ Secrets are never hard-coded: SECRET_KEY must be set in production.
 
 from functools import lru_cache
 
-from pydantic import model_validator
+from pydantic import field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,7 +24,15 @@ class Settings(BaseSettings):
     http_timeout_seconds: float = 15.0
 
     session_days: int = 30
+    # Where uploaded photos live: "local" disk (dev) or "database" (free hosts whose disk
+    # is wiped on every restart). S3-compatible storage can be added later.
+    storage_backend: str = "local"
     storage_local_dir: str = "./data/uploads"
+    # Comma-separated emails that become admins when they log in (no command line needed
+    # on free hosting). Example: ADMIN_EMAILS=owner@example.com
+    admin_emails: str = ""
+    # Google Search Console "HTML tag" verification code (just the content="..." value).
+    google_site_verification: str = ""
 
     # Email: "console" prints emails to the server log (development); "smtp" sends them.
     email_backend: str = "console"
@@ -45,6 +53,24 @@ class Settings(BaseSettings):
     @property
     def is_production(self) -> bool:
         return self.app_env == "production"
+
+    @property
+    def admin_email_set(self) -> set[str]:
+        return {e.strip().lower() for e in self.admin_emails.split(",") if e.strip()}
+
+    @field_validator("database_url")
+    @classmethod
+    def _normalize_db_url(cls, v: str) -> str:
+        """Hosts hand out 'postgres://...' URLs; SQLAlchemy needs the driver name."""
+        for prefix in ("postgres://", "postgresql://"):
+            if v.startswith(prefix):
+                return "postgresql+psycopg://" + v[len(prefix) :]
+        return v
+
+    @field_validator("public_base_url")
+    @classmethod
+    def _strip_slash(cls, v: str) -> str:
+        return v.rstrip("/")
 
     @model_validator(mode="after")
     def _check_production_secrets(self) -> "Settings":

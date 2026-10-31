@@ -1,9 +1,11 @@
 import { useTranslation } from "react-i18next";
 import { PageTitle } from "../../components/ui";
+import { useDocumentTitle } from "../../lib/title";
 import CodeSearch from "./CodeSearch";
 
 export default function CodesPage() {
   const { t } = useTranslation();
+  useDocumentTitle(t("codes.title"));
   return (
     <div className="space-y-4">
       <PageTitle>{t("codes.title")}</PageTitle>

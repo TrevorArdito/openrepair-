@@ -21,7 +21,13 @@
 - [x] Step 4: Community guides & specs (revisions, verify, votes, reports, photos, safety disclaimer, multi-source labor times)
 - [x] Step 5: Unified search (VINs, codes, vehicles, guides/specs, recalls/TSBs within a vehicle)
 - [x] Step 6: Email verification, password reset, pro applications, moderator user tools (suspend/ban/roles), action log
-- [ ] Step 7: PWA offline polish, seed data, docs (DATA_SOURCES.md, deploy guide)
+- [x] Step 7: offline polish, Google-friendly pages + sitemap, free deployment (render.yaml, docs/DEPLOY.md), weekly NHTSA refresh workflow
+- **v0.1.0 complete.**
+
+## Go live (owner, ~45 min — follow docs/DEPLOY.md)
+- [ ] Decide: merge to `main` (Claude opens a pull request when asked) or deploy from the feature branch
+- [ ] Neon account + database; Render account + Blueprint deploy; sign up with your ADMIN_EMAILS address
+- [ ] Optional: Brevo email; GitHub secret PROD_DATABASE_URL; Google Search Console
 
 ## Next big modules (owner priorities)
 - [ ] **Wiring diagrams module**: structured circuit format (components, connectors, pins, wires
@@ -53,6 +59,9 @@
 - [ ] "Supported by" sponsor slot + disclosed affiliate links (no paywalls, never inside steps/specs)
 
 ## Known follow-ups
+- Photo storage on S3-compatible storage (Cloudflare R2) once the 0.5 GB free database fills up
+- Update the TSB period in .github/workflows/nhtsa-refresh.yml when NHTSA publishes a new file name (currently 2025-2026)
+- Offline: logged-in state isn't remembered offline (My Garage needs a connection)
 - Search: upgrade to Postgres full-text ranking (tsvector) if results need better ordering at scale; today it's all-words matching + trigram indexes
 - Search: typo tolerance ("camery" → Camry) using pg_trgm similarity on Postgres
 - Write up more generic codes (target: the ~300 most common); community can add/edit once step 4 lands
@@ -62,7 +71,6 @@
 - Engine list per model only knows engines we've seen (seed data + VIN decodes); community-added engines come with step 4
 - Email sending in production needs a free SMTP account (owner); then set EMAIL_BACKEND=smtp and REQUIRE_VERIFIED_EMAIL=true
 - Optional captcha (Cloudflare Turnstile, free) on sign-up if spam becomes a problem
-- Suppress the harmless 401 console message when logged out
 - Docker Hub rate-limits anonymous image pulls on some networks; mirror.gcr.io/library/<image> works as a fallback
 
 ## Ideas for later (not v0.1)

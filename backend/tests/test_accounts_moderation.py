@@ -197,3 +197,18 @@ def test_verified_email_requirement_switch(client, db_session_factory, monkeypat
     assert r.status_code == 403 and r.json()["error"]["code"] == "email_not_verified"
     client.post("/api/v1/auth/verify-email", json={"token": link_token("verify-email")})
     assert create(client).status_code == 201
+
+
+def test_admin_emails_bootstrap(client, monkeypatch):
+    from app.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "admin_emails", "Owner@Example.com, other@example.com")
+    register(client, email="owner@example.com")
+    me = client.get("/api/v1/me").json()
+    assert me["role"] == "admin" and me["status"] == "active"
+
+
+def test_session_endpoint_never_401(client):
+    assert client.get("/api/v1/auth/session").json() == {"user": None}
+    register(client)
+    assert client.get("/api/v1/auth/session").json()["user"]["email"] == "tech@example.com"

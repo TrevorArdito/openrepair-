@@ -27,8 +27,9 @@
     "decoding": "Decoding…",
     "orPick": "Or pick a vehicle",
     "recent": "Recently viewed",
-    "noRecent": "Vehicles you look up will show here, and stay available offline.",
-    "openGarage": "Open My Garage"
+    "noRecent": "Vehicles and guides you look up will show here, and stay available offline.",
+    "openGarage": "Open My Garage",
+    "recentGuides": "Recently viewed guides & specs"
   },
   "picker": {
     "year": "Year",
@@ -509,7 +510,8 @@
     "none": "Nothing here yet for this vehicle. Be the first to add one!",
     "generalBadge": "General",
     "notFound": "Entry not found",
-    "sourceLine": "Source:"
+    "sourceLine": "Source:",
+    "safetyBodyGeneral": "This involves a safety-critical system (brakes, steering, suspension, fuel, airbags or high voltage). Follow the safety steps, and confirm specs against the manufacturer's service information."
   },
   "editor": {
     "newTitle": "New {{kind}}",

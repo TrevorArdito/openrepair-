@@ -32,17 +32,26 @@ export default defineConfig({
         navigateFallbackDenylist: [/^\/api\//],
         runtimeCaching: [
           {
+            // Photos never change once uploaded: keep them on the device.
+            urlPattern: ({ url }) => url.pathname.startsWith("/api/v1/photos/"),
+            handler: "CacheFirst",
+            options: {
+              cacheName: "photos",
+              expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 90 },
+              cacheableResponse: { statuses: [200] },
+            },
+          },
+          {
             // Recently viewed vehicles, codes and guides stay readable offline.
             urlPattern: ({ url }) =>
               url.pathname.startsWith("/api/v1/") &&
-              !url.pathname.startsWith("/api/v1/auth") &&
-              !url.pathname.startsWith("/api/v1/me"),
+              !/^\/api\/v1\/(auth|me|mod|admin|photos|pro-requests)/.test(url.pathname),
             handler: "NetworkFirst",
             method: "GET",
             options: {
               cacheName: "api-recent",
               networkTimeoutSeconds: 5,
-              expiration: { maxEntries: 300, maxAgeSeconds: 60 * 60 * 24 * 30 },
+              expiration: { maxEntries: 400, maxAgeSeconds: 60 * 60 * 24 * 30 },
               cacheableResponse: { statuses: [200] },
             },
           },

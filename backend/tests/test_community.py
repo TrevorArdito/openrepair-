@@ -452,3 +452,18 @@ def test_builtin_guides_seed_and_link_to_codes(client, db_session_factory):
     first = client.get(f"/api/v1/entries/{listed['items'][0]['id']}").json()
     assert first["revision"]["author"]["display_name"] == "ChrystalClear Team"
     assert first["revision"]["data"]["sources"][0]["type"] == "industry_standard"
+
+
+def test_photos_can_live_in_the_database(client, db_session_factory, monkeypatch, tmp_path):
+    from app.config import get_settings
+
+    monkeypatch.setattr(get_settings(), "storage_backend", "database")
+    monkeypatch.setattr(get_settings(), "storage_local_dir", str(tmp_path))
+    login_as(client, db_session_factory, "pro@example.com", Role.pro)
+    buf = io.BytesIO()
+    Image.new("RGB", (40, 30), "blue").save(buf, "PNG")
+    photo = client.post("/api/v1/photos", files={"file": ("p.png", buf.getvalue(), "image/png")},
+                        headers=csrf(client)).json()  # fmt: skip
+    assert list(tmp_path.iterdir()) == []  # nothing written to disk
+    got = client.get(photo["url"])
+    assert got.status_code == 200 and Image.open(io.BytesIO(got.content)).size == (40, 30)

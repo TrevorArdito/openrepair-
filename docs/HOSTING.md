@@ -1,6 +1,6 @@
 # Hosting options (free or cheap)
 
-> **Current budget is $0** — start with the "Fully free" option below. See `docs/FUNDING.md`.
+> **Current budget is $0** — follow **`docs/DEPLOY.md`** (Render + Neon, step by step). See `docs/FUNDING.md`.
 > Our production `Dockerfile` builds ONE container (API + app), so any Docker host works.
 
 ChrystalClear needs three things online: the **app** (backend + frontend), a **Postgres

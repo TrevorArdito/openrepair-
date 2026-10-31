@@ -151,6 +151,11 @@ Legal guardrails for these modules (non-negotiable):
   (pinouts/colors are facts). Never trace or redraw OEM diagrams.
 
 - 2026-10-31: Business ideas and priorities are tracked in `docs/BUSINESS_IDEAS.md`.
+- 2026-10-31: **v0.1.0 complete.** Free deployment target: Render (render.yaml, Docker) + Neon
+  Postgres, guide in `docs/DEPLOY.md`. Production stores photos in the database
+  (`STORAGE_BACKEND=database`) because free hosts wipe their disk; admins are bootstrapped with
+  `ADMIN_EMAILS`. Google-friendly pages are rendered server-side by `backend/app/seo.py`
+  (titles, descriptions, content, sitemap) — keep new public page types in sync with it.
 
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
