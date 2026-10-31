@@ -16,7 +16,11 @@ def test_lookup_known_code(client):
     assert body["known"] is True
     assert body["title"].startswith("Catalytic converter efficiency")
     assert body["severity"] == "low"
-    assert body["structure"] == {"system": "powertrain", "generic": True, "subsystem": "aux_emissions"}
+    assert body["structure"] == {
+        "system": "powertrain",
+        "generic": True,
+        "subsystem": "aux_emissions",
+    }
     assert len(body["diagnostic_steps"]) >= 3
     assert body["source_license"] == "CC BY-SA 4.0"
 

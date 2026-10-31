@@ -16,11 +16,15 @@ def search(db: Session, q: str, limit: int = 30) -> list[Dtc]:
     q = q.strip()
     code = normalize_code(q)
     stmt = select(Dtc).where(Dtc.make_id.is_(None))
-    if q and (CODE_RE.match(code) or (len(code) <= 5 and code[:1] in "PBCU" and code[1:].isalnum())):
+    if q and (
+        CODE_RE.match(code) or (len(code) <= 5 and code[:1] in "PBCU" and code[1:].isalnum())
+    ):
         stmt = stmt.where(Dtc.code.startswith(code))
     elif q:
         like = f"%{q.lower()}%"
-        stmt = stmt.where(or_(func.lower(Dtc.title).like(like), func.lower(Dtc.description).like(like)))
+        stmt = stmt.where(
+            or_(func.lower(Dtc.title).like(like), func.lower(Dtc.description).like(like))
+        )
     return list(db.scalars(stmt.order_by(Dtc.code).limit(limit)))
 
 
