@@ -1,4 +1,4 @@
-# OpenRepair v0.1 Plan
+# ChrystalClear v0.1 Plan
 
 Status: **Waiting for owner approval** before any app code is written.
 
@@ -45,7 +45,7 @@ environment flags.
 ## 2. Folder structure
 
 ```
-openrepair/
+chrystalclear/
 ├── backend/
 │   ├── app/
 │   │   ├── main.py              # builds the app, loads enabled modules

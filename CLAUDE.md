@@ -1,17 +1,27 @@
-# CLAUDE.md — Project rules for OpenRepair
+# CLAUDE.md — Project rules for ChrystalClear
 
 Read this first in every session. It records the owner's decisions so work stays on track.
 If a request conflicts with this file, ask the owner before proceeding.
 
 ## What this is
-**OpenRepair** — a free, open-source alternative to ALLDATA for auto repair information.
+**ChrystalClear** — a free, open-source alternative to ALLDATA for auto repair information.
 
 ## Non-negotiables
-1. **Free forever.** Every feature stays 100% free. Ads *may* be added later, but only if
-   nothing is paywalled — no "pro" tier, no premium features, no locked content.
-   (The "verified pro" *user role* is a trust badge, not a paid tier.)
-2. **License: AGPL-3.0** for code. Because it's a web app, the UI must always link to the
-   source code (AGPL §13). Community content license: see "Open decisions".
+1. **Business model: "free core, optional paid business extras later" (Option B).**
+   - **Free forever, never paywalled:** all repair information — VIN decoding, vehicle data,
+     recalls/TSBs/complaints, trouble codes, every community-written guide/spec/photo, search,
+     My Garage, and every v0.1 feature. Safety information is never paywalled.
+   - **May be paid later (not now):** optional business tools that cost money to run, e.g.
+     shop management, multi-tech team accounts, bulk data/API access for other software.
+     Also allowed: ads, sponsorships, donations, parts affiliate links, hardware sales.
+   - Never charge for community-written content. The "verified pro" *user role* is a trust
+     badge, not a paid tier.
+   - Keep paid-capable features as separate modules so the free core never depends on them.
+2. **Licenses.** Code: **AGPL-3.0**. Because it's a web app, the UI must always link to the
+   source code (AGPL §13). Community content: **CC BY-SA 4.0**. All contributors (code and
+   content) agree to the **Contributor License Agreement** (`CLA.md`) so the project owner
+   keeps the right to relicense/commercialize; code contributions are checked by a CLA bot,
+   content contributors accept it in the sign-up terms.
 3. **Stay legal on content.** Matching or improving on the *features, workflows, navigation
    and layout ideas* of ALLDATA, Mitchell, Identifix, etc. is fair game. Never scrape, copy,
    or paraphrase-closely their text, images, diagrams or databases. Use only:
@@ -83,11 +93,13 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
 
 ## Decision log
 - 2026-10-31: Owner approved docs/PLAN.md.
+- 2026-10-31: Business model = Option B (free core forever; optional paid business extras later) + CLA.
+- 2026-10-31: Community content license = CC BY-SA 4.0.
+- 2026-10-31: Renamed from "OpenRepair" to **ChrystalClear** (owner's spelling — keep the "h").
+  Reason: "Open Repair" is already used by the Open Repair Alliance (openrepair.org), a repair-data
+  group. Owner's fallback names AnyData/AlphaData/OmegaData were rejected as too close to ALLDATA.
 
 ## Open decisions (waiting on owner)
-- Business model: keep "free forever, no pro tier" as-is, or leave room to charge later
-  for optional business add-ons (core repair info stays free). Affects whether we require
-  a Contributor License Agreement (CLA). Do not change the "Free forever" rule until decided.
-- Possible rename from "OpenRepair" to "ChrystalClear" (spelling + trademark check pending).
-- License for community-contributed content (recommended: **CC BY-SA 4.0**).
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
+- Formal trademark search / attorney check on "ChrystalClear" before spending on branding.
+- Have a lawyer review CLA.md before accepting outside contributions.

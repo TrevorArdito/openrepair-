@@ -1,4 +1,4 @@
-# Contributing to OpenRepair
+# Contributing to ChrystalClear
 
 Thanks for helping build free repair information for everyone.
 
@@ -24,8 +24,15 @@ their *content* is not. When in doubt, leave it out, or ask in an issue.
 **Safety:** double-check torque values and safety-critical specs (brakes, steering,
 suspension, airbags, fuel, high-voltage) before submitting. Mark anything you're unsure of.
 
+## Licenses and the Contributor License Agreement
+- **Code** is licensed under **AGPL-3.0**.
+- **Community content** (guides, specs, notes, photos) is licensed under **CC BY-SA 4.0**.
+- Everyone signs our **[Contributor License Agreement](CLA.md)** once. You keep ownership of
+  your work, and the project promises your contributions stay openly available forever.
+  It also lets the project offer optional paid business tools later, while all repair
+  information stays free.
+
 ## Code contributions
-- License: by contributing code you agree it is licensed under **AGPL-3.0**.
 - Keep pull requests small and focused, with a clear description.
 - Add or update tests for what you change. CI must pass.
 - All user-facing text goes in translation files (`frontend/src/i18n/locales/`) — no hard-coded strings.

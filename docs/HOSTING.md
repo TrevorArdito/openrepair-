@@ -1,6 +1,6 @@
 # Hosting options (free or cheap)
 
-OpenRepair needs three things online: the **app** (backend + frontend), a **Postgres
+ChrystalClear needs three things online: the **app** (backend + frontend), a **Postgres
 database**, and **file storage** for photos. Prices change often — check each provider's
 current pricing page before signing up.
 

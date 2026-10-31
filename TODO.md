@@ -2,12 +2,17 @@
 
 ## Waiting on the owner
 - [x] Approve the plan in `docs/PLAN.md` (approved 2026-10-31)
-- [ ] Decide business model: strict free-forever vs. free core + optional paid business add-ons later (decides whether we need a contributor agreement)
-- [ ] Confirm new name ("ChrystalClear"?): check spelling, USPTO trademark search, domain availability
-- [ ] Choose a license for community-contributed guides/specs/photos (recommended: CC BY-SA 4.0)
-- [ ] Create a project contact email (after the name is final)
+- [x] Business model: Option B — free core forever, optional paid business extras later
+- [x] Community content license: CC BY-SA 4.0
+- [x] Name: ChrystalClear
+- [ ] Register a domain (chrystalclear.app and chrystalclearrepair.com looked unregistered on 2026-10-31; chrystalclear.com is taken)
+- [ ] Optional but smart before spending on branding: USPTO search at tmsearch.uspto.gov for "ChrystalClear" and "Crystal Clear" in software (class 9/42), or a one-hour attorney check
+- [ ] Create a project contact email (e.g. on the new domain, or a free Gmail/Proton address)
+- [ ] Have a lawyer glance at CLA.md before outside contributors join
+- [ ] When outside code contributors arrive: install the free CLA Assistant GitHub app (cla-assistant.io)
+- [ ] Optional: rename the GitHub repo from `openrepair-` to `chrystalclear` (Settings → General → Repository name), then start a new Claude session on the renamed repo
 
-## Next up (after approval) — v0.1 build order
+## Next up — v0.1 build order
 - [ ] Step 0: Docker Compose, backend + frontend skeletons, health check, GitHub Actions CI
 - [ ] Step 1: VIN decoder (vPIC) + YMM/engine picker + vehicle profile + My Garage (minimal accounts)
 - [ ] Step 2: Recalls, TSB index, complaints + NHTSA import scripts

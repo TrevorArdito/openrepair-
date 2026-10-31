@@ -1,13 +1,14 @@
-# OpenRepair
+# ChrystalClear
 
 **Free, open-source auto repair information — for shops, techs, and DIYers.**
 
-OpenRepair is a community-built alternative to paid repair databases. Decode a VIN,
+ChrystalClear is a community-built alternative to paid repair databases. Decode a VIN,
 see recalls, TSBs and complaints, look up trouble codes, and follow repair guides and
 specs written and checked by real technicians. It runs in any browser and installs on
 your phone like an app, with offline access to what you've recently viewed.
 
-> **Free forever.** Every feature is and will stay 100% free — no paywalls, no "pro" tier.
+> **Repair information is free forever.** Vehicle lookups, recalls, TSBs, trouble codes, and
+> every community-written guide and spec will always be free — never paywalled.
 
 > **Status:** early planning (v0.1 in progress). See [docs/PLAN.md](docs/PLAN.md),
 > [TODO.md](TODO.md), and [CHANGELOG.md](CHANGELOG.md).
@@ -45,11 +46,14 @@ Contributions of code, guides, specs, and photos are welcome. Please read
 - [NHTSA recalls, complaints and manufacturer communications (TSBs)](https://www.nhtsa.gov/nhtsa-datasets-and-apis)
 - Community contributions written in contributors' own words
 
-OpenRepair is not affiliated with NHTSA, ALLDATA, Mitchell 1, Identifix, or any vehicle manufacturer.
+ChrystalClear is not affiliated with NHTSA, ALLDATA, Mitchell 1, Identifix, or any vehicle manufacturer.
 
 ## Contact
 Project contact email: _to be set by the project owner._
 
 ## License
-Code: [GNU AGPL-3.0](LICENSE). If you run a modified version as a public service, you
-must share your source code with its users.
+- **Code:** [GNU AGPL-3.0](LICENSE). If you run a modified version as a public service,
+  you must share your source code with its users.
+- **Community content** (guides, specs, notes, photos): [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+  Anyone may reuse it with credit, as long as they share it under the same license.
+- Contributors sign our [Contributor License Agreement](CLA.md) — see CONTRIBUTING.md.

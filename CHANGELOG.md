@@ -10,3 +10,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - v0.1 technical plan in `docs/PLAN.md` (folder structure, database schema, API routes, pages).
 - `docs/HOSTING.md` with free / low-cost hosting options.
 - `.gitignore` and `.env.example`.
+- Contributor License Agreement draft (`CLA.md`); community content licensed CC BY-SA 4.0.
+### Changed
+- Project renamed from OpenRepair to **ChrystalClear**.
+- Business model clarified: all repair information free forever; optional paid business tools may come later.
