@@ -475,7 +475,8 @@
     "addSpec": "Add a spec",
     "none": "Nothing here yet for this vehicle. Be the first to add one!",
     "generalBadge": "General",
-    "notFound": "Entry not found"
+    "notFound": "Entry not found",
+    "sourceLine": "Source:"
   },
   "editor": {
     "newTitle": "New {{kind}}",
@@ -543,8 +544,8 @@
     "job": "Job",
     "includes": "Included operations (one per line)",
     "excludes": "Not included (one per line)",
-    "sourcesTitle": "Sources",
-    "sourcesHelp": "Where did this come from? Specs need at least one source. Never copy text from paid repair software or factory manuals — facts in your own words only.",
+    "sourcesTitle": "Where did this number come from?",
+    "sourcesHelp": "Pick one — details are optional. It helps pros verify the number quickly.",
     "sourceType": "Source type",
     "citation": "Details (e.g. \"2015 F-150 owner's manual, p. 412\")",
     "addSource": "Add source",

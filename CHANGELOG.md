@@ -43,6 +43,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `docs/HOSTING.md` with free / low-cost hosting options.
 - `.gitignore` and `.env.example`.
 - Contributor License Agreement draft (`CLA.md`); community content licensed CC BY-SA 4.0.
+### Changed
+- Sources on specs are now a single small "Source:" line, and only numeric specs ask for one.
 ### Fixed
 - P0101 write-up: corrected the MAF airflow rule of thumb (about 1 g/s per liter at warm idle).
 ### Changed

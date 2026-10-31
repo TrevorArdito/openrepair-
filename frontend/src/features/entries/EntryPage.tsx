@@ -136,22 +136,11 @@ export default function EntryPage() {
         )}
       </Card>
 
-      {entry.kind !== "labor_time" && (
-        <Card>
-          <h2 className="mb-2 text-xl font-bold">{t("entry.sources")}</h2>
-          {sources.length === 0 ? (
-            <p>{t("entry.noSources")}</p>
-          ) : (
-            <ul className="list-disc space-y-1 pl-6 text-lg">
-              {sources.map((s, i) => (
-                <li key={i}>
-                  <b>{t(`entry.sourceTypes.${s.type}`)}</b>
-                  {s.citation ? ` — ${s.citation}` : ""}
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
+      {sources.length > 0 && (
+        <p className="text-base text-slate-600 dark:text-slate-400">
+          {t("entry.sourceLine")}{" "}
+          {sources.map((src) => t(`entry.sourceTypes.${src.type}`) + (src.citation ? ` (${src.citation})` : "")).join(" · ")}
+        </p>
       )}
 
       {rev && (

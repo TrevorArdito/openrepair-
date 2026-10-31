@@ -35,6 +35,12 @@
       CAN bus diagnosis, relay testing, scope basics, ABS sensor test, brake jobs, etc.
 - [ ] Diagrams/illustrations for guides (our own SVGs in standard conventions)
 
+## Growth items (see docs/BUSINESS_IDEAS.md)
+- [ ] Google-friendly public pages (pre-render codes, guides, specs with titles/descriptions, sitemap)
+- [ ] Contributor reputation, badges and "top contributors"
+- [ ] Spanish translation
+- [ ] "Supported by" sponsor slot + disclosed affiliate links (no paywalls, never inside steps/specs)
+
 ## Known follow-ups
 - Write up more generic codes (target: the ~300 most common); community can add/edit once step 4 lands
 - NHTSA's complaints API returns nothing for some popular models (e.g. 2015 F-150); add a bulk importer for FLAT_CMPL / COMPLAINTS_RECEIVED_* files as a fallback

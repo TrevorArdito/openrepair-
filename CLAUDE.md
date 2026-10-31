@@ -113,8 +113,14 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
 - **Accuracy policy (owner: "no mistakes"):** general procedures are written to standard
   shop practice with typical values clearly labeled "typical — check the manufacturer's
   spec". Vehicle-specific numbers (torque, capacities, gaps, pressures) are NEVER invented
-  or recalled from memory: each must cite a source (owner's manual, public OEM document,
-  measured, or verified pro). Re-check seeded content for errors; fix immediately.
+  or recalled from memory. Re-check seeded content for errors; fix immediately.
+- **Sources (clarified by owner 2026-10-31):** the owner does NOT require citing sources
+  everywhere. Keep it light: numeric specs (torque, fluids, other specs) ask for one source
+  pick (details optional), shown as a single small "Source:" line — it helps pros verify and
+  shows facts came from legitimate places. Guides/part notes don't ask for sources.
+- **Units (clarified by owner 2026-10-31):** "manufacturer's standard metric" meant the
+  manufacturer's standard *measure* of labor (warranty/book time), not the metric system.
+  Units stay as built: imperial by default, metric/imperial toggle, stored metric internally.
 - **Labor times:** shown from several sources side by side — warranty time and labor-guide
   time (as reported by techs), real pro time, real DIY time — each split by rust level
   (none / some / heavy). Numbers come from many individual reports (median, range,
@@ -124,6 +130,8 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
   as possible. Build as the `wiring` module: our own structured circuit format + SVG viewer.
   Content = standard/generic circuits we draw + community-traced vehicle circuits
   (pinouts/colors are facts). Never trace or redraw OEM diagrams.
+
+- 2026-10-31: Business ideas and priorities are tracked in `docs/BUSINESS_IDEAS.md`.
 
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").

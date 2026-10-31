@@ -94,7 +94,7 @@ export default function EntryEditPage() {
       {user.status === "probation" && <Alert kind="info">{t("editor.probationNote")}</Alert>}
       <TextField id="f-title" label={t("editor.title")} hint={t("editor.titleHint")} value={title} required onChange={setTitle} />
       <KindForm kind={kind} d={data} set={set} />
-      {kind !== "labor_time" && <SourcesForm d={data} set={set} />}
+      {["torque_spec", "fluid_capacity", "spec"].includes(kind) && <SourcesForm d={data} set={set} />}
       <TagsForm tags={tags} set={setTags} />
       <TextField id="f-summary-edit" label={t("editor.editSummary")} hint={t("editor.editSummaryHint")} value={summary} max={300} required={editing} onChange={setSummary} />
       <p className="text-base text-slate-600 dark:text-slate-400">{t("editor.contentRules")}</p>
