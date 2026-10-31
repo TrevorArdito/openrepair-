@@ -35,6 +35,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **15 built-in general guides and specs**: misfire swap test, smoke testing, battery/charging,
   voltage drop, parasitic draw, cooling pressure + block test, thermostat, fuel pressure, O2 heater,
   MAF, fuel trims, and key electrical specs — linked to the trouble codes they help diagnose.
+- **Search everything** from one box: VINs, trouble codes (by code or words), vehicles typed
+  naturally ("2015 f150", "chevy silverado"), guides and specs (including words inside steps),
+  and — when searching within a vehicle — its recalls and TSBs. Recall campaign numbers work too.
+- Vehicle pages without an engine now offer the known engines as one-tap choices.
+- Planned commerce modules designed (`docs/COMMERCE_DESIGN.md`): parts catalog, affiliate links,
+  marketplace, state emissions info, tune store, catalytic converter section.
 - NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
   `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
 - Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),

@@ -27,6 +27,7 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("dtc", "app.modules.dtc.router"),
     ModuleSpec("community", "app.modules.community.router"),
     ModuleSpec("moderation", "app.modules.community.router", attr="mod"),
+    ModuleSpec("search", "app.modules.search.router"),
     # Off by default. See app/modules/hardware/README.md.
     ModuleSpec("hardware", "app.modules.hardware.router", enabled_flag="enable_hardware"),
 ]

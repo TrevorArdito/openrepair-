@@ -19,7 +19,7 @@
 - [x] Step 2: Recalls, TSB index, complaints + NHTSA import scripts
 - [x] Step 3: DTC search + seed generic OBD-II codes (our own wording) — 57 codes so far
 - [x] Step 4: Community guides & specs (revisions, verify, votes, reports, photos, safety disclaimer, multi-source labor times)
-- [ ] Step 5: Unified search
+- [x] Step 5: Unified search (VINs, codes, vehicles, guides/specs, recalls/TSBs within a vehicle)
 - [ ] Step 6: Roles, pro requests, moderation queue, anti-spam
 - [ ] Step 7: PWA offline polish, seed data, docs (DATA_SOURCES.md, deploy guide)
 
@@ -53,6 +53,8 @@
 - [ ] "Supported by" sponsor slot + disclosed affiliate links (no paywalls, never inside steps/specs)
 
 ## Known follow-ups
+- Search: upgrade to Postgres full-text ranking (tsvector) if results need better ordering at scale; today it's all-words matching + trigram indexes
+- Search: typo tolerance ("camery" → Camry) using pg_trgm similarity on Postgres
 - Write up more generic codes (target: the ~300 most common); community can add/edit once step 4 lands
 - NHTSA's complaints API returns nothing for some popular models (e.g. 2015 F-150); add a bulk importer for FLAT_CMPL / COMPLAINTS_RECEIVED_* files as a fallback
 - TSB model-name matching: NHTSA sometimes uses names like "F150 PICKUP" or "SILVERADO 1500"; add a model alias table

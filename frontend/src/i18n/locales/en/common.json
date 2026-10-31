@@ -72,7 +72,8 @@
       "vehicle_type": "Type",
       "manufacturer": "Manufacturer",
       "plant_country": "Built in"
-    }
+    },
+    "chooseEngine": "Which engine? Pick one for engine-specific specs:"
   },
   "fuel": {
     "gasoline": "Gasoline",
@@ -189,7 +190,8 @@
     "revision_not_pending": "That edit was already reviewed.",
     "entry_not_published": "This isn't published yet.",
     "not_labor_entry": "This isn't a labor-time entry.",
-    "report_not_found": "Report not found."
+    "report_not_found": "Report not found.",
+    "search_empty": "Type something to search for."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -600,5 +602,26 @@
     "by": "by {{name}}",
     "reason": "Reason",
     "hide": "Hide entry"
+  },
+  "search": {
+    "title": "Search",
+    "label": "Search everything",
+    "placeholder": "VIN, code, vehicle, or repair (e.g. 2015 f150 brakes)",
+    "hint": "Try a VIN, a code like P0420, a vehicle like \"2015 F-150\", or a job like \"brake pads\".",
+    "within": "Searching within {{vehicle}}",
+    "clearVehicle": "Search everything instead",
+    "searchVehicle": "Search this vehicle",
+    "vin": "VIN",
+    "decodeVin": "Decode this VIN",
+    "codes": "Trouble codes",
+    "vehicles": "Vehicles",
+    "pickYear": "Pick a year:",
+    "open": "Open",
+    "entries": "Guides & specs",
+    "recalls": "Recalls",
+    "tsbs": "Technical service bulletins",
+    "noResults": "No results for \"{{q}}\". Check the spelling or try fewer words.",
+    "searching": "Searching…",
+    "unknownCode": "Look up this code"
   }
 }

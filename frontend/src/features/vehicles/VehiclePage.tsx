@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router-dom";
-import { Alert, Button, Card, PageTitle, Spinner } from "../../components/ui";
+import { Alert, Button, Card, LinkButton, PageTitle, Spinner } from "../../components/ui";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
@@ -9,7 +9,7 @@ import { rememberVehicle } from "../../lib/recent";
 import CodeSearch from "../codes/CodeSearch";
 import EntryList from "../entries/EntryList";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
-import type { RecallList, VehicleProfile, VinDecode } from "../../lib/types";
+import type { RecallList, Vehicle, VehicleProfile, VinDecode } from "../../lib/types";
 
 const TABS = ["overview", "recalls", "tsbs", "complaints", "codes", "guides", "specs"] as const;
 type Tab = (typeof TABS)[number];
@@ -26,6 +26,16 @@ export default function VehiclePage() {
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [recallCount, setRecallCount] = useState<number | null>(null);
+  const [engines, setEngines] = useState<Vehicle[]>([]);
+
+  useEffect(() => {
+    // No engine chosen yet? Offer the engines we know for this year + model.
+    setEngines([]);
+    if (!vehicle || vehicle.engine.label) return;
+    api<Vehicle[]>(`/vehicles/engines?year=${vehicle.year}&model_id=${vehicle.model.id}`)
+      .then((list) => setEngines(list.filter((v) => v.engine.label)))
+      .catch(() => setEngines([]));
+  }, [vehicle]);
 
   useEffect(() => {
     // Recalls matter most: check them as soon as the vehicle opens.
@@ -77,6 +87,19 @@ export default function VehiclePage() {
         {decode && <p className="font-mono text-base">{t("vehicle.fromVin", { vin: decode.vin })}</p>}
       </div>
 
+      {engines.length > 0 && (
+        <Card>
+          <p className="mb-2 text-lg font-bold">{t("vehicle.chooseEngine")}</p>
+          <div className="flex flex-wrap gap-2">
+            {engines.map((e) => (
+              <Link key={e.id} to={`/vehicle/${e.id}`} className="inline-flex min-h-12 items-center rounded-lg border-2 border-amber-400 px-4 font-bold">
+                {e.engine.label}
+                {e.engine.engine_code ? ` · ${e.engine.engine_code}` : ""}
+              </Link>
+            ))}
+          </div>
+        </Card>
+      )}
       {decode && !decode.check_digit_valid && <Alert kind="warning">{t("vehicle.checkDigitWarning")}</Alert>}
       {!!recallCount && (
         <button type="button" onClick={() => setTab("recalls")} className="block w-full text-left">
@@ -96,6 +119,9 @@ export default function VehiclePage() {
         </Link>
       )}
       {saveError && <Alert>{saveError}</Alert>}
+      <LinkButton to={`/search?vehicle_id=${vehicle.id}`} variant="secondary" className="w-full">
+        🔍 {t("search.searchVehicle")}
+      </LinkButton>
 
       <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {TABS.map((key) => {

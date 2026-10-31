@@ -42,7 +42,9 @@ If a request conflicts with this file, ask the owner before proceeding.
 - PWA: installable on phones, works on laptops.
 - Backend: **Python + FastAPI**, SQLAlchemy 2, Alembic migrations, Pydantic v2.
 - Database: **Postgres** (production / Docker), **SQLite** (quick local dev).
-- Search: database full-text search (Postgres FTS + pg_trgm; SQLite FTS5 in dev). No extra search server.
+- Search: all-words matching in the database with light stemming; Postgres uses pg_trgm
+  trigram indexes (Postgres-only indexes are created by hand in migrations and ignored by
+  `alembic check`). Full-text ranking/typo tolerance can be added later. No extra search server.
 - Frontend: **React + Vite + Tailwind**, vite-plugin-pwa (Workbox), react-i18next.
 - Setup: **Docker** (`docker compose up` is the one-command dev setup) with seed data.
 - CI: GitHub Actions runs tests on every push.

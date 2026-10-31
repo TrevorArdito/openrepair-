@@ -10,8 +10,8 @@ import ModPage from "../features/entries/ModPage";
 import { LoginPage, RegisterPage } from "../features/account/LoginPage";
 import GaragePage from "../features/garage/GaragePage";
 import AboutPage from "../features/info/AboutPage";
-import ComingSoonPage from "../features/info/ComingSoonPage";
 import NotFoundPage from "../features/info/NotFoundPage";
+import SearchPage from "../features/search/SearchPage";
 import HomePage from "../features/vehicles/HomePage";
 import VehiclePage from "../features/vehicles/VehiclePage";
 import { AuthProvider } from "../lib/auth";
@@ -29,7 +29,7 @@ export default function App() {
               <Route path="garage" element={<GaragePage />} />
               <Route path="codes" element={<CodesPage />} />
               <Route path="codes/:code" element={<CodeDetailPage />} />
-              <Route path="search" element={<ComingSoonPage titleKey="nav.search" />} />
+              <Route path="search" element={<SearchPage />} />
               <Route path="entries/new" element={<EntryEditPage />} />
               <Route path="entries/:id" element={<EntryPage />} />
               <Route path="entries/:id/edit" element={<EntryEditPage />} />

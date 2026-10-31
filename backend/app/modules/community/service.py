@@ -109,9 +109,25 @@ def _attach_photos(db: Session, entry: Entry, data: dict) -> None:
 # ---- applying the current revision ------------------------------------------------
 
 
+def search_text_for(title: str, data: dict) -> str:
+    """Words a search should find: title, summaries, names, steps, tools, parts."""
+    parts: list[str] = [title]
+    for key in ("summary", "component", "fastener", "name", "part_name", "job", "fluid_spec",
+                "condition", "notes", "fitment_notes"):  # fmt: skip
+        if isinstance(data.get(key), str):
+            parts.append(data[key])
+    for key in ("tools", "parts", "warnings", "includes", "oem_numbers", "aftermarket"):
+        parts.extend(x for x in data.get(key, []) if isinstance(x, str))
+    parts.extend(step.get("text", "") for step in data.get("steps", []))
+    if data.get("system"):
+        parts.append(str(data["system"]).replace("_", " "))
+    return " ".join(" ".join(parts).lower().split())[:20000]
+
+
 def _apply_current(db: Session, entry: Entry, rev: EntryRevision) -> None:
     entry.current_revision_id = rev.id
     entry.title = rev.title
+    entry.search_text = search_text_for(rev.title, rev.data)
     entry.status = EntryStatus.published if entry.status != EntryStatus.hidden else entry.status
     db.execute(delete(EntryVehicle).where(EntryVehicle.entry_id == entry.id))
     db.execute(delete(EntrySystem).where(EntrySystem.entry_id == entry.id))

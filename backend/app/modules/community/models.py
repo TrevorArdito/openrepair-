@@ -67,6 +67,9 @@ class Entry(TimestampMixin, Base):
     kind: Mapped[Kind] = mapped_column(_enum(Kind), index=True)
     status: Mapped[EntryStatus] = mapped_column(_enum(EntryStatus), default=EntryStatus.pending)
     title: Mapped[str] = mapped_column(String(200))  # copy of current revision title (for lists)
+    search_text: Mapped[str] = mapped_column(
+        Text, default="", server_default=""
+    )  # words for search
     current_revision_id: Mapped[int | None] = mapped_column(
         ForeignKey("entry_revisions.id", use_alter=True, ondelete="SET NULL")
     )

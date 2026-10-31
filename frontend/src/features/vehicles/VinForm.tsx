@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert, Button, Input, Label } from "../../components/ui";
 import { api } from "../../lib/api";
 import { errorMessage } from "../../lib/errors";
@@ -11,7 +11,8 @@ import { normalizeVin, vinProblem } from "../../lib/vin";
 export default function VinForm() {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [vin, setVin] = useState("");
+  const [params] = useSearchParams();
+  const [vin, setVin] = useState(params.get("vin") ?? "");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
