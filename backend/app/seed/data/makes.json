@@ -1,0 +1,182 @@
+[
+ {
+  "name": "Acura",
+  "vpic_make_id": 475
+ },
+ {
+  "name": "Alfa Romeo",
+  "vpic_make_id": 493
+ },
+ {
+  "name": "Audi",
+  "vpic_make_id": 582
+ },
+ {
+  "name": "BMW",
+  "vpic_make_id": 452
+ },
+ {
+  "name": "Buick",
+  "vpic_make_id": 468
+ },
+ {
+  "name": "Cadillac",
+  "vpic_make_id": 469
+ },
+ {
+  "name": "Chevrolet",
+  "vpic_make_id": 467
+ },
+ {
+  "name": "Chrysler",
+  "vpic_make_id": 477
+ },
+ {
+  "name": "Dodge",
+  "vpic_make_id": 476
+ },
+ {
+  "name": "Fiat",
+  "vpic_make_id": 492
+ },
+ {
+  "name": "Ford",
+  "vpic_make_id": 460
+ },
+ {
+  "name": "Genesis",
+  "vpic_make_id": 5083
+ },
+ {
+  "name": "GMC",
+  "vpic_make_id": 472
+ },
+ {
+  "name": "Honda",
+  "vpic_make_id": 474
+ },
+ {
+  "name": "Hummer",
+  "vpic_make_id": 951
+ },
+ {
+  "name": "Hyundai",
+  "vpic_make_id": 498
+ },
+ {
+  "name": "Infiniti",
+  "vpic_make_id": 480
+ },
+ {
+  "name": "Isuzu",
+  "vpic_make_id": 542
+ },
+ {
+  "name": "Jaguar",
+  "vpic_make_id": 442
+ },
+ {
+  "name": "Jeep",
+  "vpic_make_id": 483
+ },
+ {
+  "name": "Kia",
+  "vpic_make_id": 499
+ },
+ {
+  "name": "Land Rover",
+  "vpic_make_id": 444
+ },
+ {
+  "name": "Lexus",
+  "vpic_make_id": 515
+ },
+ {
+  "name": "Lincoln",
+  "vpic_make_id": 464
+ },
+ {
+  "name": "Mazda",
+  "vpic_make_id": 473
+ },
+ {
+  "name": "Mercedes-Benz",
+  "vpic_make_id": 449
+ },
+ {
+  "name": "Mercury",
+  "vpic_make_id": 465
+ },
+ {
+  "name": "MINI",
+  "vpic_make_id": 456
+ },
+ {
+  "name": "Mitsubishi",
+  "vpic_make_id": 481
+ },
+ {
+  "name": "Nissan",
+  "vpic_make_id": 478
+ },
+ {
+  "name": "Oldsmobile",
+  "vpic_make_id": 4162
+ },
+ {
+  "name": "Plymouth",
+  "vpic_make_id": 2409
+ },
+ {
+  "name": "Pontiac",
+  "vpic_make_id": 536
+ },
+ {
+  "name": "Porsche",
+  "vpic_make_id": 584
+ },
+ {
+  "name": "Ram",
+  "vpic_make_id": 496
+ },
+ {
+  "name": "Saab",
+  "vpic_make_id": 572
+ },
+ {
+  "name": "Saturn",
+  "vpic_make_id": 1056
+ },
+ {
+  "name": "Subaru",
+  "vpic_make_id": 523
+ },
+ {
+  "name": "Suzuki",
+  "vpic_make_id": 509
+ },
+ {
+  "name": "Tesla",
+  "vpic_make_id": 441
+ },
+ {
+  "name": "Toyota",
+  "vpic_make_id": 448
+ },
+ {
+  "name": "Volkswagen",
+  "vpic_make_id": 482
+ },
+ {
+  "name": "Volvo",
+  "vpic_make_id": 485
+ },
+ {
+  "name": "Rivian",
+  "vpic_make_id": 10887
+ },
+ {
+  "name": "Polestar",
+  "vpic_make_id": 10224
+ }
+]
