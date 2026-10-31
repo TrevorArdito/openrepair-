@@ -6,7 +6,8 @@ import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
-import type { VehicleProfile, VinDecode } from "../../lib/types";
+import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
+import type { RecallList, VehicleProfile, VinDecode } from "../../lib/types";
 
 const TABS = ["overview", "recalls", "tsbs", "complaints", "codes", "guides", "specs"] as const;
 type Tab = (typeof TABS)[number];
@@ -22,6 +23,15 @@ export default function VehiclePage() {
   const [tab, setTab] = useState<Tab>("overview");
   const [saved, setSaved] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [recallCount, setRecallCount] = useState<number | null>(null);
+
+  useEffect(() => {
+    // Recalls matter most: check them as soon as the vehicle opens.
+    setRecallCount(null);
+    api<RecallList>(`/vehicles/${id}/recalls`)
+      .then((r) => setRecallCount(r.total))
+      .catch(() => setRecallCount(null));
+  }, [id]);
 
   useEffect(() => {
     setVehicle(null);
@@ -66,6 +76,13 @@ export default function VehiclePage() {
       </div>
 
       {decode && !decode.check_digit_valid && <Alert kind="warning">{t("vehicle.checkDigitWarning")}</Alert>}
+      {!!recallCount && (
+        <button type="button" onClick={() => setTab("recalls")} className="block w-full text-left">
+          <Alert kind="error">
+            <span className="text-lg font-bold">{t("safety.recallAlert", { count: recallCount })}</span>
+          </Alert>
+        </button>
+      )}
 
       {user ? (
         <Button variant={saved ? "secondary" : "primary"} disabled={saved} onClick={addToGarage} className="w-full">
@@ -80,7 +97,7 @@ export default function VehiclePage() {
 
       <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {TABS.map((key) => {
-          const count = vehicle.counts[key];
+          const count = key === "recalls" && recallCount !== null ? recallCount : vehicle.counts[key];
           return (
             <button
               key={key}
@@ -138,6 +155,12 @@ export default function VehiclePage() {
             )}
             {decode && <p className="mt-3 text-base text-slate-600 dark:text-slate-400">{t("vehicle.source", { source: decode.source })}</p>}
           </Card>
+        ) : tab === "recalls" ? (
+          <RecallsTab vehicleId={id!} />
+        ) : tab === "tsbs" ? (
+          <TsbsTab vehicleId={id!} />
+        ) : tab === "complaints" ? (
+          <ComplaintsTab vehicleId={id!} />
         ) : (
           <Card>
             <p className="text-lg">{t("vehicle.tabComingSoon")}</p>

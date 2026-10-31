@@ -47,3 +47,43 @@ export type GarageItem = {
   nickname: string | null;
   notes: string | null;
 };
+
+type Freshness = { source: string; source_url: string; fetched_at: string | null; stale: boolean };
+
+export type Recall = {
+  campaign_number: string;
+  manufacturer: string | null;
+  component: string | null;
+  summary: string | null;
+  consequence: string | null;
+  remedy: string | null;
+  notes: string | null;
+  report_date: string | null;
+  park_it: boolean;
+  park_outside: boolean;
+  over_the_air: boolean;
+};
+export type RecallList = Freshness & { total: number; items: Recall[] };
+
+export type Complaint = {
+  odi_number: string;
+  components: string | null;
+  summary: string | null;
+  crash: boolean;
+  fire: boolean;
+  injuries: number;
+  deaths: number;
+  incident_date: string | null;
+  filed_date: string | null;
+};
+export type ComplaintList = Freshness & { total: number; items: Complaint[]; components: Record<string, number> };
+
+export type Tsb = {
+  nhtsa_id: number;
+  bulletin_number: string | null;
+  bulletin_date: string | null;
+  comm_type: string | null;
+  components: string | null;
+  summary: string | null;
+};
+export type TsbList = Freshness & { total: number; items: Tsb[]; last_import: string | null };

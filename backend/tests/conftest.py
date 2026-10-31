@@ -8,6 +8,7 @@ from app.core import ratelimit
 from app.core.errors import AppError
 from app.db import Base, get_db, make_engine
 from app.main import create_app
+from app.modules.safety.nhtsa import get_nhtsa
 from app.modules.vehicles.vpic import get_vpic
 from app.seed.__main__ import run as run_seed
 
@@ -54,6 +55,66 @@ class FakeVpic:
         return self.models.get((vpic_make_id, year), [])
 
 
+RECALL_ROW = {
+    "Manufacturer": "Ford Motor Company",
+    "NHTSACampaignNumber": "18V894000",
+    "parkIt": False,
+    "parkOutSide": True,
+    "overTheAirUpdate": False,
+    "ReportReceivedDate": "18/12/2018",
+    "Component": "ENGINE",
+    "Summary": "Block heater cable may short.",
+    "Consequence": "Increases the risk of fire.",
+    "Remedy": "Dealers will disable the block heater cable, free of charge.",
+    "Notes": "Owners may contact NHTSA.",
+    "ModelYear": "2015",
+    "Make": "FORD",
+    "Model": "F-150",
+}
+
+
+def complaint_row(n: int, component: str = "ENGINE") -> dict:
+    return {
+        "odiNumber": str(11000000 + n),
+        "manufacturer": "Ford Motor Company",
+        "crash": n == 1,
+        "fire": False,
+        "numberOfInjuries": 0,
+        "numberOfDeaths": 0,
+        "dateOfIncident": "06/18/2024",
+        "dateComplaintFiled": f"06/{n % 28 + 1:02d}/2024",
+        "components": component,
+        "summary": f"Complaint number {n} about the {component.lower()}.",
+    }
+
+
+class FakeNhtsa:
+    def __init__(self):
+        self.calls = 0
+        self.fail = False
+        self.recall_rows = [dict(RECALL_ROW)]
+        self.complaint_rows = [
+            complaint_row(i, "ENGINE" if i % 2 else "BRAKES") for i in range(1, 31)
+        ]
+
+    def recalls(self, make, model, year):
+        self.calls += 1
+        if self.fail:
+            raise AppError("upstream_unavailable", 503)
+        return self.recall_rows if (make, model, year) == ("Ford", "F-150", 2015) else []
+
+    def complaints(self, make, model, year):
+        self.calls += 1
+        if self.fail:
+            raise AppError("upstream_unavailable", 503)
+        return self.complaint_rows if (make, model, year) == ("Ford", "F-150", 2015) else []
+
+
+@pytest.fixture
+def nhtsa():
+    return FakeNhtsa()
+
+
 @pytest.fixture
 def db_session_factory():
     engine = make_engine("sqlite://", poolclass=StaticPool)
@@ -71,7 +132,7 @@ def vpic():
 
 
 @pytest.fixture
-def client(db_session_factory, vpic):
+def client(db_session_factory, vpic, nhtsa):
     ratelimit.reset()
     app = create_app()
 
@@ -81,6 +142,7 @@ def client(db_session_factory, vpic):
 
     app.dependency_overrides[get_db] = _db
     app.dependency_overrides[get_vpic] = lambda: vpic
+    app.dependency_overrides[get_nhtsa] = lambda: nhtsa
     with TestClient(app) as c:
         yield c
 

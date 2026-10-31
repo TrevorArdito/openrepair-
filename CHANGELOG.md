@@ -20,6 +20,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Single-container production image (`Dockerfile`).
 - GitHub Actions CI: lint, backend + frontend tests, Postgres migration check, Docker build.
 - `docs/FUNDING.md`: running on $0, donation options, free legal help.
+- **Recalls, TSBs and complaints** per vehicle from NHTSA: recall alert banner, "do not drive" /
+  "park outside" warnings, filter by part, most-reported problems, links to NHTSA.gov.
+- NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
+  `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
 - Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),
   Code of Conduct (Contributor Covenant 2.1), CLAUDE.md (project decisions), TODO, CHANGELOG.
 - v0.1 technical plan in `docs/PLAN.md` (folder structure, database schema, API routes, pages).
