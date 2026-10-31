@@ -20,6 +20,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.db import Base, TimestampMixin, utcnow
+from app.modules.vehicles.fitment import FitmentMixin
 
 
 class Kind(enum.StrEnum):
@@ -114,16 +115,11 @@ class EntryRevision(Base):
 # ---- Tags of the current approved revision, copied into tables for fast lookups ----
 
 
-class EntryVehicle(Base):
+class EntryVehicle(FitmentMixin, Base):
     __tablename__ = "entry_vehicles"
 
     id: Mapped[int] = mapped_column(primary_key=True)
     entry_id: Mapped[int] = mapped_column(ForeignKey("entries.id", ondelete="CASCADE"), index=True)
-    make_id: Mapped[int] = mapped_column(ForeignKey("makes.id"), index=True)
-    model_id: Mapped[int | None] = mapped_column(ForeignKey("models.id"), index=True)
-    year_from: Mapped[int] = mapped_column(Integer)
-    year_to: Mapped[int] = mapped_column(Integer)
-    displacement_l: Mapped[float | None] = mapped_column(Float)
 
 
 class EntrySystem(Base):

@@ -29,6 +29,14 @@ money *around* the free core or is an optional paid business tool (Option B).
 - **Job board:** shops pay a small fee to post technician jobs; techs browse free.
 - **Hardware (later):** sell a recommended OBD-II adapter that works with the hardware module.
 
+## Commerce modules (owner-requested, designed in docs/COMMERCE_DESIGN.md)
+- **Affiliate parts links** — easiest first revenue; no inventory, no payments.
+- **Parts marketplace (new + used, with fitment)** — revenue from a small seller fee per sale
+  once payments are added. Fitment from our vehicle data is the selling point.
+- **Tune store** — commission on emissions-legal tunes only.
+- **State emissions info + catalytic converter section** — free content that drives search
+  traffic and leads naturally to compliant parts listings.
+
 ## Optional paid business tools (Option B — later, separate modules)
 - **Shop tools:** estimates/invoices using the community labor times, customer & vehicle
   history, technician assignment.

@@ -35,6 +35,17 @@
       CAN bus diagnosis, relay testing, scope basics, ABS sensor test, brake jobs, etc.
 - [ ] Diagrams/illustrations for guides (our own SVGs in standard conventions)
 
+## Planned commerce & compliance modules (after v0.1 — design in docs/COMMERCE_DESIGN.md)
+- [ ] **Affiliate parts links**: disclosed links from part notes / guide parts lists (first money-maker)
+- [ ] **Parts catalog**: categories linked to systems, brands, part numbers, interchange, fitment, compliance
+- [ ] **Parts marketplace** (new + used, with fitment): sellers, verification, listings, photos,
+      reports, prohibited-item rules; payments later through a payment provider
+- [ ] **State emissions info**: programs by state/area, test types, model years, readiness rules,
+      "will my vehicle pass?" checklist, official links
+- [ ] **Tune store**: emissions-legal tunes only (CARB EO / EPA-compliant), fitment by vehicle + ECU
+- [ ] **Catalytic converter section**: diagnosis guides, legality finder (EPA vs CARB by state),
+      theft prevention, compliant replacement listings
+
 ## Growth items (see docs/BUSINESS_IDEAS.md)
 - [ ] Google-friendly public pages (pre-render codes, guides, specs with titles/descriptions, sitemap)
 - [ ] Contributor reputation, badges and "top contributors"
@@ -55,4 +66,4 @@
 - VIN barcode scanning with the phone camera
 - Spanish translation
 - Hardware module: ELM327 / J2534 live data and code reading (disabled by default)
-- Community-drawn wiring diagrams, key programming, ECU tuning, parts price lookup
+- Community-drawn wiring diagrams, key programming, ECU tuning (see tune store rules), parts price lookup

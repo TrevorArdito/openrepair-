@@ -11,7 +11,7 @@ import statistics
 from datetime import UTC, datetime
 
 from pydantic import ValidationError
-from sqlalchemy import and_, delete, func, or_, select
+from sqlalchemy import delete, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import AppError, NotFound
@@ -42,6 +42,7 @@ from app.modules.community.schemas import (
     Tags,
     Verification,
 )
+from app.modules.vehicles.fitment import fits
 from app.modules.vehicles.models import Make, Model, Vehicle
 
 PROBATION_APPROVALS = 3
@@ -459,18 +460,7 @@ def _summary_text(db: Session, entry: Entry) -> str | None:
 
 def vehicle_filter(v: Vehicle):
     """Entries that apply to this vehicle (make, model, year range, engine size)."""
-    match = and_(
-        EntryVehicle.make_id == v.model.make_id,
-        or_(EntryVehicle.model_id.is_(None), EntryVehicle.model_id == v.model_id),
-        EntryVehicle.year_from <= v.year,
-        EntryVehicle.year_to >= v.year,
-        or_(
-            EntryVehicle.displacement_l.is_(None),
-            v.engine_displacement_l is None,
-            func.abs(EntryVehicle.displacement_l - (v.engine_displacement_l or 0)) < 0.05,
-        ),
-    )
-    return select(EntryVehicle.entry_id).where(match)
+    return select(EntryVehicle.entry_id).where(fits(EntryVehicle, v))
 
 
 def list_entries(

@@ -65,10 +65,27 @@ Backend errors return stable error codes, not English sentences, for the same re
 5. Fast search across vehicles, codes, recalls, guides.
 6. Accounts: email login; roles user / verified pro / moderator / admin; anti-spam + moderation tools.
 
-## Later (design for, don't build)
+## Later (design for, don't build until v0.1 is finished)
 OBD-II live data & code reading (ELM327, J2534), community-drawn wiring diagrams, key
-programming, ECU tuning, parts price lookup. Each is a separate module under
-`backend/app/modules/` + `frontend/src/features/`, toggled by env flags.
+programming, ECU tuning, parts price lookup — plus (owner, 2026-10-31):
+**affiliate parts links, a parts marketplace (new and used, with vehicle fitment), state
+emissions info, a tune store, and a catalytic converter section.**
+Each is a separate module under `backend/app/modules/` + `frontend/src/features/`,
+toggled by env flags (off by default). Database design: `docs/COMMERCE_DESIGN.md`.
+Anything that targets vehicles (guides, parts, listings, tunes) uses the shared fitment
+shape + matcher in `backend/app/modules/vehicles/fitment.py` — don't invent a second one.
+
+Legal guardrails for these modules (non-negotiable):
+- **Tune store:** only emissions-legal tunes (CARB EO number or documented EPA compliance).
+  Never list or sell anything that removes, disables or defeats emissions equipment
+  (EGR/DPF/catalyst deletes, O2 simulators) — federal Clean Air Act tampering rules.
+- **Marketplace prohibited items:** used airbags/SRS parts, delete/defeat parts, counterfeit
+  parts, parts with an unremedied safety recall; used catalytic converters only from
+  verified licensed sellers with the documentation their state requires.
+- **Affiliate links:** always disclosed; never inside safety steps or specs; never change
+  what repair information is shown.
+- **Payments:** a payment provider handles card data; we never store it. Seller identity
+  documents are deleted after review.
 
 ## Key design decisions (see docs/PLAN.md for full detail)
 - Modular backend: `backend/app/modules/<name>/` each with routes, models, services, tests; registry with env feature flags.
