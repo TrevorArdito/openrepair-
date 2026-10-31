@@ -99,7 +99,12 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
   Reason: "Open Repair" is already used by the Open Repair Alliance (openrepair.org), a repair-data
   group. Owner's fallback names AnyData/AlphaData/OmegaData were rejected as too close to ALLDATA.
 
+- 2026-10-31: Budget is **$0** for now: no paid services, no domain yet, no lawyer. Use free
+  tiers (see docs/FUNDING.md, docs/HOSTING.md). Prefer free legal resources over paid review.
+- 2026-10-31: Production = one Docker image (`/Dockerfile`) serving API + built PWA.
+  Seed data lives in `backend/app/seed/data/`.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
-- Formal trademark search / attorney check on "ChrystalClear" before spending on branding.
-- Have a lawyer review CLA.md before accepting outside contributions.
+- Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.
+- CLA review: lawyer, free clinic, or switch to a standard template (Apache ICLA / Harmony) before outside contributors join.

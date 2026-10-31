@@ -10,7 +10,7 @@ your phone like an app, with offline access to what you've recently viewed.
 > **Repair information is free forever.** Vehicle lookups, recalls, TSBs, trouble codes, and
 > every community-written guide and spec will always be free — never paywalled.
 
-> **Status:** early planning (v0.1 in progress). See [docs/PLAN.md](docs/PLAN.md),
+> **Status:** v0.1 in progress — VIN decoder, vehicle picker and My Garage work today. See [docs/PLAN.md](docs/PLAN.md),
 > [TODO.md](TODO.md), and [CHANGELOG.md](CHANGELOG.md).
 
 ## Planned v0.1 features
@@ -24,11 +24,19 @@ your phone like an app, with offline access to what you've recently viewed.
 - **Shop-friendly design:** big buttons, high contrast, dark mode, metric/imperial toggle, works offline
 
 ## Quick start (developers)
-Coming with the first build step. It will be one command:
+With [Docker](https://docs.docker.com/get-docker/) installed, one command:
 
 ```bash
 docker compose up
 ```
+
+Then open **http://localhost:5173** (API docs at http://localhost:8000/api/v1/docs).
+Sample vehicles are loaded automatically — try the year/make/model picker with
+*2015 Ford F-150*, or decode any real VIN.
+
+Without Docker (Python 3.12+ and Node 22+): `./scripts/dev.sh`
+
+Run tests: `cd backend && pytest` and `cd frontend && npm test`.
 
 ## Safety disclaimer
 Repair information here is provided by the community and public sources **as-is, without

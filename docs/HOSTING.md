@@ -1,5 +1,8 @@
 # Hosting options (free or cheap)
 
+> **Current budget is $0** — start with the "Fully free" option below. See `docs/FUNDING.md`.
+> Our production `Dockerfile` builds ONE container (API + app), so any Docker host works.
+
 ChrystalClear needs three things online: the **app** (backend + frontend), a **Postgres
 database**, and **file storage** for photos. Prices change often — check each provider's
 current pricing page before signing up.

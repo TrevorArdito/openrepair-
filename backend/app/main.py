@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app import __version__
 from app.config import Settings, get_settings
-from app.core.errors import install_error_handlers
+from app.core.errors import NotFound, install_error_handlers
 from app.modules.registry import enabled_modules, load_router
 
 API_PREFIX = "/api/v1"
@@ -58,6 +58,8 @@ def _mount_frontend(app: FastAPI, dist: Path) -> None:
 
     @app.get("/{path:path}", include_in_schema=False)
     def spa(path: str):
+        if path == "api" or path.startswith("api/"):
+            raise NotFound()
         candidate = (dist / path).resolve()
         if path and candidate.is_file() and candidate.is_relative_to(dist.resolve()):
             return FileResponse(candidate)

@@ -61,7 +61,8 @@ chrystalclear/
 │   │   │   ├── search/          # one search box across everything
 │   │   │   ├── moderation/      # review queue, reports, bans, audit log
 │   │   │   └── hardware/        # placeholder only (disabled), interface + README
-│   │   └── importers/           # CLI: refresh NHTSA data, load seed data
+│   │   ├── importers/           # CLI: refresh NHTSA data
+│   │   └── seed/data/           # sample makes, vehicles, codes, guides (our own words)
 │   ├── alembic/                 # database migrations (versioned schema changes)
 │   ├── tests/
 │   ├── pyproject.toml
@@ -78,11 +79,11 @@ chrystalclear/
 │   ├── public/                  # app icons, manifest
 │   ├── vite.config.ts           # includes PWA/offline setup
 │   └── Dockerfile
-├── data/seed/                   # sample vehicles, DTCs, guides, specs (our own words)
 ├── docs/                        # PLAN.md, HOSTING.md, DATA_SOURCES.md, ARCHITECTURE.md
 ├── scripts/                     # dev.sh (one-command setup), helpers
 ├── .github/workflows/ci.yml     # tests on every push
 ├── docker-compose.yml           # one command: `docker compose up`
+├── Dockerfile                   # production: ONE container serves API + app
 ├── .env.example                 # every setting, with safe dev defaults
 └── CLAUDE.md, README.md, CONTRIBUTING.md, CODE_OF_CONDUCT.md, TODO.md, CHANGELOG.md, LICENSE
 ```

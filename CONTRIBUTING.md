@@ -39,7 +39,12 @@ suspension, airbags, fuel, high-voltage) before submitting. Mark anything you're
 - Never commit secrets (API keys, passwords). Use environment variables; see `.env.example`.
 - Update `CHANGELOG.md` for user-visible changes.
 
-Development setup instructions will be added here with the first build step.
+### Development setup
+- Easiest: install Docker, then run `docker compose up` and open http://localhost:5173.
+- Without Docker: `./scripts/dev.sh` (needs Python 3.12+ and Node 22+).
+- Backend details: `backend/README.md`. Frontend details: `frontend/README.md`.
+- Before opening a pull request: `cd backend && ruff check . && pytest` and
+  `cd frontend && npm run typecheck && npm test`. GitHub runs the same checks automatically.
 
 ## Conduct
 Everyone participating is expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md).
