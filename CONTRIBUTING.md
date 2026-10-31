@@ -43,8 +43,7 @@ suspension, airbags, fuel, high-voltage) before submitting. Mark anything you're
 - Easiest: install Docker, then run `docker compose up` and open http://localhost:5173.
 - Without Docker: `./scripts/dev.sh` (needs Python 3.12+ and Node 22+).
 - Backend details: `backend/README.md`. Frontend details: `frontend/README.md`.
-- Before opening a pull request: `cd backend && ruff check . && pytest` and
-  `cd frontend && npm run typecheck && npm test`. GitHub runs the same checks automatically.
+- Before opening a pull request run `./scripts/check.sh` — the same lint and tests GitHub runs.
 
 ## Conduct
 Everyone participating is expected to follow our [Code of Conduct](CODE_OF_CONDUCT.md).

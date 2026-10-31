@@ -86,6 +86,7 @@ programming, ECU tuning, parts price lookup. Each is a separate module under
 - Owner is a business owner, not a developer: explain decisions in plain English and say
   exactly what they need to do (approve, create an account, add a setting).
 - Small, working commits with clear messages. Never commit secrets.
+- Run `./scripts/check.sh` (same checks as CI) before every push.
 - Required tests: VIN decoder, DTC lookup, guide editing (also add auth/permissions tests).
 - Keep `TODO.md` (next steps) and `CHANGELOG.md` (what's done) updated with every change.
 - Hosting must stay free or very cheap — see `docs/HOSTING.md`.
