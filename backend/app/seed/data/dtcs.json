@@ -1,0 +1,1650 @@
+[
+ {
+  "code": "P0011",
+  "title": "Intake camshaft timing over-advanced (bank 1)",
+  "description": "On engines with variable valve timing, the computer moves the intake camshaft to improve power and economy. Here the camshaft ended up further ahead than commanded.",
+  "symptoms": [
+   "Rough idle",
+   "Stalling",
+   "Reduced power",
+   "Rattle on startup on some engines"
+  ],
+  "causes": [
+   "Low or dirty engine oil (most common)",
+   "Sticking oil control solenoid",
+   "Worn timing chain or tensioner",
+   "Failing cam phaser"
+  ],
+  "diagnostic_steps": [
+   "Check the oil level and condition first — VVT systems depend on clean oil at the right level.",
+   "Change the oil if it's overdue, using the correct viscosity.",
+   "Test the oil control solenoid: resistance, and whether it clicks when commanded.",
+   "Watch desired vs actual cam angle in live data.",
+   "Check cam/crank correlation for a stretched chain."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.timing",
+   "engine.lubrication"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0016",
+  "title": "Crankshaft/camshaft position correlation (bank 1)",
+  "description": "The computer compares the crankshaft and camshaft sensor signals. They're out of step, which often means the timing chain or belt has stretched or jumped.",
+  "symptoms": [
+   "Rough running or hard start",
+   "Rattle from the timing cover",
+   "Reduced power"
+  ],
+  "causes": [
+   "Stretched timing chain or worn guides",
+   "Jumped timing belt or chain",
+   "Faulty variable valve timing solenoid or phaser",
+   "Low or dirty oil",
+   "Faulty sensor or damaged tone wheel"
+  ],
+  "diagnostic_steps": [
+   "Check the oil level and condition.",
+   "Look at cam/crank correlation values in live data if available.",
+   "Listen for timing chain rattle on cold start.",
+   "Check base timing marks with the engine at top dead center."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.timing"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0101",
+  "title": "Mass airflow (MAF) sensor reading doesn't make sense",
+  "description": "The MAF sensor measures how much air enters the engine. The computer compared its reading with what it expected from throttle position and RPM, and the numbers don't agree.",
+  "symptoms": [
+   "Hesitation or stalling",
+   "Poor fuel economy",
+   "Rough idle",
+   "Possible lean or rich codes"
+  ],
+  "causes": [
+   "Dirty MAF sensor element",
+   "Air leak after the MAF sensor (cracked intake boot)",
+   "Clogged air filter",
+   "Wiring problem",
+   "Failing sensor"
+  ],
+  "diagnostic_steps": [
+   "Inspect the air filter and the intake duct between the MAF and throttle body for cracks or loose clamps.",
+   "Clean the MAF sensor with MAF-safe spray only.",
+   "Compare MAF grams/second at idle to the expected value (roughly engine liters × 2–3 g/s at warm idle on many engines).",
+   "Check the wiring and connector."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0102",
+  "title": "Mass airflow (MAF) sensor signal too low",
+  "description": "The MAF sensor signal is lower than possible — the computer thinks almost no air is coming in.",
+  "symptoms": [
+   "Stalling, hard start",
+   "Hesitation",
+   "Limp mode on some vehicles"
+  ],
+  "causes": [
+   "Unplugged or damaged connector",
+   "Open or shorted wiring",
+   "Failed MAF sensor",
+   "Large air leak after the sensor"
+  ],
+  "diagnostic_steps": [
+   "Check the connector and wiring.",
+   "Check power and ground at the sensor with the key on.",
+   "Check the signal wire while revving the engine.",
+   "Replace the sensor if power, ground and wiring are good."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0113",
+  "title": "Intake air temperature sensor reading too high (circuit high)",
+  "description": "The intake air temperature sensor is showing a voltage that means extremely cold air — usually an open circuit, like an unplugged sensor.",
+  "symptoms": [
+   "Usually minor: hard starting or slightly poor running"
+  ],
+  "causes": [
+   "Unplugged or broken sensor connector",
+   "Open wire",
+   "Failed sensor (often built into the MAF sensor)"
+  ],
+  "diagnostic_steps": [
+   "Look at intake air temperature in live data — about -40°F/-40°C means an open circuit.",
+   "Check the connector and wiring.",
+   "Jumper the signal and ground pins briefly: the reading should jump to very hot. If it does, the sensor is bad."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.air_intake",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0117",
+  "title": "Engine coolant temperature sensor circuit low",
+  "description": "The coolant temperature sensor signal reads extremely hot — usually a shorted wire or sensor.",
+  "symptoms": [
+   "Cooling fans running all the time",
+   "Hard starting when cold",
+   "Rich running, poor economy"
+  ],
+  "causes": [
+   "Shorted sensor",
+   "Wire shorted to ground",
+   "Connector damage"
+  ],
+  "diagnostic_steps": [
+   "Compare coolant temperature in live data with actual engine temperature.",
+   "Unplug the sensor: the reading should drop to very cold. If it does, the sensor is shorted.",
+   "Check the wiring for chafing."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.cooling",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0118",
+  "title": "Engine coolant temperature sensor circuit high",
+  "description": "The coolant temperature sensor signal reads extremely cold — usually an open circuit.",
+  "symptoms": [
+   "Cooling fans may run constantly as a fail-safe",
+   "Hard starting",
+   "Poor fuel economy"
+  ],
+  "causes": [
+   "Unplugged or corroded connector",
+   "Broken wire",
+   "Failed sensor"
+  ],
+  "diagnostic_steps": [
+   "Check coolant temperature in live data — about -40° means an open circuit.",
+   "Inspect the connector and wiring.",
+   "Jumper the connector pins: reading should jump to very hot; if so, replace the sensor."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.cooling",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0121",
+  "title": "Throttle position sensor reading doesn't make sense",
+  "description": "The throttle position sensor reading didn't match what the computer expected from airflow and other sensors.",
+  "symptoms": [
+   "Hesitation or surging",
+   "Erratic idle",
+   "Possible limp mode"
+  ],
+  "causes": [
+   "Worn throttle position sensor",
+   "Dirty throttle body",
+   "Wiring or connector problem"
+  ],
+  "diagnostic_steps": [
+   "Watch the throttle position reading while slowly opening the throttle — it should rise smoothly with no jumps.",
+   "Clean the throttle body.",
+   "Check the wiring and connector.",
+   "On electronic throttles, check for related P2135 codes."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0128",
+  "title": "Engine takes too long to reach operating temperature",
+  "description": "The engine didn't warm up as fast as the computer expected. Almost always the thermostat is stuck open, letting coolant through the radiator too soon.",
+  "symptoms": [
+   "Temperature gauge reads low",
+   "Weak cabin heat",
+   "Poor fuel economy"
+  ],
+  "causes": [
+   "Thermostat stuck open (most common)",
+   "Coolant temperature sensor reading low",
+   "Cooling fan running all the time"
+  ],
+  "diagnostic_steps": [
+   "Watch coolant temperature from a cold start: it should climb steadily to about 190–220°F (88–104°C) in 10–15 minutes.",
+   "Feel the upper radiator hose — if it gets warm right away, the thermostat is open too early.",
+   "Compare the sensor reading with an infrared thermometer.",
+   "Replace the thermostat with the correct temperature rating."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.cooling"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0133",
+  "title": "Oxygen sensor slow response (bank 1, sensor 1)",
+  "description": "The upstream oxygen sensor (bank 1, sensor 1) is switching between rich and lean more slowly than it should. The computer relies on this sensor to control fuel, so a lazy sensor can hurt economy and emissions.",
+  "symptoms": [
+   "Reduced fuel economy",
+   "Failed emissions test",
+   "Often no noticeable symptoms"
+  ],
+  "causes": [
+   "Aging oxygen sensor",
+   "Exhaust leak near the sensor",
+   "Contamination from coolant, oil or silicone",
+   "Wiring or connector damage"
+  ],
+  "diagnostic_steps": [
+   "Check for exhaust leaks ahead of the sensor.",
+   "Watch the sensor in live data at 2,500 RPM — it should switch quickly between about 0.1 V and 0.9 V.",
+   "Inspect the wiring for heat damage or chafing.",
+   "Replace the sensor if it's slow and the wiring and exhaust are good."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "exhaust"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0135",
+  "title": "Oxygen sensor heater circuit problem (bank 1, sensor 1)",
+  "description": "Oxygen sensors have a built-in heater so they start working soon after a cold start. The computer measured a problem in the heater circuit for bank 1, sensor 1.",
+  "symptoms": [
+   "Usually none",
+   "Slightly worse fuel economy after cold starts"
+  ],
+  "causes": [
+   "Burned-out heater inside the oxygen sensor",
+   "Blown fuse for the oxygen sensor heaters",
+   "Damaged wiring or connector",
+   "Rarely, a problem in the engine computer"
+  ],
+  "diagnostic_steps": [
+   "Check the oxygen sensor heater fuse.",
+   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "With the key on, check for battery voltage at the heater supply wire.",
+   "Inspect the wiring along the exhaust for melted insulation.",
+   "Replace the sensor if the heater is open or out of spec."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0141",
+  "title": "Oxygen sensor heater circuit problem (bank 1, sensor 2)",
+  "description": "Oxygen sensors have a built-in heater so they start working soon after a cold start. The computer measured a problem in the heater circuit for bank 1, sensor 2.",
+  "symptoms": [
+   "Usually none",
+   "Slightly worse fuel economy after cold starts"
+  ],
+  "causes": [
+   "Burned-out heater inside the oxygen sensor",
+   "Blown fuse for the oxygen sensor heaters",
+   "Damaged wiring or connector",
+   "Rarely, a problem in the engine computer"
+  ],
+  "diagnostic_steps": [
+   "Check the oxygen sensor heater fuse.",
+   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "With the key on, check for battery voltage at the heater supply wire.",
+   "Inspect the wiring along the exhaust for melted insulation.",
+   "Replace the sensor if the heater is open or out of spec."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0153",
+  "title": "Oxygen sensor slow response (bank 2, sensor 1)",
+  "description": "The upstream oxygen sensor (bank 2, sensor 1) is switching between rich and lean more slowly than it should. The computer relies on this sensor to control fuel, so a lazy sensor can hurt economy and emissions.",
+  "symptoms": [
+   "Reduced fuel economy",
+   "Failed emissions test",
+   "Often no noticeable symptoms"
+  ],
+  "causes": [
+   "Aging oxygen sensor",
+   "Exhaust leak near the sensor",
+   "Contamination from coolant, oil or silicone",
+   "Wiring or connector damage"
+  ],
+  "diagnostic_steps": [
+   "Check for exhaust leaks ahead of the sensor.",
+   "Watch the sensor in live data at 2,500 RPM — it should switch quickly between about 0.1 V and 0.9 V.",
+   "Inspect the wiring for heat damage or chafing.",
+   "Replace the sensor if it's slow and the wiring and exhaust are good."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "exhaust"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0155",
+  "title": "Oxygen sensor heater circuit problem (bank 2, sensor 1)",
+  "description": "Oxygen sensors have a built-in heater so they start working soon after a cold start. The computer measured a problem in the heater circuit for bank 2, sensor 1.",
+  "symptoms": [
+   "Usually none",
+   "Slightly worse fuel economy after cold starts"
+  ],
+  "causes": [
+   "Burned-out heater inside the oxygen sensor",
+   "Blown fuse for the oxygen sensor heaters",
+   "Damaged wiring or connector",
+   "Rarely, a problem in the engine computer"
+  ],
+  "diagnostic_steps": [
+   "Check the oxygen sensor heater fuse.",
+   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "With the key on, check for battery voltage at the heater supply wire.",
+   "Inspect the wiring along the exhaust for melted insulation.",
+   "Replace the sensor if the heater is open or out of spec."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0161",
+  "title": "Oxygen sensor heater circuit problem (bank 2, sensor 2)",
+  "description": "Oxygen sensors have a built-in heater so they start working soon after a cold start. The computer measured a problem in the heater circuit for bank 2, sensor 2.",
+  "symptoms": [
+   "Usually none",
+   "Slightly worse fuel economy after cold starts"
+  ],
+  "causes": [
+   "Burned-out heater inside the oxygen sensor",
+   "Blown fuse for the oxygen sensor heaters",
+   "Damaged wiring or connector",
+   "Rarely, a problem in the engine computer"
+  ],
+  "diagnostic_steps": [
+   "Check the oxygen sensor heater fuse.",
+   "Unplug the sensor and measure heater resistance across the heater pins (usually a few ohms — check the spec).",
+   "With the key on, check for battery voltage at the heater supply wire.",
+   "Inspect the wiring along the exhaust for melted insulation.",
+   "Replace the sensor if the heater is open or out of spec."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0171",
+  "title": "System too lean (bank 1)",
+  "description": "The oxygen sensor on bank 1 keeps seeing extra oxygen in the exhaust, so the computer has added as much fuel as it is allowed and still can't fix it. Something is letting in unmeasured air, or not enough fuel is getting in. 'Bank 1' is the side of the engine with cylinder 1.",
+  "symptoms": [
+   "Rough or hunting idle",
+   "Hesitation on acceleration",
+   "Often no symptoms at all",
+   "May come with P0174 (other bank) or misfire codes"
+  ],
+  "causes": [
+   "Vacuum leak (cracked hose, intake gasket, PCV valve or hose)",
+   "Dirty or failing mass airflow (MAF) sensor",
+   "Weak fuel pump, clogged filter or bad pressure regulator",
+   "Exhaust leak before the oxygen sensor",
+   "Clogged fuel injectors"
+  ],
+  "diagnostic_steps": [
+   "If both banks are lean (P0171 and P0174), suspect something shared: MAF sensor, fuel pressure or a large vacuum leak.",
+   "Check live data: long-term fuel trim above about +10% at idle that drops at higher RPM points to a vacuum leak; trims high everywhere point to fuel or MAF.",
+   "Inspect and smoke-test the intake system, PCV hoses and brake booster line.",
+   "Clean the MAF sensor with MAF-safe cleaner and compare grams/second to the expected value for the engine size.",
+   "Test fuel pressure and volume.",
+   "Check for exhaust leaks ahead of the upstream oxygen sensor."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.fuel",
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0172",
+  "title": "System too rich (bank 1)",
+  "description": "The oxygen sensor on bank 1 keeps seeing too little oxygen, so the computer has cut fuel as far as it can and the mixture is still rich.",
+  "symptoms": [
+   "Black smoke or fuel smell",
+   "Poor fuel economy",
+   "Sooty spark plugs",
+   "Possible misfires"
+  ],
+  "causes": [
+   "Leaking fuel injector",
+   "Fuel pressure too high (bad regulator)",
+   "MAF sensor over-reading",
+   "Engine coolant temperature sensor stuck reading cold",
+   "Saturated EVAP canister purging too much fuel vapor",
+   "Oil contaminated with fuel"
+  ],
+  "diagnostic_steps": [
+   "Check fuel trims and coolant temperature in live data — a sensor reading cold makes the engine run rich.",
+   "Test fuel pressure, including whether it holds or rises with the engine off.",
+   "Inspect the MAF sensor and air filter.",
+   "Check for a stuck-open EVAP purge valve.",
+   "Look for leaking injectors (fuel in the intake, wet plugs)."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0174",
+  "title": "System too lean (bank 2)",
+  "description": "The oxygen sensor on bank 2 keeps seeing extra oxygen in the exhaust, so the computer has added as much fuel as it is allowed and still can't fix it. Something is letting in unmeasured air, or not enough fuel is getting in. 'Bank 2' is the side of the engine with cylinder 2.",
+  "symptoms": [
+   "Rough or hunting idle",
+   "Hesitation on acceleration",
+   "Often no symptoms at all",
+   "May come with P0171 (other bank) or misfire codes"
+  ],
+  "causes": [
+   "Vacuum leak (cracked hose, intake gasket, PCV valve or hose)",
+   "Dirty or failing mass airflow (MAF) sensor",
+   "Weak fuel pump, clogged filter or bad pressure regulator",
+   "Exhaust leak before the oxygen sensor",
+   "Clogged fuel injectors"
+  ],
+  "diagnostic_steps": [
+   "If both banks are lean (P0171 and P0174), suspect something shared: MAF sensor, fuel pressure or a large vacuum leak.",
+   "Check live data: long-term fuel trim above about +10% at idle that drops at higher RPM points to a vacuum leak; trims high everywhere point to fuel or MAF.",
+   "Inspect and smoke-test the intake system, PCV hoses and brake booster line.",
+   "Clean the MAF sensor with MAF-safe cleaner and compare grams/second to the expected value for the engine size.",
+   "Test fuel pressure and volume.",
+   "Check for exhaust leaks ahead of the upstream oxygen sensor."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.fuel",
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0175",
+  "title": "System too rich (bank 2)",
+  "description": "The oxygen sensor on bank 2 keeps seeing too little oxygen, so the computer has cut fuel as far as it can and the mixture is still rich.",
+  "symptoms": [
+   "Black smoke or fuel smell",
+   "Poor fuel economy",
+   "Sooty spark plugs",
+   "Possible misfires"
+  ],
+  "causes": [
+   "Leaking fuel injector",
+   "Fuel pressure too high (bad regulator)",
+   "MAF sensor over-reading",
+   "Engine coolant temperature sensor stuck reading cold",
+   "Saturated EVAP canister purging too much fuel vapor",
+   "Oil contaminated with fuel"
+  ],
+  "diagnostic_steps": [
+   "Check fuel trims and coolant temperature in live data — a sensor reading cold makes the engine run rich.",
+   "Test fuel pressure, including whether it holds or rises with the engine off.",
+   "Inspect the MAF sensor and air filter.",
+   "Check for a stuck-open EVAP purge valve.",
+   "Look for leaking injectors (fuel in the intake, wet plugs)."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0217",
+  "title": "Engine overheating",
+  "description": "The engine computer saw coolant temperature above a safe limit. Continuing to drive can warp the head or blow the head gasket.",
+  "symptoms": [
+   "Temperature gauge high",
+   "Steam from the engine",
+   "Loss of power (protection mode)"
+  ],
+  "causes": [
+   "Low coolant from a leak",
+   "Failed thermostat (stuck closed)",
+   "Failed water pump",
+   "Cooling fan not running",
+   "Clogged radiator",
+   "Head gasket failure"
+  ],
+  "diagnostic_steps": [
+   "Stop driving and let the engine cool before opening the cooling system — hot coolant can burn you.",
+   "Check coolant level and look for leaks.",
+   "Confirm the cooling fans turn on when hot.",
+   "Check for a stuck thermostat (upper hose hot, lower hose cold).",
+   "Pressure-test the cooling system and test for combustion gas in the coolant."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.cooling"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0300",
+  "title": "Random or multiple cylinders misfiring",
+  "description": "The engine computer watches crankshaft speed and noticed it stumbling on more than one cylinder, or on no single cylinder consistently. A flashing check-engine light means the misfire is bad enough to overheat and damage the catalytic converter.",
+  "symptoms": [
+   "Rough idle or shaking",
+   "Hesitation or stumbling when accelerating",
+   "Flashing check-engine light",
+   "Fuel smell from the exhaust",
+   "Poor fuel economy"
+  ],
+  "causes": [
+   "Worn spark plugs",
+   "Vacuum leak (affects all cylinders)",
+   "Low fuel pressure or weak pump",
+   "Contaminated or low-quality fuel",
+   "Failing ignition coil pack (shared coil designs)",
+   "Mass airflow sensor reading wrong",
+   "Low compression or a jumped timing chain/belt"
+  ],
+  "diagnostic_steps": [
+   "Check for other codes first — fuel trim (P0171/P0174) or cam/crank codes often explain random misfires.",
+   "Look at freeze-frame data: was it at idle, under load, cold or hot?",
+   "Check long-term fuel trims. High positive trims on both banks point to a vacuum leak or fuel delivery problem.",
+   "Inspect spark plugs for wear, oil fouling or cracked insulators.",
+   "Listen and smoke-test for vacuum leaks around the intake, PCV and brake booster hose.",
+   "Test fuel pressure against the spec for the vehicle.",
+   "If misfires continue, run a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0301",
+  "title": "Cylinder 1 misfire detected",
+  "description": "The engine computer detected cylinder 1 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 1",
+   "Failing ignition coil or plug wire on cylinder 1",
+   "Clogged or leaking fuel injector on cylinder 1",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 1 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 1 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 1 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0302",
+  "title": "Cylinder 2 misfire detected",
+  "description": "The engine computer detected cylinder 2 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 2",
+   "Failing ignition coil or plug wire on cylinder 2",
+   "Clogged or leaking fuel injector on cylinder 2",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 2 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 2 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 2 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0303",
+  "title": "Cylinder 3 misfire detected",
+  "description": "The engine computer detected cylinder 3 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 3",
+   "Failing ignition coil or plug wire on cylinder 3",
+   "Clogged or leaking fuel injector on cylinder 3",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 3 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 3 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 3 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0304",
+  "title": "Cylinder 4 misfire detected",
+  "description": "The engine computer detected cylinder 4 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 4",
+   "Failing ignition coil or plug wire on cylinder 4",
+   "Clogged or leaking fuel injector on cylinder 4",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 4 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 4 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 4 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0305",
+  "title": "Cylinder 5 misfire detected",
+  "description": "The engine computer detected cylinder 5 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 5",
+   "Failing ignition coil or plug wire on cylinder 5",
+   "Clogged or leaking fuel injector on cylinder 5",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 5 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 5 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 5 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0306",
+  "title": "Cylinder 6 misfire detected",
+  "description": "The engine computer detected cylinder 6 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 6",
+   "Failing ignition coil or plug wire on cylinder 6",
+   "Clogged or leaking fuel injector on cylinder 6",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 6 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 6 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 6 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0307",
+  "title": "Cylinder 7 misfire detected",
+  "description": "The engine computer detected cylinder 7 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 7",
+   "Failing ignition coil or plug wire on cylinder 7",
+   "Clogged or leaking fuel injector on cylinder 7",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 7 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 7 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 7 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0308",
+  "title": "Cylinder 8 misfire detected",
+  "description": "The engine computer detected cylinder 8 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 8",
+   "Failing ignition coil or plug wire on cylinder 8",
+   "Clogged or leaking fuel injector on cylinder 8",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 8 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 8 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 8 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0309",
+  "title": "Cylinder 9 misfire detected",
+  "description": "The engine computer detected cylinder 9 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 9",
+   "Failing ignition coil or plug wire on cylinder 9",
+   "Clogged or leaking fuel injector on cylinder 9",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 9 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 9 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 9 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0310",
+  "title": "Cylinder 10 misfire detected",
+  "description": "The engine computer detected cylinder 10 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 10",
+   "Failing ignition coil or plug wire on cylinder 10",
+   "Clogged or leaking fuel injector on cylinder 10",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 10 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 10 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 10 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0311",
+  "title": "Cylinder 11 misfire detected",
+  "description": "The engine computer detected cylinder 11 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 11",
+   "Failing ignition coil or plug wire on cylinder 11",
+   "Clogged or leaking fuel injector on cylinder 11",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 11 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 11 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 11 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0312",
+  "title": "Cylinder 12 misfire detected",
+  "description": "The engine computer detected cylinder 12 not firing properly — the crankshaft slows down each time that cylinder should be making power. A flashing check-engine light means unburned fuel is reaching the catalytic converter and can damage it.",
+  "symptoms": [
+   "Rough idle or shake",
+   "Loss of power",
+   "Flashing check-engine light",
+   "Engine runs worse under load or uphill"
+  ],
+  "causes": [
+   "Bad spark plug in cylinder 12",
+   "Failing ignition coil or plug wire on cylinder 12",
+   "Clogged or leaking fuel injector on cylinder 12",
+   "Vacuum leak near that cylinder's intake runner",
+   "Low compression (valve, ring or head gasket problem)"
+  ],
+  "diagnostic_steps": [
+   "Swap the ignition coil from cylinder 12 with a neighboring cylinder, clear codes and drive. If the misfire moves to the other cylinder, the coil is bad.",
+   "Pull and inspect the cylinder 12 spark plug: worn electrode, oil, fuel fouling or a cracked insulator.",
+   "Swap the spark plug the same way if the coil swap didn't move the misfire.",
+   "Check the cylinder 12 injector: listen with a stethoscope, check its resistance, or swap it with another cylinder.",
+   "If the misfire stays on that cylinder after swapping coil, plug and injector, do a compression or leak-down test."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "engine.fuel"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0325",
+  "title": "Knock sensor circuit problem (bank 1)",
+  "description": "The knock sensor listens for engine pinging. The computer found a problem with its circuit, so it may pull timing to be safe.",
+  "symptoms": [
+   "Reduced power and fuel economy",
+   "Possible pinging"
+  ],
+  "causes": [
+   "Damaged wiring (often under the intake manifold)",
+   "Failed knock sensor",
+   "Wrong tightening torque on the sensor"
+  ],
+  "diagnostic_steps": [
+   "Inspect the wiring and connector.",
+   "Check sensor resistance against spec.",
+   "Make sure the sensor is torqued to spec — too loose or too tight changes its signal."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.ignition"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0335",
+  "title": "Crankshaft position sensor circuit problem",
+  "description": "The computer isn't getting a usable signal from the crankshaft position sensor, which tells it engine speed and position. Without it, many engines won't start or will stall.",
+  "symptoms": [
+   "Engine cranks but won't start",
+   "Stalling, especially when hot",
+   "Tachometer not moving while cranking"
+  ],
+  "causes": [
+   "Failed crankshaft sensor",
+   "Damaged wiring or connector",
+   "Damaged reluctor (tone) ring",
+   "Metal debris on a magnetic sensor"
+  ],
+  "diagnostic_steps": [
+   "Check whether RPM shows in live data while cranking.",
+   "Inspect the sensor connector and wiring.",
+   "Check sensor power and ground (3-wire) or resistance (2-wire), against spec.",
+   "Check the signal with a scope or meter while cranking."
+  ],
+  "severity": "high",
+  "systems": [
+   "engine.ignition",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0340",
+  "title": "Camshaft position sensor circuit problem (bank 1)",
+  "description": "The computer isn't getting a correct signal from the camshaft position sensor, which helps it time fuel injection and spark.",
+  "symptoms": [
+   "Hard or long start",
+   "Stalling",
+   "Reduced power"
+  ],
+  "causes": [
+   "Failed cam sensor",
+   "Wiring or connector problem",
+   "Timing chain or belt problem"
+  ],
+  "diagnostic_steps": [
+   "Inspect the sensor and connector.",
+   "Check sensor power, ground and signal.",
+   "If the sensor and wiring are good, check cam timing."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.ignition",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0401",
+  "title": "EGR flow too low",
+  "description": "The exhaust gas recirculation (EGR) system sends a little exhaust back into the engine to cool combustion and cut emissions. The computer opened the EGR and didn't see the change it expected.",
+  "symptoms": [
+   "Engine pinging or knocking under load",
+   "Failed emissions test"
+  ],
+  "causes": [
+   "Carbon-clogged EGR passages (most common)",
+   "Stuck EGR valve",
+   "Bad EGR position sensor or DPFE sensor (some Fords)",
+   "Cracked vacuum line"
+  ],
+  "diagnostic_steps": [
+   "Inspect and clean the EGR valve and passages.",
+   "Command the EGR valve open with a scan tool at idle — the engine should stumble.",
+   "Check vacuum lines and sensors on vacuum-operated systems."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0420",
+  "title": "Catalytic converter efficiency below threshold (bank 1)",
+  "description": "The computer compares the oxygen sensors before and after the catalytic converter on bank 1. A healthy converter smooths out the oxygen swings, so the rear sensor stays steady. Here the rear sensor is copying the front sensor too closely, so the converter isn't storing oxygen like it should.",
+  "symptoms": [
+   "Usually no driveability symptoms",
+   "Failed emissions test",
+   "Sometimes a rotten-egg smell or rattle from the converter"
+  ],
+  "causes": [
+   "Worn-out catalytic converter",
+   "Exhaust leak near the downstream oxygen sensor",
+   "Failing downstream oxygen sensor",
+   "Old misfires or oil burning that damaged the converter",
+   "Engine running rich or lean"
+  ],
+  "diagnostic_steps": [
+   "Fix any misfire, fuel trim or oxygen sensor codes first — they can cause or fake this code.",
+   "Check for exhaust leaks between the engine and the rear oxygen sensor.",
+   "Watch both oxygen sensors in live data at a steady 2,500 RPM: the front should switch quickly, the rear should stay fairly steady.",
+   "Check the rear sensor's response with a quick snap of the throttle or a propane enrichment test.",
+   "Only replace the converter after the above checks pass — and find out why it failed."
+  ],
+  "severity": "low",
+  "systems": [
+   "exhaust.catalytic_converter",
+   "engine.emissions"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0430",
+  "title": "Catalytic converter efficiency below threshold (bank 2)",
+  "description": "The computer compares the oxygen sensors before and after the catalytic converter on bank 2. A healthy converter smooths out the oxygen swings, so the rear sensor stays steady. Here the rear sensor is copying the front sensor too closely, so the converter isn't storing oxygen like it should.",
+  "symptoms": [
+   "Usually no driveability symptoms",
+   "Failed emissions test",
+   "Sometimes a rotten-egg smell or rattle from the converter"
+  ],
+  "causes": [
+   "Worn-out catalytic converter",
+   "Exhaust leak near the downstream oxygen sensor",
+   "Failing downstream oxygen sensor",
+   "Old misfires or oil burning that damaged the converter",
+   "Engine running rich or lean"
+  ],
+  "diagnostic_steps": [
+   "Fix any misfire, fuel trim or oxygen sensor codes first — they can cause or fake this code.",
+   "Check for exhaust leaks between the engine and the rear oxygen sensor.",
+   "Watch both oxygen sensors in live data at a steady 2,500 RPM: the front should switch quickly, the rear should stay fairly steady.",
+   "Check the rear sensor's response with a quick snap of the throttle or a propane enrichment test.",
+   "Only replace the converter after the above checks pass — and find out why it failed."
+  ],
+  "severity": "low",
+  "systems": [
+   "exhaust.catalytic_converter",
+   "engine.emissions"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0440",
+  "title": "Evaporative emission (EVAP) system malfunction",
+  "description": "The EVAP system traps fuel vapor from the tank and burns it in the engine instead of letting it into the air. The computer ran a self-test and found a problem it couldn't narrow down further.",
+  "symptoms": [
+   "Usually no driveability symptoms",
+   "Possible fuel smell",
+   "Failed emissions test"
+  ],
+  "causes": [
+   "Loose, damaged or wrong gas cap",
+   "Cracked EVAP hose",
+   "Faulty purge or vent valve",
+   "Leaking charcoal canister"
+  ],
+  "diagnostic_steps": [
+   "Check the gas cap seal and that it clicks tight.",
+   "Look for other EVAP codes that narrow it down.",
+   "Smoke-test the EVAP system to find leaks.",
+   "Command the purge and vent valves with a scan tool and confirm they open and close."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0442",
+  "title": "EVAP system small leak detected",
+  "description": "During its leak test the computer found a small leak — about the size of a pinhole (0.040 inch / 1 mm) — somewhere in the fuel vapor system.",
+  "symptoms": [
+   "No driveability symptoms",
+   "Faint fuel smell sometimes",
+   "Failed emissions test"
+  ],
+  "causes": [
+   "Gas cap seal worn or not tightened",
+   "Small crack in an EVAP hose",
+   "Leaking purge or vent valve",
+   "Filler neck corrosion"
+  ],
+  "diagnostic_steps": [
+   "Start with the gas cap: inspect the seal, tighten until it clicks, or try a new cap.",
+   "Smoke-test the system — small leaks are hard to find any other way.",
+   "Check hoses near the tank and canister for cracks.",
+   "Test the vent and purge valves for leaking when closed."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0446",
+  "title": "EVAP vent control circuit problem",
+  "description": "The vent valve lets fresh air into the EVAP canister and closes so the system can be leak-tested. The computer found a problem with the valve or its circuit.",
+  "symptoms": [
+   "Hard to fill the fuel tank (pump keeps clicking off)",
+   "Possible fuel smell"
+  ],
+  "causes": [
+   "Vent valve stuck or clogged (dirt, spider webs)",
+   "Wiring or connector problem",
+   "Clogged vent filter or hose"
+  ],
+  "diagnostic_steps": [
+   "Check if the tank is hard to fill — a stuck-closed vent often causes this.",
+   "Command the vent valve with a scan tool and listen for a click.",
+   "Check the valve's resistance and the wiring.",
+   "Inspect the vent hose and filter for blockages."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0455",
+  "title": "EVAP system large leak detected",
+  "description": "The computer tried to pull a vacuum on the fuel vapor system and couldn't — there's a big opening somewhere, most often a gas cap that's missing or not tightened.",
+  "symptoms": [
+   "Fuel smell",
+   "Check-engine light right after filling up"
+  ],
+  "causes": [
+   "Gas cap missing, loose or wrong part",
+   "Disconnected or broken EVAP hose",
+   "Vent valve stuck open",
+   "Purge valve stuck closed"
+  ],
+  "diagnostic_steps": [
+   "Check the gas cap first.",
+   "Look for disconnected hoses at the canister and purge valve.",
+   "Smoke-test the EVAP system.",
+   "Command the vent valve closed and confirm it seals."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0456",
+  "title": "EVAP system very small leak detected",
+  "description": "The leak test found a tiny leak — about 0.020 inch (0.5 mm). These are the hardest to find and are often the gas cap or a hairline crack.",
+  "symptoms": [
+   "No driveability symptoms",
+   "Failed emissions test"
+  ],
+  "causes": [
+   "Gas cap seal",
+   "Hairline crack in a hose or the canister",
+   "Purge or vent valve not sealing fully"
+  ],
+  "diagnostic_steps": [
+   "Replace or test the gas cap.",
+   "Smoke-test carefully at low pressure; check the filler neck, canister and valves.",
+   "Clear the code and let the computer re-run its test over a few days of driving."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0496",
+  "title": "EVAP flow during a non-purge condition",
+  "description": "The computer saw vacuum in the fuel tank when the purge valve should have been closed. Usually that means the purge valve is stuck open, letting fuel vapor flow into the engine all the time.",
+  "symptoms": [
+   "Hard start or rough idle right after refueling",
+   "Lean or rich fuel trim codes"
+  ],
+  "causes": [
+   "Purge valve stuck open (most common)",
+   "Wiring short to the purge valve"
+  ],
+  "diagnostic_steps": [
+   "Disconnect the purge valve hose at idle: there should be no vacuum when the valve is not commanded.",
+   "Apply vacuum to the valve unpowered — it should hold.",
+   "Replace the purge valve if it leaks."
+  ],
+  "severity": "low",
+  "systems": [
+   "fuel.evap"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0500",
+  "title": "Vehicle speed sensor problem",
+  "description": "The computer isn't getting a usable vehicle speed signal.",
+  "symptoms": [
+   "Speedometer not working or erratic",
+   "Harsh or odd shifting",
+   "Cruise control not working",
+   "ABS light on some vehicles"
+  ],
+  "causes": [
+   "Failed speed sensor",
+   "Wiring or connector problem",
+   "Bad wheel speed sensor (on vehicles that use ABS sensors for speed)"
+  ],
+  "diagnostic_steps": [
+   "Check whether vehicle speed shows in live data while driving.",
+   "Check related ABS codes.",
+   "Inspect the sensor, connector and wiring."
+  ],
+  "severity": "medium",
+  "systems": [
+   "transmission",
+   "electrical"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0505",
+  "title": "Idle air control system problem",
+  "description": "The computer couldn't hold the idle speed it wanted.",
+  "symptoms": [
+   "Idle too high or too low",
+   "Stalling when coming to a stop"
+  ],
+  "causes": [
+   "Dirty throttle body or idle air control valve",
+   "Vacuum leak",
+   "Failed idle air control valve or electronic throttle"
+  ],
+  "diagnostic_steps": [
+   "Clean the throttle body and idle air passages.",
+   "Check for vacuum leaks.",
+   "Perform an idle relearn if the vehicle needs one after cleaning.",
+   "Test the idle control valve."
+  ],
+  "severity": "medium",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0506",
+  "title": "Idle speed lower than expected",
+  "description": "The engine is idling slower than the computer wants, even after it tried to correct it.",
+  "symptoms": [
+   "Rough or low idle",
+   "Stalling"
+  ],
+  "causes": [
+   "Dirty throttle body",
+   "Heavy load from accessories (AC, alternator)",
+   "Restricted air intake"
+  ],
+  "diagnostic_steps": [
+   "Clean the throttle body.",
+   "Do an idle relearn.",
+   "Check the air filter and intake."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0507",
+  "title": "Idle speed higher than expected",
+  "description": "The engine is idling faster than the computer wants. Usually extra air is getting in.",
+  "symptoms": [
+   "High idle",
+   "Vehicle wants to creep forward in gear"
+  ],
+  "causes": [
+   "Vacuum leak",
+   "Dirty or sticking throttle",
+   "Idle air control valve stuck open"
+  ],
+  "diagnostic_steps": [
+   "Smoke-test for vacuum leaks.",
+   "Clean the throttle body.",
+   "Perform an idle relearn."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.air_intake"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0562",
+  "title": "System voltage low",
+  "description": "The engine computer saw battery/charging voltage below what it needs.",
+  "symptoms": [
+   "Dim lights",
+   "Hard starting",
+   "Battery light",
+   "Odd electrical behavior"
+  ],
+  "causes": [
+   "Weak battery",
+   "Failing alternator",
+   "Loose or corroded battery cables",
+   "Bad ground connection"
+  ],
+  "diagnostic_steps": [
+   "Test the battery (load or conductance test).",
+   "With the engine running, check charging voltage at the battery — typically about 13.5–14.8 V.",
+   "Clean and tighten battery terminals and grounds.",
+   "Test the alternator output."
+  ],
+  "severity": "medium",
+  "systems": [
+   "electrical.charging"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0606",
+  "title": "Engine computer internal fault",
+  "description": "The engine computer's self-check found a problem inside itself.",
+  "symptoms": [
+   "Varies: stalling, no start, limp mode, or no symptoms"
+  ],
+  "causes": [
+   "Low or unstable voltage to the computer",
+   "Bad grounds",
+   "Software issue (check for a bulletin/update)",
+   "Failed computer"
+  ],
+  "diagnostic_steps": [
+   "Check battery and charging voltage and all computer grounds first.",
+   "Look for a TSB or software update for this vehicle.",
+   "Replace the computer only after power, grounds and updates are ruled out (it may need programming)."
+  ],
+  "severity": "medium",
+  "systems": [
+   "electrical",
+   "engine.computer"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0700",
+  "title": "Transmission control system fault",
+  "description": "The transmission computer has stored its own code and asked the engine computer to turn on the check-engine light. This code just says 'look in the transmission computer'.",
+  "symptoms": [
+   "Varies: harsh shifts, stuck in one gear (limp mode)"
+  ],
+  "causes": [
+   "Any transmission problem — the real code is in the transmission module"
+  ],
+  "diagnostic_steps": [
+   "Use a scan tool that can read the transmission module and get the specific code.",
+   "Check transmission fluid level and condition."
+  ],
+  "severity": "medium",
+  "systems": [
+   "transmission"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0715",
+  "title": "Transmission input/turbine speed sensor problem",
+  "description": "The transmission computer isn't getting a good signal from the input speed sensor.",
+  "symptoms": [
+   "Harsh or erratic shifting",
+   "Limp mode",
+   "Speedometer problems on some vehicles"
+  ],
+  "causes": [
+   "Failed sensor",
+   "Wiring or connector problem",
+   "Low or burnt fluid"
+  ],
+  "diagnostic_steps": [
+   "Check fluid level and condition.",
+   "Inspect the sensor connector and wiring.",
+   "Check the sensor's resistance or signal against spec."
+  ],
+  "severity": "medium",
+  "systems": [
+   "transmission"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0730",
+  "title": "Incorrect gear ratio",
+  "description": "The transmission computer compared input and output speeds and they don't match any gear it should be in — something is slipping.",
+  "symptoms": [
+   "Slipping",
+   "Engine revs without the vehicle speeding up",
+   "Harsh shifts",
+   "Limp mode"
+  ],
+  "causes": [
+   "Low or burnt fluid",
+   "Worn clutches or bands",
+   "Faulty shift solenoid",
+   "Clogged filter",
+   "Valve body problem"
+  ],
+  "diagnostic_steps": [
+   "Check fluid level and condition — dark, burnt-smelling fluid with debris means internal wear.",
+   "Check for other transmission codes (solenoid codes).",
+   "Look for software updates or TSBs for this transmission."
+  ],
+  "severity": "high",
+  "systems": [
+   "transmission"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P0740",
+  "title": "Torque converter clutch circuit problem",
+  "description": "The torque converter clutch locks the engine to the transmission at cruising speed for better economy. The computer found a problem with its control circuit.",
+  "symptoms": [
+   "Poor fuel economy",
+   "Shudder at highway speed",
+   "Engine RPM higher than normal at cruise"
+  ],
+  "causes": [
+   "Faulty torque converter clutch solenoid",
+   "Wiring problem",
+   "Low fluid"
+  ],
+  "diagnostic_steps": [
+   "Check fluid level and condition.",
+   "Check solenoid resistance and wiring.",
+   "Look for TSBs — many vehicles have known fixes."
+  ],
+  "severity": "medium",
+  "systems": [
+   "transmission"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "P2096",
+  "title": "Post-catalyst fuel trim too lean (bank 1)",
+  "description": "The computer uses the rear oxygen sensor to fine-tune fuel. That fine-tune has hit its lean limit.",
+  "symptoms": [
+   "Usually none",
+   "Possible P0420"
+  ],
+  "causes": [
+   "Exhaust leak near the rear oxygen sensor",
+   "Upstream oxygen sensor reading off",
+   "Catalytic converter problem"
+  ],
+  "diagnostic_steps": [
+   "Check for exhaust leaks around the converter and sensors.",
+   "Check upstream and downstream oxygen sensor readings.",
+   "Fix fuel trim problems first."
+  ],
+  "severity": "low",
+  "systems": [
+   "engine.emissions"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ },
+ {
+  "code": "U0100",
+  "title": "Lost communication with engine computer (ECM/PCM)",
+  "description": "Another module on the vehicle network stopped hearing from the engine computer.",
+  "symptoms": [
+   "No start",
+   "Multiple warning lights",
+   "Gauges not working"
+  ],
+  "causes": [
+   "Low battery voltage",
+   "Engine computer has no power or ground (blown fuse)",
+   "Damaged network (CAN) wiring",
+   "Failed engine computer"
+  ],
+  "diagnostic_steps": [
+   "Check battery voltage.",
+   "Check the engine computer's fuses and grounds.",
+   "See whether a scan tool can talk to the engine computer at all.",
+   "Check the network wiring resistance at the diagnostic connector (about 60 ohms between CAN high and low on many vehicles with the key off)."
+  ],
+  "severity": "high",
+  "systems": [
+   "electrical.network"
+  ],
+  "source": "ChrystalClear contributors (original writing)",
+  "source_license": "CC BY-SA 4.0"
+ }
+]

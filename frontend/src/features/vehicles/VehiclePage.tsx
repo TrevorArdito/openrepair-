@@ -6,6 +6,7 @@ import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
+import CodeSearch from "../codes/CodeSearch";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
 import type { RecallList, VehicleProfile, VinDecode } from "../../lib/types";
 
@@ -161,6 +162,11 @@ export default function VehiclePage() {
           <TsbsTab vehicleId={id!} />
         ) : tab === "complaints" ? (
           <ComplaintsTab vehicleId={id!} />
+        ) : tab === "codes" ? (
+          <div className="space-y-2">
+            <p className="text-lg">{t("codes.vehicleTabHint")}</p>
+            <CodeSearch />
+          </div>
         ) : (
           <Card>
             <p className="text-lg">{t("vehicle.tabComingSoon")}</p>

@@ -10,6 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import SessionLocal
+from app.modules.dtc.models import Dtc
 from app.modules.vehicles import service
 from app.modules.vehicles.models import Make
 
@@ -56,8 +57,23 @@ def seed_vehicles(db: Session) -> int:
     return count
 
 
+def seed_dtcs(db: Session) -> int:
+    """Insert or update generic codes from dtcs.json (our own writing, CC BY-SA 4.0)."""
+    count = 0
+    for row in load("dtcs.json"):
+        dtc = db.scalar(select(Dtc).where(Dtc.code == row["code"], Dtc.make_id.is_(None)))
+        if dtc is None:
+            dtc = Dtc(code=row["code"])
+            db.add(dtc)
+        for field in ("title", "description", "symptoms", "causes", "diagnostic_steps",
+                      "severity", "systems", "source", "source_license"):  # fmt: skip
+            setattr(dtc, field, row[field])
+        count += 1
+    return count
+
+
 def run(db: Session) -> dict[str, int]:
-    result = {"makes_added": seed_makes(db), "vehicles": seed_vehicles(db)}
+    result = {"makes_added": seed_makes(db), "vehicles": seed_vehicles(db), "dtcs": seed_dtcs(db)}
     db.commit()
     return result
 

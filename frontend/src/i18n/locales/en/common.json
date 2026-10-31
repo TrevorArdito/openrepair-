@@ -170,7 +170,8 @@
     "garage_full": "My Garage is full ({{limit}} vehicles). Remove one first.",
     "vehicle_not_found": "Vehicle not found.",
     "not_found": "Not found.",
-    "unknown_error": "Something went wrong. Please try again."
+    "unknown_error": "Something went wrong. Please try again.",
+    "dtc_invalid": "That's not a valid code. Codes look like P0420: a letter (P, B, C or U) then 4 characters."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -211,5 +212,55 @@
     "topComponents": "Most reported problems",
     "recallAlert_one": "This vehicle has {{count}} recall on file. Check that it's been done.",
     "recallAlert_other": "This vehicle has {{count}} recalls on file. Check that they've been done."
+  },
+  "codes": {
+    "title": "Trouble codes",
+    "searchLabel": "Code or symptom",
+    "searchPlaceholder": "e.g. P0420 or misfire",
+    "intro": "Look up generic OBD-II codes: what they mean, common causes, and how to diagnose them.",
+    "common": "Common codes",
+    "noResults": "No codes match. Check the code, or try a word like \"lean\" or \"misfire\".",
+    "lookUp": "Look up {{code}}",
+    "meaning": "What it means",
+    "symptoms": "Symptoms",
+    "causes": "Common causes (most likely first)",
+    "steps": "How to diagnose",
+    "stepsHelp": "Tap a step to check it off.",
+    "reset": "Reset checklist",
+    "related": "Related repair guides",
+    "noRelated": "No guides linked to this code yet.",
+    "unknownTitle": "We don't have a write-up for {{code}} yet",
+    "unknownBody": "Here's what the code number itself tells us. Manufacturer-specific codes mean different things on different brands — check a source for this vehicle.",
+    "structureTitle": "Code breakdown",
+    "systemLabel": "System",
+    "typeLabel": "Type",
+    "subsystemLabel": "Area",
+    "generic": "Generic (same meaning on every vehicle)",
+    "manufacturer": "Manufacturer-specific",
+    "source": "Written by {{source}} · {{license}}",
+    "safety": "Always follow safety procedures. Codes point you toward a problem; confirm with testing before replacing parts.",
+    "severity": {
+      "low": "Low urgency",
+      "medium": "Fix soon",
+      "high": "Urgent — stop driving if the light is flashing or the engine runs badly"
+    },
+    "system": {
+      "powertrain": "Powertrain (engine & transmission)",
+      "body": "Body",
+      "chassis": "Chassis (brakes, steering, suspension)",
+      "network": "Network / communication"
+    },
+    "subsystem": {
+      "fuel_air_aux_emissions": "Fuel, air & emissions",
+      "fuel_air": "Fuel & air metering",
+      "fuel_air_injectors": "Fuel & air (injectors)",
+      "ignition_misfire": "Ignition & misfire",
+      "aux_emissions": "Emissions controls",
+      "speed_idle": "Speed & idle control",
+      "computer_outputs": "Computer & outputs",
+      "transmission": "Transmission",
+      "hybrid": "Hybrid system"
+    },
+    "vehicleTabHint": "Enter a code from this vehicle's scan:"
   }
 }

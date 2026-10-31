@@ -1,6 +1,8 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout";
 import AccountPage from "../features/account/AccountPage";
+import CodeDetailPage from "../features/codes/CodeDetailPage";
+import CodesPage from "../features/codes/CodesPage";
 import { LoginPage, RegisterPage } from "../features/account/LoginPage";
 import GaragePage from "../features/garage/GaragePage";
 import AboutPage from "../features/info/AboutPage";
@@ -21,7 +23,8 @@ export default function App() {
               <Route index element={<HomePage />} />
               <Route path="vehicle/:id" element={<VehiclePage />} />
               <Route path="garage" element={<GaragePage />} />
-              <Route path="codes" element={<ComingSoonPage titleKey="nav.codes" />} />
+              <Route path="codes" element={<CodesPage />} />
+              <Route path="codes/:code" element={<CodeDetailPage />} />
               <Route path="search" element={<ComingSoonPage titleKey="nav.search" />} />
               <Route path="account" element={<AccountPage />} />
               <Route path="login" element={<LoginPage />} />

@@ -17,13 +17,14 @@
 - [x] Step 0: Docker Compose, backend + frontend skeletons, health check, GitHub Actions CI
 - [x] Step 1: VIN decoder (vPIC) + YMM/engine picker + vehicle profile + My Garage (minimal accounts)
 - [x] Step 2: Recalls, TSB index, complaints + NHTSA import scripts
-- [ ] Step 3: DTC search + seed generic OBD-II codes (our own wording)
+- [x] Step 3: DTC search + seed generic OBD-II codes (our own wording) — 57 codes so far
 - [ ] Step 4: Community guides & specs (revisions, verify, votes, reports, photos, safety disclaimer)
 - [ ] Step 5: Unified search
 - [ ] Step 6: Roles, pro requests, moderation queue, anti-spam
 - [ ] Step 7: PWA offline polish, seed data, docs (DATA_SOURCES.md, deploy guide)
 
 ## Known follow-ups
+- Write up more generic codes (target: the ~300 most common); community can add/edit once step 4 lands
 - NHTSA's complaints API returns nothing for some popular models (e.g. 2015 F-150); add a bulk importer for FLAT_CMPL / COMPLAINTS_RECEIVED_* files as a fallback
 - TSB model-name matching: NHTSA sometimes uses names like "F150 PICKUP" or "SILVERADO 1500"; add a model alias table
 - Schedule the NHTSA refresh (e.g. free GitHub Actions cron or host cron): `python -m app.importers.nhtsa refresh` weekly, `tsbs --period 2025-2026` monthly

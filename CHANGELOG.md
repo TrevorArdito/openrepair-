@@ -22,6 +22,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - `docs/FUNDING.md`: running on $0, donation options, free legal help.
 - **Recalls, TSBs and complaints** per vehicle from NHTSA: recall alert banner, "do not drive" /
   "park outside" warnings, filter by part, most-reported problems, links to NHTSA.gov.
+- **Trouble code lookup**: search by code or symptom; 57 common generic OBD-II codes written in our
+  own words (meaning, symptoms, likely causes, step-by-step diagnosis as a tap-to-check checklist,
+  urgency); any valid code is decoded by structure even without a write-up. Every code records
+  its source and license.
 - NHTSA data refresh scripts: `python -m app.importers.nhtsa refresh` (recalls + complaints) and
   `python -m app.importers.nhtsa tsbs` (TSB index from NHTSA bulk files). Every run is logged.
 - Project skeleton: AGPL-3.0 license, README, CONTRIBUTING (with content rules),

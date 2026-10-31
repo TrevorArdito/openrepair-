@@ -23,6 +23,7 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("accounts", "app.modules.accounts.router"),
     ModuleSpec("vehicles", "app.modules.vehicles.router"),
     ModuleSpec("safety", "app.modules.safety.router"),
+    ModuleSpec("dtc", "app.modules.dtc.router"),
     # Off by default. See app/modules/hardware/README.md.
     ModuleSpec("hardware", "app.modules.hardware.router", enabled_flag="enable_hardware"),
 ]

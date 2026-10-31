@@ -6,7 +6,7 @@ const BACKEND_ERROR_CODES = [
   "vin_wrong_length", "vin_invalid_letters", "vin_invalid_characters", "vin_not_decodable",
   "upstream_unavailable", "invalid_credentials", "email_taken", "terms_not_accepted",
   "registration_rejected", "rate_limited", "account_disabled", "auth_required", "csrf_failed",
-  "validation_error", "garage_full", "vehicle_not_found", "not_found",
+  "validation_error", "garage_full", "vehicle_not_found", "not_found", "dtc_invalid",
 ];
 
 describe("translations", () => {

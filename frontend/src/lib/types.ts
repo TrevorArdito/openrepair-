@@ -87,3 +87,20 @@ export type Tsb = {
   summary: string | null;
 };
 export type TsbList = Freshness & { total: number; items: Tsb[]; last_import: string | null };
+
+export type DtcSummary = { code: string; title: string; severity: "low" | "medium" | "high" };
+export type Dtc = {
+  code: string;
+  known: boolean;
+  structure: { system: string; generic: boolean; subsystem: string | null };
+  title: string | null;
+  description: string | null;
+  symptoms: string[];
+  causes: string[];
+  diagnostic_steps: string[];
+  severity: "low" | "medium" | "high" | null;
+  systems: string[];
+  source: string | null;
+  source_license: string | null;
+  related_entries: { id: number; title: string; kind: string }[];
+};
