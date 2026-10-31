@@ -10,6 +10,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.db import SessionLocal
+from app.modules.community.service import seed_systems
 from app.modules.dtc.models import Dtc
 from app.modules.vehicles import service
 from app.modules.vehicles.models import Make
@@ -73,7 +74,12 @@ def seed_dtcs(db: Session) -> int:
 
 
 def run(db: Session) -> dict[str, int]:
-    result = {"makes_added": seed_makes(db), "vehicles": seed_vehicles(db), "dtcs": seed_dtcs(db)}
+    result = {
+        "makes_added": seed_makes(db),
+        "vehicles": seed_vehicles(db),
+        "dtcs": seed_dtcs(db),
+        "systems": seed_systems(db),
+    }
     db.commit()
     return result
 

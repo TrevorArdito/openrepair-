@@ -24,6 +24,7 @@ class Settings(BaseSettings):
     http_timeout_seconds: float = 15.0
 
     session_days: int = 30
+    storage_local_dir: str = "./data/uploads"
     # Serve the built frontend (frontend/dist) from the API server. Used in production
     # so the whole app runs as one small container.
     frontend_dist_dir: str | None = None

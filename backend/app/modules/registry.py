@@ -17,6 +17,7 @@ class ModuleSpec:
     name: str
     import_path: str
     enabled_flag: str | None = None  # Settings attribute; None = always on (core)
+    attr: str = "router"
 
 
 MODULES: list[ModuleSpec] = [
@@ -24,6 +25,8 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("vehicles", "app.modules.vehicles.router"),
     ModuleSpec("safety", "app.modules.safety.router"),
     ModuleSpec("dtc", "app.modules.dtc.router"),
+    ModuleSpec("community", "app.modules.community.router"),
+    ModuleSpec("moderation", "app.modules.community.router", attr="mod"),
     # Off by default. See app/modules/hardware/README.md.
     ModuleSpec("hardware", "app.modules.hardware.router", enabled_flag="enable_hardware"),
 ]
@@ -34,4 +37,4 @@ def enabled_modules(settings: Settings) -> list[ModuleSpec]:
 
 
 def load_router(spec: ModuleSpec):
-    return import_module(spec.import_path).router
+    return getattr(import_module(spec.import_path), spec.attr)
