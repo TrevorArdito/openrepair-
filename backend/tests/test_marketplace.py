@@ -8,7 +8,7 @@ from fastapi.testclient import TestClient
 from PIL import Image
 from sqlalchemy import select
 
-from app.config import Settings
+from app.config import Settings, get_settings
 from app.core import ratelimit
 from app.db import get_db
 from app.main import create_app
@@ -286,7 +286,8 @@ def test_reports_reach_moderators_and_removal_hides_listing(mclient, db_session_
     assert r.json()["error"]["code"] == "listing_removed"
 
 
-def test_photos_must_belong_to_seller(mclient, db_session_factory):
+def test_photos_must_belong_to_seller(mclient, db_session_factory, monkeypatch, tmp_path):
+    monkeypatch.setattr(get_settings(), "storage_local_dir", str(tmp_path))  # keep repo clean
     c = mclient
     user(c, db_session_factory, "amy@example.com")
     buf = io.BytesIO()
