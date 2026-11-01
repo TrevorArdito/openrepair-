@@ -43,8 +43,8 @@ from app.modules.community.schemas import (
     Tags,
     Verification,
 )
-from app.modules.vehicles.fitment import fits
-from app.modules.vehicles.models import EngineFamily, Make, Model, Vehicle
+from app.modules.vehicles.fitment import fitment_display, fits, validate_fitment
+from app.modules.vehicles.models import Vehicle
 
 PROBATION_APPROVALS = 3
 
@@ -83,17 +83,7 @@ def _validate(db: Session, kind: Kind, data: dict, tags: Tags, user: User) -> tu
         fields = [{"loc": [str(p) for p in e["loc"]], "type": e["type"]} for e in exc.errors()]
         raise AppError("entry_invalid", 422, fields=fields) from exc
 
-    for a in tags.applies_to:
-        if a.year_from > a.year_to:
-            raise AppError("entry_invalid", 422, fields=[{"loc": ["tags", "applies_to"]}])
-        if db.get(Make, a.make_id) is None:
-            raise NotFound("make_not_found")
-        if a.model_id is not None:
-            model = db.get(Model, a.model_id)
-            if model is None or model.make_id != a.make_id:
-                raise NotFound("model_not_found")
-        if a.engine_family_id is not None and db.get(EngineFamily, a.engine_family_id) is None:
-            raise NotFound("engine_not_found")
+    validate_fitment(db, tags.applies_to, "entry_invalid")
     known = set(db.scalars(select(System.slug).where(System.slug.in_(tags.systems))))
     if unknown := set(tags.systems) - known:
         raise AppError("unknown_system", 422, systems=sorted(unknown))
@@ -388,19 +378,7 @@ def revision_out(db: Session, rev: EntryRevision) -> RevisionOut:
 
 def tags_display(db: Session, tags: dict) -> dict:
     """Turn ids into names for display."""
-    applies = []
-    for a in tags.get("applies_to", []):
-        make = db.get(Make, a["make_id"])
-        model = db.get(Model, a["model_id"]) if a.get("model_id") else None
-        fam = db.get(EngineFamily, a["engine_family_id"]) if a.get("engine_family_id") else None
-        applies.append(
-            {
-                **a,
-                "make": make.name if make else "?",
-                "model": model.name if model else None,
-                "engine": fam.name if fam else None,
-            }  # fmt: skip
-        )
+    applies = [fitment_display(db, a) for a in tags.get("applies_to", [])]
     return {"applies_to": applies, "systems": tags.get("systems", []), "dtcs": tags.get("dtcs", [])}
 
 

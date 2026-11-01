@@ -49,6 +49,8 @@ class Settings(BaseSettings):
 
     # Feature modules (later modules plug in here; hardware is OFF by default).
     enable_hardware: bool = False
+    # Parts marketplace (new + used parts with fitment). See docs/COMMERCE_DESIGN.md.
+    enable_marketplace: bool = False
 
     @property
     def is_production(self) -> bool:

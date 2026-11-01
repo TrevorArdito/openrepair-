@@ -131,13 +131,17 @@ def update_me(data: MeUpdate, user: User = Depends(current_user), db: Session = 
     return me_out(user)
 
 
+# Optional modules (e.g. marketplace) add their data to "download my data" here.
+EXPORT_HOOKS: list = []
+
+
 @router.get("/me/export")
 def export_me(user: User = Depends(current_user), db: Session = Depends(get_db)):
     """Everything we store about you, as JSON (privacy: you can always take your data)."""
     from app.modules.vehicles.models import GarageVehicle  # local import avoids a cycle
 
     garage = db.scalars(select(GarageVehicle).where(GarageVehicle.user_id == user.id)).all()
-    return {
+    out = {
         "account": me_out(user).model_dump(),
         "created_at": user.created_at,
         "garage": [
@@ -145,6 +149,9 @@ def export_me(user: User = Depends(current_user), db: Session = Depends(get_db))
             for g in garage
         ],
     }
+    for hook in EXPORT_HOOKS:
+        out.update(hook(db, user))
+    return out
 
 
 @router.delete("/me", status_code=204, dependencies=[Depends(verify_csrf)])

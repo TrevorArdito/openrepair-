@@ -32,6 +32,8 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("search", "app.modules.search.router"),
     # Off by default. See app/modules/hardware/README.md.
     ModuleSpec("hardware", "app.modules.hardware.router", enabled_flag="enable_hardware"),
+    # Off by default. Parts marketplace — see docs/COMMERCE_DESIGN.md.
+    ModuleSpec("marketplace", "app.modules.marketplace.router", enabled_flag="enable_marketplace"),
 ]
 
 

@@ -8,7 +8,8 @@ community guides/specs today; parts, marketplace listings and tunes later
 from sqlalchemy import Float, ForeignKey, Integer, and_, func, or_
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.modules.vehicles.models import Vehicle
+from app.core.errors import AppError, NotFound
+from app.modules.vehicles.models import EngineFamily, Make, Model, Vehicle
 
 
 class FitmentMixin:
@@ -37,3 +38,32 @@ def fits(table, v: Vehicle):
         ),
         or_(table.engine_family_id.is_(None), table.engine_family_id == v.engine_family_id),
     )
+
+
+def validate_fitment(db, rows, error_code: str) -> None:
+    """Check fitment rows (objects with make_id, model_id, year_from, year_to,
+    engine_family_id): years in order, and every id exists and belongs together."""
+    for a in rows:
+        if a.year_from > a.year_to:
+            raise AppError(error_code, 422, fields=[{"loc": ["fitment", "years"]}])
+        if db.get(Make, a.make_id) is None:
+            raise NotFound("make_not_found")
+        if a.model_id is not None:
+            model = db.get(Model, a.model_id)
+            if model is None or model.make_id != a.make_id:
+                raise NotFound("model_not_found")
+        if a.engine_family_id is not None and db.get(EngineFamily, a.engine_family_id) is None:
+            raise NotFound("engine_not_found")
+
+
+def fitment_display(db, row: dict) -> dict:
+    """A fitment row with names filled in, for showing to people."""
+    make = db.get(Make, row["make_id"])
+    model = db.get(Model, row["model_id"]) if row.get("model_id") else None
+    fam = db.get(EngineFamily, row["engine_family_id"]) if row.get("engine_family_id") else None
+    return {
+        **row,
+        "make": make.name if make else "?",
+        "model": model.name if model else None,
+        "engine": fam.name if fam else None,
+    }
