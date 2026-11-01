@@ -255,7 +255,12 @@
     "listing_not_available": "This listing isn't available anymore.",
     "cannot_message_self": "That's your own listing.",
     "conversation_not_found": "That conversation wasn't found.",
-    "verification_not_found": "That license check wasn't found."
+    "verification_not_found": "That license check wasn't found.",
+    "listing_vehicle_details_required": "Fill in the vehicle details.",
+    "listing_vin_required": "Enter the 17-character VIN (required for 1981 and newer).",
+    "listing_vin_invalid": "That VIN doesn't check out — the check digit is wrong. Re-check it on the dashboard or door sticker.",
+    "listing_vin_duplicate": "This VIN is already listed for sale.",
+    "listing_vehicle_limit": "Private sellers can have up to {{limit}} vehicles listed at once. Dealers can get verified under My selling."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -838,7 +843,8 @@
       "airbag_srs": "Airbags & SRS (new only)",
       "hybrid_ev": "Hybrid & EV",
       "tools": "Tools & equipment",
-      "other": "Other"
+      "other": "Other",
+      "vehicle": "Whole vehicles"
     },
     "fits": "Fits",
     "fitsAll": "Universal — not tied to specific vehicles.",
@@ -908,7 +914,8 @@
     "verifyKind": "License type",
     "verifyKinds": {
       "dismantler_license": "Dismantler / auto recycler license",
-      "business_license": "Business license"
+      "business_license": "Business license",
+      "dealer_license": "Motor vehicle dealer license"
     },
     "verifyStatuses": {
       "pending": "waiting for review",
@@ -940,7 +947,11 @@
       "honest": "No counterfeits. The description and photos are honest.",
       "accept": "I agree to the listing rules",
       "srs": "Airbags and SRS parts: new only, and only from verified businesses. Used or rebuilt airbags can't be listed.",
-      "cat": "Catalytic converters: new ones need EPA or CARB compliance (CARB needs the EO number). Used ones can only be sold by verified licensed sellers — many states require it."
+      "cat": "Catalytic converters: new ones need EPA or CARB compliance (CARB needs the EO number). Used ones can only be sold by verified licensed sellers — many states require it.",
+      "vehLegal": "I own this vehicle (or I'm a licensed dealer selling it). It is not stolen.",
+      "vehTitle": "The title status I picked is true. If there's a loan on it, I've said so.",
+      "vehDealer": "Selling many vehicles a year can require a dealer license in your state. Private sellers can have up to 5 vehicles listed at once.",
+      "vehOdometer": "The odometer reading is accurate to my knowledge."
     },
     "noMessages": "No messages yet.",
     "roles": {
@@ -957,6 +968,56 @@
       "dismiss": "Dismiss report",
       "reasonPrompt": "Reason (shown to the seller):",
       "verifyHowTo": "Look the license number up on the issuing state's public license lookup. Approve only if the business name and status match."
-    }
+    },
+    "aPart": "A part",
+    "aVehicle": "A whole vehicle",
+    "tabParts": "Parts",
+    "tabVehicles": "Vehicles",
+    "vehiclesTitle": "Vehicles for sale",
+    "sellVehicle": "Sell a vehicle",
+    "searchVehiclesPlaceholder": "Make, model, trim or VIN",
+    "vehicleDetails": "Vehicle details",
+    "vin": "VIN",
+    "lookUp": "Look up",
+    "vinHint": "Required for 1981 and newer. We fill in the year, make and model from the VIN (NHTSA's free decoder).",
+    "vinFound": "Found: {{label}}",
+    "year": "Year",
+    "make": "Make",
+    "model": "Model",
+    "yearMin": "Year from",
+    "yearMax": "Year to",
+    "yearMakeModel": "Vehicle",
+    "titleStatus": "Title",
+    "running": "Runs?",
+    "hasLien": "There's still a loan (lien) on the title",
+    "lien": "lien on title",
+    "odometer": "Odometer",
+    "odometerUnit": "Unit",
+    "trim": "Trim",
+    "color": "Color",
+    "drive": "Drive (FWD, 4WD…)",
+    "transmission": "Transmission",
+    "titleStatuses": {
+      "clean": "Clean title",
+      "rebuilt": "Rebuilt title",
+      "salvage": "Salvage title",
+      "non_repairable": "Parts only / junk title"
+    },
+    "runnings": {
+      "runs_drives": "Runs and drives",
+      "runs_not_drives": "Runs, doesn't drive",
+      "not_running": "Doesn't run"
+    },
+    "vehicleTitleHint": "Year, make, model and trim, e.g. \"2015 Ford F-150 XLT 3.5L EcoBoost 4x4\"",
+    "vehicleDescriptionHint": "Known problems, recent repairs, rust, accident history, what's included (keys, spare, records).",
+    "beforeYouBuy": "Before you buy",
+    "repairInfo": "Repair info, recalls, TSBs and common problems for this vehicle",
+    "nhtsaRecalls": "Check this VIN for open safety recalls (NHTSA.gov)",
+    "nicbCheck": "Free theft & total-loss check (NICB VINCheck)",
+    "vehicleTips": "Check the title in person and make sure the seller's name is on it. Compare the VIN on the title, dashboard and door sticker. Have it inspected before paying. Your state DMV sets the rules for signing over the title and the odometer reading — check them before you meet.",
+    "save": "Save",
+    "savedButton": "Saved",
+    "savedTitle": "Saved",
+    "savedNone": "Nothing saved yet. Tap ☆ Save on any listing to keep track of it."
   }
 }

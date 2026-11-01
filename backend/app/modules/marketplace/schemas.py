@@ -6,10 +6,13 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator
 from app.modules.community.schemas import AppliesTo
 from app.modules.marketplace.models import (
     Condition,
+    ListingKind,
     ListingReportReason,
     ListingStatus,
+    Running,
     SellerType,
     Shipping,
+    TitleStatus,
     VerificationKind,
 )
 
@@ -75,6 +78,32 @@ class VerificationOut(BaseModel):
     created_at: datetime
 
 
+Opt40 = Annotated[str, Field(max_length=40)] | None
+
+
+class VehicleDetailsIn(Strict):
+    """Whole-vehicle facts. With a VIN, year/make/model come from decoding the VIN."""
+
+    vin: Annotated[str, Field(pattern=r"^[A-HJ-NPR-Z0-9]{17}$")] | None = None
+    year: Annotated[int, Field(ge=1900, le=2100)]
+    make_id: int
+    model_id: int | None = None
+    odometer: Annotated[int, Field(ge=0, le=3_000_000)] | None = None
+    odometer_unit: Literal["mi", "km"] = "mi"
+    title_status: TitleStatus
+    has_lien: bool = False
+    running: Running
+    trim: Annotated[str, Field(max_length=60)] | None = None
+    drive: Opt40 = None
+    transmission: Opt40 = None
+    exterior_color: Opt40 = None
+
+    @field_validator("vin", mode="before")
+    @classmethod
+    def _vin(cls, v):
+        return v.strip().upper() or None if isinstance(v, str) else v
+
+
 class ListingIn(Strict):
     title: Annotated[str, Field(min_length=5, max_length=120)]
     description: Annotated[str, Field(min_length=10, max_length=5000)]
@@ -91,7 +120,8 @@ class ListingIn(Strict):
     emissions_compliance: Literal["epa", "carb"] | None = None
     carb_eo_number: Annotated[str, Field(max_length=30)] | None = None
     fitment: Annotated[list[AppliesTo], Field(max_length=30)] = []  # empty = universal
-    photo_ids: Annotated[list[int], Field(max_length=12)] = []
+    photo_ids: Annotated[list[int], Field(max_length=20)] = []
+    vehicle: VehicleDetailsIn | None = None  # required when category == "vehicle"
     accept_rules: bool  # must be true: not stolen, not counterfeit, no open recall, legal
 
     @field_validator("source_vin", mode="before")
@@ -102,6 +132,7 @@ class ListingIn(Strict):
 
 class ListingSummary(BaseModel):
     id: int
+    kind: ListingKind
     title: str
     category: str
     condition: Condition
@@ -115,6 +146,8 @@ class ListingSummary(BaseModel):
     seller_verified: bool
     photo_url: str | None
     fits_all: bool  # no fitment rows = universal part
+    vehicle: dict | None = None  # whole-vehicle listings: year, make, model, odometer, title...
+    saved: bool = False
     created_at: datetime
 
 

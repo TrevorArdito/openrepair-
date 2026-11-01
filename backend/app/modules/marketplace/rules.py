@@ -42,6 +42,7 @@ CATEGORIES: dict[str, str | None] = {
     "airbag_srs": "restraints",
     "hybrid_ev": "hybrid_ev",
     "tools": None,
+    "vehicle": None,  # a whole vehicle (any condition) — see VehicleDetails
     "other": None,
 }
 

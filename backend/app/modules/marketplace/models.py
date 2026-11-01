@@ -66,6 +66,25 @@ class Shipping(enum.StrEnum):
 class VerificationKind(enum.StrEnum):
     business_license = "business_license"
     dismantler_license = "dismantler_license"  # auto recycler / salvage dealer license
+    dealer_license = "dealer_license"  # motor vehicle dealer license
+
+
+class ListingKind(enum.StrEnum):
+    part = "part"
+    vehicle = "vehicle"  # a whole vehicle, any condition
+
+
+class TitleStatus(enum.StrEnum):
+    clean = "clean"
+    rebuilt = "rebuilt"  # rebuilt / reconstructed (was salvage, repaired, inspected)
+    salvage = "salvage"
+    non_repairable = "non_repairable"  # junk / parts-only certificate
+
+
+class Running(enum.StrEnum):
+    runs_drives = "runs_drives"
+    runs_not_drives = "runs_not_drives"
+    not_running = "not_running"
 
 
 class VerificationStatus(enum.StrEnum):
@@ -133,7 +152,10 @@ class Listing(TimestampMixin, Base):
     )
     title: Mapped[str] = mapped_column(String(120))
     description: Mapped[str] = mapped_column(Text)
-    category: Mapped[str] = mapped_column(String(30), index=True)
+    kind: Mapped[ListingKind] = mapped_column(
+        _enum(ListingKind), default=ListingKind.part, index=True
+    )
+    category: Mapped[str] = mapped_column(String(30), index=True)  # "vehicle" for whole vehicles
     condition: Mapped[Condition] = mapped_column(_enum(Condition))
     brand: Mapped[str | None] = mapped_column(String(60))
     part_number: Mapped[str | None] = mapped_column(String(60), index=True)
@@ -160,6 +182,48 @@ class Listing(TimestampMixin, Base):
     photos: Mapped[list["ListingPhoto"]] = relationship(
         cascade="all, delete-orphan", order_by="ListingPhoto.position"
     )
+    vehicle: Mapped["VehicleDetails | None"] = relationship(
+        cascade="all, delete-orphan", uselist=False
+    )
+
+
+class VehicleDetails(Base):
+    """Extra facts for a whole-vehicle listing."""
+
+    __tablename__ = "market_vehicle_details"
+
+    listing_id: Mapped[int] = mapped_column(
+        ForeignKey("market_listings.id", ondelete="CASCADE"), primary_key=True
+    )
+    year: Mapped[int] = mapped_column(Integer, index=True)
+    make_id: Mapped[int] = mapped_column(ForeignKey("makes.id"), index=True)
+    model_id: Mapped[int | None] = mapped_column(ForeignKey("models.id"), index=True)
+    # Our vehicle record (year + model + engine) when known — links to repair info and recalls.
+    vehicle_id: Mapped[int | None] = mapped_column(ForeignKey("vehicles.id", ondelete="SET NULL"))
+    vin: Mapped[str | None] = mapped_column(String(17), index=True)
+    odometer: Mapped[int | None] = mapped_column(Integer)
+    odometer_unit: Mapped[str] = mapped_column(String(2), default="mi")
+    title_status: Mapped[TitleStatus] = mapped_column(_enum(TitleStatus))
+    has_lien: Mapped[bool] = mapped_column(Boolean, default=False)
+    running: Mapped[Running] = mapped_column(_enum(Running))
+    trim: Mapped[str | None] = mapped_column(String(60))
+    drive: Mapped[str | None] = mapped_column(String(40))
+    transmission: Mapped[str | None] = mapped_column(String(40))
+    exterior_color: Mapped[str | None] = mapped_column(String(40))
+
+
+class SavedListing(Base):
+    """A buyer's watch list."""
+
+    __tablename__ = "market_saved"
+    __table_args__ = (UniqueConstraint("user_id", "listing_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    listing_id: Mapped[int] = mapped_column(
+        ForeignKey("market_listings.id", ondelete="CASCADE"), index=True
+    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
 class ListingFitment(FitmentMixin, Base):

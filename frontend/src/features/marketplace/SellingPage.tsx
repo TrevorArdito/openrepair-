@@ -105,7 +105,7 @@ function Verifications() {
       >
         <Label htmlFor="vk">{t("market.verifyKind")}</Label>
         <Select id="vk" value={f.kind} onChange={(e) => setF({ ...f, kind: e.target.value })}>
-          {["dismantler_license", "business_license"].map((k) => <option key={k} value={k}>{t(`market.verifyKinds.${k}`)}</option>)}
+          {["dismantler_license", "dealer_license", "business_license"].map((k) => <option key={k} value={k}>{t(`market.verifyKinds.${k}`)}</option>)}
         </Select>
         <TextField id="vb" label={t("market.businessName")} value={f.business_name} max={120} required onChange={(v) => setF({ ...f, business_name: v })} />
         <div className="grid grid-cols-2 gap-3">

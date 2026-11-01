@@ -17,6 +17,10 @@ What's built (v1, no payments):
 - Prohibited-item rules (`rules.py`): emissions delete/defeat parts, used airbags/SRS (new
   only from verified sellers), catalytic converters (new = EPA/CARB proof, used = verified
   licensed sellers only). Sellers accept the listing rules on every listing.
+- Whole vehicles (category `vehicle`): VIN required for 1981+ and checked (check digit, NHTSA
+  decode sets year/make/model, no duplicate open listings), title status, lien, runs/drives,
+  odometer; private sellers max 5 open vehicle listings (more needs a verified dealer license)
+- Watch list ("Saved"); email alert on new messages (link only, one per unread batch)
 - Moderator actions logged in the moderation log; marketplace data in "download my data";
   deleting an account deletes its seller profile and listings.
 

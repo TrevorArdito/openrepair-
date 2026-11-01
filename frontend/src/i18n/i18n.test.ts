@@ -17,7 +17,8 @@ const BACKEND_ERROR_CODES = [
   "listing_rules_not_accepted", "listing_removed", "listing_status_locked", "listing_prohibited_defeat",
   "listing_prohibited_used_srs", "listing_requires_verified_seller", "listing_needs_emissions_compliance",
   "listing_needs_carb_eo", "listing_not_available", "cannot_message_self", "conversation_not_found",
-  "verification_not_found",
+  "verification_not_found", "listing_vehicle_details_required", "listing_vin_required", "listing_vin_invalid",
+  "listing_vin_duplicate", "listing_vehicle_limit",
 ];
 
 describe("translations", () => {

@@ -19,6 +19,7 @@ from app.modules.marketplace.models import (
     Listing,
     ListingReport,
     ListingStatus,
+    SavedListing,
     Seller,
     SellerStatus,
     SellerVerification,
@@ -41,6 +42,7 @@ from app.modules.marketplace.schemas import (
     VerificationOut,
 )
 from app.modules.vehicles.models import Vehicle
+from app.modules.vehicles.vpic import VpicApi, get_vpic
 
 router = APIRouter(prefix="/market", tags=["marketplace"])
 EXPORT_HOOKS.append(service.export_for)
@@ -127,9 +129,17 @@ def browse(
     state: str | None = Query(None, max_length=2),
     min_price: int | None = Query(None, ge=0),
     max_price: int | None = Query(None, ge=0),
+    kind: str | None = Query(None, pattern="^(part|vehicle)$"),
+    make_id: int | None = None,
+    model_id: int | None = None,
+    year_min: int | None = None,
+    year_max: int | None = None,
+    title_status: str | None = None,
+    running: str | None = None,
     sort: str = "newest",
     limit: int = Query(24, ge=1, le=service.PAGE_MAX),
     offset: int = Query(0, ge=0),
+    user: User | None = Depends(optional_user),
     db: Session = Depends(get_db),
 ):
     vehicle = db.get(Vehicle, vehicle_id) if vehicle_id else None
@@ -138,9 +148,11 @@ def browse(
     total, rows = service.search(
         db, q=q, category=category, condition=condition, vehicle=vehicle, state=state,
         min_price=min_price, max_price=max_price, sort=sort, limit=limit, offset=offset,
-        seller_id=seller_id,
+        seller_id=seller_id, kind=kind, make_id=make_id, model_id=model_id, year_min=year_min,
+        year_max=year_max, title_status=title_status, running=running,
     )  # fmt: skip
-    return {"total": total, "items": [service.summary(db, ls) for ls in rows]}
+    saved = service.saved_ids(db, user)
+    return {"total": total, "items": [service.summary(db, ls, saved=saved) for ls in rows]}
 
 
 @router.get("/my/listings")
@@ -168,9 +180,12 @@ def get_listing(
     dependencies=[Depends(verify_csrf), Depends(rate_limit("market_list", 30, 3600))],
 )
 def create_listing(
-    data: ListingIn, user: User = Depends(current_user), db: Session = Depends(get_db)
+    data: ListingIn,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+    vpic: VpicApi = Depends(get_vpic),
 ):
-    listing = service.save_listing(db, user, data, None)
+    listing = service.save_listing(db, user, data, None, vpic)
     db.commit()
     return service.detail(db, listing, user)
 
@@ -185,11 +200,12 @@ def update_listing(
     data: ListingIn,
     user: User = Depends(current_user),
     db: Session = Depends(get_db),
+    vpic: VpicApi = Depends(get_vpic),
 ):
     listing = db.get(Listing, listing_id)
     if listing is None or listing.seller.user_id != user.id:
         raise NotFound("listing_not_found")
-    service.save_listing(db, user, data, listing)
+    service.save_listing(db, user, data, listing, vpic)
     db.commit()
     return service.detail(db, listing, user)
 
@@ -226,6 +242,49 @@ def report_listing(
     db.add(ListingReport(listing_id=listing.id, reporter_id=user.id, **data.model_dump()))
     db.commit()
     return {"status": "received"}
+
+
+# ---- watch list ------------------------------------------------------------------
+
+
+@router.post("/listings/{listing_id}/save", status_code=204, dependencies=[Depends(verify_csrf)])
+def save_listing(
+    listing_id: int, user: User = Depends(current_user), db: Session = Depends(get_db)
+):
+    listing = _listing(db, listing_id, user)
+    if not db.scalar(
+        select(SavedListing.id).where(
+            SavedListing.user_id == user.id, SavedListing.listing_id == listing.id
+        )
+    ):
+        db.add(SavedListing(user_id=user.id, listing_id=listing.id))
+        db.commit()
+
+
+@router.delete("/listings/{listing_id}/save", status_code=204, dependencies=[Depends(verify_csrf)])
+def unsave_listing(
+    listing_id: int, user: User = Depends(current_user), db: Session = Depends(get_db)
+):
+    row = db.scalar(
+        select(SavedListing).where(
+            SavedListing.user_id == user.id, SavedListing.listing_id == listing_id
+        )
+    )
+    if row is not None:
+        db.delete(row)
+        db.commit()
+
+
+@router.get("/saved")
+def saved_listings(user: User = Depends(current_user), db: Session = Depends(get_db)):
+    rows = db.scalars(
+        select(Listing)
+        .join(SavedListing, SavedListing.listing_id == Listing.id)
+        .where(SavedListing.user_id == user.id)
+        .order_by(SavedListing.created_at.desc())
+    ).all()
+    ids = {ls.id for ls in rows}
+    return [service.summary(db, ls, saved=ids) for ls in rows if service.can_view(ls, user)]
 
 
 # ---- messages ----------------------------------------------------------------------

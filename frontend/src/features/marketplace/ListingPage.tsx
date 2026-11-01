@@ -45,6 +45,38 @@ function ContactSeller({ l }: { l: Listing }) {
   );
 }
 
+function SaveButton({ l, onChange }: { l: Listing; onChange: (saved: boolean) => void }) {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  if (!user || l.is_owner) return null;
+  const toggle = () =>
+    api(`/market/listings/${l.id}/save`, { method: l.saved ? "DELETE" : "POST" })
+      .then(() => onChange(!l.saved))
+      .catch(() => undefined);
+  return (
+    <Button variant="secondary" className="w-full" aria-pressed={l.saved} onClick={toggle}>
+      {l.saved ? `★ ${t("market.savedButton")}` : `☆ ${t("market.save")}`}
+    </Button>
+  );
+}
+
+function VehicleChecks({ l }: { l: Listing }) {
+  const { t } = useTranslation();
+  const v = l.vehicle!;
+  const ext = "inline-flex min-h-12 items-center font-semibold underline";
+  return (
+    <Card className="space-y-2">
+      <h2 className="text-xl font-bold">{t("market.beforeYouBuy")}</h2>
+      <ul className="space-y-1 text-lg">
+        {v.vehicle_id && <li><Link className={ext} to={`/vehicle/${v.vehicle_id}`}>🔧 {t("market.repairInfo")}</Link></li>}
+        {v.vin && <li><a className={ext} href="https://www.nhtsa.gov/recalls" target="_blank" rel="noopener noreferrer">⚠️ {t("market.nhtsaRecalls")} ↗</a></li>}
+        <li><a className={ext} href="https://www.nicb.org/vincheck" target="_blank" rel="noopener noreferrer">🔎 {t("market.nicbCheck")} ↗</a></li>
+      </ul>
+      <p className="text-base">{t("market.vehicleTips")}</p>
+    </Card>
+  );
+}
+
 function ReportForm({ id }: { id: number }) {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -116,7 +148,22 @@ export default function ListingPage() {
 
   if (error) return <Alert>{error}</Alert>;
   if (!l) return <Spinner label={t("app.loading")} />;
-  const rows: [string, string | null][] = [
+  const v = l.vehicle;
+  const vehicleRows: [string, string | null][] = v ? [
+    [t("market.yearMakeModel"), [v.year, v.make, v.model, v.trim].filter(Boolean).join(" ")],
+    [t("market.odometer"), v.odometer != null ? `${v.odometer.toLocaleString()} ${v.odometer_unit}` : null],
+    [t("market.titleStatus"), t(`market.titleStatuses.${v.title_status}`) + (v.has_lien ? ` · ${t("market.lien")}` : "")],
+    [t("market.running"), t(`market.runnings.${v.running}`)],
+    [t("market.vin"), v.vin ?? null],
+    [t("market.drive"), v.drive ?? null],
+    [t("market.transmission"), v.transmission ?? null],
+    [t("market.color"), v.exterior_color ?? null],
+  ] : [];
+  const rows: [string, string | null][] = v ? [
+    ...vehicleRows,
+    [t("market.shipping"), t(`market.shippings.${l.shipping}`) + (l.shipping_note ? ` — ${l.shipping_note}` : "")],
+    [t("market.listed"), formatDate(l.created_at)],
+  ] : [
     [t("market.condition"), t(`market.conditions.${l.condition}`)],
     [t("market.category"), t(`market.categories.${l.category}`)],
     [t("market.brand"), l.brand],
@@ -154,14 +201,15 @@ export default function ListingPage() {
       </div>
 
       {l.is_owner && <OwnerControls l={l} onChange={setL} />}
+      <SaveButton l={l} onChange={(saved) => setL({ ...l, saved })} />
 
-      <Card className="space-y-2">
+      {v ? <VehicleChecks l={l} /> : <Card className="space-y-2">
         <h2 className="text-xl font-bold">{t("market.fits")}</h2>
         {l.fits_all ? <p className="text-lg">{t("market.fitsAll")}</p> : (
           <ul className="list-disc space-y-1 pl-6 text-lg">{l.fitment.map((f, i) => <li key={i}>{fitLabel(f)}</li>)}</ul>
         )}
         <p className="text-base">{t("market.fitmentWarning")}</p>
-      </Card>
+      </Card>}
 
       <Card>
         <p className="whitespace-pre-line text-lg">{l.description}</p>

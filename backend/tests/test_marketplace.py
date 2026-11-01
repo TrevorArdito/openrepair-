@@ -317,3 +317,104 @@ def test_export_and_delete_account(mclient, db_session_factory):
     with db_session_factory() as db:
         assert db.scalar(select(Seller)) is None
         assert db.scalar(select(Listing)) is None
+
+
+# ---- whole vehicles, watch list, message emails -------------------------------------
+
+from app.core.email import OUTBOX  # noqa: E402
+from app.modules.vehicles.vin import compute_check_digit  # noqa: E402
+
+
+def _vin(serial: str) -> str:
+    base = f"1FTEW1EG0FK{serial}"  # check digit (9th character) filled in below
+    return base[:8] + compute_check_digit(base) + base[9:]
+
+
+def vehicle_listing(client, **vehicle):
+    ford = next(m["id"] for m in client.get("/api/v1/vehicles/makes").json() if m["name"] == "Ford")
+    v = {"year": 2015, "make_id": ford, "title_status": "clean", "running": "runs_drives",
+         "odometer": 148000, **vehicle}  # fmt: skip
+    return listing(client, title="2015 F-150 XLT 3.5 EcoBoost", category="vehicle",
+                   description="Runs and drives great, new tires.", price_cents=1650000,
+                   shipping="pickup", vehicle=v)  # fmt: skip
+
+
+def test_whole_vehicle_listing_uses_vin(mclient, db_session_factory, vpic):
+    c = mclient
+    user(c, db_session_factory, "sam@example.com")
+    seller(c, seller_type="individual")
+    assert vehicle_listing(c).json()["error"]["code"] == "listing_vin_required"
+    good = _vin("A12345")
+    bad = good[:8] + ("X" if good[8] != "X" else "0") + good[9:]  # wrong check digit
+    assert vehicle_listing(c, vin=bad).json()["error"]["code"] == "listing_vin_invalid"
+
+    r = vehicle_listing(c, vin=_vin("A12345"), model_id=None, year=1999)  # VIN wins
+    assert r.status_code == 201, r.text
+    item = r.json()
+    assert item["kind"] == "vehicle" and item["fits_all"] is False
+    veh = item["vehicle"]
+    assert (veh["year"], veh["make"], veh["model"]) == (2015, "Ford", "F-150")
+    assert veh["vehicle_id"] and veh["vin"] == _vin("A12345")
+    # Same VIN can't be listed twice at once.
+    assert vehicle_listing(c, vin=_vin("A12345")).json()["error"]["code"] == "listing_vin_duplicate"
+
+    # Parts search and vehicle search are separate; filters work.
+    listing(c)  # an alternator
+    assert c.get(f"{API}/listings", params={"kind": "vehicle"}).json()["total"] == 1
+    assert c.get(f"{API}/listings", params={"kind": "part"}).json()["total"] == 1
+    got = c.get(f"{API}/listings", params={"kind": "vehicle", "year_min": 2014, "year_max": 2016,
+                                           "title_status": "clean", "q": "f-150"}).json()  # fmt: skip
+    assert got["total"] == 1
+    assert (
+        c.get(f"{API}/listings", params={"kind": "vehicle", "running": "not_running"}).json()[
+            "total"
+        ]
+        == 0
+    )
+
+    # Pre-1981 classics have no 17-character VIN.
+    r = vehicle_listing(c, year=1965, title_status="salvage", running="not_running")
+    assert r.status_code == 201 and r.json()["vehicle"]["vin"] is None
+
+
+def test_private_seller_vehicle_limit(mclient, db_session_factory):
+    c = mclient
+    user(c, db_session_factory, "sam@example.com")
+    seller(c, seller_type="individual")
+    for i in range(5):
+        assert vehicle_listing(c, vin=_vin(f"B1234{i}")).status_code == 201
+    r = vehicle_listing(c, vin=_vin("B12399"))
+    assert r.status_code == 403 and r.json()["error"]["code"] == "listing_vehicle_limit"
+
+
+def test_watch_list(mclient, db_session_factory):
+    c = mclient
+    user(c, db_session_factory, "buyer@example.com")
+    user(c, db_session_factory, "sam@example.com")
+    seller(c)
+    item = listing(c).json()
+    login(c, "buyer@example.com")
+    assert c.post(f"{API}/listings/{item['id']}/save", headers=csrf(c)).status_code == 204
+    c.post(f"{API}/listings/{item['id']}/save", headers=csrf(c))  # twice is fine
+    saved = c.get(f"{API}/saved").json()
+    assert [s["id"] for s in saved] == [item["id"]] and saved[0]["saved"]
+    assert c.get(f"{API}/listings").json()["items"][0]["saved"] is True
+    c.delete(f"{API}/listings/{item['id']}/save", headers=csrf(c))
+    assert c.get(f"{API}/saved").json() == []
+
+
+def test_message_email_is_one_per_unread_batch(mclient, db_session_factory):
+    c = mclient
+    user(c, db_session_factory, "buyer@example.com")
+    user(c, db_session_factory, "sam@example.com")
+    seller(c)
+    item = listing(c).json()
+    login(c, "buyer@example.com")
+    OUTBOX.clear()
+    conv = c.post(f"{API}/listings/{item['id']}/messages", json={"body": "Is it still there? Call me 555-0100"},
+                  headers=csrf(c)).json()  # fmt: skip
+    c.post(f"{API}/conversations/{conv['id']}/messages", json={"body": "Hello?"}, headers=csrf(c))
+    mails = [m.get_content() for m in OUTBOX if m["To"] == "sam@example.com"]
+    assert len(mails) == 1  # second message while the first is unread: no extra email
+    assert "555-0100" not in mails[0]  # the message text never goes out by email
+    assert f"/market/messages/{conv['id']}" in mails[0]

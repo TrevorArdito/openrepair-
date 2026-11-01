@@ -1,8 +1,12 @@
+import logging
 from datetime import UTC, datetime
+from types import SimpleNamespace
 
 from sqlalchemy import and_, exists, func, or_, select
 from sqlalchemy.orm import Session
 
+from app.config import get_settings
+from app.core.email import send_email
 from app.core.errors import AppError, NotFound
 from app.modules.accounts.models import Role, User, UserStatus
 from app.modules.community.models import Photo
@@ -12,12 +16,15 @@ from app.modules.marketplace.models import (
     Conversation,
     Listing,
     ListingFitment,
+    ListingKind,
     ListingPhoto,
     ListingStatus,
     Message,
+    SavedListing,
     Seller,
     SellerStatus,
     SellerVerification,
+    VehicleDetails,
     VerificationStatus,
 )
 from app.modules.marketplace.schemas import (
@@ -30,8 +37,17 @@ from app.modules.marketplace.schemas import (
     SellerOut,
 )
 from app.modules.search.service import words
+from app.modules.vehicles import service as vehicles_service
 from app.modules.vehicles.fitment import fitment_display, fits, validate_fitment
-from app.modules.vehicles.models import Vehicle
+from app.modules.vehicles.models import Make, Model, Vehicle
+from app.modules.vehicles.vin import check_digit_valid
+
+log = logging.getLogger(__name__)
+# Private sellers selling many vehicles may need a dealer license in their state
+# ("curbstoning" laws), so more than this many active vehicle listings needs a verified license.
+PRIVATE_VEHICLE_LIMIT = 5
+VIN_REQUIRED_FROM = 1981  # 17-character VINs became standard for the 1981 model year
+OPEN = (ListingStatus.active, ListingStatus.pending)
 
 PAGE_MAX = 50
 
@@ -102,29 +118,94 @@ def seller_out(db: Session, seller: Seller, private: bool = False) -> SellerOut:
 # ---- listings --------------------------------------------------------------------
 
 
-def _search_text(listing: Listing) -> str:
+def _search_text(db: Session, listing: Listing) -> str:
     parts = [listing.title, listing.description, listing.brand, listing.part_number]
+    if (vd := listing.vehicle) is not None:
+        make, model = db.get(Make, vd.make_id), db.get(Model, vd.model_id) if vd.model_id else None
+        parts += [str(vd.year), make.name if make else None, model.name if model else None]
+        parts += [vd.trim, vd.vin]
     if listing.part_number:  # "BR-900 1234" also findable as "br9001234"
         parts.append("".join(c for c in listing.part_number if c.isalnum()))
     return " ".join(p for p in parts if p).lower()
 
 
-def save_listing(db: Session, user: User, data: ListingIn, listing: Listing | None) -> Listing:
+def _vehicle_fields(
+    db: Session, vpic, seller: Seller, data: ListingIn, listing: Listing | None, verified: bool
+) -> dict:
+    v = data.vehicle
+    if v is None:
+        raise AppError("listing_vehicle_details_required", 422)
+    fields = v.model_dump()
+    fields["vehicle_id"] = None
+    if v.year >= VIN_REQUIRED_FROM and not v.vin:
+        raise AppError("listing_vin_required", 422)
+    if v.vin:
+        if not check_digit_valid(v.vin):
+            raise AppError("listing_vin_invalid", 422)
+        if vpic is not None:
+            try:  # the VIN is the truth: year/make/model come from NHTSA's decoder
+                dec = vehicles_service.decode_vin(db, vpic, v.vin).vehicle
+                fields.update(
+                    year=dec.year, make_id=dec.make.id, model_id=dec.model.id, vehicle_id=dec.id
+                )
+            except AppError:
+                pass  # NHTSA down or VIN unknown: keep what the seller picked
+        dup = db.scalar(
+            select(Listing.id)
+            .join(VehicleDetails, VehicleDetails.listing_id == Listing.id)
+            .where(
+                VehicleDetails.vin == v.vin,
+                Listing.status.in_(OPEN),
+                Listing.id != (listing.id if listing else -1),
+            )
+        )
+        if dup:
+            raise AppError("listing_vin_duplicate", 409)
+    one = SimpleNamespace(
+        make_id=fields["make_id"], model_id=fields["model_id"], year_from=fields["year"],
+        year_to=fields["year"], engine_family_id=None,
+    )  # fmt: skip
+    validate_fitment(db, [one], "listing_invalid")
+    if not verified:
+        open_vehicles = db.scalar(
+            select(func.count())
+            .select_from(Listing)
+            .where(
+                Listing.seller_id == seller.id,
+                Listing.kind == ListingKind.vehicle,
+                Listing.status.in_(OPEN),
+                Listing.id != (listing.id if listing else -1),
+            )
+        )
+        if (open_vehicles or 0) >= PRIVATE_VEHICLE_LIMIT:
+            raise AppError("listing_vehicle_limit", 403, limit=PRIVATE_VEHICLE_LIMIT)
+    return fields
+
+
+def save_listing(
+    db: Session, user: User, data: ListingIn, listing: Listing | None, vpic=None
+) -> Listing:
     ensure_can_contribute(user)
     seller = require_seller(db, user)
     if not data.accept_rules:
         raise AppError("listing_rules_not_accepted", 422)
     if listing is not None and listing.status == ListingStatus.removed:
         raise AppError("listing_removed", 403)
+    verified = bool(verified_kinds(db, seller))
+    is_vehicle = data.category == "vehicle"
+    vfields = _vehicle_fields(db, vpic, seller, data, listing, verified) if is_vehicle else None
+    if not is_vehicle and data.vehicle is not None:
+        raise AppError("listing_invalid", 422, fields=[{"loc": ["vehicle"]}])
     rules.check_listing(
         category=data.category,
         condition=data.condition,
         text=" ".join(filter(None, [data.title, data.description, data.part_number])),
         emissions_compliance=data.emissions_compliance,
         carb_eo_number=data.carb_eo_number,
-        seller_verified=bool(verified_kinds(db, seller)),
+        seller_verified=verified,
     )
-    validate_fitment(db, data.fitment, "listing_invalid")
+    fitment = [] if is_vehicle else data.fitment  # a whole vehicle *is* its fitment
+    validate_fitment(db, fitment, "listing_invalid")
     photos = []
     for pid in dict.fromkeys(data.photo_ids):
         photo = db.get(Photo, pid)
@@ -137,7 +218,8 @@ def save_listing(db: Session, user: User, data: ListingIn, listing: Listing | No
             raise NotFound("photo_not_found")
         photos.append(photo)
 
-    fields = data.model_dump(exclude={"fitment", "photo_ids", "accept_rules"})
+    fields = data.model_dump(exclude={"fitment", "photo_ids", "accept_rules", "vehicle"})
+    fields["kind"] = ListingKind.vehicle if is_vehicle else ListingKind.part
     if fields["emissions_compliance"] != "carb":
         fields["carb_eo_number"] = None
     if listing is None:
@@ -154,9 +236,16 @@ def save_listing(db: Session, user: User, data: ListingIn, listing: Listing | No
     elif listing.status in (None, ListingStatus.pending):
         listing.status = ListingStatus.active
     listing.status_reason = None
-    listing.fitment = [ListingFitment(**f.model_dump()) for f in data.fitment]
+    listing.fitment = [ListingFitment(**f.model_dump()) for f in fitment]
     listing.photos = [ListingPhoto(photo_id=p.id, position=i) for i, p in enumerate(photos)]
-    listing.search_text = _search_text(listing)
+    if vfields is None:
+        listing.vehicle = None
+    elif listing.vehicle is None:
+        listing.vehicle = VehicleDetails(**vfields)
+    else:
+        for k, v in vfields.items():
+            setattr(listing.vehicle, k, v)
+    listing.search_text = _search_text(db, listing)
     db.flush()
     return listing
 
@@ -174,12 +263,47 @@ def _photo_url(photo_id: int) -> str:
     return f"/api/v1/photos/{photo_id}"
 
 
-def summary(db: Session, listing: Listing, verified: bool | None = None) -> ListingSummary:
+def _vehicle_dict(db: Session, vd: VehicleDetails, full: bool) -> dict:
+    make, model = db.get(Make, vd.make_id), db.get(Model, vd.model_id) if vd.model_id else None
+    out = {
+        "year": vd.year,
+        "make": make.name if make else "?",
+        "model": model.name if model else None,
+        "trim": vd.trim,
+        "odometer": vd.odometer,
+        "odometer_unit": vd.odometer_unit,
+        "title_status": vd.title_status.value,
+        "has_lien": vd.has_lien,
+        "running": vd.running.value,
+        "vehicle_id": vd.vehicle_id,
+    }
+    if full:
+        out.update(
+            vin=vd.vin, make_id=vd.make_id, model_id=vd.model_id, drive=vd.drive,
+            transmission=vd.transmission, exterior_color=vd.exterior_color,
+        )  # fmt: skip
+    return out
+
+
+def saved_ids(db: Session, user: User | None) -> set[int]:
+    if user is None:
+        return set()
+    return set(db.scalars(select(SavedListing.listing_id).where(SavedListing.user_id == user.id)))
+
+
+def summary(
+    db: Session,
+    listing: Listing,
+    verified: bool | None = None,
+    saved: set[int] | None = None,
+    full: bool = False,
+) -> ListingSummary:
     seller = listing.seller
     if verified is None:
         verified = bool(verified_kinds(db, seller))
     return ListingSummary(
         id=listing.id,
+        kind=listing.kind,
         title=listing.title,
         category=listing.category,
         condition=listing.condition,
@@ -192,13 +316,15 @@ def summary(db: Session, listing: Listing, verified: bool | None = None) -> List
         seller_name=seller.display_name,
         seller_verified=verified,
         photo_url=_photo_url(listing.photos[0].photo_id) if listing.photos else None,
-        fits_all=not listing.fitment,
+        fits_all=not listing.fitment and listing.kind == ListingKind.part,
+        vehicle=_vehicle_dict(db, listing.vehicle, full) if listing.vehicle else None,
+        saved=listing.id in (saved or ()),
         created_at=listing.created_at,
     )
 
 
 def detail(db: Session, listing: Listing, viewer: User | None) -> ListingOut:
-    base = summary(db, listing).model_dump()
+    base = summary(db, listing, saved=saved_ids(db, viewer), full=True).model_dump()
     fit = [
         fitment_display(
             db,
@@ -257,6 +383,13 @@ def search(
     limit: int,
     offset: int,
     seller_id: int | None = None,
+    kind: str | None = None,
+    make_id: int | None = None,
+    model_id: int | None = None,
+    year_min: int | None = None,
+    year_max: int | None = None,
+    title_status: str | None = None,
+    running: str | None = None,
 ) -> tuple[int, list[Listing]]:
     stmt = (
         select(Listing)
@@ -267,6 +400,19 @@ def search(
         stmt = stmt.where(and_(*[Listing.search_text.like(f"%{w}%") for w in ws]))
     if seller_id is not None:
         stmt = stmt.where(Listing.seller_id == seller_id)
+    if kind:
+        stmt = stmt.where(Listing.kind == kind)
+    vfilters = [
+        (make_id, lambda x: VehicleDetails.make_id == x),
+        (model_id, lambda x: VehicleDetails.model_id == x),
+        (year_min, lambda x: VehicleDetails.year >= x),
+        (year_max, lambda x: VehicleDetails.year <= x),
+        (title_status, lambda x: VehicleDetails.title_status == x),
+        (running, lambda x: VehicleDetails.running == x),
+    ]
+    if any(v is not None for v, _ in vfilters):
+        stmt = stmt.join(VehicleDetails, VehicleDetails.listing_id == Listing.id)
+        stmt = stmt.where(*[cond(v) for v, cond in vfilters if v is not None])
     if category:
         stmt = stmt.where(Listing.category == category)
     if condition:
@@ -328,11 +474,29 @@ def add_message(db: Session, user: User, conv: Conversation, body: str) -> Messa
         raise NotFound("conversation_not_found")
     if conv.listing.status == ListingStatus.removed:
         raise AppError("listing_not_available", 409)
+    already_waiting = any(m.sender_id == user.id and not m.read for m in conv.messages)
     msg = Message(conversation_id=conv.id, sender_id=user.id, body=body)
     db.add(msg)
     conv.updated_at = datetime.now(UTC)
     db.flush()
+    if not already_waiting:  # one email per batch of unread messages, not one per message
+        _notify(conv, user)
     return msg
+
+
+def _notify(conv: Conversation, sender: User) -> None:
+    """Email the other person a link (never the message text or anyone's email address)."""
+    recipient = conv.listing.seller.user if conv.buyer_id == sender.id else conv.buyer
+    link = f"{get_settings().public_base_url}/market/messages/{conv.id}"
+    try:
+        send_email(
+            recipient.email,
+            f'New message about "{conv.listing.title}"',
+            f"Hi {recipient.display_name},\n\n{sender.display_name} sent you a message about "
+            f'"{conv.listing.title}" on ChrystalClear.\n\nRead and reply here:\n{link}\n',
+        )
+    except Exception:  # noqa: BLE001 - a mail outage must never block messaging
+        log.exception("message notification email failed")
 
 
 def conversation_out(

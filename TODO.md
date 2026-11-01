@@ -63,7 +63,11 @@
 - [ ] **Parts catalog**: categories linked to systems, brands, part numbers, interchange, fitment, compliance
 - [x] **Parts marketplace v1** (off by default, ENABLE_MARKETPLACE): sellers, license verification,
       listings with fitment + photos, search, messages, reports, review queue, prohibited-item rules
-- [ ] Marketplace next: email alert for new messages; distance search by ZIP; buyer reviews;
+- [x] Marketplace: whole vehicles (any condition, VIN decode, title status, before-you-buy checks),
+      watch list (Saved), email alert for new messages (link only, one per unread batch)
+- [ ] Used catalytic converters where legal: state-by-state rules (owner wants this; research each
+      state's law + EPA tested-and-labeled policy first; free legal clinic review)
+- [ ] Marketplace next: distance search by ZIP; buyer reviews; vehicle model filter;
       payments through a payment provider (Stripe Connect or similar — we never store card data);
       turn it on in production (owner decision)
 - [ ] **State emissions info**: programs by state/area, test types, model years, readiness rules,

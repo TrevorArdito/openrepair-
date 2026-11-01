@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Input, Label, LinkButton, PageTitle, Select, Spinner } from "../../components/ui";
@@ -6,8 +7,16 @@ import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { useDocumentTitle } from "../../lib/title";
-import type { GarageItem, Vehicle } from "../../lib/types";
-import { CONDITIONS, price, type ListingSummary } from "./types";
+import type { GarageItem, NamedRef, Vehicle } from "../../lib/types";
+import { CONDITIONS, RUNNING, TITLE_STATUSES, US_STATES, price, type ListingSummary, type VehicleFacts } from "./types";
+
+export function vehicleLine(t: TFunction, v: VehicleFacts): string {
+  return [
+    v.odometer != null ? `${v.odometer.toLocaleString()} ${v.odometer_unit}` : null,
+    t(`market.titleStatuses.${v.title_status}`),
+    t(`market.runnings.${v.running}`),
+  ].filter(Boolean).join(" · ");
+}
 
 export function ListingCard({ l }: { l: ListingSummary }) {
   const { t } = useTranslation();
@@ -16,13 +25,23 @@ export function ListingCard({ l }: { l: ListingSummary }) {
       {l.photo_url ? (
         <img src={l.photo_url} alt="" loading="lazy" className="size-24 shrink-0 rounded-xl object-cover" />
       ) : (
-        <div aria-hidden="true" className="flex size-24 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-3xl dark:bg-slate-900">🔧</div>
+        <div aria-hidden="true" className="flex size-24 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-3xl dark:bg-slate-900">
+          {l.kind === "vehicle" ? "🚗" : "🔧"}
+        </div>
       )}
       <div className="min-w-0">
-        <p className="text-xl font-extrabold">{l.price_cents === 0 ? t("market.free") : price(l.price_cents, l.currency)}</p>
+        <p className="text-xl font-extrabold">
+          {l.price_cents === 0 ? t("market.free") : price(l.price_cents, l.currency)}
+          {l.saved && <span className="ml-2 text-amber-600" aria-label={t("market.saved")}>★</span>}
+        </p>
         <h3 className="line-clamp-2 text-lg font-bold">{l.title}</h3>
+        {l.vehicle ? (
+          <p className="text-base">{vehicleLine(t, l.vehicle)}</p>
+        ) : (
+          <p className="text-base">{t(`market.conditions.${l.condition}`)}</p>
+        )}
         <p className="text-base">
-          {t(`market.conditions.${l.condition}`)} · {l.city}, {l.state}
+          {l.city}, {l.state}
           {l.seller_verified && <> · <span className="font-semibold text-emerald-700 dark:text-emerald-400">✓ {t("market.verified")}</span></>}
         </p>
         {l.status !== "active" && <p className="font-bold uppercase text-amber-700 dark:text-amber-400">{t(`market.statuses.${l.status}`)}</p>}
@@ -31,13 +50,28 @@ export function ListingCard({ l }: { l: ListingSummary }) {
   );
 }
 
+function FilterSelect({ id, label, value, options, onChange }: { id: string; label: string; value: string; options: [string, string][]; onChange: (v: string) => void }) {
+  const { t } = useTranslation();
+  return (
+    <div>
+      <Label htmlFor={id}>{label}</Label>
+      <Select id={id} value={value} onChange={(e) => onChange(e.target.value)}>
+        <option value="">{t("market.all")}</option>
+        {options.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+      </Select>
+    </div>
+  );
+}
+
 export default function MarketPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
-  useDocumentTitle(t("market.title"));
   const [params, setParams] = useSearchParams();
+  const kind = params.get("kind") === "vehicle" ? "vehicle" : "part";
+  useDocumentTitle(t(kind === "vehicle" ? "market.vehiclesTitle" : "market.title"));
   const [q, setQ] = useState(params.get("q") ?? "");
   const [cats, setCats] = useState<string[]>([]);
+  const [makes, setMakes] = useState<NamedRef[]>([]);
   const [garage, setGarage] = useState<Vehicle[]>([]);
   const [linked, setLinked] = useState<Vehicle | null>(null);
   const [data, setData] = useState<{ total: number; items: ListingSummary[] } | null>(null);
@@ -45,7 +79,8 @@ export default function MarketPage() {
   const vehicleId = params.get("vehicle_id") ?? "";
 
   useEffect(() => {
-    api<{ slug: string }[]>("/market/categories").then((c) => setCats(c.map((x) => x.slug))).catch(() => undefined);
+    api<{ slug: string }[]>("/market/categories").then((c) => setCats(c.map((x) => x.slug).filter((x) => x !== "vehicle"))).catch(() => undefined);
+    api<NamedRef[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
   }, []);
   useEffect(() => {
     if (!user) return;
@@ -59,10 +94,12 @@ export default function MarketPage() {
     setData(null);
     setError(null);
     const qs = new URLSearchParams([...params].filter(([, v]) => v));
+    qs.set("kind", kind);
+    if (kind === "vehicle") qs.delete("vehicle_id");
     api<{ total: number; items: ListingSummary[] }>(`/market/listings?${qs}`)
       .then(setData)
       .catch((e) => setError(errorMessage(t, e)));
-  }, [params, t]);
+  }, [params, kind, t]);
 
   const set = (k: string, v: string) => {
     const next = new URLSearchParams(params);
@@ -70,55 +107,79 @@ export default function MarketPage() {
     else next.delete(k);
     setParams(next, { replace: true });
   };
+  const switchKind = (k: string) => setParams(k === "vehicle" ? { kind: "vehicle" } : {}, { replace: true });
   const vehicles = linked ? [linked, ...garage] : garage;
+  const years = Array.from({ length: new Date().getFullYear() + 2 - 1950 }, (_, i) => String(new Date().getFullYear() + 1 - i));
 
   return (
     <div className="space-y-5">
       <PageTitle>{t("market.title")}</PageTitle>
       <p className="text-lg">{t("market.intro")}</p>
+      <div role="tablist" className="grid grid-cols-2 gap-2">
+        {(["part", "vehicle"] as const).map((k) => (
+          <button key={k} role="tab" aria-selected={kind === k} onClick={() => switchKind(k)}
+            className={`min-h-14 rounded-xl border-2 text-lg font-bold ${kind === k ? "border-amber-400 bg-amber-400 text-slate-950" : "border-slate-400"}`}>
+            {t(k === "vehicle" ? "market.tabVehicles" : "market.tabParts")}
+          </button>
+        ))}
+      </div>
       <div className="grid grid-cols-2 gap-3">
-        <LinkButton to="/market/sell">{t("market.sell")}</LinkButton>
+        <LinkButton to={kind === "vehicle" ? "/market/sell?kind=vehicle" : "/market/sell"}>
+          {t(kind === "vehicle" ? "market.sellVehicle" : "market.sell")}
+        </LinkButton>
         <LinkButton to="/market/selling" variant="secondary">{t("market.mySelling")}</LinkButton>
         <LinkButton to="/market/messages" variant="secondary">{t("market.messages")}</LinkButton>
+        <LinkButton to="/market/saved" variant="secondary">★ {t("market.savedTitle")}</LinkButton>
         {user && (user.role === "moderator" || user.role === "admin") && (
-          <LinkButton to="/market/mod" variant="secondary">{t("market.mod.title")}</LinkButton>
+          <LinkButton to="/market/mod" variant="secondary" className="col-span-2">{t("market.mod.title")}</LinkButton>
         )}
       </div>
 
       <Card className="space-y-3">
         <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); set("q", q.trim()); }}>
           <label htmlFor="mq" className="sr-only">{t("market.searchLabel")}</label>
-          <Input id="mq" type="search" value={q} placeholder={t("market.searchPlaceholder")} onChange={(e) => setQ(e.target.value)} />
+          <Input id="mq" type="search" value={q} placeholder={t(kind === "vehicle" ? "market.searchVehiclesPlaceholder" : "market.searchPlaceholder")} onChange={(e) => setQ(e.target.value)} />
           <Button type="submit">{t("market.searchButton")}</Button>
         </form>
-        <div>
-          <Label htmlFor="mv">{t("market.fitsVehicle")}</Label>
-          <Select id="mv" value={vehicleId} onChange={(e) => set("vehicle_id", e.target.value)}>
-            <option value="">{t("market.anyVehicle")}</option>
-            {vehicles.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
-          </Select>
-        </div>
+        {kind === "part" ? (
+          <>
+            <div>
+              <Label htmlFor="mv">{t("market.fitsVehicle")}</Label>
+              <Select id="mv" value={vehicleId} onChange={(e) => set("vehicle_id", e.target.value)}>
+                <option value="">{t("market.anyVehicle")}</option>
+                {vehicles.map((v) => <option key={v.id} value={v.id}>{v.label}</option>)}
+              </Select>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
+              <FilterSelect id="mc" label={t("market.category")} value={params.get("category") ?? ""} onChange={(v) => set("category", v)}
+                options={cats.map((c) => [c, t(`market.categories.${c}`)])} />
+              <FilterSelect id="mcond" label={t("market.condition")} value={params.get("condition") ?? ""} onChange={(v) => set("condition", v)}
+                options={CONDITIONS.map((c) => [c, t(`market.conditions.${c}`)])} />
+            </div>
+          </>
+        ) : (
+          <>
+            <FilterSelect id="vmk" label={t("market.make")} value={params.get("make_id") ?? ""} onChange={(v) => set("make_id", v)}
+              options={makes.map((m) => [String(m.id), m.name])} />
+            <div className="grid grid-cols-2 gap-3">
+              <FilterSelect id="vy1" label={t("market.yearMin")} value={params.get("year_min") ?? ""} onChange={(v) => set("year_min", v)} options={years.map((y) => [y, y])} />
+              <FilterSelect id="vy2" label={t("market.yearMax")} value={params.get("year_max") ?? ""} onChange={(v) => set("year_max", v)} options={years.map((y) => [y, y])} />
+              <FilterSelect id="vts" label={t("market.titleStatus")} value={params.get("title_status") ?? ""} onChange={(v) => set("title_status", v)}
+                options={TITLE_STATUSES.map((s) => [s, t(`market.titleStatuses.${s}`)])} />
+              <FilterSelect id="vrn" label={t("market.running")} value={params.get("running") ?? ""} onChange={(v) => set("running", v)}
+                options={RUNNING.map((s) => [s, t(`market.runnings.${s}`)])} />
+            </div>
+          </>
+        )}
         <div className="grid grid-cols-2 gap-3">
+          <FilterSelect id="mst" label={t("market.state")} value={params.get("state") ?? ""} onChange={(v) => set("state", v)}
+            options={US_STATES.map((s) => [s, s])} />
           <div>
-            <Label htmlFor="mc">{t("market.category")}</Label>
-            <Select id="mc" value={params.get("category") ?? ""} onChange={(e) => set("category", e.target.value)}>
-              <option value="">{t("market.all")}</option>
-              {cats.map((c) => <option key={c} value={c}>{t(`market.categories.${c}`)}</option>)}
+            <Label htmlFor="ms">{t("market.sort")}</Label>
+            <Select id="ms" value={params.get("sort") ?? "newest"} onChange={(e) => set("sort", e.target.value)}>
+              {["newest", "price_low", "price_high"].map((s) => <option key={s} value={s}>{t(`market.sorts.${s}`)}</option>)}
             </Select>
           </div>
-          <div>
-            <Label htmlFor="mcond">{t("market.condition")}</Label>
-            <Select id="mcond" value={params.get("condition") ?? ""} onChange={(e) => set("condition", e.target.value)}>
-              <option value="">{t("market.all")}</option>
-              {CONDITIONS.map((c) => <option key={c} value={c}>{t(`market.conditions.${c}`)}</option>)}
-            </Select>
-          </div>
-        </div>
-        <div>
-          <Label htmlFor="ms">{t("market.sort")}</Label>
-          <Select id="ms" value={params.get("sort") ?? "newest"} onChange={(e) => set("sort", e.target.value)}>
-            {["newest", "price_low", "price_high"].map((s) => <option key={s} value={s}>{t(`market.sorts.${s}`)}</option>)}
-          </Select>
         </div>
       </Card>
 
@@ -131,7 +192,7 @@ export default function MarketPage() {
           <div className="space-y-3">{data.items.map((l) => <ListingCard key={l.id} l={l} />)}</div>
         </>
       )}
-      <Alert kind="info">{t("market.safetyTips")}</Alert>
+      <Alert kind="info">{t(kind === "vehicle" ? "market.vehicleTips" : "market.safetyTips")}</Alert>
     </div>
   );
 }

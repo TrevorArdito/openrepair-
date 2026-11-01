@@ -4,8 +4,28 @@ export type Condition = "new" | "used" | "reman" | "for_parts";
 export type ListingStatus = "pending" | "active" | "sold" | "withdrawn" | "removed";
 export type Shipping = "pickup" | "ships" | "pickup_or_ships";
 
+export type VehicleFacts = {
+  year: number;
+  make: string;
+  model: string | null;
+  trim: string | null;
+  odometer: number | null;
+  odometer_unit: "mi" | "km";
+  title_status: "clean" | "rebuilt" | "salvage" | "non_repairable";
+  has_lien: boolean;
+  running: "runs_drives" | "runs_not_drives" | "not_running";
+  vehicle_id: number | null;
+  vin?: string | null;
+  make_id?: number;
+  model_id?: number | null;
+  drive?: string | null;
+  transmission?: string | null;
+  exterior_color?: string | null;
+};
+
 export type ListingSummary = {
   id: number;
+  kind: "part" | "vehicle";
   title: string;
   category: string;
   condition: Condition;
@@ -19,6 +39,8 @@ export type ListingSummary = {
   seller_verified: boolean;
   photo_url: string | null;
   fits_all: boolean;
+  vehicle: VehicleFacts | null;
+  saved: boolean;
   created_at: string;
 };
 
@@ -58,7 +80,7 @@ export type Seller = {
 
 export type Verification = {
   id: number;
-  kind: "business_license" | "dismantler_license";
+  kind: "business_license" | "dismantler_license" | "dealer_license";
   license_number: string;
   issuing_state: string;
   business_name: string;
@@ -88,3 +110,6 @@ export const US_STATES =
 export function price(cents: number, currency = "USD"): string {
   return new Intl.NumberFormat(undefined, { style: "currency", currency }).format(cents / 100);
 }
+
+export const TITLE_STATUSES = ["clean", "rebuilt", "salvage", "non_repairable"] as const;
+export const RUNNING = ["runs_drives", "runs_not_drives", "not_running"] as const;

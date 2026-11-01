@@ -182,6 +182,13 @@ Legal guardrails for these modules (non-negotiable):
   Next tier: Super Duty / HD diesels (Power Stroke, Cummins, Duramax). Stored in
   `backend/app/seed/data/priority_models.json`.
 
+- 2026-11-01: Owner paused owner's-manual transcription until a better data workflow exists.
+- 2026-11-01: Marketplace also sells **whole vehicles in any condition** (VIN required 1981+,
+  decoded via NHTSA; title status; private sellers max 5 open vehicle listings, more needs a
+  verified dealer license). **Used catalytic converters:** owner wants them allowed wherever
+  legal (cheap smog repairs). For now only verified licensed sellers; later a state-aware rule
+  (EPA tested-and-labeled policy + each state's law), never where state law forbids.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
 - Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.

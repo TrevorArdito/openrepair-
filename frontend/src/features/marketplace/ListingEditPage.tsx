@@ -1,16 +1,125 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Input, Label, PageTitle, Select, Spinner } from "../../components/ui";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { useDocumentTitle } from "../../lib/title";
-import type { AppliesTo, NamedRef } from "../../lib/types";
+import type { AppliesTo, NamedRef, VinDecode } from "../../lib/types";
 import { PhotoField, TextArea, TextField } from "../entries/fields";
 import { RangeRow } from "../entries/TagsForm";
 import { SellerForm } from "./SellingPage";
-import { CONDITIONS, type Listing, type Seller } from "./types";
+import { CONDITIONS, RUNNING, TITLE_STATUSES, type Listing, type Seller } from "./types";
+
+type VForm = {
+  vin: string; year: string; make_id: number | null; model_id: number | null; odometer: string;
+  odometer_unit: "mi" | "km"; title_status: string; has_lien: boolean; running: string;
+  trim: string; drive: string; transmission: string; exterior_color: string;
+};
+const EMPTY_V: VForm = {
+  vin: "", year: "", make_id: null, model_id: null, odometer: "", odometer_unit: "mi", title_status: "clean",
+  has_lien: false, running: "runs_drives", trim: "", drive: "", transmission: "", exterior_color: "",
+};
+
+function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partial<VForm>) => void; makes: NamedRef[]; onDecoded: (label: string) => void }) {
+  const { t } = useTranslation();
+  const [models, setModels] = useState<NamedRef[]>([]);
+  const [msg, setMsg] = useState<{ kind: "info" | "error"; text: string } | null>(null);
+  useEffect(() => {
+    if (!v.make_id || !v.year) return setModels([]);
+    api<NamedRef[]>(`/vehicles/models?year=${v.year}&make_id=${v.make_id}`).then(setModels).catch(() => setModels([]));
+  }, [v.make_id, v.year]);
+  async function lookUp() {
+    setMsg(null);
+    try {
+      const d = await api<VinDecode>(`/vehicles/decode/${encodeURIComponent(v.vin)}`);
+      set({
+        year: String(d.vehicle.year), make_id: d.vehicle.make.id, model_id: d.vehicle.model.id,
+        trim: v.trim || d.details.trim || "", drive: v.drive || d.details.drive_type || "",
+        transmission: v.transmission || d.details.transmission || "",
+      });
+      onDecoded(d.vehicle.label);
+      setMsg({ kind: "info", text: t("market.vinFound", { label: d.vehicle.label }) });
+    } catch (e) {
+      setMsg({ kind: "error", text: errorMessage(t, e) });
+    }
+  }
+  const field = (id: string, key: keyof VForm, label: string, max = 40) => (
+    <TextField id={id} label={label} value={String(v[key] ?? "")} max={max} onChange={(x) => set({ [key]: x } as Partial<VForm>)} />
+  );
+  return (
+    <Card className="space-y-4">
+      <h2 className="text-xl font-bold">{t("market.vehicleDetails")}</h2>
+      <div>
+        <Label htmlFor="vvin">{t("market.vin")}</Label>
+        <div className="flex gap-2">
+          <Input id="vvin" value={v.vin} maxLength={17} autoCapitalize="characters" onChange={(e) => set({ vin: e.target.value.toUpperCase().replace(/\s/g, "") })} />
+          <Button type="button" variant="secondary" disabled={v.vin.length !== 17} onClick={lookUp}>{t("market.lookUp")}</Button>
+        </div>
+        <p className="mt-1 text-base">{t("market.vinHint")}</p>
+      </div>
+      {msg && <Alert kind={msg.kind}>{msg.text}</Alert>}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label htmlFor="vyr">{t("market.year")}</Label>
+          <Input id="vyr" required type="number" inputMode="numeric" min="1900" max={new Date().getFullYear() + 1} value={v.year} onChange={(e) => set({ year: e.target.value, model_id: null })} />
+        </div>
+        <div>
+          <Label htmlFor="vmk">{t("market.make")}</Label>
+          <Select id="vmk" required value={v.make_id ?? ""} onChange={(e) => set({ make_id: e.target.value ? Number(e.target.value) : null, model_id: null })}>
+            <option value="" />
+            {makes.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+          </Select>
+        </div>
+      </div>
+      <div>
+        <Label htmlFor="vmd">{t("market.model")}</Label>
+        <Select id="vmd" value={v.model_id ?? ""} onChange={(e) => set({ model_id: e.target.value ? Number(e.target.value) : null })}>
+          <option value="">—</option>
+          {models.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+        </Select>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label htmlFor="vts">{t("market.titleStatus")}</Label>
+          <Select id="vts" value={v.title_status} onChange={(e) => set({ title_status: e.target.value })}>
+            {TITLE_STATUSES.map((x) => <option key={x} value={x}>{t(`market.titleStatuses.${x}`)}</option>)}
+          </Select>
+        </div>
+        <div>
+          <Label htmlFor="vrn">{t("market.running")}</Label>
+          <Select id="vrn" value={v.running} onChange={(e) => set({ running: e.target.value })}>
+            {RUNNING.map((x) => <option key={x} value={x}>{t(`market.runnings.${x}`)}</option>)}
+          </Select>
+        </div>
+      </div>
+      <label className="flex min-h-14 items-center gap-3 text-lg font-semibold">
+        <input type="checkbox" className="size-7" checked={v.has_lien} onChange={(e) => set({ has_lien: e.target.checked })} />
+        {t("market.hasLien")}
+      </label>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <Label htmlFor="vod">{t("market.odometer")}</Label>
+          <Input id="vod" type="number" inputMode="numeric" min="0" value={v.odometer} onChange={(e) => set({ odometer: e.target.value })} />
+        </div>
+        <div>
+          <Label htmlFor="vou">{t("market.odometerUnit")}</Label>
+          <Select id="vou" value={v.odometer_unit} onChange={(e) => set({ odometer_unit: e.target.value as "mi" | "km" })}>
+            <option value="mi">mi</option>
+            <option value="km">km</option>
+          </Select>
+        </div>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        {field("vtr", "trim", t("market.trim"), 60)}
+        {field("vcl", "exterior_color", t("market.color"))}
+        {field("vdr", "drive", t("market.drive"))}
+        {field("vtx", "transmission", t("market.transmission"))}
+      </div>
+    </Card>
+  );
+}
 
 type Form = {
   title: string;
@@ -29,13 +138,14 @@ type Form = {
   carb_eo_number: string;
   fitment: AppliesTo[];
   photo_ids: number[];
+  vehicle: VForm;
   accept_rules: boolean;
 };
 
 const EMPTY: Form = {
   title: "", description: "", category: "", condition: "used", brand: "", part_number: "", price: "",
   quantity: 1, shipping: "pickup_or_ships", shipping_note: "", source_vin: "", mileage: "",
-  emissions_compliance: "", carb_eo_number: "", fitment: [], photo_ids: [], accept_rules: false,
+  emissions_compliance: "", carb_eo_number: "", fitment: [], photo_ids: [], vehicle: EMPTY_V, accept_rules: false,
 };
 
 function fromListing(l: Listing): Form {
@@ -48,19 +158,30 @@ function fromListing(l: Listing): Form {
     fitment: l.fitment.map(({ make_id, model_id, year_from, year_to, displacement_l, engine_family_id }) =>
       ({ make_id, model_id, year_from, year_to, displacement_l, engine_family_id })),
     photo_ids: l.photos.map((p) => p.id), accept_rules: false,
+    vehicle: l.vehicle ? {
+      vin: l.vehicle.vin ?? "", year: String(l.vehicle.year), make_id: l.vehicle.make_id ?? null,
+      model_id: l.vehicle.model_id ?? null, odometer: l.vehicle.odometer != null ? String(l.vehicle.odometer) : "",
+      odometer_unit: l.vehicle.odometer_unit, title_status: l.vehicle.title_status, has_lien: l.vehicle.has_lien,
+      running: l.vehicle.running, trim: l.vehicle.trim ?? "", drive: l.vehicle.drive ?? "",
+      transmission: l.vehicle.transmission ?? "", exterior_color: l.vehicle.exterior_color ?? "",
+    } : EMPTY_V,
   };
 }
 
-const MAX_PHOTOS = 12;
+const MAX_PHOTOS = 20;
 
 export default function ListingEditPage() {
   const { t } = useTranslation();
   const { id } = useParams();
   const nav = useNavigate();
   const { user, loading } = useAuth();
-  useDocumentTitle(t(id ? "market.editTitle" : "market.sell"));
+  const [search] = useSearchParams();
+  const startAsVehicle = !id && search.get("kind") === "vehicle";
+  useDocumentTitle(t(id ? "market.editTitle" : startAsVehicle ? "market.sellVehicle" : "market.sell"));
   const [seller, setSeller] = useState<Seller | null | undefined>(undefined);
-  const [f, setF] = useState<Form | null>(id ? null : EMPTY);
+  const [f, setF] = useState<Form | null>(
+    id ? null : startAsVehicle ? { ...EMPTY, category: "vehicle", shipping: "pickup" } : EMPTY,
+  );
   const [cats, setCats] = useState<string[]>([]);
   const [makes, setMakes] = useState<NamedRef[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -87,9 +208,12 @@ export default function ListingEditPage() {
       </div>
     );
 
-  const set = (patch: Partial<Form>) => setF({ ...f, ...patch });
+  const set = (patch: Partial<Form>) => setF((cur) => cur && { ...cur, ...patch });
+  const setVehicle = (patch: Partial<VForm>) => setF((cur) => cur && { ...cur, vehicle: { ...cur.vehicle, ...patch } });
   const year = new Date().getFullYear();
   const isCat = f.category === "catalytic_converter";
+  const isVehicle = f.category === "vehicle";
+  const vf = f.vehicle;
   const used = f.condition !== "new";
 
   async function submit(e: React.FormEvent) {
@@ -104,8 +228,15 @@ export default function ListingEditPage() {
       shipping: f.shipping, shipping_note: f.shipping_note || null,
       source_vin: f.source_vin || null, mileage: f.mileage ? parseInt(f.mileage, 10) : null,
       emissions_compliance: f.emissions_compliance || null, carb_eo_number: f.carb_eo_number || null,
-      fitment: f.fitment, photo_ids: f.photo_ids, accept_rules: f.accept_rules,
+      fitment: isVehicle ? [] : f.fitment, photo_ids: f.photo_ids, accept_rules: f.accept_rules,
+      vehicle: isVehicle ? {
+        vin: vf.vin || null, year: parseInt(vf.year, 10), make_id: vf.make_id, model_id: vf.model_id,
+        odometer: vf.odometer ? parseInt(vf.odometer, 10) : null, odometer_unit: vf.odometer_unit,
+        title_status: vf.title_status, has_lien: vf.has_lien, running: vf.running, trim: vf.trim || null,
+        drive: vf.drive || null, transmission: vf.transmission || null, exterior_color: vf.exterior_color || null,
+      } : null,
     };
+    if (isVehicle) Object.assign(body, { quantity: 1, part_number: null, brand: null, source_vin: null, mileage: null, emissions_compliance: null, carb_eo_number: null });
     try {
       const l = await api<Listing>(id ? `/market/listings/${id}` : "/market/listings", { method: id ? "PUT" : "POST", body });
       nav(`/market/listings/${l.id}`);
@@ -117,15 +248,28 @@ export default function ListingEditPage() {
 
   return (
     <form className="space-y-5" onSubmit={submit}>
-      <PageTitle>{t(id ? "market.editTitle" : "market.sell")}</PageTitle>
+      <PageTitle>{t(id ? "market.editTitle" : isVehicle ? "market.sellVehicle" : "market.sell")}</PageTitle>
+      {!id && (
+        <div role="tablist" className="grid grid-cols-2 gap-2">
+          {[false, true].map((veh) => (
+            <button key={String(veh)} type="button" role="tab" aria-selected={isVehicle === veh}
+              onClick={() => set(veh ? { category: "vehicle", shipping: "pickup", condition: "used" } : { category: "" })}
+              className={`min-h-14 rounded-xl border-2 text-lg font-bold ${isVehicle === veh ? "border-amber-400 bg-amber-400 text-slate-950" : "border-slate-400"}`}>
+              {t(veh ? "market.aVehicle" : "market.aPart")}
+            </button>
+          ))}
+        </div>
+      )}
+      {isVehicle && <VehicleFields v={vf} set={setVehicle} makes={makes}
+        onDecoded={(label) => setF((cur) => cur && (cur.title ? cur : { ...cur, title: label }))} />}
       <Card className="space-y-4">
-        <TextField id="lt" label={t("market.listingTitle")} hint={t("market.listingTitleHint")} value={f.title} max={120} required onChange={(v) => set({ title: v })} />
-        <div className="grid grid-cols-2 gap-3">
+        <TextField id="lt" label={t("market.listingTitle")} hint={t(isVehicle ? "market.vehicleTitleHint" : "market.listingTitleHint")} value={f.title} max={120} required onChange={(v) => set({ title: v })} />
+        {!isVehicle && <div className="grid grid-cols-2 gap-3">
           <div>
             <Label htmlFor="lc">{t("market.category")}</Label>
             <Select id="lc" required value={f.category} onChange={(e) => set({ category: e.target.value })}>
               <option value="" />
-              {cats.map((c) => <option key={c} value={c}>{t(`market.categories.${c}`)}</option>)}
+              {cats.filter((c) => c !== "vehicle").map((c) => <option key={c} value={c}>{t(`market.categories.${c}`)}</option>)}
             </Select>
           </div>
           <div>
@@ -134,7 +278,7 @@ export default function ListingEditPage() {
               {CONDITIONS.map((c) => <option key={c} value={c}>{t(`market.conditions.${c}`)}</option>)}
             </Select>
           </div>
-        </div>
+        </div>}
         {f.category === "airbag_srs" && <Alert kind="warning">{t("market.rules.srs")}</Alert>}
         {isCat && <Alert kind="warning">{t("market.rules.cat")}</Alert>}
         <div className="grid grid-cols-2 gap-3">
@@ -142,17 +286,17 @@ export default function ListingEditPage() {
             <Label htmlFor="lp">{t("market.price")}</Label>
             <Input id="lp" required inputMode="decimal" type="number" min="0" step="0.01" value={f.price} onChange={(e) => set({ price: e.target.value })} />
           </div>
-          <div>
+          {!isVehicle && <div>
             <Label htmlFor="lq">{t("market.quantity")}</Label>
             <Input id="lq" type="number" min="1" max="999" step="1" value={f.quantity} onChange={(e) => set({ quantity: Math.max(1, parseInt(e.target.value || "1", 10)) })} />
-          </div>
+          </div>}
         </div>
-        <TextArea id="ld" label={t("market.description")} hint={t("market.descriptionHint")} value={f.description} max={5000} rows={5} onChange={(v) => set({ description: v })} />
-        <div className="grid grid-cols-2 gap-3">
+        <TextArea id="ld" label={t("market.description")} hint={t(isVehicle ? "market.vehicleDescriptionHint" : "market.descriptionHint")} value={f.description} max={5000} rows={5} onChange={(v) => set({ description: v })} />
+        {!isVehicle && <div className="grid grid-cols-2 gap-3">
           <TextField id="lb" label={t("market.brand")} value={f.brand} max={60} onChange={(v) => set({ brand: v })} />
           <TextField id="lpn" label={t("market.partNumber")} value={f.part_number} max={60} onChange={(v) => set({ part_number: v })} />
-        </div>
-        {used && (
+        </div>}
+        {used && !isVehicle && (
           <div className="grid grid-cols-2 gap-3">
             <TextField id="lv" label={t("market.sourceVin")} hint={t("market.sourceVinHint")} value={f.source_vin} max={17} onChange={(v) => set({ source_vin: v.toUpperCase() })} />
             <div>
@@ -185,7 +329,7 @@ export default function ListingEditPage() {
         <TextField id="lsn" label={t("market.shippingNote")} value={f.shipping_note} max={300} onChange={(v) => set({ shipping_note: v })} />
       </Card>
 
-      <Card className="space-y-4">
+      {!isVehicle && <Card className="space-y-4">
         <h2 className="text-xl font-bold">{t("market.fits")}</h2>
         <p className="text-lg">{f.fitment.length === 0 ? t("market.fitsAllHint") : t("market.fitsHint")}</p>
         {f.fitment.map((r, i) => (
@@ -197,7 +341,7 @@ export default function ListingEditPage() {
           onClick={() => set({ fitment: [...f.fitment, { make_id: makes[0].id, model_id: null, year_from: year - 5, year_to: year }] })}>
           + {t("editor.addVehicleRange")}
         </Button>
-      </Card>
+      </Card>}
 
       <Card className="space-y-3">
         <h2 className="text-xl font-bold">{t("market.photos")} ({f.photo_ids.length}/{MAX_PHOTOS})</h2>
@@ -212,7 +356,8 @@ export default function ListingEditPage() {
       <Card className="space-y-3">
         <h2 className="text-xl font-bold">{t("market.rules.title")}</h2>
         <ul className="list-disc space-y-1 pl-6 text-lg">
-          {["legal", "noDefeat", "noSrs", "cats", "recall", "honest"].map((k) => <li key={k}>{t(`market.rules.${k}`)}</li>)}
+          {(isVehicle ? ["vehLegal", "vehTitle", "vehDealer", "vehOdometer", "honest"] : ["legal", "noDefeat", "noSrs", "cats", "recall", "honest"])
+            .map((k) => <li key={k}>{t(`market.rules.${k}`)}</li>)}
         </ul>
         <label className="flex min-h-14 items-center gap-3 text-lg font-semibold">
           <input type="checkbox" className="size-7" checked={f.accept_rules} onChange={(e) => set({ accept_rules: e.target.checked })} />
