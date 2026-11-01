@@ -116,12 +116,21 @@ FluidSystem = Literal[
 
 class FluidCapacityData(Strict):
     system: FluidSystem
-    amount: Annotated[float, Field(gt=0, le=2000)]
+    amount: Annotated[float, Field(gt=0, le=2000)] | None = (
+        None  # None = type only (e.g. brake fluid)
+    )
     amount_unit: Literal["L", "kg", "g", "mL"] = "L"  # refrigerant is by weight
     condition: Annotated[str, Field(max_length=200)] | None = None  # "with filter", "drain & fill"
-    fluid_spec: Annotated[str, Field(max_length=200)] | None = None  # "SAE 0W-20, API SP"
+    fluid_spec: Annotated[str, Field(max_length=300)] | None = None  # "SAE 0W-20, API SP"
+    printed: Annotated[str, Field(max_length=100)] | None = None  # exactly as the source prints it
     notes: Annotated[str, Field(max_length=2000)] | None = None
     sources: Annotated[list[Source], Field(min_length=1)]
+
+    @model_validator(mode="after")
+    def _amount_or_type(self):
+        if self.amount is None and not self.fluid_spec:
+            raise ValueError("give an amount, a fluid type, or both")
+        return self
 
 
 # ---- Other specs (gaps, pressures, resistances, ...) ---------------------------
@@ -145,16 +154,22 @@ Quantity = Literal[
 class SpecData(Strict):
     name: Short  # e.g. "Spark plug gap"
     quantity: Quantity
-    value: float
+    value: float | None = None
     value_max: float | None = None  # for ranges ("0.9–1.1 mm")
+    text: Annotated[str, Field(max_length=200)] | None = (
+        None  # non-numeric specs: "1-4-2-5-3-6", "10.0:1"
+    )
     unit_other: Annotated[str, Field(max_length=20)] | None = None  # only for quantity "other"
     condition: Annotated[str, Field(max_length=200)] | None = None  # "engine warm, at idle"
+    printed: Annotated[str, Field(max_length=100)] | None = None  # exactly as the source prints it
     notes: Annotated[str, Field(max_length=2000)] | None = None
     sources: Annotated[list[Source], Field(min_length=1)]
 
     @model_validator(mode="after")
     def _range(self):
-        if self.value_max is not None and self.value_max < self.value:
+        if self.value is None and not self.text:
+            raise ValueError("give a value or a text spec")
+        if self.value_max is not None and (self.value is None or self.value_max < self.value):
             raise ValueError("value_max must be >= value")
         return self
 

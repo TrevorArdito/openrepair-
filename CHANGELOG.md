@@ -15,6 +15,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Heavy-duty diesel trucks** (F-250/F-350 Power Stroke, Ram 2500/3500 Cummins, Silverado/Sierra
   HD Duramax) added from the engine catalog.
 - Owner's top-20 priority vehicles recorded for content planning.
+- **Owner's-manual specs**: facts transcribed from the manufacturer's own manual with page numbers
+  — first: 2015 Ford F-150, all four engines (capacities, fluid types with Ford spec numbers,
+  firing order, spark plug gap, compression ratio, Motorcraft part numbers, lug nut torque).
+- **Quick Specs** box on the vehicle overview and table-style Specs tab (values shown inline, shop
+  order, "General" tags); specs can target an exact engine; specs can be text (firing order) and
+  fluids can be type-only (brake fluid); "as printed in the manual" values.
 ### Changed
 - Flex-fuel engines are treated as the same engine as their gasoline version.
 - The weekly recall/complaint refresh only re-checks vehicles people have looked up.

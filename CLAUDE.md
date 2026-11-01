@@ -6,6 +6,18 @@ If a request conflicts with this file, ask the owner before proceeding.
 ## What this is
 **ChrystalClear** — a free, open-source alternative to ALLDATA for auto repair information.
 
+**Purpose (owner, 2026-11-01):** give EVERY mechanic and technician — and everyone else — the
+knowledge and tools the service-information monopolies keep behind expensive paywalls. The
+database exists to help people **maintain and repair vehicles correctly**, not just list them.
+- **Diagnostics come first** — it's the most important and most challenging part of the job.
+  Every vehicle should get diagnostic and repair guidance for anything that can go wrong.
+- **Follow the ALLDATA playbook** for layout and workflow so anyone who knows ALLDATA feels at
+  home (vehicle → system/component tree → specs, diagnostics/testing, repair procedures, TSBs,
+  DTCs, labor) — then improve on every part of it.
+- **Every vehicle gets its owner's-manual facts** (capacities, fluid types, torque, engine and
+  tune-up specs, part numbers) transcribed from the manufacturer's own free manuals with page
+  references (`backend/app/seed/data/manual_specs/`, see `docs/OWNER_MANUAL_SPECS.md`).
+
 ## Non-negotiables
 1. **Business model: "free core, optional paid business extras later" (Option B).**
    - **Free forever, never paywalled:** all repair information — VIN decoding, vehicle data,

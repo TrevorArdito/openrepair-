@@ -152,6 +152,7 @@ export type EntrySummary = {
   safety_critical: boolean;
   generic: boolean;
   summary: string | null;
+  data?: Record<string, any> | null; // eslint-disable-line @typescript-eslint/no-explicit-any
   updated_at: string;
 };
 

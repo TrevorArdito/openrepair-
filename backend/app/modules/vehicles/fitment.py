@@ -19,6 +19,8 @@ class FitmentMixin:
     year_from: Mapped[int] = mapped_column(Integer)
     year_to: Mapped[int] = mapped_column(Integer)
     displacement_l: Mapped[float | None] = mapped_column(Float)
+    # Optional exact engine (e.g. 3.5L EcoBoost vs 3.5L non-turbo in the same truck).
+    engine_family_id: Mapped[int | None] = mapped_column(ForeignKey("engine_families.id"))
 
 
 def fits(table, v: Vehicle):
@@ -33,4 +35,5 @@ def fits(table, v: Vehicle):
             v.engine_displacement_l is None,
             func.abs(table.displacement_l - (v.engine_displacement_l or 0)) < 0.05,
         ),
+        or_(table.engine_family_id.is_(None), table.engine_family_id == v.engine_family_id),
     )

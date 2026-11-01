@@ -44,7 +44,7 @@ from app.modules.community.schemas import (
     Verification,
 )
 from app.modules.vehicles.fitment import fits
-from app.modules.vehicles.models import Make, Model, Vehicle
+from app.modules.vehicles.models import EngineFamily, Make, Model, Vehicle
 
 PROBATION_APPROVALS = 3
 
@@ -92,6 +92,8 @@ def _validate(db: Session, kind: Kind, data: dict, tags: Tags, user: User) -> tu
             model = db.get(Model, a.model_id)
             if model is None or model.make_id != a.make_id:
                 raise NotFound("model_not_found")
+        if a.engine_family_id is not None and db.get(EngineFamily, a.engine_family_id) is None:
+            raise NotFound("engine_not_found")
     known = set(db.scalars(select(System.slug).where(System.slug.in_(tags.systems))))
     if unknown := set(tags.systems) - known:
         raise AppError("unknown_system", 422, systems=sorted(unknown))
@@ -390,8 +392,14 @@ def tags_display(db: Session, tags: dict) -> dict:
     for a in tags.get("applies_to", []):
         make = db.get(Make, a["make_id"])
         model = db.get(Model, a["model_id"]) if a.get("model_id") else None
+        fam = db.get(EngineFamily, a["engine_family_id"]) if a.get("engine_family_id") else None
         applies.append(
-            {**a, "make": make.name if make else "?", "model": model.name if model else None}
+            {
+                **a,
+                "make": make.name if make else "?",
+                "model": model.name if model else None,
+                "engine": fam.name if fam else None,
+            }  # fmt: skip
         )
     return {"applies_to": applies, "systems": tags.get("systems", []), "dtcs": tags.get("dtcs", [])}
 
@@ -481,6 +489,13 @@ def _summary_text(db: Session, entry: Entry) -> str | None:
     )
 
 
+def _list_data(db: Session, entry: Entry) -> dict | None:
+    if entry.kind in (Kind.procedure, Kind.labor_time):
+        return None
+    rev = current_rev(db, entry)
+    return {k: v for k, v in (rev.data if rev else {}).items() if k != "sources"} or None
+
+
 def vehicle_filter(v: Vehicle):
     """Entries that apply to this vehicle (make, model, year range, engine size)."""
     return select(EntryVehicle.entry_id).where(fits(EntryVehicle, v))
@@ -549,6 +564,7 @@ def list_entries(
             safety_critical=e.safety_critical,
             generic=e.id in generic_ids,
             summary=(_summary_text(db, e) or "")[:200] or None,
+            data=_list_data(db, e),
             updated_at=e.updated_at,
         )
         for e in rows

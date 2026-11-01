@@ -1,7 +1,7 @@
 // Everything is stored in metric (SI) and converted only for display.
 
 export type UnitSystem = "metric" | "imperial";
-export type Quantity = "torque" | "volume" | "volume_ml" | "pressure" | "length" | "temperature" | "mass" | "mass_g";
+export type Quantity = "torque" | "volume" | "volume_ml" | "volume_gal" | "pressure" | "length" | "temperature" | "mass" | "mass_g";
 
 const IMPERIAL: Record<Quantity, { unit: string; from: (si: number) => number; to: (v: number) => number }> = {
   torque: { unit: "lb·ft", from: (nm) => nm * 0.737562149, to: (v) => v / 0.737562149 },
@@ -12,6 +12,7 @@ const IMPERIAL: Record<Quantity, { unit: string; from: (si: number) => number; t
   mass: { unit: "lb", from: (kg) => kg * 2.204622622, to: (v) => v / 2.204622622 },
   mass_g: { unit: "oz", from: (g) => g / 28.349523125, to: (v) => v * 28.349523125 },
   volume_ml: { unit: "fl oz", from: (ml) => ml / 29.5735295625, to: (v) => v * 29.5735295625 },
+  volume_gal: { unit: "gal", from: (l) => l / 3.785411784, to: (v) => v * 3.785411784 },
 };
 const METRIC_UNIT: Record<Quantity, string> = {
   torque: "N·m",
@@ -22,6 +23,7 @@ const METRIC_UNIT: Record<Quantity, string> = {
   mass: "kg",
   mass_g: "g",
   volume_ml: "mL",
+  volume_gal: "L",
 };
 
 export function convert(si: number, q: Quantity, system: UnitSystem): { value: number; unit: string } {
@@ -33,10 +35,11 @@ export function toSI(value: number, q: Quantity, system: UnitSystem): number {
   return system === "metric" ? value : IMPERIAL[q].to(value);
 }
 
-export function formatQuantity(si: number, q: Quantity, system: UnitSystem, digits = 1): string {
+export function formatQuantity(si: number, q: Quantity, system: UnitSystem, digits = 1, fixed = false): string {
   const { value, unit } = convert(si, q, system);
-  const rounded = Number(value.toFixed(digits));
-  return `${rounded} ${unit}`;
+  // fixed=true keeps trailing zeros (".030 in", "6.0 qt") the way manuals print them.
+  const text = fixed ? value.toFixed(digits) : String(Number(value.toFixed(digits)));
+  return `${text} ${unit}`;
 }
 
 /** Units that are the same in both systems (volts, ohms, ...). */

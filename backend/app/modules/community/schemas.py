@@ -16,6 +16,7 @@ class AppliesTo(BaseModel):
     year_from: int
     year_to: int
     displacement_l: Annotated[float, Field(ge=0.5, le=10)] | None = None
+    engine_family_id: int | None = None
 
     @field_validator("year_from", "year_to")
     @classmethod
@@ -104,6 +105,7 @@ class EntrySummary(BaseModel):
     safety_critical: bool
     generic: bool
     summary: str | None = None
+    data: dict | None = None  # spec values, so lists can show them without opening each entry
     updated_at: datetime
 
 

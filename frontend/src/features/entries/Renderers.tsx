@@ -7,7 +7,8 @@ import { api } from "../../lib/api";
 import { errorMessage } from "../../lib/errors";
 import { usePrefs } from "../../lib/prefs";
 import type { Entry } from "../../lib/types";
-import { CONVERTIBLE, FIXED_UNITS, formatQuantity, type Quantity } from "../../lib/units";
+import { formatQuantity } from "../../lib/units";
+import { fluidAmount, specValue } from "./specFormat";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type D = Record<string, any>;
@@ -164,14 +165,21 @@ function TorqueView({ d }: { d: D }) {
 function FluidView({ d }: { d: D }) {
   const { t } = useTranslation();
   const { units } = usePrefs();
-  const q: Quantity = d.amount_unit === "kg" ? "mass" : d.amount_unit === "g" ? "mass_g" : d.amount_unit === "mL" ? "volume_ml" : "volume";
   const other = units === "metric" ? "imperial" : "metric";
+  const amt = fluidAmount(d, units);
   return (
     <div className="space-y-4">
-      <BigValue value={formatQuantity(d.amount, q, units, 2)} sub={`${formatQuantity(d.amount, q, other, 2)} · ${t(`entry.fluidSystems.${d.system}`)}`} />
+      {amt ? (
+        <BigValue value={amt} sub={`${fluidAmount(d, other)} · ${t(`entry.fluidSystems.${d.system}`)}`} />
+      ) : (
+        <div className="rounded-2xl bg-slate-900 p-5 text-center text-white dark:bg-slate-800">
+          <p className="text-2xl font-extrabold text-amber-400">{d.fluid_spec}</p>
+          <p className="mt-2 text-lg">{t(`entry.fluidSystems.${d.system}`)}</p>
+        </div>
+      )}
       <Card>
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-lg">
-          {d.fluid_spec && (
+          {d.fluid_spec && amt && (
             <>
               <dt className="font-semibold">{t("entry.fluidSpec")}</dt>
               <dd>{d.fluid_spec}</dd>
@@ -183,18 +191,17 @@ function FluidView({ d }: { d: D }) {
               <dd>{d.condition}</dd>
             </>
           )}
+          {d.printed && (
+            <>
+              <dt className="font-semibold">{t("entry.printed")}</dt>
+              <dd className="font-mono">{d.printed}</dd>
+            </>
+          )}
         </dl>
       </Card>
       {d.notes && <p className="whitespace-pre-line text-lg">{d.notes}</p>}
     </div>
   );
-}
-
-export function specValue(d: D, units: "metric" | "imperial"): string {
-  const q = d.quantity as string;
-  const fmt = (v: number) =>
-    CONVERTIBLE.has(q) ? formatQuantity(v, q as Quantity, units, q === "length" ? 2 : 1) : `${v} ${FIXED_UNITS[q] ?? d.unit_other ?? ""}`.trim();
-  return d.value_max != null ? `${fmt(d.value)} – ${fmt(d.value_max)}` : fmt(d.value);
 }
 
 function SpecView({ d }: { d: D }) {
@@ -203,6 +210,11 @@ function SpecView({ d }: { d: D }) {
   return (
     <div className="space-y-4">
       <BigValue value={specValue(d, units)} sub={d.name} />
+      {d.printed && (
+        <p className="text-lg">
+          <b>{t("entry.printed")}:</b> <span className="font-mono">{d.printed}</span>
+        </p>
+      )}
       {d.condition && (
         <p className="text-lg">
           <b>{t("entry.condition")}:</b> {d.condition}

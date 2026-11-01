@@ -133,7 +133,10 @@ def run(db: Session, guides: bool = True) -> dict[str, int]:
     }
     result.update(seed_engine_families(db))
     if guides:
+        from app.seed.manual_specs import load_all
+
         result["guides_added"] = seed_guides(db)
+        result["manual_specs_added"] = load_all(db, team_user(db))
     db.commit()
     return result
 

@@ -74,7 +74,20 @@
       "manufacturer": "Manufacturer",
       "plant_country": "Built in"
     },
-    "chooseEngine": "Which engine? Pick one for engine-specific specs:"
+    "chooseEngine": "Which engine? Pick one for engine-specific specs:",
+    "quickSpecs": "Quick specs",
+    "quickSpecsNone": "No specs for this exact vehicle yet.",
+    "allSpecs": "All specs",
+    "quick": {
+      "oil": "Engine oil",
+      "oilType": "Oil type",
+      "coolant": "Coolant",
+      "atf": "Transmission fluid",
+      "lug": "Lug nut torque",
+      "gap": "Spark plug gap",
+      "firing": "Firing order",
+      "oilFilter": "Oil filter"
+    }
   },
   "fuel": {
     "gasoline": "Gasoline",
@@ -327,9 +340,9 @@
   "kindsPlural": {
     "procedure": "Repair guides",
     "torque_spec": "Torque specs",
-    "fluid_capacity": "Fluids & capacities",
-    "spec": "Specs",
-    "part_note": "Part notes",
+    "fluid_capacity": "Capacities & fluid types",
+    "spec": "Engine & tune-up specs",
+    "part_note": "Parts & part numbers",
     "labor_time": "Labor times"
   },
   "systems": {
@@ -512,7 +525,8 @@
     "generalBadge": "General",
     "notFound": "Entry not found",
     "sourceLine": "Source:",
-    "safetyBodyGeneral": "This involves a safety-critical system (brakes, steering, suspension, fuel, airbags or high voltage). Follow the safety steps, and confirm specs against the manufacturer's service information."
+    "safetyBodyGeneral": "This involves a safety-critical system (brakes, steering, suspension, fuel, airbags or high voltage). Follow the safety steps, and confirm specs against the manufacturer's service information.",
+    "printed": "As printed in the manual"
   },
   "editor": {
     "newTitle": "New {{kind}}",

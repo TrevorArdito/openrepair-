@@ -40,14 +40,18 @@
 - [ ] Heavy-equipment engines + equipment table (see docs/VEHICLE_CATALOG.md)
 - [ ] Bulk-prefetch NHTSA model lists for all makes/years (so the picker never waits on NHTSA)
 
+## Owner's-manual specs (owner priority — see docs/OWNER_MANUAL_SPECS.md for the tracker)
+- [x] Pipeline: transcribed manual files → per-engine entries with page refs; Quick Specs; spec tables
+- [x] 2015 Ford F-150 (all 4 engines, 50 facts)
+- [ ] Rest of the top 20, newest generations first, then back to ~1990
+- [ ] Then: diagnostic & repair guides per vehicle (known problems from TSB/complaint patterns + system diagnostics)
+- [ ] ALLDATA-style component tree on the vehicle page (system → specs / testing & diagnosis / repair / TSBs / codes)
+
 ## Next big modules (owner priorities)
 - [ ] **Wiring diagrams module**: structured circuit format (components, connectors, pins, wires
       with real color codes, splices, grounds) + interactive SVG viewer (tap to highlight a
       circuit, color legend, pinout tables, zoom) + editor. Seed with standard circuits
       (OBD-II DLC pinout, CAN bus, 2/3/4/5-wire sensors, O2 heater, starter, charging, relay).
-- [ ] **Owner's-manual spec import**: transcribe facts (fluid capacities & types, lug nut
-      torque, tire pressures, bulb numbers, plug gap) from free public owner's manuals, with
-      page citations, for the most common vehicles first.
 - [ ] More generic diagnostic guides (target 100+): compression/leak-down, relative compression,
       CAN bus diagnosis, relay testing, scope basics, ABS sensor test, brake jobs, etc.
 - [ ] Diagrams/illustrations for guides (our own SVGs in standard conventions)

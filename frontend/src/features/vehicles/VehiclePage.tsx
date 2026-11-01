@@ -9,6 +9,7 @@ import { rememberVehicle } from "../../lib/recent";
 import { useDocumentTitle } from "../../lib/title";
 import CodeSearch from "../codes/CodeSearch";
 import EntryList from "../entries/EntryList";
+import QuickSpecs from "../entries/QuickSpecs";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
 import type { RecallList, Vehicle, VehicleProfile, VinDecode } from "../../lib/types";
 
@@ -154,7 +155,9 @@ export default function VehiclePage() {
 
       <div role="tabpanel">
         {tab === "overview" ? (
-          <Card>
+          <div className="space-y-4">
+            <QuickSpecs vehicleId={id!} onShowAll={() => setTab("specs")} />
+            <Card>
             <h2 className="mb-2 text-xl font-bold">{t("vehicle.details")}</h2>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-lg">
               <dt className="font-semibold">{t("picker.engine")}</dt>
@@ -190,6 +193,7 @@ export default function VehiclePage() {
             )}
             {decode && <p className="mt-3 text-base text-slate-600 dark:text-slate-400">{t("vehicle.source", { source: decode.source })}</p>}
           </Card>
+          </div>
         ) : tab === "recalls" ? (
           <RecallsTab vehicleId={id!} />
         ) : tab === "tsbs" ? (
@@ -199,7 +203,7 @@ export default function VehiclePage() {
         ) : tab === "guides" ? (
           <EntryList vehicleId={id!} kinds={["procedure"]} addKind="procedure" />
         ) : tab === "specs" ? (
-          <EntryList vehicleId={id!} kinds={["torque_spec", "fluid_capacity", "spec", "labor_time", "part_note"]} addKind={null} />
+          <EntryList vehicleId={id!} kinds={["fluid_capacity", "torque_spec", "spec", "part_note", "labor_time"]} addKind={null} />
         ) : tab === "codes" ? (
           <div className="space-y-2">
             <p className="text-lg">{t("codes.vehicleTabHint")}</p>
