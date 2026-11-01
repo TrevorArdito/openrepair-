@@ -32,3 +32,6 @@ dev-dist/
 Thumbs.db
 .idea/
 .vscode/
+
+# Uploaded photos (local dev / tests)
+backend/data/uploads/
