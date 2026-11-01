@@ -30,6 +30,8 @@ def test_manual_file_is_well_formed(path):
     for s in doc["specs"]:
         assert isinstance(s["page"], int) and s["page"] > 0
         assert all(k in doc["engines"] for k in keys(s))
+        if s.get("source"):
+            assert doc["other_sources"][s["source"]]["url"].startswith("https://")
         data = dict(s["data"])
         if s["kind"] != "labor_time":
             data["sources"] = [{"type": "owner_manual", "citation": "p. 1"}]

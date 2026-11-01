@@ -44,7 +44,8 @@
 - [x] Pipeline: transcribed manual files → per-engine entries with page refs; Quick Specs; spec tables
 - [x] Ford F-150 2015, 2017, 2022 (every engine, 185 facts)
 - [ ] Ford F-150: other years (2013 manual downloaded; 2018–2021, 2023–2024; 1990s–2000s)
-- [ ] Rest of the top 20, newest generations first, then back to ~1990
+- [x] 2024 Silverado 1500, Ram 1500, Camry
+- [ ] PAUSED by owner (2026-11-01) until a better way to get accurate data is set up; then the rest of the top 20
 - [ ] Then: diagnostic & repair guides per vehicle (known problems from TSB/complaint patterns + system diagnostics)
 - [ ] ALLDATA-style component tree on the vehicle page (system → specs / testing & diagnosis / repair / TSBs / codes)
 

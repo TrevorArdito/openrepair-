@@ -1,0 +1,1020 @@
+{
+ "vehicle": {
+  "make": "Toyota",
+  "model": "Camry",
+  "year_from": 2024,
+  "year_to": 2024
+ },
+ "source": {
+  "title": "2024 Toyota Camry Owner's Manual (OM06291U)",
+  "url": "https://assets.sia.toyota.com/publications/en/om-s/OM06291U/pdf/OM06291U.pdf"
+ },
+ "engines": {
+  "2.5": {
+   "family": "toyota-2-5-a25a",
+   "label": "2.5L I4 (A25A-FKS)"
+  },
+  "3.5": {
+   "family": "toyota-3-5-2gr",
+   "label": "3.5L V6 (2GR-FKS)"
+  },
+  "HV": {
+   "family": "toyota-2-5-a25a-hybrid",
+   "label": "2.5L I4 Hybrid (A25A-FXS)"
+  }
+ },
+ "specs": [
+  {
+   "engine": "2.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Engine model code",
+   "data": {
+    "name": "Engine model code",
+    "quantity": "other",
+    "text": "A25A-FKS"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "2.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Engine type",
+   "data": {
+    "name": "Engine type",
+    "quantity": "other",
+    "text": "4-cylinder in line, 4-cycle, gasoline"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "2.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Bore × stroke",
+   "data": {
+    "name": "Bore × stroke",
+    "quantity": "other",
+    "text": "87.5 × 103.4 mm",
+    "printed": "3.44 × 4.07 in. (87.5 × 103.4 mm)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "2.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "151.8 cu. in. (2487 cm³)",
+    "printed": "151.8 cu. in. (2487 cm3)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Engine model code",
+   "data": {
+    "name": "Engine model code",
+    "quantity": "other",
+    "text": "2GR-FKS"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Engine type",
+   "data": {
+    "name": "Engine type",
+    "quantity": "other",
+    "text": "6-cylinder V type, 4-cycle, gasoline"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Bore × stroke",
+   "data": {
+    "name": "Bore × stroke",
+    "quantity": "other",
+    "text": "94.0 × 83.0 mm",
+    "printed": "3.70 × 3.27 in. (94.0 × 83.0 mm)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5",
+   "page": 577,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "210.9 cu. in. (3456 cm³)",
+    "printed": "210.9 cu. in. (3456 cm3)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Engine model code",
+   "data": {
+    "name": "Engine model code",
+    "quantity": "other",
+    "text": "A25A-FXS"
+   },
+   "systems": [
+    "engine.mechanical"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Engine type",
+   "data": {
+    "name": "Engine type",
+    "quantity": "other",
+    "text": "4-cylinder in line, 4-cycle, gasoline"
+   },
+   "systems": [
+    "engine.mechanical"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Bore × stroke",
+   "data": {
+    "name": "Bore × stroke",
+    "quantity": "other",
+    "text": "87.5 × 103.4 mm",
+    "printed": "3.44 × 4.07 in. (87.5 × 103.4 mm)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "151.8 cu. in. (2487 cm³)",
+    "printed": "151.8 cu. in. (2487 cm3)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": null,
+   "page": 577,
+   "kind": "spec",
+   "title": "Valve clearance",
+   "data": {
+    "name": "Valve clearance",
+    "quantity": "other",
+    "text": "Automatic adjustment",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 546."
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 577,
+   "kind": "spec",
+   "title": "Drive belt tension",
+   "data": {
+    "name": "Drive belt tension",
+    "quantity": "other",
+    "text": "Automatic adjustment",
+    "notes": "Not listed in the Camry Hybrid manual."
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 577,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "Unleaded gasoline only, 87 octane (Research Octane Number 91) or higher",
+    "printed": "87 (Research Octane Number 91) or higher",
+    "notes": "Toyota recommends Top Tier detergent gasoline; avoid fuel with MMT or methanol (p. 590-591). Same in the Camry Hybrid manual (OM06293U), p. 546, 554."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 591,
+   "kind": "spec",
+   "title": "Maximum ethanol content",
+   "data": {
+    "name": "Maximum ethanol content",
+    "quantity": "percent",
+    "value": 15,
+    "printed": "up to 15% ethanol",
+    "notes": "Do not use flex-fuel or E30/E50/E85. Same in the Camry Hybrid manual (OM06293U), p. 555."
+   },
+   "systems": [
+    "fuel"
+   ]
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 577,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (2WD)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 60.6,
+    "amount_unit": "L",
+    "printed": "16.0 gal. (60.6 L, 13.3 Imp. gal.)",
+    "notes": "Reference capacity."
+   }
+  },
+  {
+   "engine": "2.5",
+   "page": 577,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (AWD)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 54.5,
+    "amount_unit": "L",
+    "printed": "14.4 gal. (54.5 L, 11.9 Imp. gal.)",
+    "notes": "Reference capacity. AWD is offered only with the 2.5L."
+   }
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 49.3,
+    "amount_unit": "L",
+    "printed": "13 gal. (49.3 L, 10.8 Imp. gal.)",
+    "notes": "Reference capacity."
+   },
+   "source": "hybrid"
+  },
+  {
+   "engine": "2.5",
+   "page": 578,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 4.3,
+    "amount_unit": "L",
+    "printed": "4.5 qt. (4.3 L, 3.8 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6B multigrade, SAE 0W-16 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, with filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes. If SAE 0W-16 isn't available, SAE 0W-20 may be used, but change back to 0W-16 at the next oil change."
+   }
+  },
+  {
+   "engine": "2.5",
+   "page": 578,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (without filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 4.0,
+    "amount_unit": "L",
+    "printed": "4.2 qt. (4 L, 3.5 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6B multigrade, SAE 0W-16 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, without filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes."
+   }
+  },
+  {
+   "engine": "3.5",
+   "page": 578,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.4,
+    "amount_unit": "L",
+    "printed": "5.7 qt. (5.4 L, 4.8 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6A multigrade, SAE 0W-20 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, with filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes. If SAE 0W-20 isn't available, SAE 5W-20 may be used, but change back to 0W-20 at the next oil change (p. 579)."
+   }
+  },
+  {
+   "engine": "3.5",
+   "page": 578,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (without filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.3,
+    "amount_unit": "L",
+    "printed": "5.6 qt. (5.3 L, 4.7 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6A multigrade, SAE 0W-20 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, without filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes."
+   }
+  },
+  {
+   "engine": "HV",
+   "page": 547,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 4.3,
+    "amount_unit": "L",
+    "printed": "4.5 qt. (4.3 L, 3.8 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6B multigrade, SAE 0W-16 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, with filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes. If SAE 0W-16 isn't available, SAE 0W-20 may be used, but change back to 0W-16 at the next oil change."
+   },
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 547,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (without filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 4.0,
+    "amount_unit": "L",
+    "printed": "4.2 qt. (4 L, 3.5 Imp. qt.)",
+    "fluid_spec": "ILSAC GF-6B multigrade, SAE 0W-16 (Toyota Genuine Motor Oil or equivalent)",
+    "condition": "Drain and refill, without filter",
+    "notes": "Reference amount for an oil change; fill to between the dipstick marks. Check the level after warm-up, shutting off and waiting about 5 minutes."
+   },
+   "source": "hybrid"
+  },
+  {
+   "engine": "2.5",
+   "page": 580,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 6.9,
+    "amount_unit": "L",
+    "printed": "7.3 qt. (6.9 L, 6.1 Imp. qt.)",
+    "fluid_spec": "Toyota Super Long Life Coolant, or a similar high-quality ethylene glycol-based non-silicate, non-amine, non-nitrite, non-borate coolant with long-life hybrid organic acid technology",
+    "notes": "Reference capacity. Do not use plain water alone."
+   }
+  },
+  {
+   "engine": "3.5",
+   "page": 580,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 8.6,
+    "amount_unit": "L",
+    "printed": "9.1 qt. (8.6 L, 7.6 Imp. qt.)",
+    "fluid_spec": "Toyota Super Long Life Coolant, or a similar high-quality ethylene glycol-based non-silicate, non-amine, non-nitrite, non-borate coolant with long-life hybrid organic acid technology",
+    "notes": "Reference capacity. Do not use plain water alone."
+   }
+  },
+  {
+   "engine": "HV",
+   "page": 549,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 6.1,
+    "amount_unit": "L",
+    "printed": "6.4 qt. (6.1 L, 5.4 Imp. qt.)",
+    "fluid_spec": "Toyota Super Long Life Coolant, or a similar high-quality ethylene glycol-based non-silicate, non-amine, non-nitrite, non-borate coolant with long-life hybrid organic acid technology",
+    "notes": "Reference capacity. Do not use plain water alone."
+   },
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 549,
+   "kind": "fluid_capacity",
+   "title": "Coolant (power control unit / inverter)",
+   "data": {
+    "system": "coolant",
+    "amount": 1.8,
+    "amount_unit": "L",
+    "printed": "1.9 qt. (1.8 L, 1.6 Imp. qt.)",
+    "fluid_spec": "Toyota Super Long Life Coolant, or a similar high-quality ethylene glycol-based non-silicate, non-amine, non-nitrite, non-borate coolant with long-life hybrid organic acid technology",
+    "notes": "Separate circuit for the hybrid power control unit. Reference capacity. Do not use plain water alone."
+   },
+   "systems": [
+    "hybrid_ev",
+    "engine.cooling",
+    "maintenance"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": "2.5",
+   "page": 580,
+   "kind": "part_note",
+   "title": "Spark plugs",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "DENSO FC16HR-Q8"
+    ],
+    "notes": "Iridium-tipped plugs only; do not adjust the gap."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "3.5",
+   "page": 580,
+   "kind": "part_note",
+   "title": "Spark plugs",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "DENSO FK20HBR8"
+    ],
+    "notes": "Iridium-tipped plugs only; do not adjust the gap."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 549,
+   "kind": "part_note",
+   "title": "Spark plugs",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "DENSO FC16HR-Q8"
+    ],
+    "notes": "Iridium-tipped plugs only; do not adjust the gap."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": null,
+   "page": 580,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.8,
+    "printed": "0.031 in. (0.8 mm)",
+    "notes": "Iridium-tipped plugs only; do not adjust the gap. Same in the Camry Hybrid manual (OM06293U), p. 549."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 581,
+   "kind": "spec",
+   "title": "Battery voltage (at 68°F / 20°C)",
+   "data": {
+    "name": "Battery voltage (at 68°F / 20°C)",
+    "quantity": "voltage",
+    "value": 12.3,
+    "printed": "12.3 V or higher",
+    "notes": "Minimum specific voltage reading. Measure after switching off, lighting the high beams for 30 seconds, then turning them off. Charge the battery if below this value."
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 550,
+   "kind": "spec",
+   "title": "12-volt battery open voltage (at 68°F / 20°C)",
+   "data": {
+    "name": "12-volt battery open voltage (at 68°F / 20°C)",
+    "quantity": "voltage",
+    "value": 12.0,
+    "printed": "12.0 V or higher",
+    "notes": "Minimum. Measure after switching off, lighting the high beams for 30 seconds, then turning them off. Charge the battery if below this value."
+   },
+   "systems": [
+    "electrical.battery"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": null,
+   "page": 581,
+   "kind": "spec",
+   "title": "Battery charging rate (max)",
+   "data": {
+    "name": "Battery charging rate (max)",
+    "quantity": "current",
+    "value": 5,
+    "printed": "5 A max.",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 550."
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 494,
+   "kind": "part_note",
+   "title": "Key fob battery",
+   "data": {
+    "part_name": "Electronic key / remote battery",
+    "oem_numbers": [
+     "CR2032"
+    ],
+    "notes": "Lithium coin cell. Same in the Camry Hybrid manual (OM06293U), p. 471."
+   },
+   "systems": [
+    "electrical.body_control"
+   ]
+  },
+  {
+   "engine": "2.5",
+   "page": 581,
+   "kind": "fluid_capacity",
+   "title": "Automatic transaxle fluid",
+   "data": {
+    "system": "automatic_transmission",
+    "amount": 7.3,
+    "amount_unit": "L",
+    "printed": "7.7 qt. (7.3 L, 6.4 Imp. qt.)",
+    "fluid_spec": "Toyota Genuine ATF WS",
+    "notes": "Reference capacity; Toyota says to have a dealer do replacement. Using another fluid type can cause noise, vibration or damage."
+   }
+  },
+  {
+   "engine": "3.5",
+   "page": 581,
+   "kind": "fluid_capacity",
+   "title": "Automatic transaxle fluid",
+   "data": {
+    "system": "automatic_transmission",
+    "amount": 7.5,
+    "amount_unit": "L",
+    "printed": "7.9 qt. (7.5 L, 6.6 Imp. qt.)",
+    "fluid_spec": "Toyota Genuine ATF WS",
+    "notes": "Reference capacity; Toyota says to have a dealer do replacement. Using another fluid type can cause noise, vibration or damage."
+   }
+  },
+  {
+   "engine": "HV",
+   "page": 550,
+   "kind": "fluid_capacity",
+   "title": "Hybrid transmission fluid",
+   "data": {
+    "system": "automatic_transmission",
+    "amount": 3.9,
+    "amount_unit": "L",
+    "printed": "4.1 qt. (3.9 L, 3.4 Imp. qt.)",
+    "fluid_spec": "Toyota Genuine ATF WS",
+    "notes": "Reference capacity; Toyota says to have a dealer do replacement. Using another fluid type can cause noise, vibration or damage."
+   },
+   "source": "hybrid"
+  },
+  {
+   "engine": "2.5",
+   "page": 582,
+   "kind": "fluid_capacity",
+   "title": "Transfer oil (AWD)",
+   "data": {
+    "system": "transfer_case",
+    "amount": 0.45,
+    "amount_unit": "L",
+    "printed": "0.47 qt. (0.45 L, 0.39 Imp. qt.)",
+    "fluid_spec": "Toyota Genuine Differential Gear Oil LT 75W-85 GL-5 or equivalent",
+    "notes": "AWD models only."
+   }
+  },
+  {
+   "engine": "2.5",
+   "page": 582,
+   "kind": "fluid_capacity",
+   "title": "Rear differential oil (AWD)",
+   "data": {
+    "system": "rear_differential",
+    "amount": 0.5,
+    "amount_unit": "L",
+    "printed": "0.52 qt. (0.50 L, 0.43 Imp. qt.)",
+    "fluid_spec": "Toyota Genuine Differential Gear Oil LT 75W-85 GL-5 or equivalent",
+    "notes": "AWD models only."
+   }
+  },
+  {
+   "engine": null,
+   "page": 583,
+   "kind": "fluid_capacity",
+   "title": "Brake fluid",
+   "data": {
+    "system": "brake",
+    "fluid_spec": "FMVSS No.116 DOT 3 or SAE J1703; FMVSS No.116 DOT 4 or SAE J1704",
+    "condition": "Fill as required",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 550."
+   }
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 583,
+   "kind": "spec",
+   "title": "Brake pedal clearance (minimum)",
+   "data": {
+    "name": "Brake pedal clearance (minimum)",
+    "quantity": "length",
+    "value": 81,
+    "printed": "3.2 in. (81 mm)",
+    "notes": "Pedal pushed with 67 lbf (300 N), engine running. TRD models: 3.1 in. (79 mm)."
+   },
+   "systems": [
+    "brakes.hydraulic"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 550,
+   "kind": "spec",
+   "title": "Brake pedal clearance (minimum)",
+   "data": {
+    "name": "Brake pedal clearance (minimum)",
+    "quantity": "length",
+    "value": 85,
+    "printed": "3.3 in. (85 mm)",
+    "notes": "Pedal pushed with 67 lbf (300 N), hybrid system operating."
+   },
+   "systems": [
+    "brakes.hydraulic"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": null,
+   "page": 583,
+   "kind": "spec",
+   "title": "Brake pedal free play",
+   "data": {
+    "name": "Brake pedal free play",
+    "quantity": "length",
+    "value": 1,
+    "value_max": 6,
+    "printed": "0.04 — 0.24 in. (1 — 6 mm)",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 550."
+   },
+   "systems": [
+    "brakes.hydraulic"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 583,
+   "kind": "spec",
+   "title": "Brake pad wear limit",
+   "data": {
+    "name": "Brake pad wear limit",
+    "quantity": "length",
+    "value": 1.0,
+    "printed": "0.04 in. (1.0 mm)",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 550."
+   },
+   "systems": [
+    "brakes.disc",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 583,
+   "kind": "spec",
+   "title": "Parking brake lining wear limit (pedal type)",
+   "data": {
+    "name": "Parking brake lining wear limit (pedal type)",
+    "quantity": "length",
+    "value": 1.0,
+    "printed": "0.04 in. (1.0 mm)",
+    "notes": "Not listed in the Camry Hybrid manual."
+   },
+   "systems": [
+    "brakes.parking"
+   ]
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 583,
+   "kind": "spec",
+   "title": "Parking brake pedal travel (pedal type)",
+   "data": {
+    "name": "Parking brake pedal travel (pedal type)",
+    "quantity": "other",
+    "text": "7–12 clicks",
+    "printed": "7 — 12 clicks",
+    "notes": "Pedal pushed with 67 lbf (300 N). Not listed in the Camry Hybrid manual."
+   },
+   "systems": [
+    "brakes.parking"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 583,
+   "kind": "spec",
+   "title": "Steering wheel free play",
+   "data": {
+    "name": "Steering wheel free play",
+    "quantity": "other",
+    "text": "Less than 1.2 in. (30 mm)",
+    "printed": "Less than 1.2 in. (30 mm)",
+    "notes": "Same in the Camry Hybrid manual (OM06293U), p. 550."
+   },
+   "systems": [
+    "steering"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 584,
+   "kind": "torque_spec",
+   "title": "Wheel nut torque",
+   "systems": [
+    "wheels_tires"
+   ],
+   "data": {
+    "component": "Wheel nuts",
+    "stages": [
+     {
+      "type": "torque",
+      "value_nm": 103
+     }
+    ],
+    "thread_condition": "unspecified",
+    "notes": "Printed: 76 ft•lbf (103 N•m, 10.5 kgf•m) for every tire/wheel type. Same in the Camry Hybrid manual (OM06293U), p. 551."
+   }
+  },
+  {
+   "engine": [
+    "2.5",
+    "3.5"
+   ],
+   "page": 584,
+   "kind": "spec",
+   "title": "Cold tire pressure (2WD)",
+   "data": {
+    "name": "Cold tire pressure (2WD)",
+    "quantity": "pressure",
+    "value": 240,
+    "printed": "35 psi (240 kPa, 2.4 kgf/cm2 or bar)",
+    "notes": "Normal driving, front and rear. Above 100 mph (160 km/h), where legal, add 5 psi (30 kPa) front and rear; never exceed the tire sidewall maximum. Applies to 205/65R16 95H, 215/55R17 94V, 235/45R18 94V and 235/40R19 92V (types A–E). 235/40R19 96Y (type F): 33 psi (230 kPa), p. 586."
+   },
+   "systems": [
+    "wheels_tires"
+   ]
+  },
+  {
+   "engine": "2.5",
+   "page": 587,
+   "kind": "spec",
+   "title": "Cold tire pressure (AWD)",
+   "data": {
+    "name": "Cold tire pressure (AWD)",
+    "quantity": "pressure",
+    "value": 250,
+    "printed": "36 psi (250 kPa, 2.5 kgf/cm2 or bar)",
+    "notes": "Normal driving, front and rear. Above 100 mph (160 km/h), where legal, add 5 psi (30 kPa) front and rear; never exceed the tire sidewall maximum. Applies to 215/55R17 94V, 235/45R18 94V, and 235/40R19 92V on 19 × 8 J wheels (types A–C). 235/40R19 92V on 19 × 8 1/2 J wheels (type D): 35 psi (240 kPa), p. 588."
+   },
+   "systems": [
+    "wheels_tires"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 551,
+   "kind": "spec",
+   "title": "Cold tire pressure",
+   "data": {
+    "name": "Cold tire pressure",
+    "quantity": "pressure",
+    "value": 240,
+    "printed": "35 psi (240 kPa, 2.4 kgf/cm2 or bar)",
+    "notes": "Normal driving, front and rear. Above 100 mph (160 km/h), where legal, add 5 psi (30 kPa) front and rear; never exceed the tire sidewall maximum. Same for every listed tire (205/65R16, 215/55R17, 235/45R18, 235/40R19; types A–E, pp. 551–553)."
+   },
+   "systems": [
+    "wheels_tires"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": null,
+   "page": 584,
+   "kind": "spec",
+   "title": "Compact spare tire pressure",
+   "data": {
+    "name": "Compact spare tire pressure",
+    "quantity": "pressure",
+    "value": 420,
+    "printed": "60 psi (420 kPa, 4.2 kgf/cm2 or bar)",
+    "notes": "T155/70D17 110M compact spare on 17 × 4 T wheel. Same in the Camry Hybrid manual (OM06293U), p. 551."
+   },
+   "systems": [
+    "wheels_tires"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "part_note",
+   "title": "Front side marker bulb",
+   "data": {
+    "part_name": "Front side marker bulb",
+    "oem_numbers": [
+     "W5W"
+    ],
+    "notes": "5 W, clear wedge base. Bulb-type lamps only (others are LED). Same in the Camry Hybrid manual (OM06293U), p. 553."
+   },
+   "systems": [
+    "electrical.lighting"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "part_note",
+   "title": "Front turn signal / parking bulb",
+   "data": {
+    "part_name": "Front turn signal / parking bulb",
+    "oem_numbers": [
+     "7444NA"
+    ],
+    "notes": "28/8 W, amber wedge base. Bulb-type lamps only (others are LED). Same in the Camry Hybrid manual (OM06293U), p. 553."
+   },
+   "systems": [
+    "electrical.lighting"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "part_note",
+   "title": "Rear turn signal bulb",
+   "data": {
+    "part_name": "Rear turn signal bulb",
+    "oem_numbers": [
+     "WY21W"
+    ],
+    "notes": "21 W, amber wedge base. Bulb-type lamps only (others are LED). Same in the Camry Hybrid manual (OM06293U), p. 553."
+   },
+   "systems": [
+    "electrical.lighting"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "part_note",
+   "title": "Rear side marker bulb",
+   "data": {
+    "part_name": "Rear side marker bulb",
+    "oem_numbers": [
+     "W5W"
+    ],
+    "notes": "5 W, clear wedge base. Bulb-type lamps only (others are LED). Same in the Camry Hybrid manual (OM06293U), p. 553."
+   },
+   "systems": [
+    "electrical.lighting"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "part_note",
+   "title": "Back-up light bulb",
+   "data": {
+    "part_name": "Back-up light bulb",
+    "oem_numbers": [
+     "921"
+    ],
+    "notes": "16 W, clear wedge base. Bulb-type lamps only (others are LED). Same in the Camry Hybrid manual (OM06293U), p. 553."
+   },
+   "systems": [
+    "electrical.lighting"
+   ]
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Traction motor",
+   "data": {
+    "name": "Traction motor",
+    "quantity": "other",
+    "text": "Permanent magnet synchronous motor; 88 kW max output; 149 ft•lbf (202 N•m) max torque",
+    "printed": "149 ft•lbf (202 N•m, 20.6 kgf•m)"
+   },
+   "systems": [
+    "hybrid_ev"
+   ],
+   "source": "hybrid"
+  },
+  {
+   "engine": "HV",
+   "page": 546,
+   "kind": "spec",
+   "title": "Hybrid (traction) battery",
+   "data": {
+    "name": "Hybrid (traction) battery",
+    "quantity": "other",
+    "text": "AXVH70: lithium-ion, 259 V nominal; AXVH71: nickel-metal hydride, 244.8 V nominal",
+    "notes": "AXVH70: 3.7 V/cell, 4.0 Ah, 70 cells. AXVH71: 7.2 V/module, 6.5 Ah (3HR), 34 modules. The model code is on the vehicle's labels (see p. 545). High voltage - qualified service only."
+   },
+   "systems": [
+    "hybrid_ev"
+   ],
+   "source": "hybrid"
+  }
+ ],
+ "other_sources": {
+  "hybrid": {
+   "title": "2024 Toyota Camry Hybrid Owner's Manual (OM06293U)",
+   "url": "https://assets.sia.toyota.com/publications/en/om-s/OM06293U/pdf/OM06293U.pdf"
+  }
+ }
+}

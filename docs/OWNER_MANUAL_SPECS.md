@@ -29,10 +29,10 @@ batteries, wipers), and more as each manual provides.
 | Vehicle | Years done |
 |---|---|
 | Ford F-150 | 2015, 2017, 2022 |
-| Chevrolet Silverado 1500 | — |
-| Ram 1500 | — |
+| Chevrolet Silverado 1500 | 2024 (incl. 3.0 Duramax supplement) |
+| Ram 1500 | 2024 |
 | GMC Sierra 1500 | — |
-| Toyota Camry | — |
+| Toyota Camry | 2024 (gas + hybrid manuals) |
 | Honda Accord | — |
 | Honda Civic | — |
 | Toyota Corolla | — |

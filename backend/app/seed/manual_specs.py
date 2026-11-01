@@ -8,6 +8,8 @@ engine, and stay editable/verifiable like any other entry. Re-running never over
 File format (see ford-f150-2015.json):
   vehicle:  make, model, year_from, year_to
   source:   title (printing/date), url (the manufacturer's own PDF)
+  other_sources (optional): key -> {title, url} — e.g. a separate hybrid manual; a spec with
+            "source": key cites that manual instead
   engines:  key -> {family: engine-family slug, label: "2.7L EcoBoost"}
   specs:    [{engine: key | [keys] | null, page, kind, title, data, systems?}]
             (a list of keys = the same fact for several, but not all, engines)
@@ -89,8 +91,9 @@ def load_file(db: Session, author, path: Path) -> int:
             continue
         data = dict(item["data"])
         if item["kind"] != "labor_time":
+            isrc = doc["other_sources"][item["source"]] if item.get("source") else src
             data["sources"] = [
-                {"type": "owner_manual", "citation": f"{src['title']}, p. {item['page']}"}
+                {"type": "owner_manual", "citation": f"{isrc['title']}, p. {item['page']}"}
             ]
         base = {
             "make_id": make.id,

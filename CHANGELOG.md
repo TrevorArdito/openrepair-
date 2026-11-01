@@ -18,8 +18,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Owner's-manual specs**: facts transcribed from the manufacturer's own manual with page numbers
   — Ford F-150 2015, 2017 and 2022, every engine (capacities, fluid types with Ford spec numbers,
   firing order, spark plug gap, compression ratio, Motorcraft part numbers, lug nut torque;
-  185 facts). Facts can apply to several engines at once and capacities can be ranges ("2.0–2.1 qt").
-- Engine families: Ford 3.3L V6, 3.5L PowerBoost hybrid and 3.0L Power Stroke diesel (F-150).
+  185 facts); 2024 Chevrolet Silverado 1500, Ram 1500 and Toyota Camry (gas + hybrid). Facts can apply to several engines at once and capacities can be ranges ("2.0–2.1 qt").
+- Engine families: GM 2.7L Turbo and 3.0L Duramax, Ram eTorque 3.6/5.7 and 6.2 supercharged,
+  Toyota 2.5L hybrid, Ford 3.3L V6, 3.5L PowerBoost hybrid and 3.0L Power Stroke diesel (F-150).
 - **Quick Specs** box on the vehicle overview and table-style Specs tab (values shown inline, shop
   order, "General" tags); specs can target an exact engine; specs can be text (firing order) and
   fluids can be type-only (brake fluid); "as printed in the manual" values.

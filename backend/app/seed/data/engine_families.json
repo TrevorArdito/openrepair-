@@ -1620,7 +1620,7 @@
  {
   "slug": "chrysler-3-7-powertech",
   "name": "Chrysler 3.7L PowerTech V6",
-  "manufacturer": "Chrysler",
+  "manufacturer": "Chrysler / Stellantis",
   "displacement_l": 3.7,
   "cylinders": 6,
   "layout": "v",
@@ -1663,7 +1663,7 @@
  {
   "slug": "chrysler-4-7-powertech",
   "name": "Chrysler 4.7L PowerTech V8",
-  "manufacturer": "Chrysler",
+  "manufacturer": "Chrysler / Stellantis",
   "displacement_l": 4.7,
   "cylinders": 8,
   "layout": "v",
@@ -1818,6 +1818,168 @@
     "model": "F-150",
     "year_from": 2018,
     "year_to": 2021
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-3-6-pentastar-etorque",
+  "name": "Chrysler 3.6L Pentastar V6 eTorque (mild hybrid)",
+  "manufacturer": "Chrysler / Stellantis",
+  "displacement_l": 3.6,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "hybrid",
+  "aspiration": null,
+  "year_from": 2024,
+  "year_to": null,
+  "codes": "Pentastar, eTorque",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "3.6L V6 with the eTorque motor generator unit, extra hybrid battery and Stop/Start (EPA lists it as a hybrid). Fitment limited to what the 2024 Ram 1500 owner's manual confirms; earlier years not yet verified.",
+  "fitment": [
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2024,
+    "year_to": 2024
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-5-7-hemi-etorque",
+  "name": "Chrysler 5.7L HEMI V8 eTorque (mild hybrid)",
+  "manufacturer": "Chrysler / Stellantis",
+  "displacement_l": 5.7,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "hybrid",
+  "aspiration": null,
+  "year_from": 2024,
+  "year_to": null,
+  "codes": "HEMI, eTorque",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "5.7L HEMI with the eTorque motor generator and Stop/Start (EPA lists it as a hybrid). Fitment limited to what the 2024 Ram 1500 owner's manual confirms; earlier years not yet verified.",
+  "fitment": [
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2024,
+    "year_to": 2024
+   }
+  ]
+ },
+ {
+  "slug": "chrysler-6-2-hellcat",
+  "name": "Chrysler 6.2L Supercharged HEMI V8",
+  "manufacturer": "Chrysler / Stellantis",
+  "displacement_l": 6.2,
+  "cylinders": 8,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": "supercharged",
+  "year_from": 2024,
+  "year_to": null,
+  "codes": "Hellcat",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "Ram 1500 TRX engine. Fitment limited to what the 2024 Ram 1500 owner's manual confirms; 2021-2023 TRX not yet verified. Other Dodge/Jeep applications not added.",
+  "fitment": [
+   {
+    "make": "Ram",
+    "model": "1500",
+    "year_from": 2024,
+    "year_to": 2024
+   }
+  ]
+ },
+ {
+  "slug": "gm-2-7-turbo",
+  "name": "GM 2.7L Turbo I4",
+  "manufacturer": "General Motors",
+  "displacement_l": 2.7,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "gasoline",
+  "aspiration": "turbo",
+  "year_from": 2019,
+  "year_to": null,
+  "codes": "L3B",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 2019,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 2019,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "gm-3-0-duramax",
+  "name": "GM 3.0L Duramax I6 Turbo Diesel",
+  "manufacturer": "General Motors",
+  "displacement_l": 3.0,
+  "cylinders": 6,
+  "layout": "inline",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2020,
+  "year_to": null,
+  "codes": "LM2, LZ0",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "In Silverado / Sierra 1500 pickups.",
+  "fitment": [
+   {
+    "make": "Chevrolet",
+    "model": "Silverado",
+    "year_from": 2020,
+    "year_to": null
+   },
+   {
+    "make": "GMC",
+    "model": "Sierra",
+    "year_from": 2020,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "toyota-2-5-a25a-hybrid",
+  "name": "Toyota 2.5L I4 Hybrid (A25A-FXS)",
+  "manufacturer": "Toyota",
+  "displacement_l": 2.5,
+  "cylinders": 4,
+  "layout": "inline",
+  "fuel_type": "hybrid",
+  "aspiration": null,
+  "year_from": 2024,
+  "year_to": null,
+  "codes": "A25A-FXS",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "Engine code confirmed from the 2024 Camry Hybrid owner's manual (OM06293U, p. 546). EPA lists a 2.5 L 4-cyl hybrid in the Camry Hybrid every year 2018-2024; extend the fitment once those years' manuals confirm the code.",
+  "fitment": [
+   {
+    "make": "Toyota",
+    "model": "Camry",
+    "year_from": 2024,
+    "year_to": 2024
    }
   ]
  }
