@@ -1,0 +1,1218 @@
+{
+ "vehicle": {
+  "make": "Ford",
+  "model": "F-150",
+  "year_from": 2022,
+  "year_to": 2022
+ },
+ "source": {
+  "title": "2022 Ford F-150 Owner's Manual (version 1, Oct 2021)",
+  "url": "https://www.fordservicecontent.com/Ford_Content/Catalog/owner_information/2022-Ford-F-150-Owners-Manual-version-1_om_EN-US_10_2021.pdf"
+ },
+ "engines": {
+  "2.7EB": {
+   "family": "ford-2-7-ecoboost",
+   "label": "2.7L EcoBoost"
+  },
+  "3.3": {
+   "family": "ford-3-3-v6",
+   "label": "3.3L V6"
+  },
+  "3.5EB": {
+   "family": "ford-3-5-ecoboost",
+   "label": "3.5L EcoBoost"
+  },
+  "HEV": {
+   "family": "ford-3-5-powerboost",
+   "label": "3.5L PowerBoost Hybrid"
+  },
+  "5.0": {
+   "family": "ford-5-0-coyote",
+   "label": "5.0L V8"
+  }
+ },
+ "specs": [
+  {
+   "engine": null,
+   "page": 556,
+   "kind": "torque_spec",
+   "title": "Wheel lug nut torque",
+   "systems": [
+    "wheels_tires"
+   ],
+   "data": {
+    "component": "Wheel lug nuts",
+    "stages": [
+     {
+      "type": "torque",
+      "value_nm": 204
+     }
+    ],
+    "thread_condition": "dry",
+    "fastener": "M14 x 1.5",
+    "notes": "Torque is for threads free of dirt and rust. Clean corrosion/debris from the wheel and hub mounting surfaces first. Retighten to spec within 100 miles (160 km) after any wheel disturbance. Printed: 150 lb.ft (204 Nm)."
+   }
+  },
+  {
+   "engine": "2.7EB",
+   "page": 558,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.7,
+    "value_max": 0.8,
+    "printed": "0.028 in (0.7 mm) - 0.031 in (0.8 mm)"
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 558,
+   "kind": "spec",
+   "title": "Firing order",
+   "data": {
+    "name": "Firing order",
+    "quantity": "other",
+    "text": "1-4-2-5-3-6"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 558,
+   "kind": "spec",
+   "title": "Compression ratio",
+   "data": {
+    "name": "Compression ratio",
+    "quantity": "other",
+    "text": "10.0:1"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 558,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "165 cu in (2,700 cc)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 558,
+   "kind": "spec",
+   "title": "Ignition system",
+   "data": {
+    "name": "Ignition system",
+    "quantity": "other",
+    "text": "Coil on plug"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 559,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 1.25,
+    "value_max": 1.35,
+    "printed": "0.049 in (1.25 mm) - 0.053 in (1.35 mm)"
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 559,
+   "kind": "spec",
+   "title": "Firing order",
+   "data": {
+    "name": "Firing order",
+    "quantity": "other",
+    "text": "1-4-2-5-3-6"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 559,
+   "kind": "spec",
+   "title": "Compression ratio",
+   "data": {
+    "name": "Compression ratio",
+    "quantity": "other",
+    "text": "12:1"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 559,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "203.8 cu in (3,340 cc)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 559,
+   "kind": "spec",
+   "title": "Ignition system",
+   "data": {
+    "name": "Ignition system",
+    "quantity": "other",
+    "text": "Coil on plug"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 560,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.7,
+    "value_max": 0.8,
+    "printed": "0.028 in (0.7 mm) - 0.031 in (0.8 mm)"
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 560,
+   "kind": "spec",
+   "title": "Firing order",
+   "data": {
+    "name": "Firing order",
+    "quantity": "other",
+    "text": "1-4-2-5-3-6"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 560,
+   "kind": "spec",
+   "title": "Compression ratio",
+   "data": {
+    "name": "Compression ratio",
+    "quantity": "other",
+    "text": "10.5:1"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 560,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "213.4 cu in (3,497 cc)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 560,
+   "kind": "spec",
+   "title": "Ignition system",
+   "data": {
+    "name": "Ignition system",
+    "quantity": "other",
+    "text": "Coil on plug"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 561,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.7,
+    "value_max": 0.8,
+    "printed": "0.028 in (0.7 mm) - 0.031 in (0.8 mm)"
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 561,
+   "kind": "spec",
+   "title": "Firing order",
+   "data": {
+    "name": "Firing order",
+    "quantity": "other",
+    "text": "1-4-2-5-3-6"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 561,
+   "kind": "spec",
+   "title": "Compression ratio",
+   "data": {
+    "name": "Compression ratio",
+    "quantity": "other",
+    "text": "10.5:1"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 561,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "213.4 cu in (3,497 cc)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 561,
+   "kind": "spec",
+   "title": "Ignition system",
+   "data": {
+    "name": "Ignition system",
+    "quantity": "other",
+    "text": "Coil on plug"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 562,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 1.0,
+    "value_max": 1.1,
+    "printed": "0.039 in (1 mm) - 0.043 in (1.1 mm)"
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 562,
+   "kind": "spec",
+   "title": "Firing order",
+   "data": {
+    "name": "Firing order",
+    "quantity": "other",
+    "text": "1-3-7-2-6-5-4-8"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 562,
+   "kind": "spec",
+   "title": "Compression ratio",
+   "data": {
+    "name": "Compression ratio",
+    "quantity": "other",
+    "text": "12:1"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 562,
+   "kind": "spec",
+   "title": "Displacement",
+   "data": {
+    "name": "Displacement",
+    "quantity": "other",
+    "text": "307 cu in (5,038 cc)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 562,
+   "kind": "spec",
+   "title": "Ignition system",
+   "data": {
+    "name": "Ignition system",
+    "quantity": "other",
+    "text": "Coil on plug, coil near plug"
+   },
+   "systems": [
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 558,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "Minimum 87 octane",
+    "notes": "Printed the same in every engine section (pp. 558-562)."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 563,
+   "kind": "part_note",
+   "title": "Oil filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "FL-2062-A"
+    ],
+    "notes": "If a Motorcraft oil filter isn't available, use one that meets SAE/USCAR-36."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 563,
+   "kind": "part_note",
+   "title": "Spark plugs (Motorcraft)",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "SP-578"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 563,
+   "kind": "part_note",
+   "title": "Battery (Motorcraft)",
+   "data": {
+    "part_name": "Battery",
+    "oem_numbers": [
+     "BAGM-48H6-760"
+    ]
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 564,
+   "kind": "part_note",
+   "title": "Oil filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "FL-500-S"
+    ],
+    "notes": "If a Motorcraft oil filter isn't available, use one that meets SAE/USCAR-36."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 564,
+   "kind": "part_note",
+   "title": "Spark plugs (Motorcraft)",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "SP-520"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "3.3",
+   "page": 564,
+   "kind": "part_note",
+   "title": "Battery (Motorcraft)",
+   "data": {
+    "part_name": "Battery",
+    "oem_numbers": [
+     "BAGM-48H6-760"
+    ]
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 565,
+   "kind": "part_note",
+   "title": "Oil filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "FL-500-S"
+    ],
+    "notes": "If a Motorcraft oil filter isn't available, use one that meets SAE/USCAR-36."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 565,
+   "kind": "part_note",
+   "title": "Spark plugs (Motorcraft)",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "SP-596"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "3.5EB",
+   "page": 565,
+   "kind": "part_note",
+   "title": "Battery (Motorcraft)",
+   "data": {
+    "part_name": "Battery",
+    "oem_numbers": [
+     "BAGM-48H6-760 (standard)",
+     "BAGM-94RH7-800 (optional)"
+    ]
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 566,
+   "kind": "part_note",
+   "title": "Oil filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "FL-500-S"
+    ],
+    "notes": "If a Motorcraft oil filter isn't available, use one that meets SAE/USCAR-36."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 566,
+   "kind": "part_note",
+   "title": "Spark plugs (Motorcraft)",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "SP-596"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "HEV",
+   "page": 566,
+   "kind": "part_note",
+   "title": "Battery (Motorcraft)",
+   "data": {
+    "part_name": "Battery",
+    "oem_numbers": [
+     "BAGM-94RH7-800"
+    ],
+    "notes": "12-volt battery."
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 567,
+   "kind": "part_note",
+   "title": "Oil filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "FL-500-S"
+    ],
+    "notes": "If a Motorcraft oil filter isn't available, use one that meets SAE/USCAR-36."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 567,
+   "kind": "part_note",
+   "title": "Spark plugs (Motorcraft)",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "SP-588"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "5.0",
+   "page": 567,
+   "kind": "part_note",
+   "title": "Battery (Motorcraft)",
+   "data": {
+    "part_name": "Battery",
+    "oem_numbers": [
+     "BAGM-48H6-760 (standard)",
+     "BAGM-94RH7-800 (optional)"
+    ]
+   },
+   "systems": [
+    "electrical.battery"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 563,
+   "kind": "part_note",
+   "title": "Engine air filter (Motorcraft)",
+   "data": {
+    "part_name": "Engine air filter element",
+    "oem_numbers": [
+     "FA-1883"
+    ],
+    "notes": "Same in every engine section (pp. 563-567)."
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 563,
+   "kind": "part_note",
+   "title": "Cabin air filter (Motorcraft)",
+   "data": {
+    "part_name": "Cabin air filter",
+    "oem_numbers": [
+     "FP-92"
+    ],
+    "notes": "Same in every engine section (pp. 563-567)."
+   },
+   "systems": [
+    "maintenance",
+    "hvac"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 563,
+   "kind": "part_note",
+   "title": "Wiper blades (Motorcraft)",
+   "data": {
+    "part_name": "Windshield wiper blade",
+    "oem_numbers": [
+     "WW-2208"
+    ],
+    "notes": "Same in every engine section (pp. 563-567)."
+   },
+   "systems": [
+    "maintenance",
+    "body"
+   ]
+  },
+  {
+   "engine": "2.7EB",
+   "page": 569,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.7,
+    "amount_unit": "L",
+    "printed": "6.0 qt (5.7 L)",
+    "fluid_spec": "Motorcraft SAE 5W-30 Synthetic Blend (XO-5W30-Q1SP); Ford spec WSS-M2C961-A1",
+    "notes": "Use oil of the recommended viscosity that shows the API certification mark for gasoline engines. Ford advises against supplemental oil additives. Extremely cold climates (-22°F / -30°C or below): SAE 0W-30 Synthetic Blend, Ford spec WSS-M2C963-A1. (p. 570)"
+   }
+  },
+  {
+   "engine": "3.3",
+   "page": 571,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.7,
+    "amount_unit": "L",
+    "printed": "6.0 qt (5.7 L)",
+    "fluid_spec": "Motorcraft SAE 5W-20 Synthetic Blend (XO-5W20-Q1SP); Ford spec WSS-M2C960-A1",
+    "notes": "Use oil of the recommended viscosity that shows the API certification mark for gasoline engines. Ford advises against supplemental oil additives. Extremely cold climates (-22°F / -30°C or below): Motorcraft SAE 0W-20 Full Synthetic (XO-0W20-QFS), Ford spec WSS-M2C962-A1."
+   }
+  },
+  {
+   "engine": "3.5EB",
+   "page": 573,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.7,
+    "amount_unit": "L",
+    "printed": "6.0 qt (5.7 L)",
+    "fluid_spec": "Motorcraft SAE 5W-30 Synthetic Blend (XO-5W30-Q1SP); Ford spec WSS-M2C961-A1",
+    "notes": "Use oil of the recommended viscosity that shows the API certification mark for gasoline engines. Ford advises against supplemental oil additives. Extremely cold climates (-22°F / -30°C or below): SAE 0W-30 Synthetic Blend, Ford spec WSS-M2C963-A1."
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 575,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.7,
+    "amount_unit": "L",
+    "printed": "6.0 qt (5.7 L)",
+    "fluid_spec": "Motorcraft SAE 5W-30 Synthetic Blend (XO-5W30-Q1SP); Ford spec WSS-M2C961-A1",
+    "notes": "Use oil of the recommended viscosity that shows the API certification mark for gasoline engines. Ford advises against supplemental oil additives. Extremely cold climates (-22°F / -30°C or below): SAE 0W-30 Synthetic Blend, Ford spec WSS-M2C963-A1."
+   }
+  },
+  {
+   "engine": "5.0",
+   "page": 577,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 7.33,
+    "amount_unit": "L",
+    "printed": "7.75 qt (7.33 L)",
+    "fluid_spec": "Motorcraft SAE 5W-30 Synthetic Blend (XO-5W30-Q1SP); Ford spec WSS-M2C961-A1",
+    "notes": "Use oil of the recommended viscosity that shows the API certification mark for gasoline engines. Ford advises against supplemental oil additives. Extremely cold climates (-22°F / -30°C or below): SAE 0W-30 Synthetic Blend, Ford spec WSS-M2C963-A1."
+   }
+  },
+  {
+   "engine": "2.7EB",
+   "page": 578,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 14.3,
+    "amount_unit": "L",
+    "printed": "15.1 qt (14.3 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "3.3",
+   "page": 579,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 12.0,
+    "amount_unit": "L",
+    "printed": "12.7 qt (12 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "3.5EB",
+   "page": 579,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 13.5,
+    "amount_unit": "L",
+    "printed": "14.3 qt (13.5 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 580,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant (high-temperature circuit)",
+   "data": {
+    "system": "coolant",
+    "amount": 14.5,
+    "amount_unit": "L",
+    "printed": "15.3 qt (14.5 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 580,
+   "kind": "fluid_capacity",
+   "title": "Coolant (low-temperature circuit)",
+   "data": {
+    "system": "coolant",
+    "amount": 6.8,
+    "amount_unit": "L",
+    "printed": "7.2 qt (6.8 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "5.0",
+   "page": 581,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 12.5,
+    "amount_unit": "L",
+    "printed": "13.2 qt (12.5 L)",
+    "fluid_spec": "Motorcraft Yellow Prediluted Antifreeze/Coolant (VC-13DL-G); Ford spec WSS-M97B57-A2"
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 582,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 115.8,
+    "amount_unit": "L",
+    "printed": "30.6 gal (115.8 L)"
+   }
+  },
+  {
+   "engine": [
+    "2.7EB",
+    "3.3",
+    "3.5EB",
+    "5.0"
+   ],
+   "page": 583,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (regular cab, standard)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 87.1,
+    "amount_unit": "L",
+    "printed": "23.0 gal (87.1 L)",
+    "notes": "Raptor: 36.0 gal (136.3 L), p. 584."
+   }
+  },
+  {
+   "engine": [
+    "2.7EB",
+    "3.3",
+    "3.5EB",
+    "5.0"
+   ],
+   "page": 583,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (SuperCab, standard)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 87.1,
+    "amount_unit": "L",
+    "printed": "23.0 gal (87.1 L)",
+    "notes": "Raptor: 36.0 gal (136.3 L), p. 584."
+   }
+  },
+  {
+   "engine": [
+    "2.7EB",
+    "3.3",
+    "3.5EB",
+    "5.0"
+   ],
+   "page": 583,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (SuperCrew, standard)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 98.4,
+    "amount_unit": "L",
+    "printed": "26.0 gal (98.4 L)",
+    "notes": "Raptor: 36.0 gal (136.3 L), p. 584."
+   }
+  },
+  {
+   "engine": [
+    "2.7EB",
+    "3.3",
+    "3.5EB",
+    "5.0"
+   ],
+   "page": 583,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (optional)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 136.3,
+    "amount_unit": "L",
+    "printed": "36.0 gal (136.3 L)",
+    "notes": "Raptor: 36.0 gal (136.3 L), p. 584."
+   }
+  },
+  {
+   "engine": "2.7EB",
+   "page": 585,
+   "kind": "fluid_capacity",
+   "title": "A/C refrigerant",
+   "data": {
+    "system": "refrigerant",
+    "amount": 0.82,
+    "amount_unit": "kg",
+    "printed": "29 oz (0.82 kg)",
+    "fluid_spec": "R-1234yf (YN-33-A); Ford spec WSS-M17B21-A",
+    "notes": "High-pressure system — only qualified personnel should service it."
+   }
+  },
+  {
+   "engine": "2.7EB",
+   "page": 585,
+   "kind": "fluid_capacity",
+   "title": "A/C compressor oil",
+   "data": {
+    "system": "refrigerant_oil",
+    "amount": 80,
+    "amount_unit": "mL",
+    "printed": "2.71 fl oz (80 ml)",
+    "fluid_spec": "Motorcraft R-1234yf Refrigerant PAG Oil; Ford spec WSS-M2C300-A2"
+   }
+  },
+  {
+   "engine": "3.3",
+   "page": 586,
+   "kind": "fluid_capacity",
+   "title": "A/C refrigerant",
+   "data": {
+    "system": "refrigerant",
+    "amount": 0.82,
+    "amount_unit": "kg",
+    "printed": "29 oz (0.82 kg)",
+    "fluid_spec": "R-1234yf (YN-33-A); Ford spec WSS-M17B21-A",
+    "notes": "High-pressure system — only qualified personnel should service it."
+   }
+  },
+  {
+   "engine": "3.3",
+   "page": 586,
+   "kind": "fluid_capacity",
+   "title": "A/C compressor oil",
+   "data": {
+    "system": "refrigerant_oil",
+    "amount": 80,
+    "amount_unit": "mL",
+    "printed": "2.71 fl oz (80 ml)",
+    "fluid_spec": "Motorcraft R-1234yf Refrigerant PAG Oil; Ford spec WSS-M2C300-A2"
+   }
+  },
+  {
+   "engine": "3.5EB",
+   "page": 587,
+   "kind": "fluid_capacity",
+   "title": "A/C refrigerant",
+   "data": {
+    "system": "refrigerant",
+    "amount": 0.82,
+    "amount_unit": "kg",
+    "printed": "29 oz (0.82 kg)",
+    "fluid_spec": "R-1234yf (YN-33-A); Ford spec WSS-M17B21-A",
+    "notes": "High-pressure system — only qualified personnel should service it."
+   }
+  },
+  {
+   "engine": "3.5EB",
+   "page": 587,
+   "kind": "fluid_capacity",
+   "title": "A/C compressor oil",
+   "data": {
+    "system": "refrigerant_oil",
+    "amount": 80,
+    "amount_unit": "mL",
+    "printed": "2.71 fl oz (80 ml)",
+    "fluid_spec": "Motorcraft R-1234yf Refrigerant PAG Oil; Ford spec WSS-M2C300-A2"
+   }
+  },
+  {
+   "engine": "5.0",
+   "page": 589,
+   "kind": "fluid_capacity",
+   "title": "A/C refrigerant",
+   "data": {
+    "system": "refrigerant",
+    "amount": 0.82,
+    "amount_unit": "kg",
+    "printed": "29 oz (0.82 kg)",
+    "fluid_spec": "R-1234yf (YN-33-A); Ford spec WSS-M17B21-A",
+    "notes": "High-pressure system — only qualified personnel should service it."
+   }
+  },
+  {
+   "engine": "5.0",
+   "page": 589,
+   "kind": "fluid_capacity",
+   "title": "A/C compressor oil",
+   "data": {
+    "system": "refrigerant_oil",
+    "amount": 80,
+    "amount_unit": "mL",
+    "printed": "2.71 fl oz (80 ml)",
+    "fluid_spec": "Motorcraft R-1234yf Refrigerant PAG Oil; Ford spec WSS-M2C300-A2"
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 588,
+   "kind": "fluid_capacity",
+   "title": "A/C refrigerant",
+   "data": {
+    "system": "refrigerant",
+    "amount": 0.75,
+    "amount_unit": "kg",
+    "printed": "26.5 oz (0.75 kg)",
+    "fluid_spec": "R-1234yf (YN-33-A); Ford spec WSS-M17B21-A",
+    "notes": "High-pressure system — only qualified personnel should service it."
+   }
+  },
+  {
+   "engine": "HEV",
+   "page": 588,
+   "kind": "fluid_capacity",
+   "title": "A/C compressor oil",
+   "data": {
+    "system": "refrigerant_oil",
+    "amount": 160,
+    "amount_unit": "mL",
+    "printed": "5.4 fl oz (160 ml)",
+    "fluid_spec": "Motorcraft R-1234yf Refrigerant POE Oil",
+    "notes": "Hybrid uses POE oil (electric compressor), not the PAG oil used on the gasoline-only engines."
+   }
+  },
+  {
+   "engine": null,
+   "page": 589,
+   "kind": "fluid_capacity",
+   "title": "Washer fluid",
+   "data": {
+    "system": "washer",
+    "fluid_spec": "Motorcraft Premium Windshield Wash Concentrate with Bitterant (ZC-32-B2); Ford spec WSS-M14P19-A",
+    "condition": "Fill as required"
+   }
+  },
+  {
+   "engine": null,
+   "page": 590,
+   "kind": "fluid_capacity",
+   "title": "Brake fluid",
+   "data": {
+    "system": "brake",
+    "fluid_spec": "Motorcraft DOT 4 LV High Performance Motor Vehicle Brake Fluid (PM-20); Ford spec WSS-M6C65-A2",
+    "condition": "Fill as required",
+    "notes": "Ford recommends DOT 4 Low Viscosity (LV) fluid meeting WSS-M6C65-A2 or ISO 4925 Class 6. Keep brake fluid clean and dry; contamination can damage the brake system."
+   }
+  },
+  {
+   "engine": null,
+   "page": 591,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (electronic shift-on-the-fly 4WD)",
+   "data": {
+    "system": "transfer_case",
+    "amount": 1.4,
+    "amount_unit": "L",
+    "printed": "1.5 qt (1.4 L)",
+    "fluid_spec": "Motorcraft MERCON LV (XT-10-QLVC); Ford spec WSS-M2C938-A"
+   }
+  },
+  {
+   "engine": null,
+   "page": 591,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (automatic 4WD / torque on demand)",
+   "data": {
+    "system": "transfer_case",
+    "amount": 1.4,
+    "amount_unit": "L",
+    "printed": "1.5 qt (1.4 L)",
+    "fluid_spec": "Motorcraft MERCON LV (XT-10-QLVC); Ford spec WSS-M2C938-A"
+   }
+  },
+  {
+   "engine": null,
+   "page": 591,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (two-speed automatic 4WD, mechanical lock)",
+   "data": {
+    "system": "transfer_case",
+    "amount": 1.8,
+    "amount_unit": "L",
+    "printed": "1.9 qt (1.8 L)",
+    "fluid_spec": "Motorcraft MERCON LV (XT-10-QLVC); Ford spec WSS-M2C938-A"
+   }
+  },
+  {
+   "engine": null,
+   "page": 592,
+   "kind": "fluid_capacity",
+   "title": "Front axle fluid (standard 4WD axle)",
+   "data": {
+    "system": "front_differential",
+    "amount": 1.7,
+    "amount_unit": "L",
+    "printed": "1.8 qt (1.7 L)",
+    "fluid_spec": "Motorcraft SAE 75W-85 Premium Synthetic Hypoid Gear Lubricant (XY-75W85-QL); Ford spec WSS-M2C942-A"
+   }
+  },
+  {
+   "engine": null,
+   "page": 592,
+   "kind": "fluid_capacity",
+   "title": "Front axle fluid (Torsen limited-slip)",
+   "data": {
+    "system": "front_differential",
+    "amount": 1.55,
+    "amount_unit": "L",
+    "printed": "1.64 qt (1.55 L)",
+    "fluid_spec": "Motorcraft SAE 75W-85 Premium Synthetic Hypoid Gear Lubricant (XY-75W85-QL); Ford spec WSS-M2C942-A",
+    "notes": "For a complete refill, add 4.0 fl oz (118.5 ml) of Motorcraft Additive Friction Modifier XL-3 (spec EST-M2C118-A), included in the total."
+   }
+  },
+  {
+   "engine": null,
+   "page": 593,
+   "kind": "fluid_capacity",
+   "title": "Rear axle fluid (8.8-inch)",
+   "data": {
+    "system": "rear_differential",
+    "amount": 1.9,
+    "amount_unit": "L",
+    "printed": "2.0–2.1 qt (1.9–2 L)",
+    "fluid_spec": "Motorcraft SAE 75W-85 Premium Synthetic Hypoid Gear Lubricant (XY-75W85-QL); Ford spec WSS-M2C942-A",
+    "amount_max": 2.0
+   }
+  },
+  {
+   "engine": null,
+   "page": 593,
+   "kind": "fluid_capacity",
+   "title": "Rear axle fluid (9.75-inch)",
+   "data": {
+    "system": "rear_differential",
+    "amount": 2.1,
+    "amount_unit": "L",
+    "printed": "2.2–2.3 qt (2.1–2.2 L)",
+    "fluid_spec": "Motorcraft SAE 75W-85 Premium Synthetic Hypoid Gear Lubricant (XY-75W85-QL); Ford spec WSS-M2C942-A",
+    "notes": "Raptor 9.75-inch: 2.5–2.6 qt (2.36–2.44 L), p. 594. Police Responder 9.75-inch: same as above.",
+    "amount_max": 2.2
+   }
+  }
+ ]
+}

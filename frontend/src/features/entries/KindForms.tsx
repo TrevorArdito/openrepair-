@@ -124,8 +124,9 @@ function FluidForm({ d, set }: Props) {
           {FLUIDS.map((x) => <option key={x} value={x}>{t(`entry.fluidSystems.${x}`)}</option>)}
         </Select>
       </div>
-      <div className="grid grid-cols-2 gap-3">
-        <PlainNumber id="f-amt" required label={t("editor.amount")} value={d.amount} onChange={(v) => set({ amount: v })} />
+      <div className="grid grid-cols-3 gap-3">
+        <PlainNumber id="f-amt" label={t("editor.amount")} value={d.amount} onChange={(v) => set({ amount: v })} />
+        <PlainNumber id="f-amt-max" label={t("editor.amountMax")} value={d.amount_max} onChange={(v) => set({ amount_max: v })} />
         <div>
           <Label htmlFor="f-unit">{t("editor.amountUnit")}</Label>
           <Select id="f-unit" value={d.amount_unit} onChange={(e) => set({ amount_unit: e.target.value })}>

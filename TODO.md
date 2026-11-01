@@ -31,7 +31,7 @@
 
 ## Vehicle catalog (owner: "as extensive as possible")
 - [x] Every light-duty vehicle + engine 1984 → now from EPA data (~21,000), weekly refresh
-- [x] Engine family catalog (45 families) linked to vehicles; engine pages; engines in search
+- [x] Engine family catalog (48 families) linked to vehicles; engine pages; engines in search
 - [x] Heavy-duty diesel pickups (Power Stroke, Cummins, Duramax) from the engine catalog
 - [x] Owner's top-20 priority vehicles recorded (priority_models.json)
 - [ ] More engine families: every engine in the top-20 vehicles 1990–2024 (incl. hybrids, older 1990s engines)
@@ -42,7 +42,8 @@
 
 ## Owner's-manual specs (owner priority — see docs/OWNER_MANUAL_SPECS.md for the tracker)
 - [x] Pipeline: transcribed manual files → per-engine entries with page refs; Quick Specs; spec tables
-- [x] 2015 Ford F-150 (all 4 engines, 50 facts)
+- [x] Ford F-150 2015, 2017, 2022 (every engine, 185 facts)
+- [ ] Ford F-150: other years (2013 manual downloaded; 2018–2021, 2023–2024; 1990s–2000s)
 - [ ] Rest of the top 20, newest generations first, then back to ~1990
 - [ ] Then: diagnostic & repair guides per vehicle (known problems from TSB/complaint patterns + system diagnostics)
 - [ ] ALLDATA-style component tree on the vehicle page (system → specs / testing & diagnosis / repair / TSBs / codes)

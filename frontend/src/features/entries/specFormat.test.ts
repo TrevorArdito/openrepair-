@@ -15,6 +15,7 @@ describe("spec formatting", () => {
     expect(entryValue("fluid_capacity", { system: "engine_oil", amount: 7.3, amount_unit: "L" }, "imperial")).toBe("7.7 qt");
     expect(entryValue("fluid_capacity", { system: "fuel_tank", amount: 87.1, amount_unit: "L" }, "imperial")).toBe("23.0 gal");
     expect(entryValue("fluid_capacity", { system: "refrigerant", amount: 0.68, amount_unit: "kg" }, "imperial")).toBe("1.5 lb");
+    expect(entryValue("fluid_capacity", { system: "rear_differential", amount: 1.9, amount_max: 2.0, amount_unit: "L" }, "imperial")).toBe("2.0–2.1 qt");
     expect(entryValue("fluid_capacity", { system: "brake", condition: "Between MIN and MAX" }, "imperial")).toBe("—");
   });
   it("torque with angle stages and short titles", () => {

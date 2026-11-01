@@ -1745,5 +1745,80 @@
     "year_to": 2023
    }
   ]
+ },
+ {
+  "slug": "ford-3-3-v6",
+  "name": "Ford 3.3L V6 (Ti-VCT)",
+  "manufacturer": "Ford",
+  "displacement_l": 3.3,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "gasoline",
+  "aspiration": null,
+  "year_from": 2018,
+  "year_to": 2023,
+  "codes": null,
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2018,
+    "year_to": 2023
+   }
+  ]
+ },
+ {
+  "slug": "ford-3-5-powerboost",
+  "name": "Ford 3.5L PowerBoost Hybrid V6 (twin-turbo)",
+  "manufacturer": "Ford",
+  "displacement_l": 3.5,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "hybrid",
+  "aspiration": "turbo",
+  "year_from": 2021,
+  "year_to": null,
+  "codes": "PowerBoost",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": "Full hybrid: 3.5L EcoBoost with an electric motor in the 10-speed transmission.",
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2021,
+    "year_to": null
+   }
+  ]
+ },
+ {
+  "slug": "ford-3-0-powerstroke",
+  "name": "Ford 3.0L Power Stroke V6 Turbo Diesel",
+  "manufacturer": "Ford",
+  "displacement_l": 3.0,
+  "cylinders": 6,
+  "layout": "v",
+  "fuel_type": "diesel",
+  "aspiration": "turbo",
+  "year_from": 2018,
+  "year_to": 2021,
+  "codes": "Power Stroke",
+  "applications": [
+   "light_duty"
+  ],
+  "notes": null,
+  "fitment": [
+   {
+    "make": "Ford",
+    "model": "F-150",
+    "year_from": 2018,
+    "year_to": 2021
+   }
+  ]
  }
 ]

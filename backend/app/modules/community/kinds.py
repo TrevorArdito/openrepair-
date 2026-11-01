@@ -119,6 +119,7 @@ class FluidCapacityData(Strict):
     amount: Annotated[float, Field(gt=0, le=2000)] | None = (
         None  # None = type only (e.g. brake fluid)
     )
+    amount_max: Annotated[float, Field(gt=0, le=2000)] | None = None  # ranges: "2.0–2.1 qt"
     amount_unit: Literal["L", "kg", "g", "mL"] = "L"  # refrigerant is by weight
     condition: Annotated[str, Field(max_length=200)] | None = None  # "with filter", "drain & fill"
     fluid_spec: Annotated[str, Field(max_length=300)] | None = None  # "SAE 0W-20, API SP"
@@ -130,6 +131,8 @@ class FluidCapacityData(Strict):
     def _amount_or_type(self):
         if self.amount is None and not self.fluid_spec:
             raise ValueError("give an amount, a fluid type, or both")
+        if self.amount_max is not None and (self.amount is None or self.amount_max < self.amount):
+            raise ValueError("amount_max needs an amount and must not be smaller than it")
         return self
 
 

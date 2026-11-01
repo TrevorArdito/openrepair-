@@ -5,7 +5,8 @@ import json
 import pytest
 from sqlalchemy import select
 
-from app.modules.community.models import Entry
+from app.modules.community.kinds import validate_data
+from app.modules.community.models import Entry, Kind
 from app.modules.community.service import list_entries
 from app.modules.vehicles.models import EngineFamily, Make, Model, Vehicle
 from app.seed.__main__ import team_user
@@ -19,11 +20,20 @@ def test_manual_file_is_well_formed(path):
     doc = json.loads(path.read_text())
     assert doc["source"]["url"].startswith("https://"), "must link the manufacturer's own manual"
     assert doc["source"]["title"]
-    titles = [(s.get("engine"), s["title"]) for s in doc["specs"]]
+
+    def keys(s):
+        e = s.get("engine")
+        return [e] if isinstance(e, str) else (e or [])
+
+    titles = [(tuple(keys(s)), s["title"]) for s in doc["specs"]]
     assert len(titles) == len(set(titles)), "duplicate spec titles"
     for s in doc["specs"]:
         assert isinstance(s["page"], int) and s["page"] > 0
-        assert s.get("engine") is None or s["engine"] in doc["engines"]
+        assert all(k in doc["engines"] for k in keys(s))
+        data = dict(s["data"])
+        if s["kind"] != "labor_time":
+            data["sources"] = [{"type": "owner_manual", "citation": "p. 1"}]
+        validate_data(Kind(s["kind"]), data)  # same rules the app enforces
 
 
 def _f150(db, slug):
@@ -61,3 +71,41 @@ def test_manual_specs_load_per_engine_and_idempotent(db_session_factory):
             select(Entry).where(Entry.title == "2015 Ford F-150 — Wheel lug nut torque")
         )
         assert entry.safety_critical  # torque always carries the safety banner
+
+
+def test_manual_specs_shared_by_some_engines(db_session_factory):
+    """A fact listed for several (not all) engines reaches exactly those engines."""
+    from app.modules.vehicles import service as vehicles
+    from app.modules.vehicles.catalog import link_engine_families
+
+    with db_session_factory() as db:
+        model = db.scalar(
+            select(Model).join(Make).where(Make.name == "Ford", Model.name == "F-150")
+        )
+        v33 = vehicles.get_or_create_vehicle(
+            db, year=2022, model=model, displacement_l=3.3, cylinders=6, fuel_type="gasoline"
+        )
+        hev = vehicles.get_or_create_vehicle(
+            db, year=2022, model=model, displacement_l=3.5, cylinders=6, fuel_type="hybrid",
+            aspiration="turbo",
+        )  # fmt: skip
+        link_engine_families(db)
+        load_all(db, team_user(db))
+        db.commit()
+        db.refresh(v33)
+        db.refresh(hev)
+        assert v33.engine_family.slug == "ford-3-3-v6"
+        assert hev.engine_family.slug == "ford-3-5-powerboost"
+
+        _, items = list_entries(db, vehicle=v33, include_generic=False, limit=200)
+        by_title = {i.title: i for i in items}
+        crew = next(t for t in by_title if "— Fuel tank (SuperCrew, standard)" in t)
+        assert "3.3L V6" in crew and by_title[crew].data["amount"] == 98.4
+        axle = by_title["2022 Ford F-150 — Rear axle fluid (8.8-inch)"]
+        assert (axle.data["amount"], axle.data["amount_max"]) == (1.9, 2.0)
+
+        _, items = list_entries(db, vehicle=hev, include_generic=False, limit=200)
+        titles = {i.title for i in items}
+        assert not any("SuperCrew" in t for t in titles)  # hybrid has its own tank
+        assert "2022 Ford F-150 3.5L PowerBoost Hybrid — Fuel tank" in titles
+        assert "2022 Ford F-150 — Wheel lug nut torque" in titles

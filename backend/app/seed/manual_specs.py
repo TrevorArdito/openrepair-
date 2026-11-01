@@ -9,7 +9,8 @@ File format (see ford-f150-2015.json):
   vehicle:  make, model, year_from, year_to
   source:   title (printing/date), url (the manufacturer's own PDF)
   engines:  key -> {family: engine-family slug, label: "2.7L EcoBoost"}
-  specs:    [{engine: key|null, page, kind, title, data, systems?}]
+  specs:    [{engine: key | [keys] | null, page, kind, title, data, systems?}]
+            (a list of keys = the same fact for several, but not all, engines)
 """
 
 import json
@@ -72,10 +73,16 @@ def load_file(db: Session, author, path: Path) -> int:
 
     added = 0
     for item in doc["specs"]:
-        fam, elabel = engines[item["engine"]] if item.get("engine") else (None, None)
+        keys = item.get("engine")
+        keys = [keys] if isinstance(keys, str) else (keys or [])
+        fams = [engines[k][0] for k in keys]
+        labels = [engines[k][1] for k in keys]
+        elabel = " / ".join(labels) if 0 < len(labels) <= 2 else None
         title = (
             f"{years} {make.name} {model.name}{' ' + elabel if elabel else ''} — {item['title']}"
         )
+        if len(labels) > 2:
+            title += f" ({', '.join(labels)})"
         if db.scalar(
             select(Entry.id).where(Entry.title == title, Entry.created_by_id == author.id)
         ):
@@ -85,15 +92,16 @@ def load_file(db: Session, author, path: Path) -> int:
             data["sources"] = [
                 {"type": "owner_manual", "citation": f"{src['title']}, p. {item['page']}"}
             ]
-        applies = {
+        base = {
             "make_id": make.id,
             "model_id": model.id,
             "year_from": v["year_from"],
             "year_to": v["year_to"],
         }
-        if fam is not None:
-            applies.update(engine_family_id=fam.id, displacement_l=fam.displacement_l)
-        tags = Tags(applies_to=[applies], systems=_systems(item))
+        applies = [
+            {**base, "engine_family_id": f.id, "displacement_l": f.displacement_l} for f in fams
+        ] or [base]
+        tags = Tags(applies_to=applies, systems=_systems(item))
         create_entry(db, author, Kind(item["kind"]), title, data, tags, f"From {src['title']}")
         added += 1
     return added

@@ -8,7 +8,7 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Every vehicle since 1984**: importer for EPA fuel-economy data — every car, SUV, minivan and
   light pickup with each engine (~21,000 year/model/engine combinations, 145 makes), matched to
   NHTSA's make/model names; refreshed weekly. Turbo/supercharged engines are kept separate.
-- **Engine catalog**: 45 named engine families (GM 5.3/6.2/4.3, Ford Coyote/EcoBoost/Modular,
+- **Engine catalog**: 48 named engine families (GM 5.3/6.2/4.3, Ford Coyote/EcoBoost/Modular,
   HEMI, Pentastar, Toyota, Honda, Nissan, Hyundai, Power Stroke, Cummins, Duramax, EcoDiesel…)
   linked to the vehicles that use them; engine pages, "Browse engines", engines in search, engine
   names in the picker and on vehicle pages; Google-friendly engine pages.
@@ -16,8 +16,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   HD Duramax) added from the engine catalog.
 - Owner's top-20 priority vehicles recorded for content planning.
 - **Owner's-manual specs**: facts transcribed from the manufacturer's own manual with page numbers
-  — first: 2015 Ford F-150, all four engines (capacities, fluid types with Ford spec numbers,
-  firing order, spark plug gap, compression ratio, Motorcraft part numbers, lug nut torque).
+  — Ford F-150 2015, 2017 and 2022, every engine (capacities, fluid types with Ford spec numbers,
+  firing order, spark plug gap, compression ratio, Motorcraft part numbers, lug nut torque;
+  185 facts). Facts can apply to several engines at once and capacities can be ranges ("2.0–2.1 qt").
+- Engine families: Ford 3.3L V6, 3.5L PowerBoost hybrid and 3.0L Power Stroke diesel (F-150).
 - **Quick Specs** box on the vehicle overview and table-style Specs tab (values shown inline, shop
   order, "General" tags); specs can target an exact engine; specs can be text (firing order) and
   fluids can be type-only (brake fluid); "as printed in the manual" values.

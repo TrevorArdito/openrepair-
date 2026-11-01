@@ -14,7 +14,12 @@ export function fluidQuantity(d: D): Quantity {
 
 export function fluidAmount(d: D, units: UnitSystem): string | null {
   if (d.amount == null) return null;
-  return formatQuantity(d.amount, fluidQuantity(d), units, 1, true);
+  const q = fluidQuantity(d);
+  if (d.amount_max != null) {
+    const [lo, hi] = [formatQuantity(d.amount, q, units, 1, true), formatQuantity(d.amount_max, q, units, 1, true)];
+    return `${lo.split(" ")[0]}–${hi}`; // "2.0–2.1 qt"
+  }
+  return formatQuantity(d.amount, q, units, 1, true);
 }
 
 export function specValue(d: D, units: UnitSystem): string {

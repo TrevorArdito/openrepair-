@@ -14,7 +14,9 @@ batteries, wipers), and more as each manual provides.
    transcribed from its own manual (or a later manual that explicitly covers it).
 4. **Per engine.** Engine-specific facts are tied to the exact engine family; facts identical in
    every engine section are stored once for the whole model year — only after checking they really
-   are identical.
+   are identical. A fact shared by several (not all) engines lists those engine keys.
+6. **Trim-only figures** (e.g. Raptor, Police Responder) that our catalog can't tell apart from the
+   regular engine go in the entry's notes with their page number, not as separate entries.
 5. **Re-check every file** against the manual before committing; fix mistakes immediately.
 
 ## How to add a manual
@@ -26,7 +28,7 @@ batteries, wipers), and more as each manual provides.
 ## Progress (owner's top 20, ~1990–2024)
 | Vehicle | Years done |
 |---|---|
-| Ford F-150 | 2015 |
+| Ford F-150 | 2015, 2017, 2022 |
 | Chevrolet Silverado 1500 | — |
 | Ram 1500 | — |
 | GMC Sierra 1500 | — |
