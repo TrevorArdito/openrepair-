@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { Link, useLocation, useParams } from "react-router-dom";
 import { Alert, Button, Card, LinkButton, PageTitle, Spinner } from "../../components/ui";
 import { api } from "../../lib/api";
+import { useModule } from "../../lib/modules";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
@@ -22,6 +23,7 @@ export default function VehiclePage() {
   const location = useLocation();
   const decode = (location.state as { decode?: VinDecode } | null)?.decode;
   const { user } = useAuth();
+  const market = useModule("marketplace");
   const [vehicle, setVehicle] = useState<VehicleProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [tab, setTab] = useState<Tab>("overview");
@@ -130,6 +132,11 @@ export default function VehiclePage() {
       <LinkButton to={`/search?vehicle_id=${vehicle.id}`} variant="secondary" className="w-full">
         🔍 {t("search.searchVehicle")}
       </LinkButton>
+      {market && (
+        <LinkButton to={`/market?vehicle_id=${vehicle.id}`} variant="secondary" className="w-full">
+          🛒 {t("market.partsForVehicle")}
+        </LinkButton>
+      )}
 
       <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
         {TABS.map((key) => {

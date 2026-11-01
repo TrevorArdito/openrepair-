@@ -7,7 +7,7 @@ import { PlainNumber } from "./fields";
 
 type SystemRow = { slug: string; parent: string | null; safety_critical: boolean };
 
-function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; makes: NamedRef[]; onChange: (r: AppliesTo) => void; onRemove: () => void; idx: number }) {
+export function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; makes: NamedRef[]; onChange: (r: AppliesTo) => void; onRemove: () => void; idx: number }) {
   const { t } = useTranslation();
   const [models, setModels] = useState<NamedRef[]>([]);
   useEffect(() => {

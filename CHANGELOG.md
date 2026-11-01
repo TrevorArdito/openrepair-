@@ -24,6 +24,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **Quick Specs** box on the vehicle overview and table-style Specs tab (values shown inline, shop
   order, "General" tags); specs can target an exact engine; specs can be text (firing order) and
   fluids can be type-only (brake fluid); "as printed in the manual" values.
+- **Parts marketplace (off by default)**: buy and sell new and used parts matched to vehicles —
+  seller profiles, listings with photos and fitment, "fits my vehicle" search, buyer-seller
+  messages, reports, moderator review queue, licensed-seller verification, and built-in rules
+  that block illegal items (emissions delete parts, used airbags, unverified used catalytic
+  converters). Turn on with `ENABLE_MARKETPLACE=true`.
 ### Changed
 - Flex-fuel engines are treated as the same engine as their gasoline version.
 - The weekly recall/complaint refresh only re-checks vehicles people have looked up.

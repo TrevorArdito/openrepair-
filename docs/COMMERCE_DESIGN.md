@@ -60,6 +60,10 @@ never change what information is shown, and never paywall anything.
 
 ## 4. Parts marketplace (`marketplace` module) — new and used, with fitment
 
+**Status: v1 built (2026-11-01), off by default (`ENABLE_MARKETPLACE`).** See
+`backend/app/modules/marketplace/README.md`. Tables are prefixed `market_`. Payments, orders and
+reviews below are still to come; seller verification stores a license number only (no documents).
+
 | Table | Key columns | Notes |
 |---|---|---|
 | `sellers` | user_id, type (`individual` / `shop` / `recycler` / `retailer`), display_name, location (city/state/ZIP only), verified_at, status, rating | One account can be a seller. Business details only if they choose. |

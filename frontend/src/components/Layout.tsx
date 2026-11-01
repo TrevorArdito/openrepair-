@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, Outlet } from "react-router-dom";
+import { useModule } from "../lib/modules";
 
-const NAV = [
+const NAV: { to: string; key: string; icon: string; module?: string }[] = [
   { to: "/", key: "home", icon: "M3 11 12 3l9 8v10h-6v-6H9v6H3z" },
   { to: "/garage", key: "garage", icon: "M3 21V9l9-6 9 6v12M7 21v-6h10v6M7 17h10" },
   { to: "/codes", key: "codes", icon: "M4 6h16M4 12h10M4 18h7M17 15l3 3-3 3" },
   { to: "/search", key: "search", icon: "M11 4a7 7 0 1 0 0 14 7 7 0 0 0 0-14zM21 21l-5-5" },
+  { to: "/market", key: "parts", icon: "M3 7h18l-2 13H5zM8 7V5a4 4 0 0 1 8 0v2", module: "marketplace" },
   { to: "/account", key: "account", icon: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0" },
 ];
 
@@ -28,6 +30,8 @@ function useOnline() {
 export default function Layout() {
   const { t } = useTranslation();
   const online = useOnline();
+  const market = useModule("marketplace");
+  const nav = NAV.filter((n) => !n.module || (n.module === "marketplace" && market));
   return (
     <div className="flex min-h-dvh flex-col">
       <a href="#main" className="sr-only focus:not-sr-only focus:p-3">
@@ -58,8 +62,8 @@ export default function Layout() {
         aria-label="Main"
         className="fixed inset-x-0 bottom-0 z-10 border-t-2 border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-800 dark:bg-slate-950"
       >
-        <ul className="mx-auto grid max-w-3xl grid-cols-5">
-          {NAV.map((n) => (
+        <ul className={`mx-auto grid max-w-3xl ${nav.length > 5 ? "grid-cols-6" : "grid-cols-5"}`}>
+          {nav.map((n) => (
             <li key={n.to}>
               <NavLink
                 to={n.to}

@@ -112,7 +112,7 @@ export type Kind = "procedure" | "torque_spec" | "fluid_capacity" | "spec" | "pa
 export const KINDS: Kind[] = ["procedure", "torque_spec", "fluid_capacity", "spec", "part_note", "labor_time"];
 export type Person = { id: number | null; display_name: string; role?: string | null };
 export type Source = { type: string; citation?: string };
-export type AppliesTo = { make_id: number; model_id?: number | null; year_from: number; year_to: number; displacement_l?: number | null };
+export type AppliesTo = { make_id: number; model_id?: number | null; year_from: number; year_to: number; displacement_l?: number | null; engine_family_id?: number | null };
 export type EntryTags = { applies_to: AppliesTo[]; systems: string[]; dtcs: string[] };
 export type Revision = {
   id: number;

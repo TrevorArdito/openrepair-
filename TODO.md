@@ -61,8 +61,11 @@
 ## Planned commerce & compliance modules (after v0.1 — design in docs/COMMERCE_DESIGN.md)
 - [ ] **Affiliate parts links**: disclosed links from part notes / guide parts lists (first money-maker)
 - [ ] **Parts catalog**: categories linked to systems, brands, part numbers, interchange, fitment, compliance
-- [ ] **Parts marketplace** (new + used, with fitment): sellers, verification, listings, photos,
-      reports, prohibited-item rules; payments later through a payment provider
+- [x] **Parts marketplace v1** (off by default, ENABLE_MARKETPLACE): sellers, license verification,
+      listings with fitment + photos, search, messages, reports, review queue, prohibited-item rules
+- [ ] Marketplace next: email alert for new messages; distance search by ZIP; buyer reviews;
+      payments through a payment provider (Stripe Connect or similar — we never store card data);
+      turn it on in production (owner decision)
 - [ ] **State emissions info**: programs by state/area, test types, model years, readiness rules,
       "will my vehicle pass?" checklist, official links
 - [ ] **Tune store**: emissions-legal tunes only (CARB EO / EPA-compliant), fitment by vehicle + ECU

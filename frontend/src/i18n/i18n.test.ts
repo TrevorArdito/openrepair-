@@ -12,6 +12,12 @@ const BACKEND_ERROR_CODES = [
   "revision_not_pending", "entry_not_published", "not_labor_entry", "report_not_found", "search_empty",
   "token_invalid", "already_pro", "pro_request_pending", "pro_request_not_found", "user_not_found",
   "cannot_moderate_self", "email_not_verified", "engine_not_found",
+  // marketplace
+  "seller_profile_required", "seller_suspended", "seller_not_found", "listing_not_found", "listing_invalid",
+  "listing_rules_not_accepted", "listing_removed", "listing_status_locked", "listing_prohibited_defeat",
+  "listing_prohibited_used_srs", "listing_requires_verified_seller", "listing_needs_emissions_compliance",
+  "listing_needs_carb_eo", "listing_not_available", "cannot_message_self", "conversation_not_found",
+  "verification_not_found",
 ];
 
 describe("translations", () => {

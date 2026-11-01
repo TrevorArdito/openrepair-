@@ -14,6 +14,13 @@ import AboutPage from "../features/info/AboutPage";
 import NotFoundPage from "../features/info/NotFoundPage";
 import EngineDetailPage from "../features/engines/EngineDetailPage";
 import EnginesPage from "../features/engines/EnginesPage";
+import ListingEditPage from "../features/marketplace/ListingEditPage";
+import ListingPage from "../features/marketplace/ListingPage";
+import MarketModPage from "../features/marketplace/MarketModPage";
+import MarketPage from "../features/marketplace/MarketPage";
+import { ConversationPage, MessagesPage } from "../features/marketplace/MessagesPage";
+import SellerPage from "../features/marketplace/SellerPage";
+import SellingPage from "../features/marketplace/SellingPage";
 import SearchPage from "../features/search/SearchPage";
 import HomePage from "../features/vehicles/HomePage";
 import VehiclePage from "../features/vehicles/VehiclePage";
@@ -40,6 +47,15 @@ export default function App() {
               <Route path="entries/:id/edit" element={<EntryEditPage />} />
               <Route path="entries/:id/history" element={<HistoryPage />} />
               <Route path="mod" element={<ModPage />} />
+              <Route path="market" element={<MarketPage />} />
+              <Route path="market/sell" element={<ListingEditPage />} />
+              <Route path="market/selling" element={<SellingPage />} />
+              <Route path="market/listings/:id" element={<ListingPage />} />
+              <Route path="market/listings/:id/edit" element={<ListingEditPage />} />
+              <Route path="market/sellers/:id" element={<SellerPage />} />
+              <Route path="market/messages" element={<MessagesPage />} />
+              <Route path="market/messages/:id" element={<ConversationPage />} />
+              <Route path="market/mod" element={<MarketModPage />} />
               <Route path="account" element={<AccountPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />
