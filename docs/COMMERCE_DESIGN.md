@@ -62,7 +62,8 @@ never change what information is shown, and never paywall anything.
 
 **Status: v1 built (2026-11-01), off by default (`ENABLE_MARKETPLACE`).** See
 `backend/app/modules/marketplace/README.md`. Tables are prefixed `market_`. Payments, orders and
-reviews below are still to come; seller verification stores a license number only (no documents).
+reviews are built too (see docs/PAYMENTS.md for payments); seller verification stores a license
+number only (no documents).
 
 | Table | Key columns | Notes |
 |---|---|---|

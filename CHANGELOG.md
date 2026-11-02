@@ -35,6 +35,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Marketplace: **search within N miles of a ZIP code** (US Census ZIP centre points, public domain)
   with "nearest first"; **seller star ratings and reviews** from people who actually dealt with
   the seller; moderators can hide reviews.
+- **Marketplace payments (Stripe Connect, test mode, off by default)** — see docs/PAYMENTS.md:
+  sellers set up payouts through Stripe Express (Stripe verifies identity/bank, sends tax forms);
+  *Buy now* for shipped items via Stripe's hosted checkout; 6% platform fee as a Stripe
+  application fee (setting `MARKET_FEE_PERCENT`), Stripe's fee paid by the seller; fee breakdown
+  shown before listing; money held until the buyer confirms or 3 days after delivery, released
+  daily; report-a-problem flow (seller responds, admin refunds or pays out); chargebacks freeze
+  orders; order history and printable receipts; switchable Stripe Tax; INFORM Consumers Act
+  high-volume seller check; vehicles stay contact-seller only; PayPal-ready provider layer.
+- **DRAFT legal documents** (for lawyer review): Terms of Service, Seller Agreement, Prohibited
+  Items — shown at /legal/… and linked from About and the marketplace.
 ### Changed
 - Flex-fuel engines are treated as the same engine as their gasoline version.
 - The weekly recall/complaint refresh only re-checks vehicles people have looked up.

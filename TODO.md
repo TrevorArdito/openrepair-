@@ -69,6 +69,14 @@
       state's law + EPA tested-and-labeled policy first; free legal clinic review)
 - [x] Marketplace: "within N miles of ZIP" search (Census ZIP points), seller star reviews
       (only from people the seller actually dealt with, after a sale)
+- [x] Marketplace payments built (Stripe Connect Express, test mode) — docs/PAYMENTS.md
+- [ ] **Owner: create Stripe account + test keys** (docs/PAYMENTS.md checklist), test a purchase
+- [ ] **Owner: lawyer/clinic review** of backend/app/legal/ (Terms, Seller Agreement, Prohibited Items)
+- [ ] **Owner: ask CPA** about sales tax / marketplace facilitator duty before MARKET_TAX_ENABLED=true
+      (platform-liable tax would need destination charges — see docs/PAYMENTS.md)
+- [ ] Payments later: PayPal as a buyer option; buyer-paid "pay in app for pickup"; carrier tracking
+      API for automatic delivery dates; email alerts for order events; INFORM $20k+ seller
+      disclosure to buyers (name/address) if required; quantity > 1 per order
 - [ ] Marketplace next: vehicle model filter;
       payments through a payment provider (Stripe Connect or similar — we never store card data);
       turn it on in production (owner decision)

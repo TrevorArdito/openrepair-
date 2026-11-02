@@ -189,7 +189,16 @@ Legal guardrails for these modules (non-negotiable):
   legal (cheap smog repairs). For now only verified licensed sellers; later a state-aware rule
   (EPA tested-and-labeled policy + each state's law), never where state law forbids.
 
+- 2026-11-02: **Marketplace payments**: Stripe Connect Express, Stripe handles pricing (seller pays
+  Stripe fees, Stripe covers losses), direct charges + application fee (`MARKET_FEE_PERCENT`,
+  6%); local pickup free; funds held (manual payouts) until buyer confirms / N days after
+  delivery; disputes decided by admins; INFORM Consumers Act check; Stripe Tax switchable (CPA);
+  vehicles contact-seller only (`MARKET_CONTACT_ONLY_CATEGORIES`); PayPal later via
+  `PaymentProvider`. Legal docs in `backend/app/legal/` are DRAFTS. Delete/defeat parts stay
+  prohibited (Clean Air Act). Details: docs/PAYMENTS.md.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
 - Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.
 - CLA review: lawyer, free clinic, or switch to a standard template (Apache ICLA / Harmony) before outside contributors join.
+- Stripe account + keys (owner), lawyer review of the legal drafts, CPA answer on sales tax.
