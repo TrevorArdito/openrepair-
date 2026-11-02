@@ -7,8 +7,55 @@ import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { formatDate } from "../../lib/format";
 import { useDocumentTitle } from "../../lib/title";
+import { useModule } from "../../lib/modules";
 import { ListingCard } from "./MarketPage";
-import type { ListingSummary, Verification } from "./types";
+import { price, type ListingSummary, type Order, type Verification } from "./types";
+
+function PaymentsAdmin({ isAdmin }: { isAdmin: boolean }) {
+  const { t } = useTranslation();
+  const [rows, setRows] = useState<{ dispute_id: number; order: Order }[] | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const load = useCallback(() => api<{ dispute_id: number; order: Order }[]>("/market/mod/disputes").then(setRows).catch((e) => setError(errorMessage(t, e))), [t]);
+  useEffect(() => void load(), [load]);
+  const decide = (id: number, decision: "refund" | "release") => {
+    const note = window.prompt(t("pay.admin.notePrompt")) ?? "";
+    api(`/market/mod/disputes/${id}/decide`, { method: "POST", body: { decision, note: note || null } }).then(load).catch((e) => setError(errorMessage(t, e)));
+  };
+  return (
+    <section className="space-y-3">
+      <h2 className="text-2xl font-bold">{t("pay.admin.disputes")} ({rows?.length ?? 0})</h2>
+      {!isAdmin && <p className="text-base">{t("pay.admin.adminOnly")}</p>}
+      {rows?.map(({ dispute_id, order: o }) => {
+        const d = o.disputes?.find((x) => x.id === dispute_id);
+        return (
+          <Card key={dispute_id} className="space-y-2 text-lg">
+            <Link className="font-bold underline" to={`/market/orders/${o.id}`}>{t("orders.number", { id: o.id })} · {o.listing_title}</Link>
+            <p>{price(o.total_cents, o.currency.toUpperCase())} · {o.seller_name}</p>
+            {d && <p><strong>{t(`orders.reasons.${d.reason}`)}</strong>: {d.details}</p>}
+            {d?.seller_response && <p><strong>{t("orders.sellerSaid")}</strong> {d.seller_response}</p>}
+            {isAdmin && d?.reason !== "chargeback" && (
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="danger" onClick={() => decide(dispute_id, "refund")}>{t("pay.admin.refund")}</Button>
+                <Button onClick={() => decide(dispute_id, "release")}>{t("pay.admin.release")}</Button>
+              </div>
+            )}
+            {d?.reason === "chargeback" && <p className="text-base">{t("pay.admin.chargebackNote")}</p>}
+          </Card>
+        );
+      })}
+      {isAdmin && (
+        <Button variant="secondary" className="w-full"
+          onClick={() => api<{ released: number }>("/market/mod/payouts/run", { method: "POST" })
+            .then((r) => setMsg(t("pay.admin.released", { count: r.released }))).catch((e) => setError(errorMessage(t, e)))}>
+          {t("pay.admin.runPayouts")}
+        </Button>
+      )}
+      {msg && <Alert kind="info">{msg}</Alert>}
+      {error && <Alert>{error}</Alert>}
+    </section>
+  );
+}
 
 type Queue = {
   pending_listings: ListingSummary[];
@@ -18,6 +65,7 @@ type Queue = {
 
 export default function MarketModPage() {
   const { t } = useTranslation();
+  const paymentsOn = useModule("market_payments");
   const { user, loading } = useAuth();
   useDocumentTitle(t("market.mod.title"));
   const [q, setQ] = useState<Queue | null>(null);
@@ -39,6 +87,7 @@ export default function MarketModPage() {
   return (
     <div className="space-y-5">
       <PageTitle>{t("market.mod.title")}</PageTitle>
+      {paymentsOn && <PaymentsAdmin isAdmin={user.role === "admin"} />}
       {error && <Alert>{error}</Alert>}
       {!q && !error && <Spinner label={t("app.loading")} />}
       {q && (

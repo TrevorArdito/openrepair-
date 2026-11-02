@@ -19,7 +19,9 @@ import ListingPage from "../features/marketplace/ListingPage";
 import MarketModPage from "../features/marketplace/MarketModPage";
 import MarketPage from "../features/marketplace/MarketPage";
 import { ConversationPage, MessagesPage } from "../features/marketplace/MessagesPage";
+import { OrderPage, OrdersPage } from "../features/marketplace/OrdersPage";
 import SavedPage from "../features/marketplace/SavedPage";
+import LegalPage from "../features/info/LegalPage";
 import SellerPage from "../features/marketplace/SellerPage";
 import SellingPage from "../features/marketplace/SellingPage";
 import SearchPage from "../features/search/SearchPage";
@@ -58,6 +60,9 @@ export default function App() {
               <Route path="market/messages/:id" element={<ConversationPage />} />
               <Route path="market/mod" element={<MarketModPage />} />
               <Route path="market/saved" element={<SavedPage />} />
+              <Route path="market/orders" element={<OrdersPage />} />
+              <Route path="market/orders/:id" element={<OrderPage />} />
+              <Route path="legal/:name" element={<LegalPage />} />
               <Route path="account" element={<AccountPage />} />
               <Route path="login" element={<LoginPage />} />
               <Route path="register" element={<RegisterPage />} />

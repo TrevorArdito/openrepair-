@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { Alert, Card, PageTitle } from "../../components/ui";
 import { api } from "../../lib/api";
 
@@ -38,6 +39,12 @@ export default function AboutPage() {
         >
           {t("about.source")}
         </a>
+      </Card>
+      <Card>
+        <h2 className="mb-1 text-xl font-bold">{t("legal.title")}</h2>
+        {["terms", "seller-agreement", "prohibited-items"].map((n) => (
+          <Link key={n} to={`/legal/${n}`} className="flex min-h-12 items-center font-bold underline">{t(`legal.${n}`)}</Link>
+        ))}
       </Card>
       <p className="text-base text-slate-600 dark:text-slate-400">{t("about.notAffiliated")}</p>
     </div>

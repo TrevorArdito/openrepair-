@@ -20,6 +20,11 @@ const BACKEND_ERROR_CODES = [
   "verification_not_found", "listing_vehicle_details_required", "listing_vin_required", "listing_vin_invalid",
   "listing_vin_duplicate", "listing_vehicle_limit", "zip_not_found", "review_not_allowed", "review_exists",
   "review_not_found",
+  // marketplace payments
+  "payments_not_configured", "payment_provider_error", "payout_not_ready", "agreement_not_accepted",
+  "payments_not_set_up", "phone_required", "buy_now_unavailable", "cannot_buy_own",
+  "inform_verification_required", "webhook_invalid", "order_not_found", "order_wrong_status",
+  "dispute_not_found", "dispute_closed", "chargeback_in_stripe",
 ];
 
 describe("translations", () => {

@@ -10,7 +10,33 @@ import type { AppliesTo, NamedRef, VinDecode } from "../../lib/types";
 import { PhotoField, TextArea, TextField } from "../entries/fields";
 import { RangeRow } from "../entries/TagsForm";
 import { SellerForm } from "./SellingPage";
-import { CONDITIONS, RUNNING, TITLE_STATUSES, type Listing, type Seller } from "./types";
+import { useModule } from "../../lib/modules";
+import { CONDITIONS, RUNNING, TITLE_STATUSES, feeBreakdown, price as fmtPrice, type Listing, type PaymentsConfig, type Seller } from "./types";
+
+/** "What you take home" — shown before listing (owner requirement). */
+function FeeBreakdown({ cfg, priceCents, shippingCents, ships }: { cfg: PaymentsConfig; priceCents: number; shippingCents: number; ships: boolean }) {
+  const { t } = useTranslation();
+  if (!ships) return <Alert kind="info">{t("pay.pickupFree")}</Alert>;
+  const b = feeBreakdown(cfg, priceCents, shippingCents);
+  const rows: [string, string][] = [
+    [t("pay.salePrice"), fmtPrice(priceCents)],
+    [t("pay.shippingCharged"), fmtPrice(shippingCents)],
+    [t("pay.ourFee", { percent: cfg.fee_percent }), `− ${fmtPrice(b.fee)}`],
+    [t("pay.stripeFee", { percent: cfg.stripe_fee_percent, fixed: fmtPrice(cfg.stripe_fee_fixed_cents) }), `− ${fmtPrice(b.stripe)}`],
+  ];
+  return (
+    <div className="rounded-xl border-2 border-slate-300 p-3 dark:border-slate-700">
+      <h3 className="text-lg font-bold">{t("pay.breakdownTitle")}</h3>
+      <dl className="divide-y divide-slate-200 dark:divide-slate-800">
+        {rows.map(([k, v]) => (
+          <div key={k} className="flex justify-between gap-3 py-1 text-lg"><dt>{k}</dt><dd>{v}</dd></div>
+        ))}
+        <div className="flex justify-between gap-3 py-1 text-xl font-extrabold"><dt>{t("pay.takeHome")}</dt><dd>{fmtPrice(b.net)}</dd></div>
+      </dl>
+      <p className="mt-1 text-base">{t("pay.breakdownNote")}</p>
+    </div>
+  );
+}
 
 type VForm = {
   vin: string; year: string; make_id: number | null; model_id: number | null; odometer: string;
@@ -132,6 +158,7 @@ type Form = {
   quantity: number;
   shipping: string;
   shipping_note: string;
+  shipping_price: string; // dollars, as typed
   source_vin: string;
   mileage: string;
   emissions_compliance: string;
@@ -144,7 +171,7 @@ type Form = {
 
 const EMPTY: Form = {
   title: "", description: "", category: "", condition: "used", brand: "", part_number: "", price: "",
-  quantity: 1, shipping: "pickup_or_ships", shipping_note: "", source_vin: "", mileage: "",
+  quantity: 1, shipping: "pickup_or_ships", shipping_note: "", shipping_price: "", source_vin: "", mileage: "",
   emissions_compliance: "", carb_eo_number: "", fitment: [], photo_ids: [], vehicle: EMPTY_V, accept_rules: false,
 };
 
@@ -153,6 +180,7 @@ function fromListing(l: Listing): Form {
     title: l.title, description: l.description, category: l.category, condition: l.condition,
     brand: l.brand ?? "", part_number: l.part_number ?? "", price: (l.price_cents / 100).toFixed(2),
     quantity: l.quantity, shipping: l.shipping, shipping_note: l.shipping_note ?? "",
+    shipping_price: l.shipping_cents != null ? (l.shipping_cents / 100).toFixed(2) : "",
     source_vin: l.source_vin ?? "", mileage: l.mileage != null ? String(l.mileage) : "",
     emissions_compliance: l.emissions_compliance ?? "", carb_eo_number: l.carb_eo_number ?? "",
     fitment: l.fitment.map(({ make_id, model_id, year_from, year_to, displacement_l, engine_family_id }) =>
@@ -186,6 +214,11 @@ export default function ListingEditPage() {
   const [makes, setMakes] = useState<NamedRef[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
+  const paymentsOn = useModule("market_payments");
+  const [payCfg, setPayCfg] = useState<PaymentsConfig | null>(null);
+  useEffect(() => {
+    if (paymentsOn) api<PaymentsConfig>("/market/payments/config").then(setPayCfg).catch(() => undefined);
+  }, [paymentsOn]);
 
   useEffect(() => {
     if (!user) return;
@@ -226,6 +259,7 @@ export default function ListingEditPage() {
       brand: f.brand || null, part_number: f.part_number || null,
       price_cents: Math.round(parseFloat(f.price || "0") * 100), quantity: f.quantity,
       shipping: f.shipping, shipping_note: f.shipping_note || null,
+      shipping_cents: f.shipping !== "pickup" && f.shipping_price !== "" && !isVehicle ? Math.round(parseFloat(f.shipping_price) * 100) : null,
       source_vin: f.source_vin || null, mileage: f.mileage ? parseInt(f.mileage, 10) : null,
       emissions_compliance: f.emissions_compliance || null, carb_eo_number: f.carb_eo_number || null,
       fitment: isVehicle ? [] : f.fitment, photo_ids: f.photo_ids, accept_rules: f.accept_rules,
@@ -326,7 +360,19 @@ export default function ListingEditPage() {
             {["pickup", "ships", "pickup_or_ships"].map((s) => <option key={s} value={s}>{t(`market.shippings.${s}`)}</option>)}
           </Select>
         </div>
+        {f.shipping !== "pickup" && !isVehicle && (
+          <div>
+            <Label htmlFor="lsp">{t("pay.shippingPrice")}</Label>
+            <Input id="lsp" type="number" inputMode="decimal" min="0" step="0.01" value={f.shipping_price} onChange={(e) => set({ shipping_price: e.target.value })} />
+            <p className="mt-1 text-base">{t("pay.shippingPriceHint")}</p>
+          </div>
+        )}
         <TextField id="lsn" label={t("market.shippingNote")} value={f.shipping_note} max={300} onChange={(v) => set({ shipping_note: v })} />
+        {payCfg?.enabled && !isVehicle && !payCfg.contact_only_categories.includes(f.category) && (
+          <FeeBreakdown cfg={payCfg} priceCents={Math.round(parseFloat(f.price || "0") * 100) || 0}
+            shippingCents={Math.round(parseFloat(f.shipping_price || "0") * 100) || 0}
+            ships={f.shipping !== "pickup" && f.shipping_price !== ""} />
+        )}
       </Card>
 
       {!isVehicle && <Card className="space-y-4">

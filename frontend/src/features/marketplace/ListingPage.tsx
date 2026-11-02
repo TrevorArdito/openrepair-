@@ -77,6 +77,33 @@ function VehicleChecks({ l }: { l: Listing }) {
   );
 }
 
+function BuyNow({ l }: { l: Listing }) {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  if (!user) return <LinkButton to="/login" className="w-full">{t("pay.loginToBuy")}</LinkButton>;
+  return (
+    <div className="space-y-2">
+      <Button className="w-full text-xl" disabled={busy}
+        onClick={async () => {
+          setBusy(true);
+          setError(null);
+          try {
+            window.location.href = (await api<{ url: string }>(`/market/listings/${l.id}/checkout`, { method: "POST" })).url;
+          } catch (e) {
+            setError(errorMessage(t, e));
+            setBusy(false);
+          }
+        }}>
+        {t("pay.buyNow", { price: price(l.price_cents + (l.shipping_cents ?? 0), l.currency) })}
+      </Button>
+      <p className="text-base">{t("pay.buyNowNote", { shipping: price(l.shipping_cents ?? 0, l.currency) })}</p>
+      {error && <Alert>{error}</Alert>}
+    </div>
+  );
+}
+
 function ReviewForm({ l }: { l: Listing }) {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -266,6 +293,7 @@ export default function ListingPage() {
           {l.city}, {l.state}
           {l.seller_verified && <> · <span className="font-semibold text-emerald-700 dark:text-emerald-400">✓ {t("market.verifiedBusiness")}</span></>}
         </p>
+        {!l.is_owner && l.buy_now && <BuyNow l={l} />}
         {!l.is_owner && l.status === "active" && <ContactSeller l={l} />}
       </Card>
 

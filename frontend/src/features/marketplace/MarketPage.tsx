@@ -6,6 +6,7 @@ import { Alert, Button, Card, Input, Label, LinkButton, PageTitle, Select, Spinn
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
+import { useModule } from "../../lib/modules";
 import { useDocumentTitle } from "../../lib/title";
 import type { GarageItem, NamedRef, Vehicle } from "../../lib/types";
 import { CONDITIONS, RUNNING, TITLE_STATUSES, US_STATES, price, type ListingSummary, type VehicleFacts } from "./types";
@@ -84,6 +85,7 @@ function FilterSelect({ id, label, value, options, onChange }: { id: string; lab
 export default function MarketPage() {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const paymentsOn = useModule("market_payments");
   const [params, setParams] = useSearchParams();
   const kind = params.get("kind") === "vehicle" ? "vehicle" : "part";
   useDocumentTitle(t(kind === "vehicle" ? "market.vehiclesTitle" : "market.title"));
@@ -164,6 +166,7 @@ export default function MarketPage() {
         <LinkButton to="/market/selling" variant="secondary">{t("market.mySelling")}</LinkButton>
         <LinkButton to="/market/messages" variant="secondary">{t("market.messages")}</LinkButton>
         <LinkButton to="/market/saved" variant="secondary">★ {t("market.savedTitle")}</LinkButton>
+        {paymentsOn && <LinkButton to="/market/orders" variant="secondary" className="col-span-2">{t("orders.title")}</LinkButton>}
         {user && (user.role === "moderator" || user.role === "admin") && (
           <LinkButton to="/market/mod" variant="secondary" className="col-span-2">{t("market.mod.title")}</LinkButton>
         )}
@@ -239,6 +242,9 @@ export default function MarketPage() {
         </>
       )}
       <Alert kind="info">{t(kind === "vehicle" ? "market.vehicleTips" : "market.safetyTips")}</Alert>
+      <p className="text-base">
+        <Link className="underline" to="/legal/terms">{t("legal.terms")}</Link> · <Link className="underline" to="/legal/prohibited-items">{t("legal.prohibited-items")}</Link>
+      </p>
     </div>
   );
 }

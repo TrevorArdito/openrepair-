@@ -42,6 +42,7 @@ export type ListingSummary = {
   vehicle: VehicleFacts | null;
   saved: boolean;
   distance_mi: number | null;
+  buy_now: boolean;
   created_at: string;
 };
 
@@ -54,6 +55,8 @@ export type Listing = ListingSummary & {
   quantity: number;
   shipping: Shipping;
   shipping_note: string | null;
+  shipping_cents: number | null;
+  buy_now_reason: string | null;
   source_vin: string | null;
   mileage: number | null;
   emissions_compliance: "epa" | "carb" | null;
@@ -123,3 +126,69 @@ export function price(cents: number, currency = "USD"): string {
 
 export const TITLE_STATUSES = ["clean", "rebuilt", "salvage", "non_repairable"] as const;
 export const RUNNING = ["runs_drives", "runs_not_drives", "not_running"] as const;
+
+export type PaymentsConfig = {
+  enabled: boolean;
+  fee_percent: number;
+  stripe_fee_percent: number;
+  stripe_fee_fixed_cents: number;
+  tax_enabled: boolean;
+  contact_only_categories: string[];
+  release_days_after_delivery: number;
+  agreement_version: string;
+};
+
+export type PaymentsStatus = {
+  has_account: boolean;
+  charges_enabled: boolean;
+  payouts_enabled: boolean;
+  details_submitted: boolean;
+  agreement_version: string | null;
+  agreement_current: boolean;
+  phone: string | null;
+  inform: { high_volume: boolean; sales_12m: number; revenue_12m_cents: number; missing: string[]; ok: boolean };
+};
+
+export type OrderDispute = {
+  id: number; reason: string; details: string | null; seller_response: string | null;
+  status: "open" | "responded" | "refunded" | "released"; decision_note: string | null; created_at: string;
+};
+
+export type Order = {
+  id: number;
+  role: "buyer" | "seller" | null;
+  listing_id: number | null;
+  listing_title: string;
+  seller_id: number | null;
+  seller_name: string;
+  status: "pending_payment" | "paid" | "shipped" | "delivered" | "completed" | "disputed" | "refunded" | "canceled";
+  quantity: number;
+  item_cents: number;
+  shipping_cents: number;
+  tax_cents: number;
+  total_cents: number;
+  currency: string;
+  created_at: string;
+  paid_at: string | null;
+  shipped_at: string | null;
+  delivered_at: string | null;
+  released_at: string | null;
+  refunded_at: string | null;
+  release_due_at: string | null;
+  carrier: string | null;
+  tracking_number: string | null;
+  note: string | null;
+  ship_name?: string | null;
+  ship_address?: string | null;
+  fee_cents?: number;
+  fee_percent?: number;
+  disputes?: OrderDispute[];
+};
+
+/** Same math as the backend (app/modules/marketplace/payments.py) — shown before listing. */
+export function feeBreakdown(cfg: PaymentsConfig, priceCents: number, shippingCents: number) {
+  const gross = priceCents + shippingCents;
+  const fee = Math.max(0, Math.round((gross * cfg.fee_percent) / 100));
+  const stripe = gross ? Math.round((gross * cfg.stripe_fee_percent) / 100) + cfg.stripe_fee_fixed_cents : 0;
+  return { gross, fee, stripe, net: gross - fee - stripe };
+}

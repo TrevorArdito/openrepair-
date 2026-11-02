@@ -7,7 +7,9 @@ import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { formatDate } from "../../lib/format";
 import { useDocumentTitle } from "../../lib/title";
+import { useModule } from "../../lib/modules";
 import { TextArea, TextField } from "../entries/fields";
+import PaymentsSetup from "./PaymentsSetup";
 import { ListingCard } from "./MarketPage";
 import { US_STATES, type ListingSummary, type Seller, type Verification } from "./types";
 
@@ -127,6 +129,7 @@ function Verifications() {
 
 export default function SellingPage() {
   const { t } = useTranslation();
+  const paymentsOn = useModule("market_payments");
   const { user, loading } = useAuth();
   useDocumentTitle(t("market.mySelling"));
   const [seller, setSeller] = useState<Seller | null | undefined>(undefined);
@@ -156,6 +159,7 @@ export default function SellingPage() {
         {!seller && <p className="text-lg">{t("market.becomeSellerIntro")}</p>}
         <SellerForm seller={seller} onSaved={setSeller} />
       </Card>
+      {seller && paymentsOn && <PaymentsSetup />}
       {seller && <Verifications />}
     </div>
   );
