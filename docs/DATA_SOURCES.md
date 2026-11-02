@@ -4,6 +4,7 @@
 |---|---|---|---|
 | VIN decoding, makes, models | [NHTSA vPIC API](https://vpic.nhtsa.dot.gov/api/) | US government work (public domain) | Live on demand, cached in our DB |
 | Every light-duty vehicle + engine, 1984 → next model year | [EPA fuel economy data](https://www.fueleconomy.gov/feg/download.shtml) (`vehicles.csv`) | US government work (public domain) | `python -m app.importers.epa` (weekly via GitHub Actions) |
+| US ZIP code centre points (marketplace distance search) | [US Census Bureau 2023 ZCTA Gazetteer](https://www.census.gov/geographies/reference-files/time-series/geo/gazetteer-files.html) | US government work (public domain) | `backend/app/seed/data/zip_points.csv.gz`, loaded by the seed when the marketplace is on |
 | Engine families (names, codes, years, which vehicles) + heavy-duty diesel trucks | ChrystalClear team (`backend/app/seed/data/engine_families.json`) — well-established public facts only | CC BY-SA 4.0 | Seed script |
 | Recalls | [api.nhtsa.gov recalls](https://www.nhtsa.gov/nhtsa-datasets-and-apis#recalls) | Public domain | Live on demand, cached 7 days; `refresh` script |
 | Owner complaints | [api.nhtsa.gov complaints](https://www.nhtsa.gov/nhtsa-datasets-and-apis#complaints) | Public domain | Live on demand, cached 7 days; `refresh` script |

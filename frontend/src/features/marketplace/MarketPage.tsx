@@ -18,6 +18,23 @@ export function vehicleLine(t: TFunction, v: VehicleFacts): string {
   ].filter(Boolean).join(" · ");
 }
 
+// Per-device convenience: remember the buyer's ZIP for distance search (never sent anywhere else).
+function readZip(): string {
+  try {
+    return localStorage.getItem("cc_market_zip") ?? "";
+  } catch {
+    return "";
+  }
+}
+function rememberZip(z: string) {
+  try {
+    if (z) localStorage.setItem("cc_market_zip", z);
+    else localStorage.removeItem("cc_market_zip");
+  } catch {
+    /* storage blocked: fine */
+  }
+}
+
 export function ListingCard({ l }: { l: ListingSummary }) {
   const { t } = useTranslation();
   return (
@@ -42,6 +59,7 @@ export function ListingCard({ l }: { l: ListingSummary }) {
         )}
         <p className="text-base">
           {l.city}, {l.state}
+          {l.distance_mi != null && <> · {t("market.milesAway", { count: l.distance_mi })}</>}
           {l.seller_verified && <> · <span className="font-semibold text-emerald-700 dark:text-emerald-400">✓ {t("market.verified")}</span></>}
         </p>
         {l.status !== "active" && <p className="font-bold uppercase text-amber-700 dark:text-amber-400">{t(`market.statuses.${l.status}`)}</p>}
@@ -77,6 +95,7 @@ export default function MarketPage() {
   const [data, setData] = useState<{ total: number; items: ListingSummary[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const vehicleId = params.get("vehicle_id") ?? "";
+  const [zip, setZip] = useState(params.get("near_zip") ?? readZip());
 
   useEffect(() => {
     api<{ slug: string }[]>("/market/categories").then((c) => setCats(c.map((x) => x.slug).filter((x) => x !== "vehicle"))).catch(() => undefined);
@@ -107,7 +126,22 @@ export default function MarketPage() {
     else next.delete(k);
     setParams(next, { replace: true });
   };
-  const switchKind = (k: string) => setParams(k === "vehicle" ? { kind: "vehicle" } : {}, { replace: true });
+  const applyZip = () => {
+    const z = zip.trim();
+    if (z && !/^\d{5}$/.test(z)) return;
+    if (z === (params.get("near_zip") ?? "")) return;
+    rememberZip(z);
+    set("near_zip", z);
+  };
+  const switchKind = (k: string) => {
+    const next = new URLSearchParams();
+    if (k === "vehicle") next.set("kind", "vehicle");
+    for (const keep of ["near_zip", "radius_mi"]) {
+      const v = params.get(keep);
+      if (v) next.set(keep, v);
+    }
+    setParams(next, { replace: true });
+  };
   const vehicles = linked ? [linked, ...garage] : garage;
   const years = Array.from({ length: new Date().getFullYear() + 2 - 1950 }, (_, i) => String(new Date().getFullYear() + 1 - i));
 
@@ -171,13 +205,25 @@ export default function MarketPage() {
             </div>
           </>
         )}
+        <form className="grid grid-cols-2 gap-3" onSubmit={(e) => { e.preventDefault(); applyZip(); }}>
+          <div>
+            <Label htmlFor="mzip">{t("market.nearZip")}</Label>
+            <Input id="mzip" inputMode="numeric" pattern="\d{5}" maxLength={5} value={zip} onChange={(e) => setZip(e.target.value)} onBlur={applyZip} />
+          </div>
+          <div>
+            <Label htmlFor="mrad">{t("market.within")}</Label>
+            <Select id="mrad" value={params.get("radius_mi") ?? "50"} onChange={(e) => set("radius_mi", e.target.value)} disabled={!params.get("near_zip")}>
+              {["10", "25", "50", "100", "250", "500"].map((r) => <option key={r} value={r}>{t("market.miles", { count: Number(r) })}</option>)}
+            </Select>
+          </div>
+        </form>
         <div className="grid grid-cols-2 gap-3">
           <FilterSelect id="mst" label={t("market.state")} value={params.get("state") ?? ""} onChange={(v) => set("state", v)}
             options={US_STATES.map((s) => [s, s])} />
           <div>
             <Label htmlFor="ms">{t("market.sort")}</Label>
             <Select id="ms" value={params.get("sort") ?? "newest"} onChange={(e) => set("sort", e.target.value)}>
-              {["newest", "price_low", "price_high"].map((s) => <option key={s} value={s}>{t(`market.sorts.${s}`)}</option>)}
+              {["newest", "price_low", "price_high", ...(params.get("near_zip") ? ["nearest"] : [])].map((s) => <option key={s} value={s}>{t(`market.sorts.${s}`)}</option>)}
             </Select>
           </div>
         </div>

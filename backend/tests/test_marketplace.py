@@ -418,3 +418,104 @@ def test_message_email_is_one_per_unread_batch(mclient, db_session_factory):
     assert len(mails) == 1  # second message while the first is unread: no extra email
     assert "555-0100" not in mails[0]  # the message text never goes out by email
     assert f"/market/messages/{conv['id']}" in mails[0]
+
+
+# ---- distance search, reviews --------------------------------------------------------
+
+from app.modules.marketplace import zips  # noqa: E402
+from app.modules.marketplace.models import ZipPoint  # noqa: E402
+
+
+def test_zip_file_loads_once(db_session_factory):
+    with db_session_factory() as db:
+        n = zips.load(db)
+        assert n > 30000  # every US ZIP code area
+        assert zips.load(db) == 0
+        dayton, cincy = db.get(ZipPoint, "45402"), db.get(ZipPoint, "45202")
+        assert 40 < zips.miles(dayton, cincy) < 55  # Dayton -> Cincinnati is roughly 47 miles
+
+
+def test_search_near_zip(mclient, db_session_factory):
+    c = mclient
+    with db_session_factory() as db:
+        db.add_all([ZipPoint(zip="45402", lat=39.7589, lon=-84.1916),
+                    ZipPoint(zip="45202", lat=39.1072, lon=-84.5021),
+                    ZipPoint(zip="90012", lat=34.0614, lon=-118.2385)])  # fmt: skip
+        db.commit()
+    user(c, db_session_factory, "dayton@example.com")
+    seller(c, name="Dayton Parts", postal_code="45402")
+    listing(c, title="Dayton alternator")
+    user(c, db_session_factory, "cincy@example.com")
+    seller(c, name="Cincy Parts", city="Cincinnati", postal_code="45202")
+    listing(c, title="Cincinnati alternator")
+    user(c, db_session_factory, "la@example.com")
+    seller(c, name="LA Parts", city="Los Angeles", state="CA", postal_code="90012")
+    listing(c, title="LA alternator")
+
+    near = c.get(f"{API}/listings", params={"near_zip": "45402", "radius_mi": 25}).json()
+    assert [i["title"] for i in near["items"]] == ["Dayton alternator"]
+    assert near["items"][0]["distance_mi"] == 0
+    wider = c.get(
+        f"{API}/listings", params={"near_zip": "45402", "radius_mi": 100, "sort": "nearest"}
+    ).json()
+    assert [i["title"] for i in wider["items"]] == ["Dayton alternator", "Cincinnati alternator"]
+    assert 40 < wider["items"][1]["distance_mi"] < 55
+    assert (
+        c.get(f"{API}/listings", params={"near_zip": "00000"}).json()["error"]["code"]
+        == "zip_not_found"
+    )
+
+
+def test_reviews_only_from_real_buyers(mclient, db_session_factory):
+    c = mclient
+    user(c, db_session_factory, "mod@example.com", role=Role.moderator)
+    user(c, db_session_factory, "lurker@example.com")
+    user(c, db_session_factory, "buyer@example.com")
+    user(c, db_session_factory, "sam@example.com")
+    s = seller(c)
+    item = listing(c).json()
+
+    login(c, "buyer@example.com")
+    conv = c.post(
+        f"{API}/listings/{item['id']}/messages", json={"body": "I'll take it"}, headers=csrf(c)
+    ).json()
+    review = {"rating": 5, "comment": "Part was exactly as described."}
+    assert (
+        c.post(f"{API}/listings/{item['id']}/review", json=review, headers=csrf(c)).status_code
+        == 403
+    )
+
+    login(c, "sam@example.com")
+    c.post(
+        f"{API}/conversations/{conv['id']}/messages",
+        json={"body": "Sold, see you at 5"},
+        headers=csrf(c),
+    )
+    c.post(f"{API}/listings/{item['id']}/status", json={"status": "sold"}, headers=csrf(c))
+    # Sellers can't review themselves.
+    assert (
+        c.post(f"{API}/listings/{item['id']}/review", json=review, headers=csrf(c)).status_code
+        == 403
+    )
+
+    login(c, "lurker@example.com")  # never talked to the seller
+    r = c.post(f"{API}/listings/{item['id']}/review", json=review, headers=csrf(c))
+    assert r.json()["error"]["code"] == "review_not_allowed"
+
+    login(c, "buyer@example.com")
+    assert c.get(f"{API}/listings/{item['id']}/can-review").json()["can_review"] is True
+    r = c.post(f"{API}/listings/{item['id']}/review", json=review, headers=csrf(c))
+    assert r.status_code == 201, r.text
+    assert (
+        c.post(f"{API}/listings/{item['id']}/review", json=review, headers=csrf(c)).json()["error"][
+            "code"
+        ]
+        == "review_exists"
+    )
+    pub = c.get(f"{API}/sellers/{s['id']}").json()
+    assert (pub["rating"], pub["rating_count"]) == (5.0, 1)
+
+    login(c, "mod@example.com")
+    c.post(f"{API}/mod/reviews/{r.json()['id']}/hide", headers=csrf(c))
+    assert c.get(f"{API}/sellers/{s['id']}/reviews").json() == []
+    assert c.get(f"{API}/sellers/{s['id']}").json()["rating_count"] == 0

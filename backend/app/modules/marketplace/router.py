@@ -19,6 +19,7 @@ from app.modules.marketplace.models import (
     Listing,
     ListingReport,
     ListingStatus,
+    Review,
     SavedListing,
     Seller,
     SellerStatus,
@@ -35,6 +36,8 @@ from app.modules.marketplace.schemas import (
     ModSellerIn,
     ModVerificationIn,
     ReportIn,
+    ReviewIn,
+    ReviewOut,
     SellerIn,
     SellerOut,
     StatusIn,
@@ -136,6 +139,8 @@ def browse(
     year_max: int | None = None,
     title_status: str | None = None,
     running: str | None = None,
+    near_zip: str | None = Query(None, pattern=r"^\d{5}$"),
+    radius_mi: int = Query(50, ge=1, le=500),
     sort: str = "newest",
     limit: int = Query(24, ge=1, le=service.PAGE_MAX),
     offset: int = Query(0, ge=0),
@@ -145,14 +150,24 @@ def browse(
     vehicle = db.get(Vehicle, vehicle_id) if vehicle_id else None
     if vehicle_id and vehicle is None:
         raise NotFound("vehicle_not_found")
+    near = service.zip_point(db, near_zip)
+    if near_zip and near is None:
+        raise NotFound("zip_not_found")
     total, rows = service.search(
         db, q=q, category=category, condition=condition, vehicle=vehicle, state=state,
         min_price=min_price, max_price=max_price, sort=sort, limit=limit, offset=offset,
         seller_id=seller_id, kind=kind, make_id=make_id, model_id=model_id, year_min=year_min,
-        year_max=year_max, title_status=title_status, running=running,
+        year_max=year_max, title_status=title_status, running=running, near=near,
+        radius_mi=radius_mi,
     )  # fmt: skip
     saved = service.saved_ids(db, user)
-    return {"total": total, "items": [service.summary(db, ls, saved=saved) for ls in rows]}
+    miles = service.distances(db, near, rows)
+    items = []
+    for ls in rows:
+        item = service.summary(db, ls, saved=saved)
+        item.distance_mi = miles.get(ls.id)
+        items.append(item)
+    return {"total": total, "items": items}
 
 
 @router.get("/my/listings")
@@ -242,6 +257,71 @@ def report_listing(
     db.add(ListingReport(listing_id=listing.id, reporter_id=user.id, **data.model_dump()))
     db.commit()
     return {"status": "received"}
+
+
+# ---- reviews ----------------------------------------------------------------------
+
+
+@router.get("/listings/{listing_id}/can-review")
+def can_review(listing_id: int, user: User = Depends(current_user), db: Session = Depends(get_db)):
+    listing = _listing(db, listing_id, user)
+    done = db.scalar(
+        select(Review.id).where(Review.listing_id == listing.id, Review.reviewer_id == user.id)
+    )
+    return {
+        "can_review": not done and service.can_review(db, user, listing),
+        "reviewed": bool(done),
+    }
+
+
+@router.post(
+    "/listings/{listing_id}/review",
+    response_model=ReviewOut,
+    status_code=201,
+    dependencies=[Depends(verify_csrf), Depends(rate_limit("market_review", 20, 86400))],
+)
+def review_seller(
+    listing_id: int,
+    data: ReviewIn,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+):
+    listing = _listing(db, listing_id, user)
+    r = service.add_review(db, user, listing, data.rating, data.comment)
+    db.commit()
+    return _review_out(db, r)
+
+
+def _review_out(db: Session, r: Review) -> ReviewOut:
+    reviewer = db.get(User, r.reviewer_id)
+    listing = db.get(Listing, r.listing_id)
+    return ReviewOut(
+        id=r.id, rating=r.rating, comment=r.comment,
+        reviewer_name=reviewer.display_name if reviewer else "—",
+        listing_title=listing.title if listing else "—", created_at=r.created_at,
+    )  # fmt: skip
+
+
+@router.get("/sellers/{seller_id}/reviews", response_model=list[ReviewOut])
+def seller_reviews(seller_id: int, db: Session = Depends(get_db)):
+    rows = db.scalars(
+        select(Review)
+        .where(Review.seller_id == seller_id, Review.hidden.is_(False))
+        .order_by(Review.id.desc())
+        .limit(100)
+    )
+    return [_review_out(db, r) for r in rows]
+
+
+@router.post("/mod/reviews/{review_id}/hide", dependencies=[Depends(verify_csrf)])
+def mod_hide_review(review_id: int, mod: User = Depends(moderator), db: Session = Depends(get_db)):
+    r = db.get(Review, review_id)
+    if r is None:
+        raise NotFound("review_not_found")
+    r.hidden = True
+    log_action(db, mod, "review_hide", "market_review", r.id)
+    db.commit()
+    return {"status": "hidden"}
 
 
 # ---- watch list ------------------------------------------------------------------

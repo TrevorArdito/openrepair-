@@ -21,6 +21,11 @@ What's built (v1, no payments):
   decode sets year/make/model, no duplicate open listings), title status, lien, runs/drives,
   odometer; private sellers max 5 open vehicle listings (more needs a verified dealer license)
 - Watch list ("Saved"); email alert on new messages (link only, one per unread batch)
+- Distance search: `near_zip` + `radius_mi` (seller ZIPs stay private; buyers only see miles).
+  ZIP points: `app/seed/data/zip_points.csv.gz` from the US Census Bureau 2023 ZCTA gazetteer
+  (public domain), loaded by the seed when the marketplace is on.
+- Reviews: 1–5 stars + comment, only from a buyer who messaged about a listing, got a reply,
+  and the listing is marked sold; one per sale; moderators can hide
 - Moderator actions logged in the moderation log; marketplace data in "download my data";
   deleting an account deletes its seller profile and listings.
 

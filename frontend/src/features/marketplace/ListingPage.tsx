@@ -77,6 +77,42 @@ function VehicleChecks({ l }: { l: Listing }) {
   );
 }
 
+function ReviewForm({ l }: { l: Listing }) {
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const [state, setState] = useState<{ can_review: boolean; reviewed: boolean } | null>(null);
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    if (user && l.status === "sold" && !l.is_owner)
+      api<{ can_review: boolean; reviewed: boolean }>(`/market/listings/${l.id}/can-review`).then(setState).catch(() => undefined);
+  }, [user, l]);
+  if (!state || (!state.can_review && !state.reviewed)) return null;
+  if (state.reviewed) return <Alert kind="info">{t("market.reviewThanks")}</Alert>;
+  return (
+    <Card className="space-y-3">
+      <h2 className="text-xl font-bold">{t("market.reviewSeller", { name: l.seller_name })}</h2>
+      <div className="flex gap-1" role="radiogroup" aria-label={t("market.stars")}>
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button key={n} type="button" role="radio" aria-checked={rating === n} aria-label={t("market.starsN", { count: n })}
+            onClick={() => setRating(n)} className={`size-12 text-4xl ${n <= rating ? "text-amber-500" : "text-slate-400"}`}>
+            {n <= rating ? "★" : "☆"}
+          </button>
+        ))}
+      </div>
+      <TextArea id="rvc" label={t("market.reviewComment")} value={comment} onChange={setComment} rows={3} max={1000} />
+      {error && <Alert>{error}</Alert>}
+      <Button className="w-full" disabled={!rating}
+        onClick={() => api(`/market/listings/${l.id}/review`, { method: "POST", body: { rating, comment: comment || null } })
+          .then(() => setState({ can_review: false, reviewed: true }))
+          .catch((e) => setError(errorMessage(t, e)))}>
+        {t("market.sendReview")}
+      </Button>
+    </Card>
+  );
+}
+
 function ReportForm({ id }: { id: number }) {
   const { t } = useTranslation();
   const { user } = useAuth();
@@ -233,6 +269,7 @@ export default function ListingPage() {
         {!l.is_owner && l.status === "active" && <ContactSeller l={l} />}
       </Card>
 
+      <ReviewForm l={l} />
       <Alert kind="info">{t("market.safetyTips")}</Alert>
       {!l.is_owner && <ReportForm id={l.id} />}
     </div>

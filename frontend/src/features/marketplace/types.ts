@@ -41,6 +41,7 @@ export type ListingSummary = {
   fits_all: boolean;
   vehicle: VehicleFacts | null;
   saved: boolean;
+  distance_mi: number | null;
   created_at: string;
 };
 
@@ -76,7 +77,16 @@ export type Seller = {
   verified: string[];
   member_since: string;
   active_listings: number;
+  rating: number | null;
+  rating_count: number;
 };
+
+export type Review = { id: number; rating: number; comment: string | null; reviewer_name: string; listing_title: string; created_at: string };
+
+export function stars(n: number): string {
+  const full = Math.round(n);
+  return "★".repeat(full) + "☆".repeat(5 - full);
+}
 
 export type Verification = {
   id: number;

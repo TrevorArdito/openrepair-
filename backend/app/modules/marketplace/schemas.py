@@ -56,6 +56,8 @@ class SellerOut(BaseModel):
     verified: list[VerificationKind]
     member_since: datetime
     active_listings: int
+    rating: float | None = None  # average stars (1-5) from buyers
+    rating_count: int = 0
 
 
 class VerificationIn(Strict):
@@ -148,6 +150,7 @@ class ListingSummary(BaseModel):
     fits_all: bool  # no fitment rows = universal part
     vehicle: dict | None = None  # whole-vehicle listings: year, make, model, odometer, title...
     saved: bool = False
+    distance_mi: int | None = None  # when searching near a ZIP code
     created_at: datetime
 
 
@@ -218,3 +221,17 @@ class ModVerificationIn(Strict):
 class ModSellerIn(Strict):
     action: Literal["suspend", "reinstate"]
     reason: Annotated[str, Field(max_length=500)] | None = None
+
+
+class ReviewIn(Strict):
+    rating: Annotated[int, Field(ge=1, le=5)]
+    comment: Annotated[str, Field(max_length=1000)] | None = None
+
+
+class ReviewOut(BaseModel):
+    id: int
+    rating: int
+    comment: str | None
+    reviewer_name: str
+    listing_title: str
+    created_at: datetime

@@ -260,7 +260,11 @@
     "listing_vin_required": "Enter the 17-character VIN (required for 1981 and newer).",
     "listing_vin_invalid": "That VIN doesn't check out — the check digit is wrong. Re-check it on the dashboard or door sticker.",
     "listing_vin_duplicate": "This VIN is already listed for sale.",
-    "listing_vehicle_limit": "Private sellers can have up to {{limit}} vehicles listed at once. Dealers can get verified under My selling."
+    "listing_vehicle_limit": "Private sellers can have up to {{limit}} vehicles listed at once. Dealers can get verified under My selling.",
+    "zip_not_found": "We don't know that ZIP code. Check the 5 digits.",
+    "review_not_allowed": "You can review a seller after you've messaged them about a listing, they replied, and it's marked sold.",
+    "review_exists": "You've already reviewed this sale.",
+    "review_not_found": "That review wasn't found."
   },
   "safety": {
     "loading": "Checking NHTSA…",
@@ -785,7 +789,8 @@
     "sorts": {
       "newest": "Newest first",
       "price_low": "Price: low to high",
-      "price_high": "Price: high to low"
+      "price_high": "Price: high to low",
+      "nearest": "Nearest first"
     },
     "count_one": "{{count}} listing",
     "count_other": "{{count}} listings",
@@ -905,7 +910,7 @@
     "city": "City",
     "state": "State",
     "zip": "ZIP code (optional)",
-    "zipHint": "Only you see your ZIP. It will help with distance search later.",
+    "zipHint": "Only you see your ZIP. Buyers see roughly how far away you are, never your ZIP or address.",
     "about": "About you (optional)",
     "saveProfile": "Save profile",
     "saved": "Saved.",
@@ -1018,6 +1023,23 @@
     "save": "Save",
     "savedButton": "Saved",
     "savedTitle": "Saved",
-    "savedNone": "Nothing saved yet. Tap ☆ Save on any listing to keep track of it."
+    "savedNone": "Nothing saved yet. Tap ☆ Save on any listing to keep track of it.",
+    "nearZip": "Near ZIP code",
+    "within": "Within",
+    "miles_one": "{{count}} mile",
+    "miles_other": "{{count}} miles",
+    "milesAway_one": "{{count}} mile away",
+    "milesAway_other": "{{count}} miles away",
+    "reviewSeller": "How was buying from {{name}}?",
+    "stars": "Star rating",
+    "starsN_one": "{{count}} star",
+    "starsN_other": "{{count}} stars",
+    "reviewComment": "Comment (optional)",
+    "sendReview": "Post review",
+    "reviewThanks": "Thanks for reviewing this seller.",
+    "reviews": "Reviews",
+    "noReviews": "No reviews yet",
+    "ratingOf_one": "{{rating}} out of 5 ({{count}} review)",
+    "ratingOf_other": "{{rating}} out of 5 ({{count}} reviews)"
   }
 }

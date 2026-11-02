@@ -32,6 +32,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Marketplace: **whole vehicles in any condition** — VIN look-up fills year/make/model from NHTSA,
   title status, runs/drives, odometer, links to our repair info and free recall/theft checks;
   "Saved" watch list; email alert when someone messages you (no message text in the email).
+- Marketplace: **search within N miles of a ZIP code** (US Census ZIP centre points, public domain)
+  with "nearest first"; **seller star ratings and reviews** from people who actually dealt with
+  the seller; moderators can hide reviews.
 ### Changed
 - Flex-fuel engines are treated as the same engine as their gasoline version.
 - The weekly recall/complaint refresh only re-checks vehicles people have looked up.

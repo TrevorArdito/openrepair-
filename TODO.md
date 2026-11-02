@@ -67,7 +67,9 @@
       watch list (Saved), email alert for new messages (link only, one per unread batch)
 - [ ] Used catalytic converters where legal: state-by-state rules (owner wants this; research each
       state's law + EPA tested-and-labeled policy first; free legal clinic review)
-- [ ] Marketplace next: distance search by ZIP; buyer reviews; vehicle model filter;
+- [x] Marketplace: "within N miles of ZIP" search (Census ZIP points), seller star reviews
+      (only from people the seller actually dealt with, after a sale)
+- [ ] Marketplace next: vehicle model filter;
       payments through a payment provider (Stripe Connect or similar — we never store card data);
       turn it on in production (owner decision)
 - [ ] **State emissions info**: programs by state/area, test types, model years, readiness rules,

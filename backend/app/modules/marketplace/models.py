@@ -14,6 +14,7 @@ from sqlalchemy import (
     Boolean,
     DateTime,
     Enum,
+    Float,
     ForeignKey,
     Integer,
     String,
@@ -292,4 +293,35 @@ class Message(Base):
     sender_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     body: Mapped[str] = mapped_column(Text)
     read: Mapped[bool] = mapped_column(Boolean, default=False)
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class ZipPoint(Base):
+    """US ZIP code centre points (Census Bureau ZCTA gazetteer, public domain) for
+    "within N miles" search. Loaded by the seed script."""
+
+    __tablename__ = "market_zip_points"
+
+    zip: Mapped[str] = mapped_column(String(5), primary_key=True)
+    lat: Mapped[float] = mapped_column(Float)
+    lon: Mapped[float] = mapped_column(Float)
+
+
+class Review(Base):
+    """A buyer's rating of a seller, tied to a listing they actually talked to the seller about."""
+
+    __tablename__ = "market_reviews"
+    __table_args__ = (UniqueConstraint("listing_id", "reviewer_id"),)
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    seller_id: Mapped[int] = mapped_column(
+        ForeignKey("market_sellers.id", ondelete="CASCADE"), index=True
+    )
+    listing_id: Mapped[int] = mapped_column(
+        ForeignKey("market_listings.id", ondelete="CASCADE"), index=True
+    )
+    reviewer_id: Mapped[int] = mapped_column(ForeignKey("users.id", ondelete="CASCADE"), index=True)
+    rating: Mapped[int] = mapped_column(Integer)
+    comment: Mapped[str | None] = mapped_column(Text)
+    hidden: Mapped[bool] = mapped_column(Boolean, default=False)  # removed by a moderator
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)

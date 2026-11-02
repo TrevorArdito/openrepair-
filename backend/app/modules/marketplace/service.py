@@ -1,4 +1,5 @@
 import logging
+import math
 from datetime import UTC, datetime
 from types import SimpleNamespace
 
@@ -11,7 +12,7 @@ from app.core.errors import AppError, NotFound
 from app.modules.accounts.models import Role, User, UserStatus
 from app.modules.community.models import Photo
 from app.modules.community.service import ensure_can_contribute
-from app.modules.marketplace import rules
+from app.modules.marketplace import rules, zips
 from app.modules.marketplace.models import (
     Conversation,
     Listing,
@@ -20,12 +21,14 @@ from app.modules.marketplace.models import (
     ListingPhoto,
     ListingStatus,
     Message,
+    Review,
     SavedListing,
     Seller,
     SellerStatus,
     SellerVerification,
     VehicleDetails,
     VerificationStatus,
+    ZipPoint,
 )
 from app.modules.marketplace.schemas import (
     ConversationOut,
@@ -41,6 +44,8 @@ from app.modules.vehicles import service as vehicles_service
 from app.modules.vehicles.fitment import fitment_display, fits, validate_fitment
 from app.modules.vehicles.models import Make, Model, Vehicle
 from app.modules.vehicles.vin import check_digit_valid
+
+MILES_PER_DEG_LAT = zips.MILES_PER_DEG_LAT
 
 log = logging.getLogger(__name__)
 # Private sellers selling many vehicles may need a dealer license in their state
@@ -94,7 +99,17 @@ def save_seller(db: Session, user: User, data: SellerIn) -> Seller:
     return seller
 
 
+def rating(db: Session, seller: Seller) -> tuple[float | None, int]:
+    avg, count = db.execute(
+        select(func.avg(Review.rating), func.count(Review.id)).where(
+            Review.seller_id == seller.id, Review.hidden.is_(False)
+        )
+    ).one()
+    return (round(float(avg), 1) if avg is not None else None), count or 0
+
+
 def seller_out(db: Session, seller: Seller, private: bool = False) -> SellerOut:
+    avg, count = rating(db, seller)
     active = db.scalar(
         select(func.count())
         .select_from(Listing)
@@ -112,6 +127,8 @@ def seller_out(db: Session, seller: Seller, private: bool = False) -> SellerOut:
         verified=verified_kinds(db, seller),
         member_since=seller.created_at,
         active_listings=active or 0,
+        rating=avg,
+        rating_count=count,
     )
 
 
@@ -390,6 +407,8 @@ def search(
     year_max: int | None = None,
     title_status: str | None = None,
     running: str | None = None,
+    near: ZipPoint | None = None,
+    radius_mi: int = 50,
 ) -> tuple[int, list[Listing]]:
     stmt = (
         select(Listing)
@@ -429,7 +448,22 @@ def search(
             ListingFitment.listing_id == Listing.id, fits(ListingFitment, vehicle)
         )
         stmt = stmt.where(or_(fit_ok, ~has_fit))
+    dist2 = None
+    if near is not None:  # flat-earth distance is accurate enough within a few hundred miles
+        kx = MILES_PER_DEG_LAT * math.cos(math.radians(near.lat))
+        dy = (ZipPoint.lat - near.lat) * MILES_PER_DEG_LAT
+        dx = (ZipPoint.lon - near.lon) * kx
+        dist2 = dy * dy + dx * dx
+        span = radius_mi / MILES_PER_DEG_LAT
+        stmt = stmt.join(ZipPoint, ZipPoint.zip == Seller.postal_code).where(
+            ZipPoint.lat.between(near.lat - span, near.lat + span), dist2 <= radius_mi * radius_mi
+        )
     total = db.scalar(select(func.count()).select_from(stmt.subquery())) or 0
+    if sort == "nearest" and dist2 is not None:
+        rows = db.scalars(
+            stmt.order_by(dist2, Listing.id.desc()).limit(min(limit, PAGE_MAX)).offset(offset)
+        ).all()
+        return total, list(rows)
     order = {
         "price_low": (Listing.price_cents.asc(), Listing.id.desc()),
         "price_high": (Listing.price_cents.desc(), Listing.id.desc()),
@@ -561,3 +595,58 @@ def export_for(db: Session, user: User) -> dict:
         for m in db.scalars(select(Message).where(Message.sender_id == user.id))
     ]
     return out
+
+
+# ---- distance -------------------------------------------------------------------
+
+
+def zip_point(db: Session, code: str | None) -> ZipPoint | None:
+    return db.get(ZipPoint, code) if code else None
+
+
+def distances(db: Session, near: ZipPoint | None, listings: list[Listing]) -> dict[int, int]:
+    """Whole miles from `near` to each listing's seller (when the seller gave a ZIP)."""
+    if near is None:
+        return {}
+    out = {}
+    for ls in listings:
+        p = zip_point(db, ls.seller.postal_code)
+        if p is not None:
+            out[ls.id] = round(zips.miles(near, p))
+    return out
+
+
+# ---- reviews ----------------------------------------------------------------------
+
+
+def can_review(db: Session, user: User, listing: Listing) -> bool:
+    """Only someone who talked with the seller about this listing (and got a reply) can
+    review, once it's sold. With payments later: only the actual buyer."""
+    if listing.status != ListingStatus.sold or listing.seller.user_id == user.id:
+        return False
+    conv = db.scalar(
+        select(Conversation).where(
+            Conversation.listing_id == listing.id, Conversation.buyer_id == user.id
+        )
+    )
+    seller_user = listing.seller.user_id
+    return conv is not None and any(m.sender_id == seller_user for m in conv.messages)
+
+
+def add_review(
+    db: Session, user: User, listing: Listing, stars: int, comment: str | None
+) -> Review:
+    ensure_can_contribute(user)
+    if not can_review(db, user, listing):
+        raise AppError("review_not_allowed", 403)
+    if db.scalar(
+        select(Review.id).where(Review.listing_id == listing.id, Review.reviewer_id == user.id)
+    ):
+        raise AppError("review_exists", 409)
+    review = Review(
+        seller_id=listing.seller_id, listing_id=listing.id, reviewer_id=user.id,
+        rating=stars, comment=comment,
+    )  # fmt: skip
+    db.add(review)
+    db.flush()
+    return review
