@@ -208,6 +208,9 @@ def save_listing(
         raise AppError("listing_rules_not_accepted", 422)
     if listing is not None and listing.status == ListingStatus.removed:
         raise AppError("listing_removed", 403)
+    from app.modules.marketplace.orders import ensure_inform_ok
+
+    ensure_inform_ok(db, seller)  # INFORM Consumers Act: high-volume sellers must be verified
     verified = bool(verified_kinds(db, seller))
     is_vehicle = data.category == "vehicle"
     vfields = _vehicle_fields(db, vpic, seller, data, listing, verified) if is_vehicle else None
@@ -336,6 +339,7 @@ def summary(
         fits_all=not listing.fitment and listing.kind == ListingKind.part,
         vehicle=_vehicle_dict(db, listing.vehicle, full) if listing.vehicle else None,
         saved=listing.id in (saved or ()),
+        buy_now=_buy_now_reason(listing) is None,
         created_at=listing.created_at,
     )
 
@@ -364,6 +368,8 @@ def detail(db: Session, listing: Listing, viewer: User | None) -> ListingOut:
         quantity=listing.quantity,
         shipping=listing.shipping,
         shipping_note=listing.shipping_note,
+        shipping_cents=listing.shipping_cents,
+        buy_now_reason=_buy_now_reason(listing),
         source_vin=listing.source_vin,
         mileage=listing.mileage,
         emissions_compliance=listing.emissions_compliance,
@@ -650,3 +656,9 @@ def add_review(
     db.add(review)
     db.flush()
     return review
+
+
+def _buy_now_reason(listing: Listing) -> str | None:
+    from app.modules.marketplace.orders import buy_now_reason
+
+    return buy_now_reason(listing)

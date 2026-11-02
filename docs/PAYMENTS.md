@@ -2,7 +2,7 @@
 
 Status: **built for Stripe test mode, OFF by default** (`ENABLE_MARKET_PAYMENTS`). Needs the
 marketplace on too (`ENABLE_MARKETPLACE`). Legal documents are DRAFTS for lawyer review
-(`docs/legal/`).
+(`backend/app/legal/`, see `docs/legal/README.md`).
 
 ## How it works (plain English)
 - **Sellers** tap "Set up payouts" → Stripe's own sign-up (identity, bank, tax info). Stripe
@@ -82,4 +82,4 @@ which provider took the money. A PayPal provider can be added beside Stripe.
    the "Use test data" buttons), list a shipped part, buy it from a second account with card
    `4242 4242 4242 4242`, any future date, any CVC.
 9. **Going live later**: repeat steps 4–7 with live keys (`sk_live_…`) after Stripe approves your
-   account, your lawyer/clinic reviews `docs/legal/`, and your CPA confirms the tax setup.
+   account, your lawyer/clinic reviews `backend/app/legal/`, and your CPA confirms the tax setup.

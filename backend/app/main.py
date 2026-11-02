@@ -16,6 +16,14 @@ from app.modules.registry import enabled_modules, load_router
 API_PREFIX = "/api/v1"
 
 
+LEGAL_DIR = Path(__file__).parent / "legal"
+LEGAL_DOCS = {
+    "terms": "TERMS_OF_SERVICE.md",
+    "seller-agreement": "SELLER_AGREEMENT.md",
+    "prohibited-items": "PROHIBITED_ITEMS.md",
+}
+
+
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
     app = FastAPI(
@@ -43,6 +51,19 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             "source_code_url": settings.source_code_url,
             "modules": [m.name for m in modules],
         }
+
+    @core.get("/legal/{name}")
+    def legal(name: str):
+        """Terms of Service, Seller Agreement, Prohibited Items (DRAFTS — see docs/legal/)."""
+        file = LEGAL_DOCS.get(name)
+        if file is None:
+            raise NotFound("not_found")
+        text = (LEGAL_DIR / file).read_text(encoding="utf-8")
+        version = next(
+            (ln.split("Version:", 1)[1].strip() for ln in text.splitlines() if "Version:" in ln),
+            None,
+        )
+        return {"name": name, "version": version, "draft": "DRAFT" in text[:400], "markdown": text}
 
     app.include_router(core, prefix=API_PREFIX)
     for spec in modules:

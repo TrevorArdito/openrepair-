@@ -34,6 +34,12 @@ MODULES: list[ModuleSpec] = [
     ModuleSpec("hardware", "app.modules.hardware.router", enabled_flag="enable_hardware"),
     # Off by default. Parts marketplace — see docs/COMMERCE_DESIGN.md.
     ModuleSpec("marketplace", "app.modules.marketplace.router", enabled_flag="enable_marketplace"),
+    # Off by default. Stripe Connect payments; needs the marketplace on too (docs/PAYMENTS.md).
+    ModuleSpec(
+        "market_payments",
+        "app.modules.marketplace.payments_router",
+        enabled_flag="market_payments_on",
+    ),
 ]
 
 

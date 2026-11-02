@@ -19,3 +19,16 @@ services:
         sync: false # your email — that account becomes admin when you sign up
       - key: STORAGE_BACKEND
         value: database # free hosts wipe their disk on restart, so photos live in the database
+      # Marketplace + payments are OFF until you set these (see docs/PAYMENTS.md).
+      - key: ENABLE_MARKETPLACE
+        value: "false"
+      - key: ENABLE_MARKET_PAYMENTS
+        value: "false"
+      - key: STRIPE_SECRET_KEY
+        sync: false # sk_test_… from Stripe → Developers → API keys (secret: never commit it)
+      - key: STRIPE_WEBHOOK_SECRET
+        sync: false # whsec_… from Stripe → Developers → Webhooks (Connect endpoint)
+      - key: MARKET_FEE_PERCENT
+        value: "6"
+      - key: MARKET_TAX_ENABLED
+        value: "false" # turn on only after your CPA confirms

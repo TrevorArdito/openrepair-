@@ -117,6 +117,16 @@ class Seller(TimestampMixin, Base):
     postal_code: Mapped[str | None] = mapped_column(String(10))
     about: Mapped[str | None] = mapped_column(Text)
     status: Mapped[SellerStatus] = mapped_column(_enum(SellerStatus), default=SellerStatus.active)
+    # Payments (Stripe Connect Express). Stripe holds identity/bank/tax details, not us.
+    stripe_account_id: Mapped[str | None] = mapped_column(String(64), unique=True)
+    charges_enabled: Mapped[bool] = mapped_column(Boolean, default=False)
+    payouts_enabled: Mapped[bool] = mapped_column(Boolean, default=False)
+    details_submitted: Mapped[bool] = mapped_column(Boolean, default=False)
+    agreement_version: Mapped[str | None] = mapped_column(String(30))
+    agreement_accepted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # INFORM Consumers Act (high-volume sellers): contact info + yearly re-confirmation.
+    phone: Mapped[str | None] = mapped_column(String(30))
+    inform_certified_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
 
     user = relationship("User")
 
@@ -165,6 +175,7 @@ class Listing(TimestampMixin, Base):
     quantity: Mapped[int] = mapped_column(Integer, default=1)
     shipping: Mapped[Shipping] = mapped_column(_enum(Shipping))
     shipping_note: Mapped[str | None] = mapped_column(String(300))
+    shipping_cents: Mapped[int | None] = mapped_column(Integer)  # flat shipping price (Buy now)
     # Used parts: where they came from (helps fitment and fights theft).
     source_vin: Mapped[str | None] = mapped_column(String(17))
     mileage: Mapped[int | None] = mapped_column(Integer)
@@ -325,3 +336,92 @@ class Review(Base):
     comment: Mapped[str | None] = mapped_column(Text)
     hidden: Mapped[bool] = mapped_column(Boolean, default=False)  # removed by a moderator
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
+class OrderStatus(enum.StrEnum):
+    pending_payment = "pending_payment"  # checkout started
+    paid = "paid"  # money held, waiting for the seller to ship
+    shipped = "shipped"
+    delivered = "delivered"
+    completed = "completed"  # money released to the seller
+    disputed = "disputed"  # buyer reported a problem / card chargeback: payout frozen
+    refunded = "refunded"
+    canceled = "canceled"  # checkout abandoned
+
+
+class Order(TimestampMixin, Base):
+    """One in-app purchase. Card details never touch us — only Stripe's reference ids."""
+
+    __tablename__ = "market_orders"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    listing_id: Mapped[int | None] = mapped_column(
+        ForeignKey("market_listings.id", ondelete="SET NULL"), index=True
+    )
+    seller_id: Mapped[int | None] = mapped_column(
+        ForeignKey("market_sellers.id", ondelete="SET NULL"), index=True
+    )
+    buyer_id: Mapped[int | None] = mapped_column(
+        ForeignKey("users.id", ondelete="SET NULL"), index=True
+    )
+    # Snapshots so history survives deleted listings/accounts.
+    listing_title: Mapped[str] = mapped_column(String(120))
+    seller_name: Mapped[str] = mapped_column(String(60))
+    provider: Mapped[str] = mapped_column(String(20), default="stripe")  # paypal later
+    provider_account: Mapped[str | None] = mapped_column(String(64))
+    checkout_id: Mapped[str | None] = mapped_column(String(255), unique=True)
+    payment_id: Mapped[str | None] = mapped_column(String(255), index=True)
+    quantity: Mapped[int] = mapped_column(Integer, default=1)
+    item_cents: Mapped[int] = mapped_column(Integer)  # unit price x quantity
+    shipping_cents: Mapped[int] = mapped_column(Integer, default=0)
+    tax_cents: Mapped[int] = mapped_column(Integer, default=0)
+    total_cents: Mapped[int] = mapped_column(Integer, default=0)
+    fee_percent: Mapped[float] = mapped_column(Float)
+    fee_cents: Mapped[int] = mapped_column(Integer)
+    currency: Mapped[str] = mapped_column(String(3), default="usd")
+    status: Mapped[OrderStatus] = mapped_column(_enum(OrderStatus), index=True)
+    # Shipping address from Stripe Checkout (needed by the seller to ship).
+    ship_name: Mapped[str | None] = mapped_column(String(120))
+    ship_address: Mapped[str | None] = mapped_column(Text)
+    carrier: Mapped[str | None] = mapped_column(String(40))
+    tracking_number: Mapped[str | None] = mapped_column(String(60))
+    paid_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    shipped_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    delivered_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    released_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    payout_id: Mapped[str | None] = mapped_column(String(255))
+    refunded_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    note: Mapped[str | None] = mapped_column(String(500))  # e.g. why it was refunded
+
+
+class DisputeReason(enum.StrEnum):
+    not_received = "not_received"
+    not_as_described = "not_as_described"
+    damaged = "damaged"
+    wrong_part = "wrong_part"
+    chargeback = "chargeback"  # opened by the buyer's bank, not on our site
+    other = "other"
+
+
+class DisputeStatus(enum.StrEnum):
+    open = "open"  # waiting for the seller
+    responded = "responded"  # waiting for an admin
+    refunded = "refunded"
+    released = "released"
+
+
+class Dispute(TimestampMixin, Base):
+    __tablename__ = "market_disputes"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
+    order_id: Mapped[int] = mapped_column(
+        ForeignKey("market_orders.id", ondelete="CASCADE"), index=True
+    )
+    opened_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    reason: Mapped[DisputeReason] = mapped_column(_enum(DisputeReason))
+    details: Mapped[str | None] = mapped_column(Text)
+    seller_response: Mapped[str | None] = mapped_column(Text)
+    status: Mapped[DisputeStatus] = mapped_column(_enum(DisputeStatus), default=DisputeStatus.open)
+    decided_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+    decision_note: Mapped[str | None] = mapped_column(String(1000))

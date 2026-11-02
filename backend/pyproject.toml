@@ -17,6 +17,7 @@ dependencies = [
   "email-validator>=2.2",
   "pillow>=11",
   "python-multipart>=0.0.9",
+  "stripe>=16.1,<17",
 ]
 
 [project.optional-dependencies]

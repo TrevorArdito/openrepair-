@@ -51,6 +51,27 @@ class Settings(BaseSettings):
     enable_hardware: bool = False
     # Parts marketplace (new + used parts with fitment). See docs/COMMERCE_DESIGN.md.
     enable_marketplace: bool = False
+    # Marketplace payments (Stripe Connect). See docs/PAYMENTS.md. Keys are secrets: env only.
+    enable_market_payments: bool = False
+    stripe_secret_key: str = ""
+    stripe_webhook_secret: str = ""
+    market_fee_percent: float = 6.0  # our fee on shipped / in-app sales
+    market_stripe_fee_percent: float = 2.9  # for showing sellers an estimate only
+    market_stripe_fee_fixed_cents: int = 30
+    market_tax_enabled: bool = False  # Stripe Tax — turn on after the CPA confirms
+    market_release_days_after_delivery: int = 3
+    market_release_days_after_ship: int = 30
+    market_contact_only_categories: str = "vehicle"  # comma list: no in-app payment
+    market_inform_sales: int = 200  # INFORM Consumers Act high-volume thresholds (12 months)
+    market_inform_revenue_cents: int = 500_000
+
+    @property
+    def market_payments_on(self) -> bool:
+        return self.enable_marketplace and self.enable_market_payments
+
+    @property
+    def contact_only_categories(self) -> set[str]:
+        return {c.strip() for c in self.market_contact_only_categories.split(",") if c.strip()}
 
     @property
     def is_production(self) -> bool:

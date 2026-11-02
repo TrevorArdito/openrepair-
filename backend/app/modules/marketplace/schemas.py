@@ -117,6 +117,7 @@ class ListingIn(Strict):
     quantity: Annotated[int, Field(ge=1, le=999)] = 1
     shipping: Shipping
     shipping_note: Annotated[str, Field(max_length=300)] | None = None
+    shipping_cents: Annotated[int, Field(ge=0, le=1_000_000)] | None = None  # for Buy now
     source_vin: Annotated[str, Field(pattern=r"^[A-HJ-NPR-Z0-9]{17}$")] | None = None
     mileage: Annotated[int, Field(ge=0, le=2_000_000)] | None = None
     emissions_compliance: Literal["epa", "carb"] | None = None
@@ -151,6 +152,7 @@ class ListingSummary(BaseModel):
     vehicle: dict | None = None  # whole-vehicle listings: year, make, model, odometer, title...
     saved: bool = False
     distance_mi: int | None = None  # when searching near a ZIP code
+    buy_now: bool = False  # in-app payment available (shipped items, seller set up)
     created_at: datetime
 
 
@@ -161,6 +163,8 @@ class ListingOut(ListingSummary):
     quantity: int
     shipping: Shipping
     shipping_note: str | None
+    shipping_cents: int | None = None
+    buy_now_reason: str | None = None
     source_vin: str | None
     mileage: int | None
     emissions_compliance: str | None
