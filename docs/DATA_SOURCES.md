@@ -23,5 +23,6 @@ python -m app.importers.nhtsa refresh --force         # ignore the 7-day cache
 python -m app.importers.nhtsa tsbs                    # TSBs 2020-now for models in our DB
 python -m app.importers.nhtsa tsbs --period 2015-2019 # older bulletins
 ```
-By default the TSB import only keeps bulletins for models already in our database (keeps the
-database small enough for free hosting). `--all-models` imports everything (several GB).
+By default the TSB import keeps bulletins only for the owner's priority models and for models
+someone has looked up on the site (keeps the database small enough for free hosting); a model
+someone looks up gets its TSBs at the next weekly run. `--all-models` imports everything (several GB).

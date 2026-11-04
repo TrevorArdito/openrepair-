@@ -26,13 +26,13 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from sqlalchemy import select
+from sqlalchemy import delete, insert, select
 from sqlalchemy.orm import Session
 
 from app.core.errors import AppError
 from app.db import SessionLocal
 from app.modules.safety import service
-from app.modules.safety.models import DataImport, SafetyFetch, name_key
+from app.modules.safety.models import DataImport, SafetyFetch, Tsb, TsbVehicle, name_key
 from app.modules.safety.nhtsa import NhtsaApi, get_nhtsa
 from app.modules.vehicles.models import Make, Model, Vehicle
 
@@ -133,19 +133,73 @@ def known_model_keys(db: Session) -> set[tuple[str, str]]:
     return {(name_key(mk), name_key(mo)) for mk, mo in rows}
 
 
+def tsb_model_keys(db: Session) -> set[tuple[str, str]]:
+    """Which models get TSBs by default: the owner's priority models plus every model someone
+    has looked up. (Not the whole ~21,000-vehicle catalog — that would outgrow a free database.)"""
+    rows = db.execute(
+        select(Make.name, Model.name)
+        .join(Model, Model.make_id == Make.id)
+        .where(Model.priority.is_not(None))
+    )
+    keys = {(name_key(mk), name_key(mo)) for mk, mo in rows}
+    keys |= set(db.execute(select(SafetyFetch.make_key, SafetyFetch.model_key).distinct()).all())
+    return keys
+
+
 def import_tsb_lines(db: Session, lines, only: set[tuple[str, str]] | None) -> tuple[int, int]:
-    added = seen = 0
-    for i, line in enumerate(lines, 1):
+    """Group the file's lines by bulletin (one line per make/model/year/component), then write
+    in batches: a few queries per 500 bulletins instead of several per line."""
+    groups: dict[int, dict] = {}
+    seen = 0
+    for line in lines:
         rec = parse_tsb_line(line)
         if rec is None:
             continue
-        if only is not None and (name_key(rec["make"]), name_key(rec["model"])) not in only:
+        mk, mo = name_key(rec["make"]), name_key(rec["model"])
+        if only is not None and (mk, mo) not in only:
             continue
         seen += 1
-        added += service.upsert_tsb(db, rec)
-        if i % BATCH == 0:
-            db.commit()
-    db.commit()
+        g = groups.setdefault(rec["nhtsa_id"], {**rec, "components": set(), "links": set()})
+        if rec.get("component"):
+            g["components"].add(service.clean(rec["component"], 200))
+        g["links"].add((mk, mo, rec["year"]))
+
+    added = 0
+    ids = list(groups)
+    for i in range(0, len(ids), BATCH):
+        chunk = ids[i : i + BATCH]
+        existing = {t.nhtsa_id: t for t in db.scalars(select(Tsb).where(Tsb.nhtsa_id.in_(chunk)))}
+        for nid in chunk:
+            g = groups[nid]
+            tsb = existing.get(nid)
+            if tsb is None:
+                tsb = existing[nid] = Tsb(nhtsa_id=nid)
+                db.add(tsb)
+                added += 1
+            tsb.bulletin_number = service.clean(g.get("bulletin_number"), 128)
+            tsb.bulletin_date = g.get("bulletin_date")
+            tsb.comm_type = service.clean(g.get("comm_type"), 60)
+            comps = {c for c in (tsb.components or "").split(" | ") if c} | g["components"]
+            tsb.components = " | ".join(sorted(comps))[:600] or None
+            tsb.summary = service.clean(g.get("summary"))
+        db.flush()
+        by_id = {existing[n].id: groups[n] for n in chunk}
+        have = set(
+            db.execute(
+                select(
+                    TsbVehicle.tsb_id, TsbVehicle.make_key, TsbVehicle.model_key, TsbVehicle.year
+                ).where(TsbVehicle.tsb_id.in_(list(by_id)))
+            ).all()
+        )
+        new_links = [
+            {"tsb_id": tid, "make_key": mk, "model_key": mo, "year": yr}
+            for tid, g in by_id.items()
+            for mk, mo, yr in g["links"]
+            if (tid, mk, mo, yr) not in have
+        ]
+        if new_links:
+            db.execute(insert(TsbVehicle), new_links)
+        db.commit()
     return added, seen
 
 
@@ -161,7 +215,7 @@ def download(url: str, dest: Path) -> Path:
 
 def import_tsbs(db: Session, files: list[Path], all_models: bool = False) -> dict:
     log = _start(db, "tsbs")
-    only = None if all_models else known_model_keys(db)
+    only = None if all_models else tsb_model_keys(db)
     added = seen = 0
     try:
         for path in files:
@@ -171,10 +225,26 @@ def import_tsbs(db: Session, files: list[Path], all_models: bool = False) -> dic
     except Exception as exc:
         _finish(db, log, "failed", str(exc)[:1000])
         raise
+    removed = prune_tsbs(db, only) if only is not None else 0
     log.rows_added = added
     log.rows_updated = seen - added
     _finish(db, log)
-    return {"tsbs_added": added, "rows_matched": seen}
+    return {"tsbs_added": added, "rows_matched": seen, "tsbs_pruned": removed}
+
+
+def prune_tsbs(db: Session, keep: set[tuple[str, str]]) -> int:
+    """Remove TSB links for models outside the import scope, then bulletins left with no
+    vehicles — keeps the free database small. (Public data: re-importable any time.)"""
+    pairs = db.execute(select(TsbVehicle.make_key, TsbVehicle.model_key).distinct()).all()
+    for mk, mo in pairs:
+        if (mk, mo) not in keep:
+            db.execute(
+                delete(TsbVehicle).where(TsbVehicle.make_key == mk, TsbVehicle.model_key == mo)
+            )
+    orphans = delete(Tsb).where(~select(TsbVehicle.id).where(TsbVehicle.tsb_id == Tsb.id).exists())
+    removed = db.execute(orphans).rowcount or 0
+    db.commit()
+    return removed
 
 
 # ---- CLI -------------------------------------------------------------------
