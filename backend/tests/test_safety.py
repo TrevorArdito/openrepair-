@@ -152,3 +152,37 @@ def test_refresh_only_rechecks_vehicles_people_looked_up(client, db_session_fact
         result = refresh_api(db, nhtsa, ["recalls"], force=True)
     assert result["recalls"] == {"vehicles": 1, "failed": 0}  # not every catalog vehicle
     assert nhtsa.calls == calls_before + 1
+
+
+def test_tsb_scope_is_priority_models_plus_looked_up(db_session_factory):
+    """Not every catalog model gets TSBs (that would outgrow a free database)."""
+    from sqlalchemy import select
+
+    from app.importers.nhtsa import tsb_model_keys
+    from app.modules.safety.models import SafetyFetch
+    from app.modules.vehicles.models import Make, Model
+
+    with db_session_factory() as db:
+        honda = db.scalar(select(Make).where(Make.name == "Honda"))
+        db.add(Model(make_id=honda.id, name="Insight"))  # in the catalog, not a priority model
+        db.add(SafetyFetch(source="recalls", make_key="HONDA", model_key="ELEMENT", year=2008))
+        db.commit()
+        keys = tsb_model_keys(db)
+    assert ("FORD", "F150") in keys  # owner's priority list
+    assert ("HONDA", "ELEMENT") in keys  # someone looked it up
+    assert ("HONDA", "INSIGHT") not in keys
+
+
+def test_tsb_import_prunes_out_of_scope_bulletins(db_session_factory, tmp_path):
+    from sqlalchemy import func, select
+
+    from app.modules.safety.models import Tsb, TsbVehicle
+
+    with db_session_factory() as db:
+        import_tsbs(db, [_zip(tmp_path)], all_models=True)  # e.g. an old, wider import
+        assert db.scalar(select(func.count()).select_from(Tsb)) == 3
+        result = import_tsbs(db, [_zip(tmp_path)])  # normal scoped run cleans up
+        assert result["tsbs_pruned"] == 2
+        assert db.scalar(select(func.count()).select_from(Tsb)) == 1
+        keys = set(db.execute(select(TsbVehicle.make_key, TsbVehicle.model_key)).all())
+        assert keys == {("FORD", "F150")}

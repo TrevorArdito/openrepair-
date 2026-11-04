@@ -46,6 +46,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - **DRAFT legal documents** (for lawyer review): Terms of Service, Seller Agreement, Prohibited
   Items — shown at /legal/… and linked from About and the marketplace.
 ### Changed
+- TSB import now covers the priority models plus any model someone has looked up (not the whole
+  21,000-vehicle catalog, which would outgrow the free database), and writes in batches — the
+  first live run had taken hours.
 - Flex-fuel engines are treated as the same engine as their gasoline version.
 - The weekly recall/complaint refresh only re-checks vehicles people have looked up.
 
