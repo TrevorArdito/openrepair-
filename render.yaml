@@ -5,6 +5,7 @@ services:
     name: chrystalclear
     runtime: docker
     plan: free
+    region: ohio # same region as the Neon database (AWS US East, Ohio)
     healthCheckPath: /api/v1/health
     envVars:
       - key: APP_ENV
