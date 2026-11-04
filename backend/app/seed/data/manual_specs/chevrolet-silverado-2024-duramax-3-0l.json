@@ -1,0 +1,177 @@
+{
+ "vehicle": {
+  "make": "Chevrolet",
+  "model": "Silverado",
+  "year_from": 2024,
+  "year_to": 2024
+ },
+ "source": {
+  "title": "2024 Chevrolet/GMC 3.0L Duramax Diesel Engine Supplement (85137419 B, Sept 2023)",
+  "url": "https://contentdelivery.ext.gm.com/content/dam/cope/en_us/public/pdf_assets/active/owners_manuals_browse/2024/24_MUL_Duramax_Diesel_3.0L_SUP_en_US_U_85137419B_2023SEP25_2P.pdf"
+ },
+ "engines": {
+  "3.0D": {
+   "family": "gm-3-0-duramax",
+   "label": "3.0L Duramax Turbo Diesel (LZ0)"
+  }
+ },
+ "specs": [
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 46,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 6.6,
+    "amount_unit": "L",
+    "printed": "6.6 L (7.0 qt)",
+    "fluid_spec": "SAE 0W-20 meeting GM dexosD (ACDelco dexosD recommended)",
+    "notes": "Grade and spec pp. 27, 42. No oil additives or flushes (p. 27)."
+   }
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 46,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant (pickup)",
+   "data": {
+    "system": "coolant",
+    "amount": 18.4,
+    "amount_unit": "L",
+    "printed": "18.4 L (19.4 qt)",
+    "fluid_spec": "DEX-COOL, 50/50 with clean drinkable water",
+    "notes": "Pickup figure; capacity is for the entire cooling system. The engine and the charge-air cooling system each have their own surge tank (p. 26). Fluid type p. 42."
+   }
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 46,
+   "kind": "fluid_capacity",
+   "title": "Diesel exhaust fluid (DEF) tank",
+   "data": {
+    "system": "other",
+    "amount": 20.5,
+    "amount_unit": "L",
+    "printed": "20.5 L (5.4 gal)",
+    "fluid_spec": "DEF meeting ISO 22241 or showing the API Diesel Exhaust Fluid Certification Mark",
+    "notes": "Don't overfill the DEF tank. Fluid type p. 42."
+   },
+   "systems": [
+    "engine.emissions",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 42,
+   "kind": "fluid_capacity",
+   "title": "Automatic transmission fluid",
+   "data": {
+    "system": "automatic_transmission",
+    "fluid_spec": "DEXRON ULV Automatic Transmission Fluid"
+   }
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 43,
+   "kind": "part_note",
+   "title": "Engine air filter",
+   "data": {
+    "part_name": "Engine air cleaner/filter",
+    "oem_numbers": [
+     "GM 84121219",
+     "ACDelco A3244C"
+    ],
+    "notes": "Use only the specified filters."
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 43,
+   "kind": "part_note",
+   "title": "Oil filter",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "GM 12727115",
+     "ACDelco PF66"
+    ],
+    "notes": "Use only the specified filters."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 43,
+   "kind": "part_note",
+   "title": "Fuel filter",
+   "data": {
+    "part_name": "Fuel filter",
+    "oem_numbers": [
+     "GM 13539108"
+    ],
+    "notes": "Use only the specified filters. No ACDelco number listed."
+   },
+   "systems": [
+    "maintenance",
+    "engine.fuel"
+   ]
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 47,
+   "kind": "spec",
+   "title": "Engine VIN code",
+   "data": {
+    "name": "Engine VIN code",
+    "quantity": "other",
+    "text": "8 (8th VIN character); 3.0L inline 6-cylinder turbo diesel (LZ0), pickup"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": [
+    "3.0D"
+   ],
+   "page": 15,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "Ultra Low Sulfur Diesel (under 15 ppm sulfur); up to B20 biodiesel",
+    "notes": "Never more than 20% biodiesel. Below 0 °C (32 °F) avoid blends above B5; No. 1-D or a 1-D/2-D blend is recommended in cold weather (pp. 16-17)."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  }
+ ]
+}

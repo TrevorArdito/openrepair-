@@ -1,0 +1,614 @@
+{
+ "vehicle": {
+  "make": "Ram",
+  "model": "1500",
+  "year_from": 2024,
+  "year_to": 2024
+ },
+ "source": {
+  "title": "2024 Ram 1500 Owner's Manual (pub. 5538888, digital edition E1, Aug 2023)",
+  "url": "https://vehicleinfo.mopar.com/assets/publications/en-us/Ram/2024/1500_DT/5538888_24_DT_OM_EN_USC_DIGITAL_E1.pdf"
+ },
+ "engines": {
+  "3.6": {
+   "family": "chrysler-3-6-pentastar",
+   "label": "3.6L V6 Pentastar"
+  },
+  "3.6E": {
+   "family": "chrysler-3-6-pentastar-etorque",
+   "label": "3.6L V6 Pentastar eTorque"
+  },
+  "5.7": {
+   "family": "chrysler-5-7-hemi",
+   "label": "5.7L HEMI V8"
+  },
+  "5.7E": {
+   "family": "chrysler-5-7-hemi-etorque",
+   "label": "5.7L HEMI V8 eTorque"
+  },
+  "6.2SC": {
+   "family": "chrysler-6-2-hellcat",
+   "label": "6.2L Supercharged HEMI V8 (TRX)"
+  }
+ },
+ "specs": [
+  {
+   "engine": null,
+   "page": 393,
+   "kind": "torque_spec",
+   "title": "Wheel lug nut torque",
+   "systems": [
+    "wheels_tires"
+   ],
+   "data": {
+    "component": "Wheel lug nuts/bolts",
+    "stages": [
+     {
+      "type": "torque",
+      "value_nm": 176
+     }
+    ],
+    "thread_condition": "dry",
+    "fastener": "M14 x 1.50, cone type; 22 mm socket",
+    "notes": "Printed: 130 ft-lb (176 N·m). Use a calibrated torque wrench and a six-sided deep-wall socket. Tighten in a star pattern until each nut has been tightened twice. Don't oil the studs; clean off dirt/oil and corrosion on the wheel mounting surface first. Recheck torque after 25 miles (40 km). Don't fully tighten until the truck is lowered off the jack (p. 394)."
+   }
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E"
+   ],
+   "page": 394,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "87 octane (R+M)/2 regular unleaded",
+    "notes": "Premium gives no benefit in this engine. Max 15% ethanol (no E-85). Same in the Engine Fluids and Lubricants table, p. 397."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "5.7",
+    "5.7E"
+   ],
+   "page": 394,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "87–89 octane (R+M)/2; 89 recommended, 87 acceptable",
+    "notes": "89 recommended for best performance and economy. Max 15% ethanol (no E-85). Same in the Engine Fluids and Lubricants table, p. 397."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 394,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "91 octane (R+M)/2 or higher premium unleaded — required",
+    "notes": "Octane-boosting additives are not permitted in the 6.2L Supercharged engine. Max 15% ethanol (no E-85). Same in the Engine Fluids and Lubricants table, p. 397."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (regular cab short bed / Quad & Crew Cab, standard)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 87,
+    "amount_unit": "L",
+    "printed": "23 gal / 87 L",
+    "notes": "Owner's manual table row: '1500 Regular Cab Shortbed/Crew Quad Cab Models'. Approximate. The manual prints the same label on the 26 gal row; the 2024 Ram 1500 Owner Handbook (pub. 5816357, p. 62) marks that row '(Optional)'."
+   }
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (regular cab short bed / Quad & Crew Cab, optional)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 98,
+    "amount_unit": "L",
+    "printed": "26 gal / 98 L",
+    "notes": "Owner's manual table row: '1500 Regular Cab Shortbed/Crew Quad Cab Models'. Approximate. Marked '(Optional)' in the 2024 Ram 1500 Owner Handbook (pub. 5816357, p. 62)."
+   }
+  },
+  {
+   "engine": null,
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (regular cab long bed / Quad & Crew Cab optional / TRX)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 124.9,
+    "amount_unit": "L",
+    "printed": "33 gal / 124.9 L",
+    "notes": "Owner's manual table row: '1500 Regular Cab Longbed/Crew Quad Cab Models (Optional)/TRX Models'. Approximate."
+   }
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 4.7,
+    "amount_unit": "L",
+    "printed": "5 qt / 4.7 L",
+    "fluid_spec": "Mopar SAE 0W-20 Full Synthetic Engine Oil meeting Material Standard MS-6395 (or equivalent full-synthetic 0W-20 with the API Starburst mark)",
+    "condition": "With filter",
+    "notes": "Oil spec: p. 397. Engine is designed for synthetic oil — use only API-certified synthetic oil of the right grade; no oil additives (p. 345)."
+   }
+  },
+  {
+   "engine": [
+    "5.7",
+    "5.7E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 6.6,
+    "amount_unit": "L",
+    "printed": "7 qt / 6.6 L",
+    "fluid_spec": "Mopar SAE 0W-20 Full Synthetic Engine Oil meeting Material Standard MS-6395 (or equivalent full-synthetic 0W-20 with the API Starburst mark)",
+    "condition": "With filter",
+    "notes": "Oil spec: p. 397. Engine is designed for synthetic oil — use only API-certified synthetic oil of the right grade; no oil additives (p. 345)."
+   }
+  },
+  {
+   "engine": "6.2SC",
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 7.1,
+    "amount_unit": "L",
+    "printed": "7.5 qt / 7.1 L",
+    "fluid_spec": "Mopar API Certified SAE 0W-40 Full Synthetic Engine Oil meeting Material Standard MS-A0921 (or equivalent full-synthetic 0W-40 with the API Donut mark)",
+    "condition": "With filter, after draining the oil cooler",
+    "notes": "Oil spec: p. 397. Engine is designed for synthetic oil — use only API-certified synthetic oil of the right grade; no oil additives (p. 345). Oil drains from two places: the oil pan drain bolt and the oil cooler drain bolt; the TRX dune guard must come off to reach the filter and cooler drain (p. 346)."
+   }
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 12.1,
+    "amount_unit": "L",
+    "printed": "12.8 qt / 12.1 L",
+    "fluid_spec": "Mopar Antifreeze/Coolant 10 Year/150,000 Mile (240,000 km) Formula OAT (Organic Additive Technology); OAT coolant conforming to MS.90032",
+    "notes": "Coolant type: pp. 396–397. Don't mix with HOAT or 'globally compatible' coolant, plain water, alcohol-based or propylene-glycol coolant (p. 397)."
+   }
+  },
+  {
+   "engine": "3.6E",
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Motor generator unit coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 1.7,
+    "amount_unit": "L",
+    "printed": "1.8 qt / 1.7 L",
+    "fluid_spec": "Mopar Antifreeze/Coolant 10 Year/150,000 Mile (240,000 km) Formula OAT (Organic Additive Technology); OAT coolant conforming to MS.90032",
+    "notes": "Listed as '3.6L Motor Generator Unit' (eTorque); separate reservoir with its own pressure cap (p. 340). Coolant type: p. 396."
+   },
+   "systems": [
+    "hybrid_ev",
+    "engine.cooling"
+   ]
+  },
+  {
+   "engine": [
+    "5.7",
+    "5.7E"
+   ],
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 16.6,
+    "amount_unit": "L",
+    "printed": "17.5 qt / 16.6 L",
+    "fluid_spec": "Mopar Antifreeze/Coolant 10 Year/150,000 Mile (240,000 km) Formula OAT (Organic Additive Technology); OAT coolant conforming to MS.90032",
+    "notes": "Coolant type: pp. 396–397. Don't mix with HOAT or 'globally compatible' coolant, plain water, alcohol-based or propylene-glycol coolant (p. 397)."
+   }
+  },
+  {
+   "engine": "6.2SC",
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 17.7,
+    "amount_unit": "L",
+    "printed": "18.7 qt / 17.7 L",
+    "fluid_spec": "Mopar Antifreeze/Coolant 10 Year/150,000 Mile (240,000 km) Formula OAT (Organic Additive Technology); OAT coolant conforming to MS.90032",
+    "notes": "Coolant type: pp. 396–397. Don't mix with HOAT or 'globally compatible' coolant, plain water, alcohol-based or propylene-glycol coolant (p. 397)."
+   }
+  },
+  {
+   "engine": "6.2SC",
+   "page": 396,
+   "kind": "fluid_capacity",
+   "title": "Intercooler coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 3.55,
+    "amount_unit": "L",
+    "printed": "3.75 qt / 3.55 L",
+    "notes": "Separate intercooler circuit with its own reservoir cap (p. 343). The fluids table doesn't name a coolant type for this circuit."
+   }
+  },
+  {
+   "engine": null,
+   "page": 344,
+   "kind": "spec",
+   "title": "Oil level: dipstick low-to-high range",
+   "data": {
+    "name": "Oil level: dipstick low-to-high range",
+    "quantity": "volume",
+    "value": 1.0,
+    "printed": "1 qt (1.0 L)",
+    "notes": "Adding this amount when the oil reads at the low end of the dipstick range brings it to the high end."
+   },
+   "systems": [
+    "engine.lubrication",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Automatic transmission fluid",
+   "data": {
+    "system": "automatic_transmission",
+    "fluid_spec": "Mopar ZF 8 & 9 Speed ATF Automatic Transmission Fluid, or equivalent",
+    "notes": "The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (48-11 active on-demand 2-speed, with 4WD AUTO)",
+   "data": {
+    "system": "transfer_case",
+    "fluid_spec": "Mobil Fluid LT",
+    "notes": "The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (48-12 part-time 2-speed, without 4WD AUTO)",
+   "data": {
+    "system": "transfer_case",
+    "fluid_spec": "Shell Spirax S2 ATF A389",
+    "notes": "The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Front axle fluid",
+   "data": {
+    "system": "front_differential",
+    "fluid_spec": "Mopar GL-5 Synthetic Axle Lubricant SAE 75W-85",
+    "notes": "The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Rear axle fluid (3.21 / 3.55 ratio)",
+   "data": {
+    "system": "rear_differential",
+    "fluid_spec": "Mopar Synthetic Gear Lubricant SAE 75W-90 (MS-A0160)",
+    "notes": "Limited-slip rear axles also need 5 oz (148 ml) of Mopar Limited Slip Additive (MS-10111). The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Rear axle fluid (3.92 ratio)",
+   "data": {
+    "system": "rear_differential",
+    "fluid_spec": "Mopar Synthetic Gear Lubricant SAE 75W-140 (MS-8985)",
+    "notes": "Limited-slip rear axles also need 5 oz (148 ml) of Mopar Limited Slip Additive (MS-10111). The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Rear axle fluid (Max Tow 3.92 axle)",
+   "data": {
+    "system": "rear_differential",
+    "fluid_spec": "Dana SAE 80W90 Axle Lubricant",
+    "notes": "The owner's manual gives no capacity."
+   }
+  },
+  {
+   "engine": null,
+   "page": 398,
+   "kind": "fluid_capacity",
+   "title": "Brake fluid",
+   "data": {
+    "system": "brake",
+    "fluid_spec": "Mopar DOT 3 Brake Fluid, SAE J1709",
+    "condition": "Fill as required"
+   }
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 334,
+   "kind": "spec",
+   "title": "Maximum oil change interval",
+   "data": {
+    "name": "Maximum oil change interval",
+    "quantity": "other",
+    "text": "10,000 miles (16,000 km), 12 months or 350 hours of engine run time, whichever comes first",
+    "notes": "Change sooner when the oil change indicator says so; service within 500 miles (805 km) of the message."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 337,
+   "kind": "spec",
+   "title": "Maximum oil change interval",
+   "data": {
+    "name": "Maximum oil change interval",
+    "quantity": "other",
+    "text": "6,000 miles (10,000 km) or six months, whichever comes first",
+    "notes": "Severe duty (dusty/off-road, mostly idle or very low RPM): every 4,000 miles (6,500 km) or 350 hours of engine run time. Change at six months even if the indicator hasn't come on."
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 336,
+   "kind": "spec",
+   "title": "Spark plug replacement interval",
+   "data": {
+    "name": "Spark plug replacement interval",
+    "quantity": "other",
+    "text": "100,000 miles (160,000 km)",
+    "notes": "Mileage-based only; time intervals don't apply."
+   },
+   "systems": [
+    "maintenance",
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 339,
+   "kind": "spec",
+   "title": "Spark plug replacement interval",
+   "data": {
+    "name": "Spark plug replacement interval",
+    "quantity": "other",
+    "text": "Every 60,000 miles (100,000 km)",
+    "notes": "Shown at 60,000 and 120,000 miles. Mileage-based only; time intervals don't apply."
+   },
+   "systems": [
+    "maintenance",
+    "engine.ignition"
+   ]
+  },
+  {
+   "engine": null,
+   "page": 335,
+   "kind": "spec",
+   "title": "Cabin air filter replacement interval",
+   "data": {
+    "name": "Cabin air filter replacement interval",
+    "quantity": "other",
+    "text": "Every 12,000 miles (19,000 km)",
+    "notes": "Same in the TRX schedule (p. 339)."
+   },
+   "systems": [
+    "maintenance",
+    "hvac"
+   ]
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 335,
+   "kind": "spec",
+   "title": "Engine air filter replacement interval",
+   "data": {
+    "name": "Engine air filter replacement interval",
+    "quantity": "other",
+    "text": "Every 30,000 miles (48,000 km) / 3 years",
+    "notes": "Shown at 30,000, 60,000, 90,000, 120,000 and 150,000 miles. Inspect at every oil change in dusty or off-road use."
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 339,
+   "kind": "spec",
+   "title": "Engine air filter replacement interval",
+   "data": {
+    "name": "Engine air filter replacement interval",
+    "quantity": "other",
+    "text": "Every 30,000 miles (50,000 km)",
+    "notes": "Shown at 30,000, 60,000, 90,000, 120,000 and 150,000 miles (TRX schedule). Inspect more often in dusty or off-road use (p. 338)."
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 336,
+   "kind": "spec",
+   "title": "Transfer case fluid change interval",
+   "data": {
+    "name": "Transfer case fluid change interval",
+    "quantity": "other",
+    "text": "120,000 miles (192,000 km) / 12 years",
+    "notes": "Inspect at 60,000 miles; change then too for police, taxi, fleet or frequent trailer towing."
+   },
+   "systems": [
+    "maintenance",
+    "drivetrain.transfer_case"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 338,
+   "kind": "spec",
+   "title": "Transfer case fluid change interval",
+   "data": {
+    "name": "Transfer case fluid change interval",
+    "quantity": "other",
+    "text": "Every 30,000 miles (50,000 km)",
+    "notes": "TRX schedule: drain and refill shown at 30,000, 60,000, 90,000, 120,000 and 150,000 miles."
+   },
+   "systems": [
+    "maintenance",
+    "drivetrain.transfer_case"
+   ]
+  },
+  {
+   "engine": [
+    "3.6",
+    "3.6E",
+    "5.7",
+    "5.7E"
+   ],
+   "page": 336,
+   "kind": "spec",
+   "title": "Engine coolant replacement interval",
+   "data": {
+    "name": "Engine coolant replacement interval",
+    "quantity": "other",
+    "text": "10 years or 150,000 miles (240,000 km), whichever comes first"
+   },
+   "systems": [
+    "maintenance",
+    "engine.cooling"
+   ]
+  },
+  {
+   "engine": "6.2SC",
+   "page": 339,
+   "kind": "spec",
+   "title": "Engine coolant replacement interval",
+   "data": {
+    "name": "Engine coolant replacement interval",
+    "quantity": "other",
+    "text": "150,000 miles (240,000 km), or 120 months if not done by then"
+   },
+   "systems": [
+    "maintenance",
+    "engine.cooling"
+   ]
+  },
+  {
+   "engine": [
+    "3.6E",
+    "5.7E"
+   ],
+   "page": 335,
+   "kind": "spec",
+   "title": "Accessory drive belt replacement (Stop/Start)",
+   "data": {
+    "name": "Accessory drive belt replacement (Stop/Start)",
+    "quantity": "other",
+    "text": "150,000 miles (240,000 km) / 15 years",
+    "notes": "Schedule item for trucks with Stop/Start (included with eTorque): replace with an OEM-grade Mopar belt."
+   },
+   "systems": [
+    "maintenance",
+    "engine.mechanical",
+    "hybrid_ev"
+   ]
+  }
+ ]
+}

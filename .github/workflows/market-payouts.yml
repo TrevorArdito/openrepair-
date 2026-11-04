@@ -1,0 +1,45 @@
+# Releases held marketplace payments to sellers once their hold ends (buyer confirmed, or N days
+# after delivery). Runs daily for free. Does nothing until marketplace payments are set up.
+# Setup (owner): GitHub repo → Settings → Secrets and variables → Actions → New repository secret:
+#   PROD_DATABASE_URL (already used by Data refresh) and STRIPE_SECRET_KEY (sk_test_… or sk_live_…).
+# Note: GitHub only runs scheduled workflows from the default branch (main).
+name: Marketplace payouts
+
+on:
+  schedule:
+    - cron: "41 15 * * *" # every day 15:41 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DATABASE_URL: ${{ secrets.PROD_DATABASE_URL }}
+      STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+      ENABLE_MARKETPLACE: "true"
+      ENABLE_MARKET_PAYMENTS: "true"
+    steps:
+      - name: Check setup
+        id: cfg
+        run: |
+          if [ -z "$DATABASE_URL" ] || [ -z "$STRIPE_SECRET_KEY" ]; then
+            echo "PROD_DATABASE_URL or STRIPE_SECRET_KEY secret is not set — nothing to do."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          fi
+        working-directory: .
+      - uses: actions/checkout@v5
+        if: steps.cfg.outputs.skip != 'true'
+      - uses: actions/setup-python@v6
+        if: steps.cfg.outputs.skip != 'true'
+        with:
+          python-version: "3.12"
+      - if: steps.cfg.outputs.skip != 'true'
+        run: pip install .
+      - if: steps.cfg.outputs.skip != 'true'
+        run: python -m app.modules.marketplace.release

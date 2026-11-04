@@ -1,0 +1,130 @@
+{
+ "note": "Owner's priority list (2026-10-31): these get detailed guides/specs first. 1-20 = top vehicles, 21+ = heavy-duty work trucks. Dodge Ram (pre-2011) shares Ram 1500's priority.",
+ "models": [
+  {
+   "make": "Ford",
+   "model": "F-150",
+   "priority": 1
+  },
+  {
+   "make": "Chevrolet",
+   "model": "Silverado",
+   "priority": 2
+  },
+  {
+   "make": "Ram",
+   "model": "1500",
+   "priority": 3
+  },
+  {
+   "make": "Dodge",
+   "model": "Ram",
+   "priority": 3
+  },
+  {
+   "make": "GMC",
+   "model": "Sierra",
+   "priority": 4
+  },
+  {
+   "make": "Toyota",
+   "model": "Camry",
+   "priority": 5
+  },
+  {
+   "make": "Honda",
+   "model": "Accord",
+   "priority": 6
+  },
+  {
+   "make": "Honda",
+   "model": "Civic",
+   "priority": 7
+  },
+  {
+   "make": "Toyota",
+   "model": "Corolla",
+   "priority": 8
+  },
+  {
+   "make": "Toyota",
+   "model": "RAV4",
+   "priority": 9
+  },
+  {
+   "make": "Honda",
+   "model": "CR-V",
+   "priority": 10
+  },
+  {
+   "make": "Nissan",
+   "model": "Altima",
+   "priority": 11
+  },
+  {
+   "make": "Toyota",
+   "model": "Tacoma",
+   "priority": 12
+  },
+  {
+   "make": "Ford",
+   "model": "Explorer",
+   "priority": 13
+  },
+  {
+   "make": "Chevrolet",
+   "model": "Equinox",
+   "priority": 14
+  },
+  {
+   "make": "Jeep",
+   "model": "Grand Cherokee",
+   "priority": 15
+  },
+  {
+   "make": "Jeep",
+   "model": "Wrangler",
+   "priority": 16
+  },
+  {
+   "make": "Ford",
+   "model": "Escape",
+   "priority": 17
+  },
+  {
+   "make": "Nissan",
+   "model": "Rogue",
+   "priority": 18
+  },
+  {
+   "make": "Hyundai",
+   "model": "Elantra",
+   "priority": 19
+  },
+  {
+   "make": "Chevrolet",
+   "model": "Malibu",
+   "priority": 20
+  },
+  {
+   "make": "Ford",
+   "model": "F-250",
+   "priority": 21
+  },
+  {
+   "make": "Ford",
+   "model": "F-350",
+   "priority": 22
+  },
+  {
+   "make": "Ram",
+   "model": "2500",
+   "priority": 23
+  },
+  {
+   "make": "Ram",
+   "model": "3500",
+   "priority": 24
+  }
+ ]
+}

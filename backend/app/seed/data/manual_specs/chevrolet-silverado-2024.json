@@ -1,0 +1,628 @@
+{
+ "vehicle": {
+  "make": "Chevrolet",
+  "model": "Silverado",
+  "year_from": 2024,
+  "year_to": 2024
+ },
+ "source": {
+  "title": "2024 Chevrolet Silverado 1500 Owner Manual (85516379 D, 2025 printing)",
+  "url": "https://contentdelivery.ext.gm.com/content/dam/cope/en_us/public/pdf_assets/active/owners_manuals_browse/2024/24_CHEV_Silverado_1500_OM_en_US_U_85516379D_2025JUN26_4P.pdf"
+ },
+ "engines": {
+  "2.7T": {
+   "family": "gm-2-7-turbo",
+   "label": "2.7L Turbo I4 (L3B)"
+  },
+  "5.3": {
+   "family": "gm-5-3-v8",
+   "label": "5.3L V8 (L84)"
+  },
+  "6.2": {
+   "family": "gm-6-2-v8",
+   "label": "6.2L V8 (L87)"
+  },
+  "3.0D": {
+   "family": "gm-3-0-duramax",
+   "label": "3.0L Duramax Turbo Diesel (LZ0)"
+  }
+ },
+ "specs": [
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 443,
+   "kind": "torque_spec",
+   "title": "Wheel nut torque",
+   "systems": [
+    "wheels_tires"
+   ],
+   "data": {
+    "component": "Wheel nuts",
+    "stages": [
+     {
+      "type": "torque",
+      "value_nm": 190
+     }
+    ],
+    "thread_condition": "dry",
+    "notes": "Printed: 190 N·m (140 lb ft). Remove rust/dirt from the wheel, studs and mounting surfaces; never put oil or grease on the studs, nuts, conical seats or wheel mounting surface (pp. 397, 408)."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 395,
+   "kind": "torque_spec",
+   "title": "Trailer tire pressure sensor nut torque (TTPMS)",
+   "systems": [
+    "wheels_tires"
+   ],
+   "data": {
+    "component": "Trailer TPMS sensor valve-stem nut",
+    "stages": [
+     {
+      "type": "torque",
+      "value_nm": 8
+     }
+    ],
+    "thread_condition": "unspecified",
+    "notes": "For the optional trailer tire pressure sensors fitted to trailer wheels. Printed: 8 N·m (6 lb ft)."
+   }
+  },
+  {
+   "engine": "2.7T",
+   "page": 443,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.65,
+    "value_max": 0.75,
+    "printed": "0.65–0.75 mm (0.026–0.030 in)",
+    "notes": "Gap is preset at the factory; GM advises against re-gapping (can damage the plug)."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "2.7T",
+   "page": 443,
+   "kind": "spec",
+   "title": "Engine VIN code",
+   "data": {
+    "name": "Engine VIN code",
+    "quantity": "other",
+    "text": "K (8th VIN character)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "5.3",
+   "page": 443,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.95,
+    "value_max": 1.1,
+    "printed": "0.95–1.10 mm (0.037–0.043 in)",
+    "notes": "Gap is preset at the factory; GM advises against re-gapping (can damage the plug)."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "5.3",
+   "page": 443,
+   "kind": "spec",
+   "title": "Engine VIN code",
+   "data": {
+    "name": "Engine VIN code",
+    "quantity": "other",
+    "text": "D (8th VIN character)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": "6.2",
+   "page": 443,
+   "kind": "spec",
+   "title": "Spark plug gap",
+   "data": {
+    "name": "Spark plug gap",
+    "quantity": "length",
+    "value": 0.95,
+    "value_max": 1.1,
+    "printed": "0.95–1.10 mm (0.037–0.043 in)",
+    "notes": "Gap is preset at the factory; GM advises against re-gapping (can damage the plug)."
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "6.2",
+   "page": 443,
+   "kind": "spec",
+   "title": "Engine VIN code",
+   "data": {
+    "name": "Engine VIN code",
+    "quantity": "other",
+    "text": "L (8th VIN character)"
+   },
+   "systems": [
+    "engine.mechanical"
+   ]
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3"
+   ],
+   "page": 304,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "Regular unleaded, 87 octane (R+M)/2 or higher (ASTM D4814)",
+    "notes": "Don't use below 87. Max 15% ethanol unless the fuel door has the yellow FlexFuel sticker (E85-capable 5.3L only; E85 must meet ASTM D5798, p. 305)."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": "6.2",
+   "page": 304,
+   "kind": "spec",
+   "title": "Required fuel",
+   "data": {
+    "name": "Required fuel",
+    "quantity": "other",
+    "text": "Premium unleaded, 91 octane (R+M)/2 or higher recommended (ASTM D4814)",
+    "notes": "87 octane may be used but reduces performance and driveability. No E85/FlexFuel; max 15% ethanol."
+   },
+   "systems": [
+    "fuel",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 438,
+   "kind": "part_note",
+   "title": "Engine air filter (with high-capacity air cleaner)",
+   "data": {
+    "part_name": "Engine air cleaner/filter",
+    "oem_numbers": [
+     "GM 84121219",
+     "ACDelco A3244C"
+    ]
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 438,
+   "kind": "part_note",
+   "title": "Engine air filter (without high-capacity air cleaner)",
+   "data": {
+    "part_name": "Engine air cleaner/filter",
+    "oem_numbers": [
+     "GM 84121217",
+     "ACDelco A3246C"
+    ]
+   },
+   "systems": [
+    "maintenance",
+    "engine.air_intake"
+   ]
+  },
+  {
+   "engine": "2.7T",
+   "page": 438,
+   "kind": "part_note",
+   "title": "Oil filter",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "GM 12727115",
+     "ACDelco PF66"
+    ]
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": [
+    "5.3",
+    "6.2"
+   ],
+   "page": 438,
+   "kind": "part_note",
+   "title": "Oil filter",
+   "data": {
+    "part_name": "Engine oil filter",
+    "oem_numbers": [
+     "GM 12707246",
+     "ACDelco PF63"
+    ]
+   },
+   "systems": [
+    "maintenance",
+    "engine.lubrication"
+   ]
+  },
+  {
+   "engine": "2.7T",
+   "page": 438,
+   "kind": "part_note",
+   "title": "Spark plugs",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "GM 12688094",
+     "ACDelco 41-106-IP"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "5.3",
+    "6.2"
+   ],
+   "page": 438,
+   "kind": "part_note",
+   "title": "Spark plugs",
+   "data": {
+    "part_name": "Spark plug",
+    "oem_numbers": [
+     "GM 12622441",
+     "ACDelco 41-114"
+    ]
+   },
+   "systems": [
+    "engine.ignition",
+    "maintenance"
+   ]
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 438,
+   "kind": "part_note",
+   "title": "Cabin air filter",
+   "data": {
+    "part_name": "Passenger compartment air filter",
+    "oem_numbers": [
+     "GM 13508023",
+     "ACDelco CF185"
+    ]
+   },
+   "systems": [
+    "maintenance",
+    "hvac"
+   ]
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 439,
+   "kind": "part_note",
+   "title": "Wiper blades",
+   "data": {
+    "part_name": "Windshield wiper blade",
+    "oem_numbers": [
+     "GM 84578275"
+    ],
+    "notes": "Same part both sides: driver and passenger 55 cm (21.7 in)."
+   },
+   "systems": [
+    "maintenance",
+    "body"
+   ]
+  },
+  {
+   "engine": "2.7T",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 5.7,
+    "amount_unit": "L",
+    "printed": "5.7 L (6.0 qt)",
+    "fluid_spec": "SAE 5W-30 full synthetic meeting GM dexos1 (ACDelco dexos1 full synthetic recommended)",
+    "notes": "Grade p. 351. Extreme cold (below −29 °C / −20 °F): SAE 0W-30 may be used. No oil additives or flushes (p. 352)."
+   }
+  },
+  {
+   "engine": "5.3",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 7.6,
+    "amount_unit": "L",
+    "printed": "7.6 L (8.0 qt)",
+    "fluid_spec": "SAE 0W-20 full synthetic meeting GM dexos1 (ACDelco dexos1 full synthetic recommended)",
+    "notes": "Grade p. 351. No oil additives or flushes (p. 352)."
+   }
+  },
+  {
+   "engine": "6.2",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine oil (with filter)",
+   "data": {
+    "system": "engine_oil",
+    "amount": 7.6,
+    "amount_unit": "L",
+    "printed": "7.6 L (8.0 qt)",
+    "fluid_spec": "Full synthetic meeting GM dexos1 (ACDelco dexos1 full synthetic recommended); viscosity grade as shown on the oil fill cap",
+    "notes": "The manual gives no viscosity grade for the 6.2L — it says to use the grade on the engine oil fill cap (p. 351)."
+   }
+  },
+  {
+   "engine": "2.7T",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 11.8,
+    "amount_unit": "L",
+    "printed": "11.8 L (12.4 qt)",
+    "fluid_spec": "DEX-COOL, 50/50 with clean drinkable water (GM Standard GMW3420)",
+    "notes": "Capacity is for the entire cooling system. Mixture protects to −37 °C (−34 °F) (p. 356)."
+   }
+  },
+  {
+   "engine": "5.3",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 13.1,
+    "amount_unit": "L",
+    "printed": "13.1 L (13.8 qt)",
+    "fluid_spec": "DEX-COOL, 50/50 with clean drinkable water (GM Standard GMW3420)",
+    "notes": "Capacity is for the entire cooling system. Mixture protects to −37 °C (−34 °F) (p. 356)."
+   }
+  },
+  {
+   "engine": "6.2",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Engine coolant",
+   "data": {
+    "system": "coolant",
+    "amount": 12.6,
+    "amount_unit": "L",
+    "printed": "12.6 L (13.3 qt)",
+    "fluid_spec": "DEX-COOL, 50/50 with clean drinkable water (GM Standard GMW3420)",
+    "notes": "Capacity is for the entire cooling system. Mixture protects to −37 °C (−34 °F) (p. 356)."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (standard and short box)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 90.8,
+    "amount_unit": "L",
+    "printed": "90.8 L (24.0 gal)"
+   }
+  },
+  {
+   "engine": "3.0D",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (standard and short box, 4WD)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 90.8,
+    "amount_unit": "L",
+    "printed": "90.8 L (24.0 gal)",
+    "notes": "Manual row: 'Standard and Short Box (except 2WD Diesel)'."
+   }
+  },
+  {
+   "engine": "3.0D",
+   "page": 442,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (standard and short box, 2WD)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 83.3,
+    "amount_unit": "L",
+    "printed": "83.3 L (22.0 gal)"
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 443,
+   "kind": "fluid_capacity",
+   "title": "Fuel tank (long box)",
+   "data": {
+    "system": "fuel_tank",
+    "amount": 107.1,
+    "amount_unit": "L",
+    "printed": "107.1 L (28.3 gal)"
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 436,
+   "kind": "fluid_capacity",
+   "title": "Automatic transmission fluid (8-speed)",
+   "data": {
+    "system": "automatic_transmission",
+    "fluid_spec": "DEXRON-HP Automatic Transmission Fluid",
+    "notes": "The manual doesn't say which engines get which transmission — confirm the transmission on the truck. No dipstick; GM calls the check/fill procedure a dealer job (p. 353)."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 436,
+   "kind": "fluid_capacity",
+   "title": "Automatic transmission fluid (10-speed)",
+   "data": {
+    "system": "automatic_transmission",
+    "fluid_spec": "DEXRON ULV Automatic Transmission Fluid",
+    "notes": "The manual doesn't say which engines get which transmission — confirm the transmission on the truck. No dipstick; GM calls the check/fill procedure a dealer job (p. 353)."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2"
+   ],
+   "page": 443,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (4WD)",
+   "data": {
+    "system": "transfer_case",
+    "amount": 1.5,
+    "amount_unit": "L",
+    "printed": "1.5 L (1.6 qt)",
+    "fluid_spec": "DEXRON-VI Automatic Transmission Fluid",
+    "notes": "Fluid type p. 437."
+   }
+  },
+  {
+   "engine": "3.0D",
+   "page": 437,
+   "kind": "fluid_capacity",
+   "title": "Transfer case fluid (4WD)",
+   "data": {
+    "system": "transfer_case",
+    "fluid_spec": "DEXRON-VI Automatic Transmission Fluid",
+    "notes": "The diesel supplement says fluids it doesn't list are as given in the owner manual (supplement p. 42). The diesel supplement lists no transfer case capacity."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 437,
+   "kind": "fluid_capacity",
+   "title": "Brake fluid",
+   "data": {
+    "system": "brake",
+    "fluid_spec": "DOT 4 hydraulic brake fluid (GM approved)",
+    "condition": "Fill as required",
+    "notes": "GM-approved DOT 4 only (p. 363). Diesel: The diesel supplement says fluids it doesn't list are as given in the owner manual (supplement p. 42)."
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 437,
+   "kind": "fluid_capacity",
+   "title": "Washer fluid",
+   "data": {
+    "system": "washer",
+    "fluid_spec": "Automotive windshield washer fluid meeting regional freeze-protection requirements",
+    "condition": "Fill as required"
+   }
+  },
+  {
+   "engine": [
+    "2.7T",
+    "5.3",
+    "6.2",
+    "3.0D"
+   ],
+   "page": 436,
+   "kind": "spec",
+   "title": "Chassis lubricant",
+   "data": {
+    "name": "Chassis lubricant",
+    "quantity": "other",
+    "text": "NLGI #2, Category LB or GC-LB"
+   },
+   "systems": [
+    "suspension",
+    "steering",
+    "maintenance"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+"""Standard system/category tree (like the component tree in pro repair software).
+
+slug -> (parent slug, safety critical?). Display names live in the frontend's
+translation files under "systems.<slug>"."""
+
+SYSTEM_TREE: list[tuple[str, str | None, bool]] = [
+    ("maintenance", None, False),
+    ("engine", None, False),
+    ("engine.mechanical", "engine", False),
+    ("engine.timing", "engine", False),
+    ("engine.lubrication", "engine", False),
+    ("engine.cooling", "engine", False),
+    ("engine.ignition", "engine", False),
+    ("engine.fuel", "engine", True),
+    ("engine.air_intake", "engine", False),
+    ("engine.emissions", "engine", False),
+    ("engine.computer", "engine", False),
+    ("engine.turbo", "engine", False),
+    ("fuel", None, True),
+    ("fuel.evap", "fuel", False),
+    ("exhaust", None, False),
+    ("exhaust.catalytic_converter", "exhaust", False),
+    ("transmission", None, False),
+    ("transmission.automatic", "transmission", False),
+    ("transmission.manual", "transmission", False),
+    ("drivetrain", None, False),
+    ("drivetrain.axles", "drivetrain", True),
+    ("drivetrain.differential", "drivetrain", False),
+    ("drivetrain.transfer_case", "drivetrain", False),
+    ("brakes", None, True),
+    ("brakes.disc", "brakes", True),
+    ("brakes.drum", "brakes", True),
+    ("brakes.hydraulic", "brakes", True),
+    ("brakes.abs", "brakes", True),
+    ("brakes.parking", "brakes", True),
+    ("steering", None, True),
+    ("suspension", None, True),
+    ("wheels_tires", None, True),
+    ("electrical", None, False),
+    ("electrical.battery", "electrical", False),
+    ("electrical.charging", "electrical", False),
+    ("electrical.starting", "electrical", False),
+    ("electrical.lighting", "electrical", False),
+    ("electrical.network", "electrical", False),
+    ("electrical.body_control", "electrical", False),
+    ("hvac", None, False),
+    ("restraints", None, True),  # airbags / SRS
+    ("body", None, False),
+    ("hybrid_ev", None, True),  # high voltage
+]
