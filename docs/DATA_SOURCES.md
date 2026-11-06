@@ -9,9 +9,9 @@
 | Recalls | [api.nhtsa.gov recalls](https://www.nhtsa.gov/nhtsa-datasets-and-apis#recalls) | Public domain | Live on demand, cached 7 days; `refresh` script |
 | Owner complaints | [api.nhtsa.gov complaints](https://www.nhtsa.gov/nhtsa-datasets-and-apis#complaints) | Public domain | Live on demand, cached 7 days; `refresh` script |
 | TSB index (manufacturer communications) | [NHTSA bulk files](https://www.nhtsa.gov/nhtsa-datasets-and-apis#manufacturer-communications), field list in [TSBS.txt](https://static.nhtsa.gov/odi/ffdd/tsbs/TSBS.txt) | Public domain index | `python -m app.importers.nhtsa tsbs` |
-| Generic OBD-II code write-ups | Written by ChrystalClear contributors (`backend/app/seed/data/dtcs.json`) | CC BY-SA 4.0 | Seed script |
+| Generic OBD-II code write-ups | Written by ChrystalClear contributors (`backend/app/seed/data/dtcs.json`) | ChrystalClear proprietary (content/LICENSE) | Seed script |
 | Owner's-manual specs (capacities, fluids, torque, engine specs, part numbers) | Manufacturers' own free owner's manuals (official sites only), transcribed fact by fact with page numbers | Facts (not copyrightable); our entries CC BY-SA 4.0 | `backend/app/seed/data/manual_specs/*.json` via the seed |
-| Community guides/specs | Our users, in their own words | CC BY-SA 4.0 | Website/app |
+| Community guides/specs | Our users, in their own words | ChrystalClear proprietary (content/LICENSE); before 2026-11-06: CC BY-SA 4.0 | Website/app |
 
 We store NHTSA's **index and summary** of each bulletin, not the manufacturer's full document.
 

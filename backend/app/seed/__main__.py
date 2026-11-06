@@ -65,7 +65,7 @@ def seed_vehicles(db: Session) -> int:
 
 
 def seed_dtcs(db: Session) -> int:
-    """Insert or update generic codes from dtcs.json (our own writing, CC BY-SA 4.0)."""
+    """Insert or update generic codes from dtcs.json (our own writing; proprietary, see content/LICENSE)."""
     count = 0
     for row in load("dtcs.json"):
         dtc = db.scalar(select(Dtc).where(Dtc.code == row["code"], Dtc.make_id.is_(None)))

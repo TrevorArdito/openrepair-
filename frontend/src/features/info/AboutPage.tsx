@@ -42,7 +42,7 @@ export default function AboutPage() {
       </Card>
       <Card>
         <h2 className="mb-1 text-xl font-bold">{t("legal.title")}</h2>
-        {["terms", "seller-agreement", "prohibited-items"].map((n) => (
+        {["terms", "seller-agreement", "prohibited-items", "content-license"].map((n) => (
           <Link key={n} to={`/legal/${n}`} className="flex min-h-12 items-center font-bold underline">{t(`legal.${n}`)}</Link>
         ))}
       </Card>

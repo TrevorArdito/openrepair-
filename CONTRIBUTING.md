@@ -26,9 +26,11 @@ suspension, airbags, fuel, high-voltage) before submitting. Mark anything you're
 
 ## Licenses and the Contributor License Agreement
 - **Code** is licensed under **AGPL-3.0**.
-- **Community content** (guides, specs, notes, photos) is licensed under **CC BY-SA 4.0**.
+- **Repair content** (guides, specs, notes, photos) is **proprietary, all rights reserved**
+  (see [content/LICENSE](content/LICENSE)): free for everyone to read in the app, but not openly
+  licensed. Content contributed before 2026-11-06 stays CC BY-SA 4.0.
 - Everyone signs our **[Contributor License Agreement](CLA.md)** once. You keep ownership of
-  your work, and the project promises your contributions stay openly available forever.
+  your work; the project promises repair content stays free to read.
   It also lets the project offer optional paid business tools later, while all repair
   information stays free.
 

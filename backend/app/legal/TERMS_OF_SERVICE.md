@@ -49,9 +49,10 @@ provide and verify identity, bank account, tax and contact information, and re-c
 before they can keep selling.
 
 ## 8. Content you post
-You keep ownership of what you post. Community repair content is shared under CC BY-SA 4.0 and the
-Contributor License Agreement. Listings, photos and messages may be removed if they break these
-terms.
+You keep ownership of what you post and license it to us under the Contributor License Agreement.
+ChrystalClear's repair content is free to read but all rights reserved — no copying, scraping or
+republishing ([Content License](CONTENT_LICENSE.md)). The code is open source (AGPL-3.0).
+Listings, photos and messages may be removed if they break these terms.
 
 ## 9. Limits of liability
 To the extent the law allows, we aren't liable for items, vehicles, repairs, or dealings between

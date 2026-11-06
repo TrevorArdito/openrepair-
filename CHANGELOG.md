@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- **Content Research Program** adopted (`CONTENT_PROGRAM.md`): `research/` knowledge base
+  (format review, owner lookups, blocked sources, review log) and `content/` for team-written pages.
+### Changed
+- **Repair content is now proprietary** — free to read, all rights reserved (`content/LICENSE`,
+  Content License page, README, CONTRIBUTING, CLA §5, Terms). The code stays AGPL-3.0; content
+  published before 2026-11-06 stays CC BY-SA 4.0 for those who received it.
 - **Every vehicle since 1984**: importer for EPA fuel-economy data — every car, SUV, minivan and
   light pickup with each engine (~21,000 year/model/engine combinations, 145 makes), matched to
   NHTSA's make/model names; refreshed weekly. Turbo/supercharged engines are kept separate.

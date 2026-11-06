@@ -58,7 +58,7 @@ def _article(headline: str, description: str, url: str) -> dict:
         "description": description,
         "url": url,
         "publisher": {"@type": "Organization", "name": SITE},
-        "license": "https://creativecommons.org/licenses/by-sa/4.0/",
+        "copyrightHolder": {"@type": "Organization", "name": SITE},  # content: all rights reserved
     }
 
 

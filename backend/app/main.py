@@ -21,6 +21,7 @@ LEGAL_DOCS = {
     "terms": "TERMS_OF_SERVICE.md",
     "seller-agreement": "SELLER_AGREEMENT.md",
     "prohibited-items": "PROHIBITED_ITEMS.md",
+    "content-license": "CONTENT_LICENSE.md",
 }
 
 

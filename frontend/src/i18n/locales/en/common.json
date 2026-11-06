@@ -184,7 +184,7 @@
     "privacyTitle": "Privacy",
     "privacy": "We collect the minimum: your email, display name and settings. No trackers. We never sell your data. You can download or delete your data at any time from the Account page.",
     "licenseTitle": "Licenses",
-    "license": "Code: AGPL-3.0. Community content: CC BY-SA 4.0. Vehicle, recall and complaint data: NHTSA (public domain).",
+    "license": "Code: AGPL-3.0 (open source). Repair content (guides, specs, codes, diagrams): free to read, all rights reserved. Vehicle, recall and complaint data: NHTSA and EPA (public domain).",
     "source": "View the source code",
     "notAffiliated": "Not affiliated with NHTSA, ALLDATA, Mitchell 1, Identifix or any vehicle manufacturer."
   },
@@ -661,7 +661,7 @@
     "saving": "Saving…",
     "cancel": "Cancel",
     "probationNote": "New accounts: your first few contributions are reviewed by a moderator before they go public.",
-    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it under CC BY-SA 4.0.",
+    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it to ChrystalClear under the Contributor License Agreement. Repair content is free to read but all rights reserved.",
     "conflict": "Someone else saved a newer version while you were editing. Copy your changes, reload, and try again.",
     "loginRequired": "Log in to contribute."
   },
@@ -1062,7 +1062,8 @@
     "terms": "Terms of Service",
     "seller-agreement": "Seller Agreement",
     "prohibited-items": "Prohibited items",
-    "draftNotice": "DRAFT — this document is waiting for review by a lawyer and may change."
+    "draftNotice": "DRAFT — this document is waiting for review by a lawyer and may change.",
+    "content-license": "Content license"
   },
   "pay": {
     "title": "Get paid in the app",

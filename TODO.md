@@ -3,7 +3,7 @@
 ## Waiting on the owner
 - [x] Approve the plan in `docs/PLAN.md` (approved 2026-10-31)
 - [x] Business model: Option B — free core forever, optional paid business extras later
-- [x] Community content license: CC BY-SA 4.0
+- [x] Content license: proprietary, all rights reserved, free to read (2026-11-06; was CC BY-SA 4.0)
 - [x] Name: ChrystalClear
 - [ ] Create a free project contact email (Gmail/Proton) and send it over
 - [ ] Optional, free: set up GitHub Sponsors (see docs/FUNDING.md)
@@ -39,6 +39,15 @@
 - [ ] Medium/heavy trucks (class 4–8) + their diesel engines
 - [ ] Heavy-equipment engines + equipment table (see docs/VEHICLE_CATALOG.md)
 - [ ] Bulk-prefetch NHTSA model lists for all makes/years (so the picker never waits on NHTSA)
+
+## Content Research Program (CONTENT_PROGRAM.md)
+- [x] Step 1: repo/format review (`research/format-review.md`)
+- [ ] Format upgrades: `dtc_guide` kind, deeper procedures, per-value sources + UNVERIFIED,
+      reviewer sign-off record, disclaimer first, report-a-mistake by section + owner alert, `content/` loader
+- [ ] Step 2: research notes — top US vehicles of the last 20 years, their engines, common DTCs/repairs
+- [ ] Step 3: `research/competitor-teardown.md`
+- [ ] Steps 4–6: first 5 DTC pages → stop for owner review; then the milestone (20 DTCs × top 10 vehicles)
+- [ ] **Owner:** decide whether `content/` and `research/` move to a private repo (this repo is public)
 
 ## Owner's-manual specs (owner priority — see docs/OWNER_MANUAL_SPECS.md for the tracker)
 - [x] Pipeline: transcribed manual files → per-engine entries with page refs; Quick Specs; spec tables
