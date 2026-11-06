@@ -51,6 +51,12 @@ class Settings(BaseSettings):
     enable_hardware: bool = False
     # Parts marketplace (new + used parts with fitment). See docs/COMMERCE_DESIGN.md.
     enable_marketplace: bool = False
+    # Sample listings for demos, clearly labeled DEMO (app/modules/marketplace/demo.py).
+    # Turning this off removes them on the next start.
+    market_demo_data: bool = False
+    market_demo_city: str = "River Valley"
+    market_demo_state: str = "CA"
+    market_demo_zip: str = ""
     # Marketplace payments (Stripe Connect). See docs/PAYMENTS.md. Keys are secrets: env only.
     enable_market_payments: bool = False
     stripe_secret_key: str = ""

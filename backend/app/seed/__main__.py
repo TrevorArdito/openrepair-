@@ -146,6 +146,12 @@ def run(db: Session, guides: bool = True) -> dict[str, int]:
         from app.modules.marketplace import zips
 
         result["zip_points_added"] = zips.load(db)
+        from app.modules.marketplace import demo
+
+        if get_settings().market_demo_data:
+            result["demo_listings_added"] = demo.load(db)
+        elif demo.remove(db):
+            result["demo_listings_removed"] = True
     db.commit()
     return result
 

@@ -17,6 +17,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- Demo stock for showing yards (`MARKET_DEMO_DATA`): a sample recycler with whole vehicles first,
+  then transmissions and parts, each with donor VIN and mileage; every title starts "DEMO —".
 - Marketplace switched on in `render.yaml` (payments stay off). Pages of a switched-off module
   show a friendly "Coming soon" instead of "Not found".
 - **Repair content is now proprietary** — free to read, all rights reserved (`content/LICENSE`,
