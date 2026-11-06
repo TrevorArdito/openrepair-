@@ -189,10 +189,17 @@ export default function MarketPage() {
           <Input id="mq" type="search" value={q} placeholder={t(kind === "vehicle" ? "market.searchVehiclesPlaceholder" : "market.searchPlaceholder")} onChange={(e) => setQ(e.target.value)} />
           <Button type="submit">{t("market.searchButton")}</Button>
         </form>
-        <Button type="button" variant="secondary" className="w-full" aria-expanded={showFilters} aria-controls="market-filters"
-          onClick={() => setShowFilters(!showFilters)}>
-          {showFilters ? "▲" : "▼"} {activeFilters ? t("market.filtersActive", { count: activeFilters }) : t("market.filters")}
-        </Button>
+        <div className="flex gap-2">
+          <Button type="button" variant="secondary" className="flex-1" aria-expanded={showFilters} aria-controls="market-filters"
+            onClick={() => setShowFilters(!showFilters)}>
+            {showFilters ? "▲" : "▼"} {activeFilters ? t("market.filtersActive", { count: activeFilters }) : t("market.filters")}
+          </Button>
+          {activeFilters > 0 && !showFilters && (
+            <Button type="button" variant="secondary" onClick={() => setParams({ kind }, { replace: true })}>
+              {t("market.clearFilters")}
+            </Button>
+          )}
+        </div>
         {showFilters && <div id="market-filters" className="space-y-3">
         {kind === "part" ? (
           <>
