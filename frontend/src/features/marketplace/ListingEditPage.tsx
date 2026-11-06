@@ -42,11 +42,13 @@ function FeeBreakdown({ cfg, priceCents, shippingCents, ships }: { cfg: Payments
 type VForm = {
   vin: string; year: string; make_id: number | null; model_id: number | null; odometer: string;
   odometer_unit: "mi" | "km"; title_status: string; has_lien: boolean; running: string;
+  stock_number: string; arrived_on: string; has_keys: "" | "yes" | "no"; damage: string; lien_sale_after: string;
   trim: string; drive: string; transmission: string; exterior_color: string;
 };
 const EMPTY_V: VForm = {
   vin: "", year: "", make_id: null, model_id: null, odometer: "", odometer_unit: "mi", title_status: "clean",
   has_lien: false, running: "runs_drives", trim: "", drive: "", transmission: "", exterior_color: "",
+  stock_number: "", arrived_on: "", has_keys: "", damage: "", lien_sale_after: "",
 };
 
 function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partial<VForm>) => void; makes: Make[]; onDecoded: (label: string) => void }) {
@@ -144,6 +146,28 @@ function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partia
         {field("vdr", "drive", t("market.drive"))}
         {field("vtx", "transmission", t("market.transmission"))}
       </div>
+      <h3 className="pt-2 text-lg font-bold">{t("market.yardFacts")}</h3>
+      <div className="grid grid-cols-2 gap-3">
+        {field("vsn", "stock_number", t("market.stockNumber"), 30)}
+        <div>
+          <Label htmlFor="var">{t("market.arrivedOn")}</Label>
+          <Input id="var" type="date" value={v.arrived_on} onChange={(e) => set({ arrived_on: e.target.value })} />
+        </div>
+        <div>
+          <Label htmlFor="vky">{t("market.keys")}</Label>
+          <Select id="vky" value={v.has_keys} onChange={(e) => set({ has_keys: e.target.value as VForm["has_keys"] })}>
+            <option value="">{t("market.notSaid")}</option>
+            <option value="yes">{t("market.keysYes")}</option>
+            <option value="no">{t("market.keysNo")}</option>
+          </Select>
+        </div>
+        {field("vdm", "damage", t("market.damage"), 60)}
+      </div>
+      <div>
+        <Label htmlFor="vls">{t("market.lienSaleField")}</Label>
+        <Input id="vls" type="date" value={v.lien_sale_after} onChange={(e) => set({ lien_sale_after: e.target.value })} />
+        <p className="mt-1 text-base text-slate-600 dark:text-slate-400">{t("market.lienSaleHint")}</p>
+      </div>
     </Card>
   );
 }
@@ -193,6 +217,9 @@ function fromListing(l: Listing): Form {
       odometer_unit: l.vehicle.odometer_unit, title_status: l.vehicle.title_status, has_lien: l.vehicle.has_lien,
       running: l.vehicle.running, trim: l.vehicle.trim ?? "", drive: l.vehicle.drive ?? "",
       transmission: l.vehicle.transmission ?? "", exterior_color: l.vehicle.exterior_color ?? "",
+      stock_number: l.vehicle.stock_number ?? "", arrived_on: l.vehicle.arrived_on ?? "",
+      has_keys: l.vehicle.has_keys == null ? "" : l.vehicle.has_keys ? "yes" : "no",
+      damage: l.vehicle.damage ?? "", lien_sale_after: l.vehicle.lien_sale_after ?? "",
     } : EMPTY_V,
   };
 }
@@ -269,6 +296,9 @@ export default function ListingEditPage() {
         odometer: vf.odometer ? parseInt(vf.odometer, 10) : null, odometer_unit: vf.odometer_unit,
         title_status: vf.title_status, has_lien: vf.has_lien, running: vf.running, trim: vf.trim || null,
         drive: vf.drive || null, transmission: vf.transmission || null, exterior_color: vf.exterior_color || null,
+        stock_number: vf.stock_number || null, arrived_on: vf.arrived_on || null,
+        has_keys: vf.has_keys === "" ? null : vf.has_keys === "yes", damage: vf.damage || null,
+        lien_sale_after: vf.lien_sale_after || null,
       } : null,
     };
     if (isVehicle) Object.assign(body, { quantity: 1, part_number: null, brand: null, source_vin: null, mileage: null, emissions_compliance: null, carb_eo_number: null });

@@ -7,6 +7,7 @@ import MakeOptions from "../../components/MakeOptions";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
+import { formatDate } from "../../lib/format";
 import { useModule } from "../../lib/modules";
 import { useDocumentTitle } from "../../lib/title";
 import type { GarageItem, Make, Vehicle } from "../../lib/types";
@@ -17,7 +18,15 @@ export function vehicleLine(t: TFunction, v: VehicleFacts): string {
     v.odometer != null ? `${v.odometer.toLocaleString()} ${v.odometer_unit}` : null,
     t(`market.titleStatuses.${v.title_status}`),
     t(`market.runnings.${v.running}`),
+    v.has_keys == null ? null : v.has_keys ? t("market.keysYes") : t("market.keysNo"),
+    v.damage ? t("market.damageShort", { damage: v.damage }) : null,
   ].filter(Boolean).join(" · ");
+}
+
+/** Yard line for a vehicle card: row / stock number and when it arrived on the lot. */
+export function yardLine(t: TFunction, v: VehicleFacts): string {
+  return [v.stock_number, v.arrived_on ? t("market.arrived", { date: formatDate(v.arrived_on) }) : null]
+    .filter(Boolean).join(" · ");
 }
 
 // Per-device convenience: remember the buyer's ZIP for distance search (never sent anywhere else).
@@ -55,7 +64,15 @@ export function ListingCard({ l }: { l: ListingSummary }) {
         </p>
         <h3 className="line-clamp-2 text-lg font-bold">{l.title}</h3>
         {l.vehicle ? (
-          <p className="text-base">{vehicleLine(t, l.vehicle)}</p>
+          <>
+            {l.vehicle.lien_sale_after && (
+              <p className="my-1 inline-block rounded-md bg-amber-400 px-2 py-0.5 text-base font-bold text-slate-950">
+                {t("market.lienSaleAfter", { date: formatDate(l.vehicle.lien_sale_after) })}
+              </p>
+            )}
+            <p className="text-base">{vehicleLine(t, l.vehicle)}</p>
+            {yardLine(t, l.vehicle) && <p className="text-base font-semibold">{yardLine(t, l.vehicle)}</p>}
+          </>
         ) : (
           <p className="text-base">{t(`market.conditions.${l.condition}`)}</p>
         )}

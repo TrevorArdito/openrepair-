@@ -376,6 +376,21 @@ def test_whole_vehicle_listing_uses_vin(mclient, db_session_factory, vpic):
     r = vehicle_listing(c, year=1965, title_status="salvage", running="not_running")
     assert r.status_code == 201 and r.json()["vehicle"]["vin"] is None
 
+    # Yard facts (row/stock #, arrival date, keys, damage, lien sale) show on the search card.
+    r = vehicle_listing(c, vin=_vin("A12399"), stock_number="Row 4 · #A1043",
+                        arrived_on="2026-11-01", has_keys=False, damage="Front end",
+                        lien_sale_after="2026-11-20")  # fmt: skip
+    assert r.status_code == 201, r.text
+    card = next(i for i in c.get(f"{API}/listings").json()["items"] if i["id"] == r.json()["id"])
+    v = card["vehicle"]
+    assert (
+        v["stock_number"],
+        v["arrived_on"],
+        v["has_keys"],
+        v["damage"],
+        v["lien_sale_after"],
+    ) == ("Row 4 · #A1043", "2026-11-01", False, "Front end", "2026-11-20")
+
 
 def test_private_seller_vehicle_limit(mclient, db_session_factory):
     c = mclient
@@ -541,6 +556,9 @@ def test_demo_stock_is_labeled_and_removable(db_session_factory, monkeypatch):
             assert check_digit_valid(vin) and vin.endswith("000000")
         parts = [r for r in rows if r.kind.value == "part"]
         assert all(r.source_vin and r.mileage for r in parts)  # donor VIN + mileage on every part
+        vehicles = [r.vehicle for r in rows if r.vehicle]
+        assert all(v.stock_number and v.arrived_on for v in vehicles)
+        assert sum(1 for v in vehicles if v.lien_sale_after) == 1  # one tow-yard lien-sale example
         assert demo.remove(db)
         db.commit()
         assert db.scalar(select(Listing)) is None and db.scalar(select(Seller)) is None

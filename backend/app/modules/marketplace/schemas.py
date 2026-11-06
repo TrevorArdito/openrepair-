@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date, datetime
 from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
@@ -99,6 +99,11 @@ class VehicleDetailsIn(Strict):
     drive: Opt40 = None
     transmission: Opt40 = None
     exterior_color: Opt40 = None
+    stock_number: Annotated[str, Field(max_length=30)] | None = None
+    arrived_on: date | None = None
+    has_keys: bool | None = None
+    damage: Annotated[str, Field(max_length=60)] | None = None
+    lien_sale_after: date | None = None
 
     @field_validator("vin", mode="before")
     @classmethod

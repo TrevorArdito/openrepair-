@@ -5,6 +5,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- Vehicle listings take yard details buyers look for first: row / stock #, date it arrived on the
+  lot, keys yes/no, main damage, and for tow yards "Lien sale — available after [date]". They show
+  on the search card and the listing page. Demo stock includes them (plus one lien-sale example).
 - **Content Research Program** adopted (`CONTENT_PROGRAM.md`): `research/` knowledge base
   (format review, owner lookups, blocked sources, review log) and `content/` for team-written pages.
 - **Diagnostic guide pages** (engine-specific DTC pages): what the computer monitors, enable
