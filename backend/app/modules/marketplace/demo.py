@@ -9,7 +9,7 @@ real vehicle. Turning the setting off removes the demo seller and all its listin
 """
 
 import secrets
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
@@ -113,7 +113,8 @@ def load(db: Session) -> int:
         db.add(seller)
         db.flush()
     added = 0
-    for title, donor, kind, category, price, shipping, desc in LISTINGS:
+    now = datetime.now(UTC)
+    for i, (title, donor, kind, category, price, shipping, desc) in enumerate(LISTINGS):
         if db.scalar(
             select(Listing.id).where(Listing.seller_id == seller.id, Listing.title == title)
         ):
@@ -136,7 +137,8 @@ def load(db: Session) -> int:
             condition=Condition.for_parts if "rebuild" in title else Condition.used,
             price_cents=price * 100, quantity=1, shipping=shipping,
             source_vin=None if kind == "vehicle" else vin, mileage=None if kind == "vehicle" else miles,
-            status=ListingStatus.active, rules_accepted_at=datetime.now(UTC),
+            status=ListingStatus.active, rules_accepted_at=now,
+            created_at=now - timedelta(minutes=i),  # "newest" sort keeps the list order above
             search_text=f"{title} {desc} {year} {make_name} {model_name} {vin}".lower(),
         )  # fmt: skip
         if kind == "vehicle":
