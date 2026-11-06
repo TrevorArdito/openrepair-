@@ -69,7 +69,7 @@ export default function BulkVins({ onDone }: { onDone: () => void }) {
           className="w-full rounded-xl border-2 border-slate-300 bg-white p-3 font-mono text-lg dark:border-slate-700 dark:bg-slate-900" />
         <p className="text-base text-slate-600 dark:text-slate-400">{t("market.bulk.count", { count: lines.length, max: MAX_LINES })}</p>
       </div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid gap-3 sm:grid-cols-2">
         <div>
           <Label htmlFor="bulk-ts">{t("market.titleStatus")}</Label>
           <Select id="bulk-ts" value={titleStatus} onChange={(e) => setTitleStatus(e.target.value)}>

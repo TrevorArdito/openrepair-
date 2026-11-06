@@ -19,6 +19,7 @@ export default function SellerPage() {
   const [show, setShow] = useState<"all" | "vehicle" | "part">("all");
   const [make, setMake] = useState("");
   const [shared, setShared] = useState(false);
+  const [manual, setManual] = useState(false); // sharing and copying both blocked: show the link
   useDocumentTitle(s?.display_name);
   useEffect(() => {
     api<Seller>(`/market/sellers/${id}`).then(setS).catch((e) => setError(errorMessage(t, e)));
@@ -41,8 +42,8 @@ export default function SellerPage() {
       if (navigator.share) await navigator.share({ title: s!.display_name, url });
       else await navigator.clipboard.writeText(url);
       setShared(true);
-    } catch {
-      /* person closed the share sheet */
+    } catch (e) {
+      if ((e as Error).name !== "AbortError") setManual(true); // AbortError = closed the share sheet
     }
   }
   return (
@@ -100,6 +101,9 @@ export default function SellerPage() {
         <Button variant="secondary" className="w-full" onClick={share}>
           {shared ? `✓ ${t("market.inventory.shared")}` : t("market.inventory.share")}
         </Button>
+        {manual && (
+          <p className="break-all rounded-lg bg-slate-100 p-3 font-mono text-base select-all dark:bg-slate-900">{window.location.href}</p>
+        )}
       </Card>
     </div>
   );
