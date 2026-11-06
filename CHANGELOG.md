@@ -17,6 +17,10 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- Recall count now counts only the vehicle maker's own recalls for that model and engine.
+  Recalls filed by other companies (upfitters, equipment makers) and maker recalls that name a
+  different engine size go in collapsed groups below. NHTSA's ALL-CAPS text is shown in normal
+  sentence case (acronyms like ABS kept).
 - Demo stock for showing yards (`MARKET_DEMO_DATA`): a sample recycler with whole vehicles first,
   then transmissions and parts, each with donor VIN and mileage; every title starts "DEMO —".
 - Marketplace switched on in `render.yaml` (payments stay off). Pages of a switched-off module

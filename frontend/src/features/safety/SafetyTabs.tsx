@@ -81,38 +81,74 @@ function Shell({
   );
 }
 
+function RecallCard({ r }: { r: Recall }) {
+  const { t } = useTranslation();
+  return (
+    <Card className={r.park_it || r.park_outside ? "border-red-600 dark:border-red-500" : ""}>
+      <div className="mb-2 flex flex-wrap gap-2">
+        {r.park_it && <Badge tone="red">{t("safety.parkIt")}</Badge>}
+        {r.park_outside && <Badge tone="red">{t("safety.parkOutside")}</Badge>}
+        {r.over_the_air && <Badge tone="slate">{t("safety.ota")}</Badge>}
+      </div>
+      <h3 className="text-xl font-bold">{r.component}</h3>
+      <p className="mb-2 font-mono text-base">
+        {t("safety.campaign", { number: r.campaign_number })} · {t("safety.reported", { date: formatDate(r.report_date) })}
+      </p>
+      {r.group === "aftermarket" && r.manufacturer && (
+        <p className="mb-2 text-base font-semibold">{t("safety.filedBy", { name: r.manufacturer })}</p>
+      )}
+      <ExpandableText text={r.summary} />
+      {r.consequence && (
+        <div className="mt-3">
+          <h4 className="font-bold">{t("safety.consequence")}</h4>
+          <ExpandableText text={r.consequence} />
+        </div>
+      )}
+      {r.remedy && (
+        <div className="mt-3">
+          <h4 className="font-bold">{t("safety.remedy")}</h4>
+          <ExpandableText text={r.remedy} />
+        </div>
+      )}
+    </Card>
+  );
+}
+
+/** Recalls that may not apply to this vehicle, collapsed so they don't inflate the count. */
+function RecallGroup({ title, hint, items }: { title: string; hint: string; items: Recall[] }) {
+  if (items.length === 0) return null;
+  return (
+    <details className="rounded-xl border-2 border-slate-300 p-3 dark:border-slate-700">
+      <summary className="flex min-h-12 cursor-pointer items-center text-lg font-bold">{title}</summary>
+      <p className="mb-3 text-base text-slate-600 dark:text-slate-400">{hint}</p>
+      <div className="space-y-4">
+        {items.map((r) => (
+          <RecallCard key={r.campaign_number} r={r} />
+        ))}
+      </div>
+    </details>
+  );
+}
+
 export function RecallsTab({ vehicleId }: { vehicleId: string }) {
   const { t } = useTranslation();
   const [q, setQ] = useState("");
   const list = useSafetyList<Recall, RecallList>(vehicleId, "recalls", q);
+  const of = (g: Recall["group"]) => list.items.filter((r) => (r.group ?? "maker") === g);
+  const others = (list.data?.other_engine ?? 0) + (list.data?.aftermarket ?? 0);
   return (
-    <Shell q={q} setQ={setQ} {...list} count={t("safety.recallCount", { count: list.data?.total ?? 0 })} empty={t("safety.noRecalls")}>
-      {list.items.map((r) => (
-        <Card key={r.campaign_number} className={r.park_it || r.park_outside ? "border-red-600 dark:border-red-500" : ""}>
-          <div className="mb-2 flex flex-wrap gap-2">
-            {r.park_it && <Badge tone="red">{t("safety.parkIt")}</Badge>}
-            {r.park_outside && <Badge tone="red">{t("safety.parkOutside")}</Badge>}
-            {r.over_the_air && <Badge tone="slate">{t("safety.ota")}</Badge>}
-          </div>
-          <h3 className="text-xl font-bold">{r.component}</h3>
-          <p className="mb-2 font-mono text-base">
-            {t("safety.campaign", { number: r.campaign_number })} · {t("safety.reported", { date: formatDate(r.report_date) })}
-          </p>
-          <ExpandableText text={r.summary} />
-          {r.consequence && (
-            <div className="mt-3">
-              <h4 className="font-bold">{t("safety.consequence")}</h4>
-              <ExpandableText text={r.consequence} />
-            </div>
-          )}
-          {r.remedy && (
-            <div className="mt-3">
-              <h4 className="font-bold">{t("safety.remedy")}</h4>
-              <ExpandableText text={r.remedy} />
-            </div>
-          )}
-        </Card>
+    <Shell
+      q={q}
+      setQ={setQ}
+      {...list}
+      count={t("safety.recallCount", { count: list.data?.total ?? 0 })}
+      empty={others ? t("safety.noMakerRecalls") : t("safety.noRecalls")}
+    >
+      {of("maker").map((r) => (
+        <RecallCard key={r.campaign_number} r={r} />
       ))}
+      <RecallGroup title={t("safety.otherEngineRecalls", { count: of("other_engine").length })} hint={t("safety.otherEngineHint")} items={of("other_engine")} />
+      <RecallGroup title={t("safety.aftermarketRecalls", { count: of("aftermarket").length })} hint={t("safety.aftermarketHint")} items={of("aftermarket")} />
     </Shell>
   );
 }

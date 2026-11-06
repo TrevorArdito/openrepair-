@@ -252,6 +252,39 @@ def component_counts(items: Iterable[str | None]) -> dict[str, int]:
     return dict(sorted(out.items(), key=lambda kv: -kv[1]))
 
 
+# ---- readable recalls ----------------------------------------------------------
+
+
+def recall_out(r: Recall, v: Vehicle):
+    from app.modules.safety.readable import proper_words, readable, recall_group
+    from app.modules.safety.schemas import RecallOut
+
+    proper = proper_words(r.manufacturer, v.model.make.name, v.model.name)
+    return RecallOut(
+        campaign_number=r.campaign_number,
+        manufacturer=r.manufacturer,
+        component=readable(r.component, proper),
+        summary=readable(r.summary, proper),
+        consequence=readable(r.consequence, proper),
+        remedy=readable(r.remedy, proper),
+        notes=readable(r.notes, proper),
+        report_date=r.report_date,
+        park_it=r.park_it,
+        park_outside=r.park_outside,
+        over_the_air=r.over_the_air,
+        group=recall_group(r, v.model.make.name, v.engine_displacement_l),
+    )
+
+
+def maker_recall_count(db: Session, v: Vehicle) -> int:
+    from app.modules.safety.readable import recall_group
+
+    make = v.model.make.name
+    return sum(
+        1 for r in list_recalls(db, v) if recall_group(r, make, v.engine_displacement_l) == "maker"
+    )
+
+
 # ---- profile counters ------------------------------------------------------
 
 
@@ -273,6 +306,6 @@ def _counter(link_model):
 def register_counters() -> None:
     from app.modules.vehicles.service import PROFILE_COUNTERS
 
-    PROFILE_COUNTERS["recalls"] = _counter(RecallVehicle)
+    PROFILE_COUNTERS["recalls"] = maker_recall_count  # only the maker's own recalls
     PROFILE_COUNTERS["tsbs"] = _counter(TsbVehicle)
     PROFILE_COUNTERS["complaints"] = _counter(ComplaintVehicle)

@@ -65,8 +65,11 @@ export type Recall = {
   park_it: boolean;
   park_outside: boolean;
   over_the_air: boolean;
+  /** maker = counted; other_engine = maker recall naming a different engine; aftermarket = another company's. */
+  group: "maker" | "other_engine" | "aftermarket";
 };
-export type RecallList = Freshness & { total: number; items: Recall[] };
+/** total counts only the vehicle maker's own recalls for this engine. */
+export type RecallList = Freshness & { total: number; other_engine: number; aftermarket: number; items: Recall[] };
 
 export type Complaint = {
   odi_number: string;
