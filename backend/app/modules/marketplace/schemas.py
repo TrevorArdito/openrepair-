@@ -138,6 +138,29 @@ class ListingIn(Strict):
         return v.strip().upper() or None if isinstance(v, str) else v
 
 
+class BulkVinLine(Strict):
+    vin: Annotated[str, Field(min_length=11, max_length=20)]
+    price_cents: Annotated[int, Field(ge=0, le=10_000_000)] | None = None  # none = hidden draft
+    stock_number: Annotated[str, Field(max_length=30)] | None = None
+
+
+class BulkVinIn(Strict):
+    """Yards: add many vehicles at once from a pasted VIN list."""
+
+    lines: Annotated[list[BulkVinLine], Field(min_length=1, max_length=25)]
+    title_status: TitleStatus
+    running: Running
+    accept_rules: bool
+
+
+class BulkVinResult(BaseModel):
+    vin: str
+    listing_id: int | None = None
+    title: str | None = None
+    published: bool = False
+    error: str | None = None  # stable error code when this VIN couldn't be added
+
+
 class ListingSummary(BaseModel):
     id: int
     kind: ListingKind

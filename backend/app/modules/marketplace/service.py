@@ -14,6 +14,7 @@ from app.modules.community.models import Photo
 from app.modules.community.service import ensure_can_contribute
 from app.modules.marketplace import rules, zips
 from app.modules.marketplace.models import (
+    Condition,
     Conversation,
     Listing,
     ListingFitment,
@@ -26,6 +27,7 @@ from app.modules.marketplace.models import (
     Seller,
     SellerStatus,
     SellerVerification,
+    Shipping,
     VehicleDetails,
     VerificationStatus,
     ZipPoint,
@@ -268,6 +270,44 @@ def save_listing(
     listing.search_text = _search_text(db, listing)
     db.flush()
     return listing
+
+
+def bulk_add_vehicles(db: Session, user: User, data, vpic) -> list[dict]:
+    """Create one whole-vehicle listing per pasted VIN. Lines without a price are saved hidden
+    (withdrawn) so the yard can add a price later; one bad VIN doesn't stop the rest."""
+    from app.modules.marketplace.schemas import ListingIn, VehicleDetailsIn
+
+    if not data.accept_rules:
+        raise AppError("listing_rules_not_accepted", 422)
+    results = []
+    for line in data.lines:
+        vin = line.vin.strip().upper()
+        out = {"vin": vin}
+        try:
+            dec = vehicles_service.decode_vin(db, vpic, vin).vehicle  # cached after this
+            with db.begin_nested():  # a failed VIN rolls back only its own listing
+                body = ListingIn(
+                    title=f"{dec.label}"[:120], category="vehicle", condition=Condition.used,
+                    description="Added from the yard's VIN list. Contact the seller for details.",
+                    price_cents=line.price_cents or 0, shipping=Shipping.pickup, accept_rules=True,
+                    vehicle=VehicleDetailsIn(
+                        vin=vin, year=dec.year, make_id=dec.make.id, model_id=dec.model.id,
+                        title_status=data.title_status, running=data.running,
+                        stock_number=line.stock_number,
+                    ),
+                )  # fmt: skip
+                listing = save_listing(db, user, body, None, vpic)
+                if line.price_cents is None and listing.status == ListingStatus.active:
+                    listing.status = ListingStatus.withdrawn  # hidden until priced
+                db.flush()
+            out.update(listing_id=listing.id, title=listing.title,
+                       published=listing.status == ListingStatus.active)  # fmt: skip
+        except AppError as e:
+            out["error"] = e.code
+        except ValueError:  # pydantic validation of the built listing
+            out["error"] = "listing_invalid"
+        results.append(out)
+    return results
 
 
 def set_status(db: Session, user: User, listing: Listing, status: str) -> None:

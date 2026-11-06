@@ -12,6 +12,7 @@ import { TextArea, TextField } from "../entries/fields";
 import PaymentsSetup from "./PaymentsSetup";
 import { ListingCard } from "./MarketPage";
 import { US_STATES, type ListingSummary, type Seller, type Verification } from "./types";
+import BulkVins from "./BulkVins";
 
 const TYPES = ["individual", "shop", "recycler", "retailer"] as const;
 
@@ -134,10 +135,11 @@ export default function SellingPage() {
   useDocumentTitle(t("market.mySelling"));
   const [seller, setSeller] = useState<Seller | null | undefined>(undefined);
   const [items, setItems] = useState<ListingSummary[]>([]);
+  const loadMine = () => api<ListingSummary[]>("/market/my/listings").then(setItems).catch(() => undefined);
   useEffect(() => {
     if (!user) return;
     api<Seller | null>("/market/seller/me").then(setSeller).catch(() => setSeller(null));
-    api<ListingSummary[]>("/market/my/listings").then(setItems).catch(() => undefined);
+    loadMine();
   }, [user]);
 
   if (loading) return <Spinner label={t("app.loading")} />;
@@ -152,6 +154,7 @@ export default function SellingPage() {
           {t("market.inventory.myPage")}
         </LinkButton>
       )}
+      {seller && <BulkVins onDone={loadMine} />}
       {seller && (
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">{t("market.myListings")} ({items.length})</h2>
