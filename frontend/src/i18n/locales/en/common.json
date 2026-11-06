@@ -1085,7 +1085,11 @@
     "sameModelForSale_one": "{{count}} {{model}} for sale",
     "sameModelForSale_other": "{{count}} {{model}}s for sale",
     "seeAllParts": "See all parts that fit",
-    "seeAllVehicles": "See all {{model}} vehicles"
+    "seeAllVehicles": "See all {{model}} vehicles",
+    "filters": "Filters",
+    "filtersActive_one": "Filters ({{count}} on)",
+    "filtersActive_other": "Filters ({{count}} on)",
+    "clearFilters": "Clear filters"
   },
   "legal": {
     "title": "Terms and rules",

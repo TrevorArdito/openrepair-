@@ -97,6 +97,8 @@ export default function MarketPage() {
   const [data, setData] = useState<{ total: number; items: ListingSummary[] } | null>(null);
   const [error, setError] = useState<string | null>(null);
   const vehicleId = params.get("vehicle_id") ?? "";
+  const activeFilters = [...params.keys()].filter((k) => !["q", "kind", "sort", "radius_mi"].includes(k) && params.get(k)).length;
+  const [showFilters, setShowFilters] = useState(false);
   const [zip, setZip] = useState(params.get("near_zip") ?? readZip());
 
   useEffect(() => {
@@ -150,7 +152,6 @@ export default function MarketPage() {
   return (
     <div className="space-y-5">
       <PageTitle>{t("market.title")}</PageTitle>
-      <p className="text-lg">{t("market.intro")}</p>
       <div role="tablist" className="grid grid-cols-2 gap-2">
         {(["part", "vehicle"] as const).map((k) => (
           <button key={k} role="tab" aria-selected={kind === k} onClick={() => switchKind(k)}
@@ -159,18 +160,9 @@ export default function MarketPage() {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-2 gap-3">
-        <LinkButton to={kind === "vehicle" ? "/market/sell?kind=vehicle" : "/market/sell"}>
-          {t(kind === "vehicle" ? "market.sellVehicle" : "market.sell")}
-        </LinkButton>
-        <LinkButton to="/market/selling" variant="secondary">{t("market.mySelling")}</LinkButton>
-        <LinkButton to="/market/messages" variant="secondary">{t("market.messages")}</LinkButton>
-        <LinkButton to="/market/saved" variant="secondary">★ {t("market.savedTitle")}</LinkButton>
-        {paymentsOn && <LinkButton to="/market/orders" variant="secondary" className="col-span-2">{t("orders.title")}</LinkButton>}
-        {user && (user.role === "moderator" || user.role === "admin") && (
-          <LinkButton to="/market/mod" variant="secondary" className="col-span-2">{t("market.mod.title")}</LinkButton>
-        )}
-      </div>
+      <LinkButton to={kind === "vehicle" ? "/market/sell?kind=vehicle" : "/market/sell"} className="w-full">
+        {t(kind === "vehicle" ? "market.sellVehicle" : "market.sell")}
+      </LinkButton>
 
       <Card className="space-y-3">
         <form className="flex gap-2" onSubmit={(e) => { e.preventDefault(); set("q", q.trim()); }}>
@@ -178,6 +170,11 @@ export default function MarketPage() {
           <Input id="mq" type="search" value={q} placeholder={t(kind === "vehicle" ? "market.searchVehiclesPlaceholder" : "market.searchPlaceholder")} onChange={(e) => setQ(e.target.value)} />
           <Button type="submit">{t("market.searchButton")}</Button>
         </form>
+        <Button type="button" variant="secondary" className="w-full" aria-expanded={showFilters} aria-controls="market-filters"
+          onClick={() => setShowFilters(!showFilters)}>
+          {showFilters ? "▲" : "▼"} {activeFilters ? t("market.filtersActive", { count: activeFilters }) : t("market.filters")}
+        </Button>
+        {showFilters && <div id="market-filters" className="space-y-3">
         {kind === "part" ? (
           <>
             <div>
@@ -230,6 +227,12 @@ export default function MarketPage() {
             </Select>
           </div>
         </div>
+        {activeFilters > 0 && (
+          <Button type="button" variant="secondary" className="w-full" onClick={() => setParams(kind === "vehicle" ? { kind: "vehicle" } : {}, { replace: true })}>
+            {t("market.clearFilters")}
+          </Button>
+        )}
+        </div>}
       </Card>
 
       {error && <Alert>{error}</Alert>}
@@ -241,6 +244,16 @@ export default function MarketPage() {
           <div className="space-y-3">{data.items.map((l) => <ListingCard key={l.id} l={l} />)}</div>
         </>
       )}
+      <div className="grid grid-cols-2 gap-3">
+        <LinkButton to="/market/selling" variant="secondary">{t("market.mySelling")}</LinkButton>
+        <LinkButton to="/market/messages" variant="secondary">{t("market.messages")}</LinkButton>
+        <LinkButton to="/market/saved" variant="secondary">★ {t("market.savedTitle")}</LinkButton>
+        {paymentsOn && <LinkButton to="/market/orders" variant="secondary" className="col-span-2">{t("orders.title")}</LinkButton>}
+        {user && (user.role === "moderator" || user.role === "admin") && (
+          <LinkButton to="/market/mod" variant="secondary" className="col-span-2">{t("market.mod.title")}</LinkButton>
+        )}
+      </div>
+      <p className="text-lg">{t("market.intro")}</p>
       <Alert kind="info">{t(kind === "vehicle" ? "market.vehicleTips" : "market.safetyTips")}</Alert>
       <p className="text-base">
         <Link className="underline" to="/legal/terms">{t("legal.terms")}</Link> · <Link className="underline" to="/legal/prohibited-items">{t("legal.prohibited-items")}</Link>
