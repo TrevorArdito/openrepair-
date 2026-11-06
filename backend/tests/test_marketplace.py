@@ -6,7 +6,7 @@ import io
 import pytest
 from fastapi.testclient import TestClient
 from PIL import Image
-from sqlalchemy import select
+from sqlalchemy import func, select
 
 from app.config import Settings, get_settings
 from app.core import ratelimit
@@ -543,6 +543,11 @@ def test_demo_stock_is_labeled_and_removable(db_session_factory, monkeypatch):
     with db_session_factory() as db:
         assert demo.load(db) == len(demo.LISTINGS)
         assert demo.load(db) == 0  # idempotent
+        first = db.scalar(select(Listing).where(Listing.title == demo.LISTINGS[0][0]))
+        first.description = "older wording"  # demo list changed in a later release
+        db.flush()
+        assert demo.load(db) == len(demo.LISTINGS)  # stale demo stock replaced, no duplicates
+        assert db.scalar(select(func.count()).select_from(Listing)) == len(demo.LISTINGS)
         db.commit()
         rows = db.scalars(select(Listing)).all()
         assert rows and all(r.title.startswith("DEMO —") for r in rows)

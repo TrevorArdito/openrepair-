@@ -29,6 +29,16 @@ ACRONYMS = {
     "FCA", "FMVSS", "GM", "HVAC", "LED", "LLC", "MIL", "NHTSA", "OBD", "OTA", "PCM", "RWD",
     "SRS", "SUV", "TCM", "TPMS", "US", "USA", "VIN", "4WD", "2WD", "FWD", "HD", "EPB", "HEV",
     "PHEV", "BMW", "CNG", "LPG", "ACC", "LKA", "AEB", "RV", "II", "III", "IV",
+    "OCSM", "TRS", "TECM", "SDM", "IPC", "EPS", "EBCM", "TIPM", "ORC", "RCM", "ESP", "VSA",
+    "HID", "DRL", "ECU", "ACM", "PCV", "DCT", "MAF", "TPS", "OEM", "PSI", "MPH", "RPM", "VSC",
+    "FCM", "BSM", "SCR", "DEF", "DPF", "PTU", "RDU", "ATF", "USB",
+    "GPS", "LCD", "PRNDL", "SAE", "ISO", "TSB",
+}  # fmt: skip
+# Always capitalized in sentence case.
+NAMES = {
+    "january", "february", "march", "april", "june", "july", "august", "september",
+    "october", "november", "december", "monday", "tuesday", "wednesday", "thursday", "friday",
+    "saturday", "sunday", "i",
 }  # fmt: skip
 
 _ENGINE = re.compile(r"\b(\d\.\d)\s*-?\s*(?:l\b|liter|litre)", re.IGNORECASE)
@@ -65,17 +75,39 @@ def readable(text: str | None, proper: set[str] = frozenset()) -> str | None:
 
     def word(w: str) -> str:
         core = w.strip("().,;:'\"")
-        if core.upper() in ACRONYMS or any(ch.isdigit() for ch in core):
-            return w  # keep as-is (acronyms, part numbers, "3.5L")
+        parts = [p for p in re.split(r"[/-]", core) if p]
+        if core[:1].isupper() and not core.isupper():
+            return w  # already mixed case on purpose (e.g. the month "May")
+        if parts and all(p.upper() in ACRONYMS for p in parts) or any(ch.isdigit() for ch in core):
+            return w  # keep as-is (acronyms like TCM/PCM, part numbers, "3.5L")
         lw = w.lower()
         hit = proper_lower.get(core.lower())
-        return lw.replace(core.lower(), hit) if hit else lw
+        if hit:
+            return lw.replace(core.lower(), hit)
+        if core.lower() in NAMES and core:
+            return lw.replace(core.lower(), core.capitalize())
+        return lw
 
-    text = re.sub(r":(?=\S)", ": ", text)  # "SYSTEM:BATTERY" -> "SYSTEM: BATTERY"
+    text = re.sub(r":(?=\S)", ": ", text)
+    text = re.sub(
+        r"\bMAY(?=\s+\d)", "May", text
+    )  # the month, not "may fail"  # "SYSTEM:BATTERY" -> "SYSTEM: BATTERY"
     out = " ".join(word(w) for w in text.split(" "))
     # Capitalize the start of each sentence.
     out = re.sub(r"(^|[.!?]\s+)([a-z])", lambda m: m.group(1) + m.group(2).upper(), out)
     return out
+
+
+def title_case(text: str | None) -> str | None:
+    """ALL-CAPS label → Title Case ("FORD MOTOR COMPANY" → "Ford Motor Company"), acronyms kept."""
+    if not text or not text.isupper():
+        return text
+
+    def w(x: str) -> str:
+        core = x.strip("(),.")
+        return x if core in ACRONYMS or any(c.isdigit() for c in core) else x.capitalize()
+
+    return " ".join(w(x) for x in text.split(" "))
 
 
 def proper_words(*names: str | None) -> set[str]:

@@ -20,6 +20,11 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- Marketplace opens on Vehicles (yards' main stock), with page titles per tab; part listings say
+  "Donor vehicle VIN"; fitment shows "5.0L"; card titles get three lines on phones.
+- Recall text keeps more abbreviations (OCSM, TCM/PCM…), month names and the make's model names
+  capitalized; VIN details (manufacturer, vehicle type, country) no longer shout in ALL CAPS.
+- Demo stock refreshes itself when its wording or details change (no duplicates).
 - Make dropdowns (vehicle picker, marketplace filter, listing form, guide tags) list the 20
   most common makes first (Ford, Chevrolet, Toyota, Honda, ...), then every make A–Z.
 - Vehicle page hides empty sections instead of showing blanks: the TSB and Specs tabs only

@@ -62,7 +62,7 @@ export function ListingCard({ l }: { l: ListingSummary }) {
           {l.price_cents === 0 ? t("market.free") : price(l.price_cents, l.currency)}
           {l.saved && <span className="ml-2 text-amber-600" aria-label={t("market.saved")}>★</span>}
         </p>
-        <h3 className="line-clamp-2 text-lg font-bold">{l.title}</h3>
+        <h3 className="line-clamp-3 text-lg font-bold">{l.title}</h3>
         {l.vehicle ? (
           <>
             {l.vehicle.lien_sale_after && (
@@ -105,8 +105,9 @@ export default function MarketPage() {
   const { user } = useAuth();
   const paymentsOn = useModule("market_payments");
   const [params, setParams] = useSearchParams();
-  const kind = params.get("kind") === "vehicle" ? "vehicle" : "part";
-  useDocumentTitle(t(kind === "vehicle" ? "market.vehiclesTitle" : "market.title"));
+  // Whole vehicles lead (what yards have most of); parts when asked for or when shopping for a vehicle.
+  const kind = params.get("kind") === "part" || (!params.get("kind") && params.get("vehicle_id")) ? "part" : "vehicle";
+  useDocumentTitle(t(kind === "vehicle" ? "market.vehiclesTitle" : "market.partsTitle"));
   const [q, setQ] = useState(params.get("q") ?? "");
   const [cats, setCats] = useState<string[]>([]);
   const [makes, setMakes] = useState<Make[]>([]);
@@ -157,7 +158,7 @@ export default function MarketPage() {
   };
   const switchKind = (k: string) => {
     const next = new URLSearchParams();
-    if (k === "vehicle") next.set("kind", "vehicle");
+    next.set("kind", k);
     for (const keep of ["near_zip", "radius_mi"]) {
       const v = params.get(keep);
       if (v) next.set(keep, v);
@@ -169,9 +170,9 @@ export default function MarketPage() {
 
   return (
     <div className="space-y-5">
-      <PageTitle>{t("market.title")}</PageTitle>
+      <PageTitle>{t(kind === "vehicle" ? "market.vehiclesTitle" : "market.partsTitle")}</PageTitle>
       <div role="tablist" className="grid grid-cols-2 gap-2">
-        {(["part", "vehicle"] as const).map((k) => (
+        {(["vehicle", "part"] as const).map((k) => (
           <button key={k} role="tab" aria-selected={kind === k} onClick={() => switchKind(k)}
             className={`min-h-14 rounded-xl border-2 text-lg font-bold ${kind === k ? "border-amber-400 bg-amber-400 text-slate-950" : "border-slate-400"}`}>
             {t(k === "vehicle" ? "market.tabVehicles" : "market.tabParts")}
@@ -251,7 +252,7 @@ export default function MarketPage() {
           </div>
         </div>
         {activeFilters > 0 && (
-          <Button type="button" variant="secondary" className="w-full" onClick={() => setParams(kind === "vehicle" ? { kind: "vehicle" } : {}, { replace: true })}>
+          <Button type="button" variant="secondary" className="w-full" onClick={() => setParams({ kind }, { replace: true })}>
             {t("market.clearFilters")}
           </Button>
         )}

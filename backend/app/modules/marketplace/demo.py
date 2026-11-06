@@ -81,8 +81,8 @@ LISTINGS = [
      1500, Shipping.pickup, "Sample listing. Not running (lifter noise reported before parking). "
      "Bed, doors and rear axle in good shape. Salvage title."),
     ("DEMO — Automatic transmission, 2012 F-150 5.0L donor (168k miles)", "f150", "part",
-     "transmission", 950, Shipping.pickup_or_ships, "Sample listing. Pulled from the donor truck "
-     "above, which drove in. Fluid looked clean. 30-day yard warranty. Confirm the transmission "
+     "transmission", 950, Shipping.pickup_or_ships, "Sample listing. Pulled from the demo F-150 "
+     "listed under Vehicles, which drove in. Fluid looked clean. 30-day yard warranty. Confirm the transmission "
      "and part number match yours before buying."),
     ("DEMO — Automatic transmission, 2010 Silverado 1500 5.3L donor (204k miles)", "silverado",
      "part", "transmission", 700, Shipping.pickup_or_ships, "Sample listing. Shifted through all "
@@ -121,6 +121,13 @@ def load(db: Session) -> int:
                         postal_code=s.market_demo_zip or None,
                         about="Sample listings for demonstrating the marketplace. Not real inventory.")  # fmt: skip
         db.add(seller)
+        db.flush()
+    # Demo stock changed since it was loaded (new wording or yard details)? Replace it all —
+    # it's sample data owned by this code, so nothing real is lost.
+    old = db.scalars(select(Listing).where(Listing.seller_id == seller.id)).all()
+    if old and {(x.title, x.description) for x in old} != {(t[0], t[6]) for t in LISTINGS}:
+        for listing in old:
+            db.delete(listing)
         db.flush()
     added = 0
     now = datetime.now(UTC)

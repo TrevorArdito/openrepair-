@@ -14,7 +14,7 @@ const REPORT_REASONS = ["stolen", "prohibited", "scam", "counterfeit", "wrong_fi
 
 function fitLabel(f: Listing["fitment"][number]): string {
   const years = f.year_from === f.year_to ? `${f.year_from}` : `${f.year_from}–${f.year_to}`;
-  return [years, f.make, f.model, f.engine ?? (f.displacement_l ? `${f.displacement_l}L` : null)].filter(Boolean).join(" ");
+  return [years, f.make, f.model, f.engine ?? (f.displacement_l ? `${f.displacement_l.toFixed(1)}L` : null)].filter(Boolean).join(" ");
 }
 
 function ContactSeller({ l }: { l: Listing }) {
@@ -239,7 +239,7 @@ export default function ListingPage() {
     [t("market.quantity"), String(l.quantity)],
     [t("market.shipping"), t(`market.shippings.${l.shipping}`) + (l.shipping_note ? ` — ${l.shipping_note}` : "")],
     [t("market.mileage"), l.mileage != null ? l.mileage.toLocaleString() : null],
-    [t("market.sourceVin"), l.source_vin],
+    [t("market.donorVin"), l.source_vin],
     [t("market.compliance"), l.emissions_compliance ? t(`market.compliances.${l.emissions_compliance}`) + (l.carb_eo_number ? ` (EO ${l.carb_eo_number})` : "") : null],
     [t("market.listed"), formatDate(l.created_at)],
   ];
