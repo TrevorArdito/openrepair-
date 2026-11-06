@@ -5,6 +5,34 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- **Content Research Program** adopted (`CONTENT_PROGRAM.md`): `research/` knowledge base
+  (format review, owner lookups, blocked sources, review log) and `content/` for team-written pages.
+- **Diagnostic guide pages** (engine-specific DTC pages): what the computer monitors, enable
+  criteria, causes ranked for that engine with known weak spots, tests with spec values, pins and
+  good/bad results, related TSBs/recalls, common misdiagnoses, repair time and parts cost, numbered
+  sources with per-claim references, UNVERIFIED marks. Repair procedures gain applications, special
+  tools, fluids with capacities, per-step specs and sequences, and techs' gotchas.
+- Every guide shows "Work at your own risk" first, "Fact-checked by the ChrystalClear reviewer",
+  "Last revised", and an "under review" notice while a reported mistake is open. Report-a-mistake
+  takes the page section and emails the admins. Team pages in `content/` publish only after a
+  different reviewer agent signs off.
+### Changed
+- Make dropdowns (vehicle picker, marketplace filter, listing form, guide tags) list the 20
+  most common makes first (Ford, Chevrolet, Toyota, Honda, ...), then every make A–Z.
+- Vehicle page hides empty sections instead of showing blanks: the TSB and Specs tabs only
+  appear when there's something in them, the quick-specs box only when it has numbers, and the
+  "Common codes" heading only above a list. Diagnostic guide pages now count in the Guides tab.
+- Recall count now counts only the vehicle maker's own recalls for that model and engine.
+  Recalls filed by other companies (upfitters, equipment makers) and maker recalls that name a
+  different engine size go in collapsed groups below. NHTSA's ALL-CAPS text is shown in normal
+  sentence case (acronyms like ABS kept).
+- Demo stock for showing yards (`MARKET_DEMO_DATA`): a sample recycler with whole vehicles first,
+  then transmissions and parts, each with donor VIN and mileage; every title starts "DEMO —".
+- Marketplace switched on in `render.yaml` (payments stay off). Pages of a switched-off module
+  show a friendly "Coming soon" instead of "Not found".
+- **Repair content is now proprietary** — free to read, all rights reserved (`content/LICENSE`,
+  Content License page, README, CONTRIBUTING, CLA §5, Terms). The code stays AGPL-3.0; content
+  published before 2026-11-06 stays CC BY-SA 4.0 for those who received it.
 - **Every vehicle since 1984**: importer for EPA fuel-economy data — every car, SUV, minivan and
   light pickup with each engine (~21,000 year/model/engine combinations, 145 makes), matched to
   NHTSA's make/model names; refreshed weekly. Turbo/supercharged engines are kept separate.

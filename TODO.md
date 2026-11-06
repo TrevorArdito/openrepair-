@@ -3,7 +3,7 @@
 ## Waiting on the owner
 - [x] Approve the plan in `docs/PLAN.md` (approved 2026-10-31)
 - [x] Business model: Option B — free core forever, optional paid business extras later
-- [x] Community content license: CC BY-SA 4.0
+- [x] Content license: proprietary, all rights reserved, free to read (2026-11-06; was CC BY-SA 4.0)
 - [x] Name: ChrystalClear
 - [ ] Create a free project contact email (Gmail/Proton) and send it over
 - [ ] Optional, free: set up GitHub Sponsors (see docs/FUNDING.md)
@@ -39,6 +39,30 @@
 - [ ] Medium/heavy trucks (class 4–8) + their diesel engines
 - [ ] Heavy-equipment engines + equipment table (see docs/VEHICLE_CATALOG.md)
 - [ ] Bulk-prefetch NHTSA model lists for all makes/years (so the picker never waits on NHTSA)
+
+## Marketplace demo for local yards (owner, 2026-11-06)
+- [x] 1. Marketplace on in render.yaml (payments off); "coming soon" page when a module is off
+- [x] 2. Demo stock (MARKET_DEMO_DATA): sample recycler, whole vehicles + transmissions first, donor VIN + miles
+- [x] 3. Vehicle page: "For sale near you" (parts that fit, same-model vehicles)
+- [x] 4. Marketplace filters behind a Filters button, results first
+- [x] 5. Desktop top menu; vehicle tabs wrap
+- [x] 6. Keep-awake ping (GitHub schedule, daytime only) — allowed by Render's docs
+- [x] 7. Recall count = maker's own recalls for that engine; others in collapsed groups; no ALL CAPS
+- [x] 8. Hide empty TSB/Specs tabs, quick-specs box and "Common codes" heading
+- [x] 9. Make dropdowns: most common makes first
+- [ ] Owner: ChrystalClear vs OpenRepair name for the pitch (app currently says ChrystalClear)
+- [ ] Merge to `main`, then check Render → Environment has ENABLE_MARKETPLACE=true and MARKET_DEMO_DATA=true
+- [ ] Before real yards list: set MARKET_DEMO_DATA=false (removes all demo listings)
+- [ ] Later: Silverado/Sierra/Ram TSB model names ("SILVERADO 1500" vs "Silverado") don't match yet
+
+## Content Research Program (CONTENT_PROGRAM.md) — PAUSED by owner 2026-11-06 (marketplace demo first)
+- [x] Step 1: repo/format review (`research/format-review.md`)
+- [x] Format upgrades: `dtc_guide` kind, deeper procedures, per-value sources + UNVERIFIED,
+      reviewer sign-off record, disclaimer first, report-a-mistake by section + owner alert, `content/` loader
+- [ ] Step 2: research notes — top US vehicles of the last 20 years, their engines, common DTCs/repairs
+- [ ] Step 3: `research/competitor-teardown.md`
+- [ ] Steps 4–6: first 5 DTC pages → stop for owner review; then the milestone (20 DTCs × top 10 vehicles)
+- [ ] **Owner:** decide whether `content/` and `research/` move to a private repo (this repo is public)
 
 ## Owner's-manual specs (owner priority — see docs/OWNER_MANUAL_SPECS.md for the tracker)
 - [x] Pipeline: transcribed manual files → per-engine entries with page refs; Quick Specs; spec tables

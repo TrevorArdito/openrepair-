@@ -35,10 +35,13 @@ patent license to make, use, sell, offer to sell, import, and otherwise transfer
 Contribution, alone or combined with the project.
 
 ## 5. The project's promise to you
-Every Contribution accepted into the project will remain publicly available under the open
-license it was contributed under — **AGPL-3.0** for code, **CC BY-SA 4.0** for community
-content — for as long as the project publishes it. The Project Owner will never charge
-people to read community-written repair content.
+Code Contributions will remain publicly available under **AGPL-3.0** for as long as the
+project publishes them. Repair-content Contributions (guides, specs, notes, photos) are
+published as ChrystalClear content, **free to read** but all rights reserved (see
+content/LICENSE); content contributed before 2026-11-06 stays available under **CC BY-SA 4.0**,
+the license it was contributed under. The Project Owner will never charge people to read
+community-written repair content.
+*(Changed 2026-11-06 — DRAFT, for lawyer review.)*
 
 ## 6. Your promises
 - Each Contribution is Your original work, or You have the right to Submit it under this

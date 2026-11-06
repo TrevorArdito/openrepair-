@@ -15,6 +15,7 @@ from app.modules.vehicles.schemas import (
     GarageIn,
     GarageOut,
     GarageUpdate,
+    MakeOut,
     NamedRef,
     VehicleOut,
     VehicleProfileOut,
@@ -37,12 +38,22 @@ def years():
     return list(range(date.today().year + 1, MIN_YEAR - 1, -1))
 
 
-@router.get("/vehicles/makes", response_model=list[NamedRef])
+# Makes most US shops see, roughly by vehicles on the road: shown first in make pickers.
+COMMON_MAKES = (
+    "Ford", "Chevrolet", "Toyota", "Honda", "Nissan", "Jeep", "Ram", "GMC", "Dodge", "Hyundai",
+    "Kia", "Subaru", "Mazda", "Volkswagen", "Chrysler", "Buick", "Lexus", "Tesla", "BMW",
+    "Mercedes-Benz",
+)  # fmt: skip
+
+
+@router.get("/vehicles/makes", response_model=list[MakeOut])
 def makes(popular_only: bool = False, db: Session = Depends(get_db)):
+    """All makes A–Z; the most common ones carry a rank so pickers can list them first."""
     q = select(Make).order_by(Make.name)
     if popular_only:
         q = q.where(Make.popular.is_(True))
-    return [NamedRef(id=m.id, name=m.name) for m in db.scalars(q)]
+    rank = {name.lower(): i for i, name in enumerate(COMMON_MAKES, start=1)}
+    return [MakeOut(id=m.id, name=m.name, common=rank.get(m.name.lower())) for m in db.scalars(q)]
 
 
 @router.get("/vehicles/models", response_model=list[NamedRef])

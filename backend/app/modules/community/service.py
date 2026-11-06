@@ -7,6 +7,7 @@
   entry is edited later, readers see "verified on an earlier version".
 """
 
+import logging
 import statistics
 from datetime import UTC, datetime
 
@@ -15,9 +16,10 @@ from sqlalchemy import delete, func, or_, select
 from sqlalchemy.orm import Session
 
 from app.config import get_settings
+from app.core.email import send_email
 from app.core.errors import AppError, NotFound
 from app.modules.accounts.models import Role, User, UserStatus
-from app.modules.community.kinds import ALWAYS_SAFETY_CRITICAL, validate_data
+from app.modules.community.kinds import ALWAYS_SAFETY_CRITICAL, unverified_count, validate_data
 from app.modules.community.models import (
     Entry,
     EntryDtc,
@@ -45,6 +47,8 @@ from app.modules.community.schemas import (
 )
 from app.modules.vehicles.fitment import fitment_display, fits, validate_fitment
 from app.modules.vehicles.models import Vehicle
+
+log = logging.getLogger(__name__)
 
 PROBATION_APPROVALS = 3
 
@@ -94,7 +98,10 @@ def _validate(db: Session, kind: Kind, data: dict, tags: Tags, user: User) -> tu
             photo = db.get(Photo, pid)
             if photo is None or (photo.uploader_id != user.id and photo.entry_id is None):
                 raise AppError("photo_not_found", 422, photo_id=pid)
-    return clean, tags.model_dump(mode="json")
+    out = tags.model_dump(mode="json")
+    if kind == Kind.dtc_guide and clean["code"] not in out["dtcs"]:
+        out["dtcs"] = sorted({*out["dtcs"], clean["code"]})  # a DTC guide is always on its code
+    return clean, out
 
 
 def _attach_photos(db: Session, entry: Entry, data: dict) -> None:
@@ -118,6 +125,12 @@ def search_text_for(title: str, data: dict) -> str:
     for key in ("tools", "parts", "warnings", "includes", "oem_numbers", "aftermarket"):
         parts.extend(x for x in data.get(key, []) if isinstance(x, str))
     parts.extend(step.get("text", "") for step in data.get("steps", []))
+    for key in ("code", "definition", "monitor", "applications"):  # DTC guides
+        if isinstance(data.get(key), str):
+            parts.append(data[key])
+    parts.extend(c.get("cause", "") for c in data.get("causes", []) if isinstance(c, dict))
+    parts.extend(t.get("title", "") for t in data.get("tests", []) if isinstance(t, dict))
+    parts.extend(x for x in data.get("gotchas", []) if isinstance(x, str))
     if data.get("system"):
         parts.append(str(data["system"]).replace("_", " "))
     return " ".join(" ".join(parts).lower().split())[:20000]
@@ -295,7 +308,7 @@ def vote(db: Session, user: User, entry: Entry, value: int) -> int:
     return entry.score
 
 
-def report(db: Session, user: User, entry: Entry, reason, details) -> Report:
+def report(db: Session, user: User, entry: Entry, reason, details, section=None) -> Report:
     open_by_me = db.scalar(
         select(Report.id).where(
             Report.entry_id == entry.id, Report.reporter_id == user.id, Report.status == "open"
@@ -308,11 +321,30 @@ def report(db: Session, user: User, entry: Entry, reason, details) -> Report:
         revision_id=entry.current_revision_id,
         reporter_id=user.id,
         reason=reason,
+        section=section,
         details=details,
     )
     db.add(r)
     db.commit()
+    _alert_owner(entry, r)
     return r
+
+
+def _alert_owner(entry: Entry, r: Report) -> None:
+    """Email the admins (ADMIN_EMAILS) about a reported mistake. Never blocks the report."""
+    s = get_settings()
+    link = f"{s.public_base_url}/entries/{entry.id}"
+    for to in s.admin_email_set:
+        try:
+            send_email(
+                to,
+                f"Mistake reported: {entry.title[:80]}",
+                f'Someone reported a problem ({r.reason.value}) on "{entry.title}"\n'
+                f"Section: {r.section or '—'}\n\n{(r.details or '').strip()[:1500]}\n\n"
+                f"Open the page: {link}\nReview it in Moderation → Reports.\n",
+            )
+        except Exception:  # noqa: BLE001 - email outages must not lose the report
+            log.exception("report alert email failed")
 
 
 def add_labor_report(db: Session, user: User, entry: Entry, basis, hours, rust, note) -> None:
@@ -373,6 +405,8 @@ def revision_out(db: Session, rev: EntryRevision) -> RevisionOut:
         status=rev.status.value,
         author=person(db, rev.author_id),
         created_at=rev.created_at,
+        fact_check=rev.fact_check,
+        unverified=unverified_count(rev.data),
     )
 
 
@@ -444,6 +478,7 @@ def entry_out(db: Session, entry: Entry, viewer: User | None) -> EntryOut:
         safety_critical=entry.safety_critical or entry.kind in ALWAYS_SAFETY_CRITICAL,
         verification=verification,
         open_reports=open_reports or 0,
+        under_review=bool(open_reports),
         pending_revisions=pending or 0,
         revision=revision_out(db, rev) if rev else None,
         tags_display=tags_display(db, rev.tags) if rev else {},
@@ -572,7 +607,7 @@ def register_hooks() -> None:
 
     if related_for_dtc not in RELATED_FINDERS:
         RELATED_FINDERS.append(related_for_dtc)
-    PROFILE_COUNTERS["guides"] = _count([Kind.procedure])
+    PROFILE_COUNTERS["guides"] = _count([Kind.dtc_guide, Kind.procedure])
     PROFILE_COUNTERS["specs"] = _count(
         [Kind.torque_spec, Kind.fluid_capacity, Kind.spec, Kind.part_note, Kind.labor_time]
     )

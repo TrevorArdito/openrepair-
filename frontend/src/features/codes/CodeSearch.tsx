@@ -68,7 +68,7 @@ export default function CodeSearch({ autoFocus = false }: { autoFocus?: boolean 
         )}
       </form>
       {error && <Alert>{error}</Alert>}
-      {!q && <h2 className="text-xl font-bold">{t("codes.common")}</h2>}
+      {!q && !!results?.length && <h2 className="text-xl font-bold">{t("codes.common")}</h2>}
       {results?.length === 0 && !CODE_RE.test(code) && <p>{t("codes.noResults")}</p>}
       <ul className="divide-y-2 divide-slate-200 dark:divide-slate-800">
         {results?.map((d) => (

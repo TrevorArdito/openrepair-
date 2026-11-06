@@ -519,3 +519,28 @@ def test_reviews_only_from_real_buyers(mclient, db_session_factory):
     c.post(f"{API}/mod/reviews/{r.json()['id']}/hide", headers=csrf(c))
     assert c.get(f"{API}/sellers/{s['id']}/reviews").json() == []
     assert c.get(f"{API}/sellers/{s['id']}").json()["rating_count"] == 0
+
+
+def test_demo_stock_is_labeled_and_removable(db_session_factory, monkeypatch):
+    from app.modules.marketplace import demo
+    from app.modules.vehicles.vin import check_digit_valid
+
+    with db_session_factory() as db:
+        assert demo.load(db) == len(demo.LISTINGS)
+        assert demo.load(db) == 0  # idempotent
+        db.commit()
+        rows = db.scalars(select(Listing)).all()
+        assert rows and all(r.title.startswith("DEMO —") for r in rows)
+        newest = sorted(rows, key=lambda r: r.created_at, reverse=True)  # the market's default sort
+        assert [r.title for r in newest] == [
+            t[0] for t in demo.LISTINGS
+        ]  # vehicles, then transmissions
+        seller = db.scalar(select(Seller))
+        assert seller.display_name == demo.DEMO_NAME and seller.seller_type.value == "recycler"
+        for *_head, vin, _miles, _running, _title in demo.DONORS.values():
+            assert check_digit_valid(vin) and vin.endswith("000000")
+        parts = [r for r in rows if r.kind.value == "part"]
+        assert all(r.source_vin and r.mileage for r in parts)  # donor VIN + mileage on every part
+        assert demo.remove(db)
+        db.commit()
+        assert db.scalar(select(Listing)) is None and db.scalar(select(Seller)) is None

@@ -5,7 +5,8 @@ import { Alert, Button, Label, Select } from "../../components/ui";
 import { api } from "../../lib/api";
 import { errorMessage } from "../../lib/errors";
 import { rememberVehicle } from "../../lib/recent";
-import type { NamedRef, Vehicle } from "../../lib/types";
+import MakeOptions from "../../components/MakeOptions";
+import type { Make, NamedRef, Vehicle } from "../../lib/types";
 
 const UNKNOWN = "unknown";
 
@@ -13,7 +14,7 @@ export default function YmmPicker() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [years, setYears] = useState<number[]>([]);
-  const [makes, setMakes] = useState<NamedRef[]>([]);
+  const [makes, setMakes] = useState<Make[]>([]);
   const [models, setModels] = useState<NamedRef[] | null>(null);
   const [engines, setEngines] = useState<Vehicle[]>([]);
   const [year, setYear] = useState("");
@@ -24,7 +25,7 @@ export default function YmmPicker() {
   const [busy, setBusy] = useState(false);
 
   useEffect(() => {
-    Promise.all([api<number[]>("/vehicles/years"), api<NamedRef[]>("/vehicles/makes")])
+    Promise.all([api<number[]>("/vehicles/years"), api<Make[]>("/vehicles/makes")])
       .then(([y, m]) => {
         setYears(y);
         setMakes(m);
@@ -91,11 +92,7 @@ export default function YmmPicker() {
         <Label htmlFor="ymm-make">{t("picker.make")}</Label>
         <Select id="ymm-make" value={makeId} onChange={(e) => setMakeId(e.target.value)} disabled={!year}>
           <option value="">{t("picker.choose")}</option>
-          {makes.map((m) => (
-            <option key={m.id} value={m.id}>
-              {m.name}
-            </option>
-          ))}
+          <MakeOptions makes={makes} />
         </Select>
       </div>
       <div>

@@ -186,3 +186,29 @@ def test_tsb_import_prunes_out_of_scope_bulletins(db_session_factory, tmp_path):
         assert db.scalar(select(func.count()).select_from(Tsb)) == 1
         keys = set(db.execute(select(TsbVehicle.make_key, TsbVehicle.model_key)).all())
         assert keys == {("FORD", "F150")}
+
+
+def test_recall_count_is_makers_own_and_text_is_readable(client, nhtsa):
+    from tests.conftest import RECALL_ROW
+
+    nhtsa.recall_rows = [
+        dict(RECALL_ROW),
+        {**RECALL_ROW, "NHTSACampaignNumber": "19V111000", "Manufacturer": "Knapheide Manufacturing",
+         "Summary": "UTILITY BODY LATCH MAY OPEN.", "Component": "LATCHES/LOCKS/LINKAGES"},
+        {**RECALL_ROW, "NHTSACampaignNumber": "20V222000",
+         "Summary": "FORD MOTOR COMPANY (FORD) IS RECALLING CERTAIN 2015 F-150 VEHICLES EQUIPPED WITH 5.0L ENGINES.",
+         "Component": "ENGINE AND ENGINE COOLING:ENGINE"},
+        {**RECALL_ROW, "NHTSACampaignNumber": "21V333000",
+         "Summary": "FORD MOTOR COMPANY (FORD) IS RECALLING CERTAIN 2015 F-150 VEHICLES. THE ABS MODULE MAY FAIL.",
+         "Component": "SERVICE BRAKES"},
+    ]  # fmt: skip
+    vid = _f150_id(client)  # a 3.5L F-150
+    body = client.get(f"/api/v1/vehicles/{vid}/recalls").json()
+    assert (body["total"], body["other_engine"], body["aftermarket"]) == (2, 1, 1)
+    assert [i["group"] for i in body["items"]] == ["maker", "maker", "other_engine", "aftermarket"]
+    abs_recall = next(i for i in body["items"] if i["campaign_number"] == "21V333000")
+    assert abs_recall["summary"] == (
+        "Ford Motor Company (Ford) is recalling certain 2015 F-150 vehicles. The ABS module may fail."
+    )
+    assert abs_recall["component"] == "Service brakes"
+    assert client.get(f"/api/v1/vehicles/{vid}").json()["counts"]["recalls"] == 2

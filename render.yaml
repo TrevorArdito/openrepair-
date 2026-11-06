@@ -22,7 +22,13 @@ services:
         value: database # free hosts wipe their disk on restart, so photos live in the database
       # Marketplace + payments are OFF until you set these (see docs/PAYMENTS.md).
       - key: ENABLE_MARKETPLACE
-        value: "false"
+        value: "true" # parts + vehicles marketplace is on; in-app payments stay off below
+      - key: MARKET_DEMO_DATA
+        value: "true" # sample "DEMO —" listings for showing yards; set "false" to remove them
+      - key: MARKET_DEMO_CITY
+        value: "River Valley"
+      - key: MARKET_DEMO_STATE
+        value: "CA"
       - key: ENABLE_MARKET_PAYMENTS
         value: "false"
       - key: STRIPE_SECRET_KEY

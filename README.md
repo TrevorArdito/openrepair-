@@ -64,6 +64,9 @@ Project contact email: _to be set by the project owner._
 ## License
 - **Code:** [GNU AGPL-3.0](LICENSE). If you run a modified version as a public service,
   you must share your source code with its users.
-- **Community content** (guides, specs, notes, photos): [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-  Anyone may reuse it with credit, as long as they share it under the same license.
+- **Repair content** (guides, DTC pages, specs, research notes, diagrams — in `content/`,
+  `research/` and the seed data): **proprietary, all rights reserved** — free to read in the
+  app, not open source. See [content/LICENSE](content/LICENSE). (Content published before
+  2026-11-06 under CC BY-SA 4.0 stays CC BY-SA for those who received it.)
+- **Public data** (NHTSA, EPA) keeps its own public-domain status — see docs/DATA_SOURCES.md.
 - Contributors sign our [Contributor License Agreement](CLA.md) — see CONTRIBUTING.md.

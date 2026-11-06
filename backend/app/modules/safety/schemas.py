@@ -17,6 +17,9 @@ class RecallOut(BaseModel):
     park_it: bool
     park_outside: bool
     over_the_air: bool
+    # maker = the vehicle maker's own recall (counted); other_engine = maker recall that names a
+    # different engine; aftermarket = filed by another company (upfitter, equipment maker).
+    group: str = "maker"
 
 
 class ComplaintOut(BaseModel):
@@ -52,8 +55,10 @@ class Freshness(BaseModel):
 
 
 class RecallList(Freshness):
-    total: int
+    total: int  # the maker's own recalls for this vehicle (what the badge counts)
     items: list[RecallOut]
+    other_engine: int = 0
+    aftermarket: int = 0
 
 
 class ComplaintList(Freshness):

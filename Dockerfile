@@ -16,6 +16,8 @@ WORKDIR /app
 COPY backend/pyproject.toml ./
 RUN mkdir app && touch app/__init__.py && pip install . && rm -rf app
 COPY backend/ ./
+# Team-written repair content (proprietary, see content/LICENSE), loaded by the seed.
+COPY content/ ./content/
 COPY --from=web /web/dist ./static
 RUN useradd --create-home appuser
 USER appuser

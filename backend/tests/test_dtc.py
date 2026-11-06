@@ -22,7 +22,7 @@ def test_lookup_known_code(client):
         "subsystem": "aux_emissions",
     }
     assert len(body["diagnostic_steps"]) >= 3
-    assert body["source_license"] == "CC BY-SA 4.0"
+    assert body["source_license"] == "ChrystalClear proprietary"
 
 
 def test_lookup_normalizes_input(client):
@@ -84,4 +84,4 @@ def test_seed_content_is_complete_and_licensed():
         assert row["severity"] in {"low", "medium", "high"}
         assert row["title"] and row["description"]
         assert row["symptoms"] and row["causes"] and row["diagnostic_steps"], row["code"]
-        assert row["source"] and row["source_license"] == "CC BY-SA 4.0"
+        assert row["source"] and row["source_license"] == "ChrystalClear proprietary"

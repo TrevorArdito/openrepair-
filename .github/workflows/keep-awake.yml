@@ -1,0 +1,25 @@
+# Keeps the free Render site awake during the day so visitors (and demos) don't wait ~1 minute
+# for a cold start. Render's free plan rules allow this; it spins the site down after 15 minutes
+# without traffic, and gives 750 free hours a month. Daytime only (about 7am–9pm Pacific) uses
+# roughly 430 hours. The health check doesn't touch the database, so Neon can still sleep.
+# Change the address with a repository variable SITE_URL (Settings → Secrets and variables →
+# Actions → Variables). Note: GitHub only runs scheduled workflows from the default branch.
+name: Keep site awake
+
+on:
+  schedule:
+    - cron: "*/10 0-4,15-23 * * *" # every 10 min, 15:00–04:59 UTC ≈ 7am–9pm Pacific
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Ping the health check
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://chrystalclear.onrender.com' }}
+        run: |
+          curl -fsS --retry 2 --retry-delay 20 --max-time 90 "$SITE_URL/api/v1/health" || echo "site didn't answer (will try again in 10 minutes)"

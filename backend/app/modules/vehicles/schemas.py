@@ -20,6 +20,10 @@ class NamedRef(BaseModel):
     name: str
 
 
+class MakeOut(NamedRef):
+    common: int | None = None  # rank among the most common US makes (1 = most common)
+
+
 class EngineOut(BaseModel):
     displacement_l: float | None = None
     cylinders: int | None = None

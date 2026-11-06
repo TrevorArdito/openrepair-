@@ -36,8 +36,14 @@ def recalls(
     nhtsa: NhtsaApi = Depends(get_nhtsa),
 ):
     fresh = service.refresh(db, nhtsa, "recalls", v)
-    items = service.list_recalls(db, v, q)
-    return RecallList(total=len(items), items=items, source_url=_nhtsa_url(v), **fresh)
+    items = [service.recall_out(r, v) for r in service.list_recalls(db, v, q)]
+    groups = [i.group for i in items]
+    order = {"maker": 0, "other_engine": 1, "aftermarket": 2}
+    items.sort(key=lambda i: order[i.group])  # maker recalls first (already newest-first)
+    return RecallList(
+        total=groups.count("maker"), other_engine=groups.count("other_engine"),
+        aftermarket=groups.count("aftermarket"), items=items, source_url=_nhtsa_url(v), **fresh,
+    )  # fmt: skip
 
 
 @router.get("/complaints", response_model=ComplaintList)

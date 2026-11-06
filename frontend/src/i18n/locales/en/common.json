@@ -35,6 +35,8 @@
   "picker": {
     "year": "Year",
     "make": "Make",
+    "commonMakes": "Most common",
+    "allMakes": "All makes A–Z",
     "model": "Model",
     "engine": "Engine",
     "choose": "Choose…",
@@ -77,7 +79,6 @@
     },
     "chooseEngine": "Which engine? Pick one for engine-specific specs:",
     "quickSpecs": "Quick specs",
-    "quickSpecsNone": "No specs for this exact vehicle yet.",
     "allSpecs": "All specs",
     "quick": {
       "oil": "Engine oil",
@@ -184,7 +185,7 @@
     "privacyTitle": "Privacy",
     "privacy": "We collect the minimum: your email, display name and settings. No trackers. We never sell your data. You can download or delete your data at any time from the Account page.",
     "licenseTitle": "Licenses",
-    "license": "Code: AGPL-3.0. Community content: CC BY-SA 4.0. Vehicle, recall and complaint data: NHTSA (public domain).",
+    "license": "Code: AGPL-3.0 (open source). Repair content (guides, specs, codes, diagrams): free to read, all rights reserved. Vehicle, recall and complaint data: NHTSA and EPA (public domain).",
     "source": "View the source code",
     "notAffiliated": "Not affiliated with NHTSA, ALLDATA, Mitchell 1, Identifix or any vehicle manufacturer."
   },
@@ -292,6 +293,14 @@
     "readMore": "Read more",
     "showLess": "Show less",
     "noRecalls": "NHTSA returned no recalls for this vehicle.",
+    "noMakerRecalls": "No recalls from the vehicle's maker for this model and engine. Other recalls that may not apply are listed below.",
+    "filedBy": "Filed by {{name}}",
+    "otherEngineRecalls_one": "{{count}} recall for a different engine",
+    "otherEngineRecalls_other": "{{count}} recalls for a different engine",
+    "otherEngineHint": "The maker's recall text names an engine size this vehicle doesn't have. Check the VIN on NHTSA.gov if you're not sure.",
+    "aftermarketRecalls_one": "{{count}} recall from another company",
+    "aftermarketRecalls_other": "{{count}} recalls from other companies",
+    "aftermarketHint": "Filed by upfitters, conversion or equipment makers. These only apply if the vehicle has their equipment, so they're not in the count.",
     "noComplaints": "NHTSA's online lookup returned no owner complaints for this vehicle. Check NHTSA.gov to be sure.",
     "noTsbs": "No bulletins in our index for this vehicle yet.",
     "tsbsNotImported": "The bulletin index hasn't been imported on this server yet.",
@@ -377,7 +386,8 @@
     "fluid_capacity": "Fluid capacity",
     "spec": "Spec",
     "part_note": "Part note",
-    "labor_time": "Labor time"
+    "labor_time": "Labor time",
+    "dtc_guide": "Diagnostic guide"
   },
   "kindsPlural": {
     "procedure": "Repair guides",
@@ -385,7 +395,8 @@
     "fluid_capacity": "Capacities & fluid types",
     "spec": "Engine & tune-up specs",
     "part_note": "Parts & part numbers",
-    "labor_time": "Labor times"
+    "labor_time": "Labor times",
+    "dtc_guide": "Diagnostic guides"
   },
   "systems": {
     "maintenance": "Maintenance",
@@ -458,7 +469,12 @@
       "measured": "Measured by contributor",
       "experience": "Professional experience",
       "industry_standard": "Industry standard practice",
-      "other": "Other"
+      "other": "Other",
+      "oem_service_info": "Factory service info",
+      "service_database": "Service database",
+      "public_data": "Public data (NHTSA/EPA)",
+      "tech_channel": "Working tech",
+      "forum": "Owner forum"
     },
     "noSources": "No sources listed.",
     "lastEdit": "Version {{n}} by {{name}} · {{date}}",
@@ -510,7 +526,7 @@
       "unspecified": "Not specified"
     },
     "replaceFasteners": "One-time-use (torque-to-yield) fasteners — replace them, don't reuse.",
-    "sequence": "Tightening sequence",
+    "sequence": "Sequence",
     "fastener": "Fastener",
     "fluidSystems": {
       "engine_oil": "Engine oil",
@@ -568,7 +584,22 @@
     "notFound": "Entry not found",
     "sourceLine": "Source:",
     "safetyBodyGeneral": "This involves a safety-critical system (brakes, steering, suspension, fuel, airbags or high voltage). Follow the safety steps, and confirm specs against the manufacturer's service information.",
-    "printed": "As printed in the manual"
+    "printed": "As printed in the manual",
+    "applications": "Applies to",
+    "specialTools": "Special tools",
+    "fluids": "Fluids and capacities",
+    "gotchas": "Known gotchas from techs who've done this job",
+    "unverifiedTag": "Unverified",
+    "unverifiedHint": "This value hasn't been confirmed in two sources yet — check the manufacturer's spec.",
+    "ownRiskTitle": "Work at your own risk",
+    "ownRisk": "This information is provided as-is. Confirm specifications with the manufacturer's service information, follow every safety warning, and stop if you're not sure. You're responsible for your own work.",
+    "factChecked": "Fact-checked by the ChrystalClear reviewer · {{date}}",
+    "hasUnverified_one": "{{count}} value on this page is marked UNVERIFIED — confirm it before relying on it.",
+    "hasUnverified_other": "{{count}} values on this page are marked UNVERIFIED — confirm them before relying on them.",
+    "underReview": "Someone reported a possible mistake on this page. It's under review — double-check the numbers until it's resolved.",
+    "lastRevised": "Last revised {{date}}",
+    "reportSection": "Which part? (optional)",
+    "reportSectionHint": "e.g. \"Test 3\" or \"Causes\""
   },
   "editor": {
     "newTitle": "New {{kind}}",
@@ -661,9 +692,10 @@
     "saving": "Saving…",
     "cancel": "Cancel",
     "probationNote": "New accounts: your first few contributions are reviewed by a moderator before they go public.",
-    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it under CC BY-SA 4.0.",
+    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it to ChrystalClear under the Contributor License Agreement. Repair content is free to read but all rights reserved.",
     "conflict": "Someone else saved a newer version while you were editing. Copy your changes, reload, and try again.",
-    "loginRequired": "Log in to contribute."
+    "loginRequired": "Log in to contribute.",
+    "teamOnly": "Diagnostic guides are written and fact-checked by the ChrystalClear content team. To suggest a change, use \"Report a mistake\" on the page."
   },
   "history": {
     "title": "History: {{title}}",
@@ -1055,14 +1087,26 @@
     "reviews": "Reviews",
     "noReviews": "No reviews yet",
     "ratingOf_one": "{{rating}} out of 5 ({{count}} review)",
-    "ratingOf_other": "{{rating}} out of 5 ({{count}} reviews)"
+    "ratingOf_other": "{{rating}} out of 5 ({{count}} reviews)",
+    "forSaleNear": "For sale near you",
+    "partsThatFit_one": "{{count}} part that fits this vehicle",
+    "partsThatFit_other": "{{count}} parts that fit this vehicle",
+    "sameModelForSale_one": "{{count}} {{model}} for sale",
+    "sameModelForSale_other": "{{count}} {{model}}s for sale",
+    "seeAllParts": "See all parts that fit",
+    "seeAllVehicles": "See all {{model}} vehicles",
+    "filters": "Filters",
+    "filtersActive_one": "Filters ({{count}} on)",
+    "filtersActive_other": "Filters ({{count}} on)",
+    "clearFilters": "Clear filters"
   },
   "legal": {
     "title": "Terms and rules",
     "terms": "Terms of Service",
     "seller-agreement": "Seller Agreement",
     "prohibited-items": "Prohibited items",
-    "draftNotice": "DRAFT — this document is waiting for review by a lawyer and may change."
+    "draftNotice": "DRAFT — this document is waiting for review by a lawyer and may change.",
+    "content-license": "Content license"
   },
   "pay": {
     "title": "Get paid in the app",
@@ -1178,6 +1222,41 @@
       "responded": "Waiting for an admin",
       "refunded": "Buyer refunded",
       "released": "Seller paid"
+    }
+  },
+  "dtcGuide": {
+    "monitor": "What the computer is watching",
+    "enableCriteria": "When it runs the test (enable criteria)",
+    "symptoms": "Symptoms",
+    "causes": "Likely causes, most common first",
+    "pattern": "Known weak spot",
+    "tests": "Tests",
+    "testN": "Test {{n}}",
+    "pins": "Connector / pins",
+    "good": "Good",
+    "bad": "Points to the fault",
+    "related": "Related TSBs and recalls",
+    "bulletin": {
+      "tsb": "TSB",
+      "recall": "Recall",
+      "special_service": "Special service"
+    },
+    "misdiagnoses": "Common misdiagnoses — parts that usually don't fix it",
+    "costTime": "Typical repair time and parts cost",
+    "hours": "Repair time: about {{min}}–{{max}} h",
+    "parts": "Parts: about {{min}}–{{max}}"
+  },
+  "comingSoon": {
+    "title": "Coming soon",
+    "body": "This part of ChrystalClear isn't switched on yet. Check back soon!",
+    "home": "Back to home",
+    "marketplace": {
+      "title": "Parts & vehicles marketplace — coming soon",
+      "body": "Soon you'll be able to buy and sell used parts and whole vehicles here, matched to what they fit. Repair info, codes and recalls are all available now."
+    },
+    "market_payments": {
+      "title": "In-app payments — coming soon",
+      "body": "Paying through the app isn't switched on yet. For now, message the seller to arrange payment and pickup."
     }
   }
 }

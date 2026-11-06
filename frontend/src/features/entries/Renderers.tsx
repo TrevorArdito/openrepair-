@@ -7,7 +7,7 @@ import { api } from "../../lib/api";
 import { errorMessage } from "../../lib/errors";
 import { usePrefs } from "../../lib/prefs";
 import type { Entry } from "../../lib/types";
-import { formatQuantity } from "../../lib/units";
+import { formatQuantity, type Quantity } from "../../lib/units";
 import { fluidAmount, specValue } from "./specFormat";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -16,6 +16,11 @@ type D = Record<string, any>;
 export function useTorque() {
   const { units } = usePrefs();
   return (nm: number) => formatQuantity(nm, "torque", units, 0);
+}
+
+function useVolume() {
+  const { units } = usePrefs();
+  return (l: number) => formatQuantity(l, "volume", units, 1);
 }
 
 function Lines({ title, items, ordered = false }: { title: string; items?: string[]; ordered?: boolean }) {
@@ -42,9 +47,139 @@ function BigValue({ value, sub }: { value: string; sub?: string }) {
   );
 }
 
+// Unit-aware display of a guide's spec value (stored SI; shown in the user's units).
+const UNIT_QUANTITY: Record<string, Quantity> = { mm: "length", kPa: "pressure", "°C": "temperature", Nm: "torque", L: "volume", kg: "mass" };
+
+function useSpecText() {
+  const { units } = usePrefs();
+  return (sp: D): string => {
+    if (sp.value == null) return sp.text ?? "";
+    const q = sp.unit ? UNIT_QUANTITY[sp.unit] : undefined;
+    // Small lengths (plug gaps, clearances) need 3 decimals in inches: 1.0 mm = 0.039 in.
+    const digits = (v: number) => (q === "length" && v < 5 ? 3 : 2);
+    const fmt = (v: number) => (q ? formatQuantity(v, q, units, digits(v), true) : `${v}${sp.unit ? ` ${sp.unit}` : ""}`);
+    const main = sp.value_max != null ? `${fmt(sp.value)} – ${fmt(sp.value_max)}` : fmt(sp.value);
+    return sp.text ? `${main} (${sp.text})` : main;
+  };
+}
+
+function Unverified() {
+  const { t } = useTranslation();
+  return <span className="ml-1 rounded bg-red-700 px-2 py-0.5 text-sm font-bold uppercase text-white" title={t("entry.unverifiedHint")}>{t("entry.unverifiedTag")}</span>;
+}
+
+/** Superscript links to the page's numbered source list. */
+function Refs({ refs }: { refs?: number[] }) {
+  if (!refs?.length) return null;
+  return <sup className="ml-1 font-semibold">{refs.map((r) => <a key={r} href={`#src-${r + 1}`} className="underline">[{r + 1}]</a>)}</sup>;
+}
+
+function SpecList({ specs }: { specs: D[] }) {
+  const spec = useSpecText();
+  return (
+    <ul className="mt-2 space-y-1">
+      {specs.map((sp: D, i: number) => (
+        <li key={i} className="rounded-lg bg-slate-900 px-3 py-2 font-mono text-lg font-bold text-amber-400">
+          {sp.name}: {spec(sp)}
+          {sp.unverified && <Unverified />}
+          <Refs refs={sp.source_refs} />
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function DtcGuideView({ d }: { d: D }) {
+  const { t } = useTranslation();
+  const money = (n: number) => new Intl.NumberFormat(undefined, { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
+  const causes = [...(d.causes ?? [])].sort((a: D, b: D) => a.rank - b.rank);
+  return (
+    <div className="space-y-4">
+      {d.warnings?.length > 0 && (
+        <Alert kind="warning">
+          <h2 className="mb-1 font-bold">{t("entry.warnings")}</h2>
+          <ul className="list-disc pl-5">{d.warnings.map((w: string) => <li key={w}>{w}</li>)}</ul>
+        </Alert>
+      )}
+      <Card className="space-y-2">
+        <p className="font-mono text-2xl font-extrabold">{d.code}</p>
+        <p className="text-lg">{d.definition}</p>
+        <p className="text-lg"><b>{t("entry.applications")}:</b> {d.applications}</p>
+      </Card>
+      <Card className="space-y-2">
+        <h2 className="text-xl font-bold">{t("dtcGuide.monitor")}</h2>
+        <p className="whitespace-pre-line text-lg">{d.monitor}</p>
+        {d.enable_criteria?.length > 0 && (
+          <>
+            <h3 className="pt-2 text-lg font-bold">{t("dtcGuide.enableCriteria")}</h3>
+            <ul className="list-disc pl-5 text-lg">{d.enable_criteria.map((c: string) => <li key={c}>{c}</li>)}</ul>
+          </>
+        )}
+      </Card>
+      <Lines title={t("dtcGuide.symptoms")} items={d.symptoms} />
+      <Card>
+        <h2 className="mb-2 text-xl font-bold">{t("dtcGuide.causes")}</h2>
+        <ol className="space-y-2 text-lg">
+          {causes.map((c: D) => (
+            <li key={c.rank + c.cause} className="flex gap-3">
+              <span className="flex size-9 shrink-0 items-center justify-center rounded-full border-2 border-slate-400 font-bold">{c.rank}</span>
+              <span>
+                <b>{c.cause}</b>
+                {c.pattern_failure && <span className="ml-2 rounded bg-amber-500 px-2 py-0.5 text-sm font-bold uppercase text-slate-950">{t("dtcGuide.pattern")}</span>}
+                <Refs refs={c.source_refs} />
+                {c.note && <span className="block text-base">{c.note}</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      </Card>
+      <Card>
+        <h2 className="mb-3 text-xl font-bold">{t("dtcGuide.tests")}</h2>
+        <ol className="space-y-3">
+          {d.tests.map((ts: D, i: number) => (
+            <li key={i} id={`test-${i + 1}`} className="rounded-xl border-2 border-slate-300 p-3 dark:border-slate-700">
+              <h3 className="text-lg font-bold">{t("dtcGuide.testN", { n: i + 1 })}: {ts.title} <Refs refs={ts.source_refs} /></h3>
+              {ts.caution && <p className="mt-2 rounded-lg bg-amber-100 p-2 font-semibold text-amber-950 dark:bg-amber-950 dark:text-amber-100">⚠ {ts.caution}</p>}
+              <p className="mt-2 whitespace-pre-line text-lg">{ts.how}</p>
+              {ts.connector_pin && <p className="mt-2 text-lg"><b>{t("dtcGuide.pins")}:</b> {ts.connector_pin}</p>}
+              {ts.specs?.length > 0 && <SpecList specs={ts.specs} />}
+              {(ts.good || ts.bad) && (
+                <div className="mt-2 grid gap-2 sm:grid-cols-2">
+                  {ts.good && <p className="rounded-lg border-2 border-green-600 p-2 text-lg"><b>✓ {t("dtcGuide.good")}:</b> {ts.good}</p>}
+                  {ts.bad && <p className="rounded-lg border-2 border-red-600 p-2 text-lg"><b>✗ {t("dtcGuide.bad")}:</b> {ts.bad}</p>}
+                </div>
+              )}
+            </li>
+          ))}
+        </ol>
+      </Card>
+      {d.related?.length > 0 && (
+        <Card>
+          <h2 className="mb-2 text-xl font-bold">{t("dtcGuide.related")}</h2>
+          <ul className="space-y-1 text-lg">
+            {d.related.map((b: D) => (
+              <li key={b.number}><b>{t(`dtcGuide.bulletin.${b.type}`)} {b.number}</b>{b.summary ? ` — ${b.summary}` : ""} <Refs refs={b.source_refs} /></li>
+            ))}
+          </ul>
+        </Card>
+      )}
+      <Lines title={t("dtcGuide.misdiagnoses")} items={d.misdiagnoses} />
+      {(d.repair_hours || d.parts_cost_usd) && (
+        <Card className="space-y-1 text-lg">
+          <h2 className="mb-1 text-xl font-bold">{t("dtcGuide.costTime")}</h2>
+          {d.repair_hours && <p>{t("dtcGuide.hours", { min: d.repair_hours.min, max: d.repair_hours.max })}{d.repair_hours.note ? ` — ${d.repair_hours.note}` : ""}</p>}
+          {d.parts_cost_usd && <p>{t("dtcGuide.parts", { min: money(d.parts_cost_usd.min), max: money(d.parts_cost_usd.max) })}{d.parts_cost_usd.note ? ` — ${d.parts_cost_usd.note}` : ""}</p>}
+        </Card>
+      )}
+      {d.notes && <Card><p className="whitespace-pre-line text-lg">{d.notes}</p></Card>}
+    </div>
+  );
+}
+
 function ProcedureView({ d }: { d: D }) {
   const { t } = useTranslation();
   const torque = useTorque();
+  const volume = useVolume();
   const [done, setDone] = useState<number[]>([]);
   return (
     <div className="space-y-4">
@@ -69,8 +204,24 @@ function ProcedureView({ d }: { d: D }) {
           </ul>
         </Alert>
       )}
+      {d.applications && <p className="text-lg"><b>{t("entry.applications")}:</b> {d.applications}</p>}
       <Lines title={t("entry.tools")} items={d.tools} />
+      <Lines title={t("entry.specialTools")} items={d.special_tools} />
       <Lines title={t("entry.parts")} items={d.parts} />
+      {d.fluids?.length > 0 && (
+        <Card>
+          <h2 className="mb-2 text-xl font-bold">{t("entry.fluids")}</h2>
+          <ul className="space-y-2 text-lg">
+            {d.fluids.map((f: D, i: number) => (
+              <li key={i}>
+                <b>{f.name}</b>{f.capacity_l ? ` — ${volume(f.capacity_l)}` : ""}{f.printed ? ` (${f.printed})` : ""}
+                {f.spec && <span className="block text-base">{f.spec}</span>}
+                {f.unverified && <Unverified />} <Refs refs={f.source_refs} />
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
       <Card>
         <h2 className="mb-3 text-xl font-bold">{t("entry.steps")}</h2>
         <ol className="space-y-3">
@@ -101,12 +252,16 @@ function ProcedureView({ d }: { d: D }) {
                     {torque(s.torque_nm)}
                   </p>
                 )}
+                {s.sequence && <p className="mt-2 text-lg"><b>{t("entry.sequence")}:</b> {s.sequence}</p>}
+                {s.specs?.length > 0 && <SpecList specs={s.specs} />}
+                <Refs refs={s.source_refs} />
                 {s.photo_id && <img src={`/api/v1/photos/${s.photo_id}`} alt="" loading="lazy" className="mt-2 w-full rounded-xl" />}
               </li>
             );
           })}
         </ol>
       </Card>
+      <Lines title={t("entry.gotchas")} items={d.gotchas} />
       {d.notes && (
         <Card>
           <h2 className="mb-1 text-xl font-bold">{t("entry.notes")}</h2>
@@ -363,5 +518,7 @@ export function EntryBody({ entry, onChange, loggedIn }: { entry: Entry; onChang
       return <PartView d={d} />;
     case "labor_time":
       return <LaborView entry={entry} d={d} onChange={onChange} canAdd={loggedIn} />;
+    case "dtc_guide":
+      return <DtcGuideView d={d} />;
   }
 }

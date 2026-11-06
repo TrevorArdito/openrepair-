@@ -11,11 +11,15 @@ import { useDocumentTitle } from "../../lib/title";
 import CodeSearch from "../codes/CodeSearch";
 import EntryList from "../entries/EntryList";
 import QuickSpecs from "../entries/QuickSpecs";
+import ForSaleNearYou from "../marketplace/ForSaleNearYou";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
 import type { RecallList, Vehicle, VehicleProfile, VinDecode } from "../../lib/types";
 
 const TABS = ["overview", "recalls", "tsbs", "complaints", "codes", "guides", "specs"] as const;
 type Tab = (typeof TABS)[number];
+// Tabs that come from our own database (TSB import, written specs): hide them when empty instead
+// of opening a blank list. Recalls and complaints are fetched from NHTSA on demand, so they stay.
+const HIDE_WHEN_EMPTY: Tab[] = ["tsbs", "specs"];
 
 export default function VehiclePage() {
   const { t } = useTranslation();
@@ -138,8 +142,8 @@ export default function VehiclePage() {
         </LinkButton>
       )}
 
-      <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
-        {TABS.map((key) => {
+      <div role="tablist" aria-label={vehicle.label} className="flex flex-wrap gap-2 pb-1">
+        {TABS.filter((key) => !HIDE_WHEN_EMPTY.includes(key) || vehicle.counts[key] > 0).map((key) => {
           const count = key === "recalls" && recallCount !== null ? recallCount : vehicle.counts[key];
           return (
             <button
@@ -164,6 +168,7 @@ export default function VehiclePage() {
         {tab === "overview" ? (
           <div className="space-y-4">
             <QuickSpecs vehicleId={id!} onShowAll={() => setTab("specs")} />
+            {market && <ForSaleNearYou vehicle={vehicle} />}
             <Card>
             <h2 className="mb-2 text-xl font-bold">{t("vehicle.details")}</h2>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-lg">
@@ -208,7 +213,7 @@ export default function VehiclePage() {
         ) : tab === "complaints" ? (
           <ComplaintsTab vehicleId={id!} />
         ) : tab === "guides" ? (
-          <EntryList vehicleId={id!} kinds={["procedure"]} addKind="procedure" />
+          <EntryList vehicleId={id!} kinds={["dtc_guide", "procedure"]} addKind="procedure" />
         ) : tab === "specs" ? (
           <EntryList vehicleId={id!} kinds={["fluid_capacity", "torque_spec", "spec", "part_note", "labor_time"]} addKind={null} />
         ) : tab === "codes" ? (

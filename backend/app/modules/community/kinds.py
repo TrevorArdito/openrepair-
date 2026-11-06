@@ -26,9 +26,38 @@ class Source(Strict):
         "measured",  # contributor measured it themselves
         "experience",  # contributor's professional experience
         "industry_standard",  # standard practice / published standard (SAE, ASE study guides)
+        "oem_service_info",  # factory service information (owner lookup, cited with date)
+        "service_database",  # ALLDATA DIY / Mitchell1 DIY etc. (owner lookup, cited with date)
+        "public_data",  # NHTSA recalls/TSB index/complaints, EPA
+        "tech_channel",  # working-tech videos and write-ups (ScannerDanner, South Main Auto...)
+        "forum",  # model-specific forums / owner communities
         "other",
     ]
     citation: Annotated[str, Field(max_length=300)] = ""
+
+
+# Indexes into a page's `sources` list, so each claim/number points at its sources.
+SourceRefs = Annotated[list[Annotated[int, Field(ge=0, le=49)]], Field(max_length=10)]
+
+
+class SpecValue(Strict):
+    """A test/spec value inside a guide (stored SI where it has a unit)."""
+
+    name: Short  # "Fuel pressure, key on engine off"
+    value: float | None = None
+    value_max: float | None = None
+    unit: Annotated[str, Field(max_length=20)] | None = None  # V, ohm, kPa, mm, Nm, %, ...
+    text: Annotated[str, Field(max_length=300)] | None = None  # when it isn't one number
+    unverified: bool = False  # couldn't confirm in two sources yet (shown as UNVERIFIED)
+    source_refs: SourceRefs = []
+
+    @model_validator(mode="after")
+    def _has_value(self):
+        if self.value is None and not self.text:
+            raise ValueError("give a value or text")
+        if self.value_max is not None and (self.value is None or self.value_max < self.value):
+            raise ValueError("value_max needs a value and must not be smaller than it")
+        return self
 
 
 # ---- Procedure (repair guide) -----------------------------------------------
@@ -39,17 +68,33 @@ class Step(Strict):
     caution: Annotated[str, Field(max_length=500)] | None = None
     torque_nm: Annotated[float, Field(gt=0, le=5000)] | None = None
     torque_label: Annotated[str, Field(max_length=120)] | None = None
+    sequence: Annotated[str, Field(max_length=500)] | None = None  # tightening order etc.
+    specs: Annotated[list[SpecValue], Field(max_length=10)] = []
     photo_id: int | None = None
     diagram: Annotated[str, Field(max_length=60)] | None = None  # id of a built-in diagram
+    source_refs: SourceRefs = []
+
+
+class Fluid(Strict):
+    name: Short  # "Engine oil"
+    spec: Annotated[str, Field(max_length=300)] | None = None  # "SAE 5W-30, Ford WSS-M2C961-A1"
+    capacity_l: Annotated[float, Field(gt=0, le=2000)] | None = None
+    printed: Annotated[str, Field(max_length=100)] | None = None
+    unverified: bool = False
+    source_refs: SourceRefs = []
 
 
 class ProcedureData(Strict):
     summary: Text
+    applications: Annotated[str, Field(max_length=500)] | None = None  # years/engine/transmission
     difficulty: Annotated[int, Field(ge=1, le=5)] = 3
     time_minutes: Annotated[int, Field(ge=1, le=6000)] | None = None
     tools: list[Short] = []
+    special_tools: list[Short] = []
     parts: list[Short] = []
+    fluids: Annotated[list[Fluid], Field(max_length=20)] = []
     warnings: list[Annotated[str, Field(max_length=500)]] = []
+    gotchas: Annotated[list[Annotated[str, Field(max_length=600)]], Field(max_length=30)] = []
     steps: Annotated[list[Step], Field(min_length=1, max_length=200)]
     notes: Annotated[str, Field(max_length=4000)] | None = None
     sources: list[Source] = []
@@ -203,6 +248,99 @@ class LaborTimeData(Strict):
     notes: Annotated[str, Field(max_length=2000)] | None = None
 
 
+# ---- DTC guide (engine-specific diagnostic page) --------------------------------
+
+
+class RankedCause(Strict):
+    cause: Short
+    rank: Annotated[int, Field(ge=1, le=50)]  # 1 = most common on this engine
+    pattern_failure: bool = False  # a known weak spot on this engine
+    note: Annotated[str, Field(max_length=1000)] | None = None
+    source_refs: SourceRefs = []
+
+
+class DiagTest(Strict):
+    title: Short  # "Swap the coil to another cylinder"
+    how: Text
+    specs: Annotated[list[SpecValue], Field(max_length=10)] = []
+    connector_pin: Annotated[str, Field(max_length=300)] | None = None
+    good: Annotated[str, Field(max_length=600)] | None = None  # what a good result looks like
+    bad: Annotated[str, Field(max_length=600)] | None = None  # what points to the fault
+    caution: Annotated[str, Field(max_length=500)] | None = None
+    source_refs: SourceRefs = []
+
+
+class RelatedBulletin(Strict):
+    type: Literal["tsb", "recall", "special_service"]
+    number: Annotated[str, Field(min_length=1, max_length=40)]
+    summary: Annotated[str, Field(max_length=500)] | None = None
+    source_refs: SourceRefs = []
+
+
+class Range(Strict):
+    min: Annotated[float, Field(ge=0, le=100000)]
+    max: Annotated[float, Field(ge=0, le=100000)]
+    note: Annotated[str, Field(max_length=300)] | None = None
+
+    @model_validator(mode="after")
+    def _order(self):
+        if self.max < self.min:
+            raise ValueError("max must not be smaller than min")
+        return self
+
+
+class DtcGuideData(Strict):
+    """One code on one engine family, at full depth (CONTENT_PROGRAM.md, "A DTC page")."""
+
+    code: Annotated[str, Field(pattern=r"^[PBCU][0-9A-F]{4}$")]
+    definition: Text  # what the code means
+    monitor: Text  # what the computer is actually monitoring, and how it decides
+    applications: Annotated[str, Field(max_length=500)]  # years / engine codes / transmissions
+    enable_criteria: Annotated[
+        list[Annotated[str, Field(max_length=300)]], Field(max_length=20)
+    ] = []
+    symptoms: Annotated[list[Short], Field(max_length=20)] = []
+    causes: Annotated[list[RankedCause], Field(min_length=1, max_length=30)]
+    tests: Annotated[list[DiagTest], Field(min_length=1, max_length=40)]
+    related: Annotated[list[RelatedBulletin], Field(max_length=40)] = []
+    misdiagnoses: Annotated[list[Annotated[str, Field(max_length=500)]], Field(max_length=20)] = []
+    repair_hours: Range | None = None
+    parts_cost_usd: Range | None = None
+    warnings: list[Annotated[str, Field(max_length=500)]] = []
+    notes: Annotated[str, Field(max_length=4000)] | None = None
+    sources: Annotated[list[Source], Field(min_length=1, max_length=50)]
+
+    @model_validator(mode="after")
+    def _refs_in_range(self):
+        n = len(self.sources)
+        refs = [r for c in self.causes for r in c.source_refs]
+        refs += [r for t in self.tests for r in t.source_refs]
+        refs += [r for t in self.tests for sp in t.specs for r in sp.source_refs]
+        refs += [r for b in self.related for r in b.source_refs]
+        if any(r >= n for r in refs):
+            raise ValueError("source_refs must point at an entry in sources")
+        return self
+
+
+def unverified_count(data: dict) -> int:
+    """How many values in a page are marked UNVERIFIED (shown as a banner, logged for review)."""
+    count = 0
+
+    def walk(x):
+        nonlocal count
+        if isinstance(x, dict):
+            if x.get("unverified") is True:
+                count += 1
+            for v in x.values():
+                walk(v)
+        elif isinstance(x, list):
+            for v in x:
+                walk(v)
+
+    walk(data)
+    return count
+
+
 KIND_SCHEMAS: dict[Kind, type[Strict]] = {
     Kind.procedure: ProcedureData,
     Kind.torque_spec: TorqueSpecData,
@@ -210,6 +348,7 @@ KIND_SCHEMAS: dict[Kind, type[Strict]] = {
     Kind.spec: SpecData,
     Kind.part_note: PartNoteData,
     Kind.labor_time: LaborTimeData,
+    Kind.dtc_guide: DtcGuideData,
 }
 
 # Torque specs always carry the safety disclaimer.

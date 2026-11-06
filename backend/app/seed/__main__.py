@@ -65,7 +65,7 @@ def seed_vehicles(db: Session) -> int:
 
 
 def seed_dtcs(db: Session) -> int:
-    """Insert or update generic codes from dtcs.json (our own writing, CC BY-SA 4.0)."""
+    """Insert or update generic codes from dtcs.json (our own writing; proprietary, see content/LICENSE)."""
     count = 0
     for row in load("dtcs.json"):
         dtc = db.scalar(select(Dtc).where(Dtc.code == row["code"], Dtc.make_id.is_(None)))
@@ -137,12 +137,21 @@ def run(db: Session, guides: bool = True) -> dict[str, int]:
 
         result["guides_added"] = seed_guides(db)
         result["manual_specs_added"] = load_all(db, team_user(db))
+        from app.seed import content
+
+        result["content_pages"] = content.load_all(db, team_user(db))
     from app.config import get_settings
 
     if get_settings().enable_marketplace:  # optional module: ZIP points for distance search
         from app.modules.marketplace import zips
 
         result["zip_points_added"] = zips.load(db)
+        from app.modules.marketplace import demo
+
+        if get_settings().market_demo_data:
+            result["demo_listings_added"] = demo.load(db)
+        elif demo.remove(db):
+            result["demo_listings_removed"] = True
     db.commit()
     return result
 
