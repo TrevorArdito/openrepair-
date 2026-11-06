@@ -3,6 +3,9 @@
 Read this first in every session. It records the owner's decisions so work stays on track.
 If a request conflicts with this file, ask the owner before proceeding.
 
+For any repair content work, follow CONTENT_PROGRAM.md.
+(Owner amendments to it are in the decision log below, 2026-11-06, and take precedence.)
+
 ## What this is
 **ChrystalClear** — a free, open-source alternative to ALLDATA for auto repair information.
 
@@ -30,7 +33,9 @@ database exists to help people **maintain and repair vehicles correctly**, not j
      badge, not a paid tier.
    - Keep paid-capable features as separate modules so the free core never depends on them.
 2. **Licenses.** Code: **AGPL-3.0**. Because it's a web app, the UI must always link to the
-   source code (AGPL §13). Community content: **CC BY-SA 4.0**. All contributors (code and
+   source code (AGPL §13). Repair content (guides, specs, research, diagrams): **proprietary,
+   all rights reserved, free to read** (owner decision 2026-11-06, replacing CC BY-SA 4.0 —
+   see `content/LICENSE`). All contributors (code and
    content) agree to the **Contributor License Agreement** (`CLA.md`) so the project owner
    keeps the right to relicense/commercialize; code contributions are checked by a CLA bot,
    content contributors accept it in the sign-up terms.
@@ -197,8 +202,22 @@ Legal guardrails for these modules (non-negotiable):
   `PaymentProvider`. Legal docs in `backend/app/legal/` are DRAFTS. Delete/defeat parts stay
   prohibited (Clean Air Act). Details: docs/PAYMENTS.md.
 
+- 2026-11-06: **Content Research Program adopted** (`CONTENT_PROGRAM.md`). Owner's decisions on it:
+  1. **License: all repair content proprietary** (all rights reserved, free to read in the app),
+     including team and community content going forward. The code stays AGPL-3.0. Copies
+     already published under CC BY-SA 4.0 stay CC BY-SA for whoever received them (can't be
+     revoked); the CLA lets the owner relicense contributions from here on.
+  2. **Paid/login-only sources: as written in the program** (owner looks things up in ALLDATA
+     DIY, Mitchell1 DIY and OEM sites; notes/screenshots go in `research/owner-notes/`; cited as
+     "owner lookup"). Owner accepted the risk that those services' terms may forbid this.
+     Still never copy their text, images or diagrams into our pages (facts only, our words).
+  3. **Sign-off: a designated reviewer agent** (separate from the writer) fact-checks and signs
+     off each page when the batch is finished, in place of the program's mechanic sign-off.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
 - Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.
 - CLA review: lawyer, free clinic, or switch to a standard template (Apache ICLA / Harmony) before outside contributors join.
 - Stripe account + keys (owner), lawyer review of the legal drafts, CPA answer on sales tax.
+- The GitHub repo is public: whether to move `content/` and `research/` (incl. owner notes and
+  screenshots from paid services) into a private repo.
