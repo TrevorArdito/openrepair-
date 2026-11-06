@@ -578,7 +578,7 @@ def _notify(conv: Conversation, sender: User) -> None:
             recipient.email,
             f'New message about "{conv.listing.title}"',
             f"Hi {recipient.display_name},\n\n{sender.display_name} sent you a message about "
-            f'"{conv.listing.title}" on ChrystalClear.\n\nRead and reply here:\n{link}\n',
+            f'"{conv.listing.title}" on River Valley Auto Sales and Market.\n\nRead and reply here:\n{link}\n',
         )
     except Exception:  # noqa: BLE001 - a mail outage must never block messaging
         log.exception("message notification email failed")

@@ -9,7 +9,7 @@ from app.main import create_app
 
 INDEX = """<!doctype html><html><head><meta charset="UTF-8" />
 <meta name="description" content="Default description" />
-<title>ChrystalClear</title></head><body><div id="root"></div></body></html>"""
+<title>River Valley Auto Sales and Market</title></head><body><div id="root"></div></body></html>"""
 
 
 @pytest.fixture
@@ -38,13 +38,13 @@ def test_serves_spa_and_keeps_api_404s(prod):
     assert r.status_code == 404
     assert r.json()["error"]["code"] == "not_found"
     # Path traversal never escapes the dist folder.
-    assert "ChrystalClear" in prod.get("/..%2f..%2fetc%2fpasswd").text
+    assert "River Valley Auto Sales and Market" in prod.get("/..%2f..%2fetc%2fpasswd").text
 
 
 def test_code_page_is_google_friendly(prod):
     html = prod.get("/codes/P0420").text
     assert (
-        "<title>P0420: Catalytic converter efficiency below threshold (bank 1) | ChrystalClear</title>"
+        "<title>P0420: Catalytic converter efficiency below threshold (bank 1) | River Valley Auto Sales and Market</title>"
         in html
     )
     assert 'content="Default description"' not in html  # replaced, not duplicated
@@ -94,7 +94,7 @@ def test_engine_pages_are_google_friendly(prod, client):
     eid = next(e["id"] for e in client.get("/api/v1/engines").json() if e["slug"] == "cummins-6-7")
     html = prod.get(f"/engines/{eid}").text
     assert (
-        "<title>Cummins 6.7L I6 Turbo Diesel — vehicles, codes &amp; repair info | ChrystalClear</title>"
+        "<title>Cummins 6.7L I6 Turbo Diesel — vehicles, codes &amp; repair info | River Valley Auto Sales and Market</title>"
         in html
     )
     assert "Ram 2500 (2011–" in html

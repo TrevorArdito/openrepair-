@@ -26,6 +26,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- **Renamed** to "River Valley Auto Sales and Market" everywhere people see it (titles, header,
+  about, install name, share previews, emails, legal pages). The web address stays the same.
 - Marketplace opens on Vehicles (yards' main stock), with page titles per tab; part listings say
   "Donor vehicle VIN"; fitment shows "5.0L"; card titles get three lines on phones.
 - Recall text keeps more abbreviations (OCSM, TCM/PCM…), month names and the make's model names

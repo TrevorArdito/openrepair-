@@ -54,7 +54,7 @@ def send_verification(db: Session, user: User) -> None:
     link = f"{get_settings().public_base_url}/verify-email?token={issue(db, user, 'verify')}"
     send_email(
         user.email,
-        "Confirm your ChrystalClear email",
+        "Confirm your River Valley Auto Sales and Market email",
         f"Hi {user.display_name},\n\nConfirm your email address by opening this link:\n{link}\n\n"
         "The link works for 48 hours. If you didn't create an account, ignore this email.\n",
     )
@@ -64,7 +64,7 @@ def send_reset(db: Session, user: User) -> None:
     link = f"{get_settings().public_base_url}/reset-password?token={issue(db, user, 'reset')}"
     send_email(
         user.email,
-        "Reset your ChrystalClear password",
+        "Reset your River Valley Auto Sales and Market password",
         f"Hi {user.display_name},\n\nSomeone (hopefully you) asked to reset your password.\n"
         f"Open this link to choose a new one:\n{link}\n\n"
         "The link works for 1 hour. If you didn't ask, ignore this email — your password won't change.\n",

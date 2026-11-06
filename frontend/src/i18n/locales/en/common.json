@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "ChrystalClear",
+    "name": "River Valley Auto Sales and Market",
     "tagline": "Free auto repair info. For shops, techs and DIYers.",
     "skipToContent": "Skip to content",
     "offline": "You're offline. Showing saved info.",
@@ -177,8 +177,8 @@
     "proNote": "Moderator note: {{note}}"
   },
   "about": {
-    "title": "About ChrystalClear",
-    "mission": "ChrystalClear is free, open-source auto repair information built by and for technicians and DIYers.",
+    "title": "About River Valley Auto Sales and Market",
+    "mission": "River Valley Auto Sales and Market is free, open-source auto repair information built by and for technicians and DIYers.",
     "free": "All repair information is free forever: vehicle lookups, recalls, trouble codes, and every community-written guide and spec.",
     "disclaimerTitle": "Safety disclaimer",
     "disclaimer": "Information is provided by the community and public sources as-is, without warranty. Always confirm torque values and safety-critical specs against the manufacturer's service information before working on brakes, steering, suspension, airbags, fuel or high-voltage systems. You are responsible for your own work.",
@@ -593,7 +593,7 @@
     "unverifiedHint": "This value hasn't been confirmed in two sources yet — check the manufacturer's spec.",
     "ownRiskTitle": "Work at your own risk",
     "ownRisk": "This information is provided as-is. Confirm specifications with the manufacturer's service information, follow every safety warning, and stop if you're not sure. You're responsible for your own work.",
-    "factChecked": "Fact-checked by the ChrystalClear reviewer · {{date}}",
+    "factChecked": "Fact-checked by the River Valley Auto Sales and Market reviewer · {{date}}",
     "hasUnverified_one": "{{count}} value on this page is marked UNVERIFIED — confirm it before relying on it.",
     "hasUnverified_other": "{{count}} values on this page are marked UNVERIFIED — confirm them before relying on them.",
     "underReview": "Someone reported a possible mistake on this page. It's under review — double-check the numbers until it's resolved.",
@@ -692,10 +692,10 @@
     "saving": "Saving…",
     "cancel": "Cancel",
     "probationNote": "New accounts: your first few contributions are reviewed by a moderator before they go public.",
-    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it to ChrystalClear under the Contributor License Agreement. Repair content is free to read but all rights reserved.",
+    "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it to River Valley Auto Sales and Market under the Contributor License Agreement. Repair content is free to read but all rights reserved.",
     "conflict": "Someone else saved a newer version while you were editing. Copy your changes, reload, and try again.",
     "loginRequired": "Log in to contribute.",
-    "teamOnly": "Diagnostic guides are written and fact-checked by the ChrystalClear content team. To suggest a change, use \"Report a mistake\" on the page."
+    "teamOnly": "Diagnostic guides are written and fact-checked by the River Valley Auto Sales and Market content team. To suggest a change, use \"Report a mistake\" on the page."
   },
   "history": {
     "title": "History: {{title}}",
@@ -1176,7 +1176,7 @@
     "breakdownTitle": "What you take home (shipped sale)",
     "salePrice": "Sale price",
     "shippingCharged": "Shipping you charge",
-    "ourFee": "ChrystalClear fee ({{percent}}%)",
+    "ourFee": "River Valley Auto Sales and Market fee ({{percent}}%)",
     "stripeFee": "Stripe card fee (about {{percent}}% + {{fixed}})",
     "takeHome": "You take home",
     "breakdownNote": "Stripe's fee is an estimate for a standard US card; Stripe charges it to you directly. You pay for the shipping label yourself.",
@@ -1207,7 +1207,7 @@
     "shipping": "Shipping",
     "tax": "Sales tax",
     "total": "Total paid",
-    "ourFee": "ChrystalClear fee ({{percent}}%)",
+    "ourFee": "River Valley Auto Sales and Market fee ({{percent}}%)",
     "stripeFeeNote": "Stripe's card fee is taken by Stripe from your payout and shown in your Stripe dashboard.",
     "paidOn": "Paid",
     "shippedOn": "Shipped",
@@ -1286,7 +1286,7 @@
   },
   "comingSoon": {
     "title": "Coming soon",
-    "body": "This part of ChrystalClear isn't switched on yet. Check back soon!",
+    "body": "This part of River Valley Auto Sales and Market isn't switched on yet. Check back soon!",
     "home": "Back to home",
     "marketplace": {
       "title": "Parts & vehicles marketplace — coming soon",

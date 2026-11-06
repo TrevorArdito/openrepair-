@@ -3,7 +3,7 @@
 > **DRAFT — NOT LEGAL ADVICE. For review by a lawyer or legal clinic before launch.**
 > Version: draft-2026-11-02
 
-These can't be listed on ChrystalClear. Listings that break these rules are removed, and repeated
+These can't be listed on River Valley Auto Sales and Market. Listings that break these rules are removed, and repeated
 or serious violations lead to suspension and, where required, reports to law enforcement.
 
 ## Never allowed

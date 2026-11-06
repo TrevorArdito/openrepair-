@@ -50,7 +50,7 @@
 - [x] 7. Recall count = maker's own recalls for that engine; others in collapsed groups; no ALL CAPS
 - [x] 8. Hide empty TSB/Specs tabs, quick-specs box and "Common codes" heading
 - [x] 9. Make dropdowns: most common makes first
-- [ ] Owner: ChrystalClear vs OpenRepair name for the pitch (app currently says ChrystalClear)
+- [x] Name: app shows "River Valley Auto Sales and Market" (owner, 2026-11-06); Render URL unchanged
 - [ ] Merge to `main`, then check Render → Environment has ENABLE_MARKETPLACE=true and MARKET_DEMO_DATA=true
 - [ ] Before real yards list: set MARKET_DEMO_DATA=false (removes all demo listings)
 - [x] Yard details on vehicle listings (row/stock #, arrived, keys, damage, lien sale)

@@ -1,17 +1,17 @@
-# ChrystalClear Repair Content — All Rights Reserved
+# River Valley Auto Sales and Market Repair Content — All Rights Reserved
 
 > **DRAFT — NOT LEGAL ADVICE. For review by a lawyer or legal clinic before launch.**
 > Version: draft-2026-11-06
 
-Copyright (c) 2026 the ChrystalClear project owner and contributors (contributions licensed to
+Copyright (c) 2026 the River Valley Auto Sales and Market project owner and contributors (contributions licensed to
 the project owner under the Contributor License Agreement, CLA.md).
 
-This license covers ChrystalClear's repair content: the repair guides, diagnostic (DTC) pages,
+This license covers River Valley Auto Sales and Market's repair content: the repair guides, diagnostic (DTC) pages,
 specifications pages, research notes, diagrams and illustrations in this folder (content/), in
 research/, in backend/app/seed/data/ (except third-party data listed in docs/DATA_SOURCES.md),
-and the same content as shown on the ChrystalClear website and app.
+and the same content as shown on the River Valley Auto Sales and Market website and app.
 
-- You may READ this content for free in the ChrystalClear website and app, and use the
+- You may READ this content for free in the River Valley Auto Sales and Market website and app, and use the
   information to maintain and repair vehicles.
 - No other rights are granted. You may not copy, republish, sell, scrape, mirror, or use it to
   build or train another product or database without written permission from the project owner.

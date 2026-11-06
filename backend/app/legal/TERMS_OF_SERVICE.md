@@ -1,10 +1,10 @@
-# ChrystalClear Terms of Service
+# River Valley Auto Sales and Market Terms of Service
 
 > **DRAFT — NOT LEGAL ADVICE. For review by a lawyer or legal clinic before launch.**
 > Version: draft-2026-11-02
 
 ## 1. Who we are
-ChrystalClear ("we", "us") runs a free auto-repair information website and an optional parts and
+River Valley Auto Sales and Market ("we", "us") runs a free auto-repair information website and an optional parts and
 vehicle marketplace. These terms apply to everyone who uses the site ("you").
 
 ## 2. Repair information
@@ -50,7 +50,7 @@ before they can keep selling.
 
 ## 8. Content you post
 You keep ownership of what you post and license it to us under the Contributor License Agreement.
-ChrystalClear's repair content is free to read but all rights reserved — no copying, scraping or
+River Valley Auto Sales and Market's repair content is free to read but all rights reserved — no copying, scraping or
 republishing ([Content License](CONTENT_LICENSE.md)). The code is open source (AGPL-3.0).
 Listings, photos and messages may be removed if they break these terms.
 

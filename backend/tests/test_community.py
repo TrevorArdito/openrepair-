@@ -450,7 +450,7 @@ def test_builtin_guides_seed_and_link_to_codes(client, db_session_factory):
     listed = client.get("/api/v1/entries", params={"vehicle_id": f150(client)[2]}).json()
     assert listed["total"] == added  # general guides apply to every vehicle
     first = client.get(f"/api/v1/entries/{listed['items'][0]['id']}").json()
-    assert first["revision"]["author"]["display_name"] == "ChrystalClear Team"
+    assert first["revision"]["author"]["display_name"] == "River Valley Auto Team"
     assert first["revision"]["data"]["sources"][0]["type"] == "industry_standard"
 
 

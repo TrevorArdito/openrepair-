@@ -2,7 +2,7 @@
 
 Each file in data/manual_specs/ is one owner's manual, transcribed by hand: the facts only
 (capacities, fluid types, torque, engine specs, part numbers), each with the manual's printed
-page number. Entries are authored by "ChrystalClear Team", tagged to the exact model years and
+page number. Entries are authored by "River Valley Auto Team", tagged to the exact model years and
 engine, and stay editable/verifiable like any other entry. Re-running never overwrites edits.
 
 File format (see ford-f150-2015.json):
