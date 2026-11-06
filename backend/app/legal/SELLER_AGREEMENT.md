@@ -1,9 +1,9 @@
-# ChrystalClear Seller Agreement
+# River Valley Auto Sales and Market Seller Agreement
 
 > **DRAFT — NOT LEGAL ADVICE. For review by a lawyer or legal clinic before launch.**
 > Version: draft-2026-11-02
 
-By listing items or accepting payments on ChrystalClear you agree to the
+By listing items or accepting payments on River Valley Auto Sales and Market you agree to the
 [Terms of Service](TERMS_OF_SERVICE.md), the [Prohibited Items list](PROHIBITED_ITEMS.md) and this
 agreement.
 

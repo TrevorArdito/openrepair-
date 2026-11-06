@@ -20,7 +20,7 @@ from app.modules.dtc.structure import CODE_RE, normalize_code
 from app.modules.vehicles.models import Vehicle
 from app.modules.vehicles.service import PROFILE_COUNTERS, vehicle_out
 
-SITE = "ChrystalClear"
+SITE = "River Valley Auto Sales and Market"
 DEFAULT_DESCRIPTION = (
     "Free auto repair information: VIN decoder, recalls, TSBs, trouble codes, repair guides, "
     "torque specs and labor times — written and checked by technicians."

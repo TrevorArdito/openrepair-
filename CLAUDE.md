@@ -214,9 +214,14 @@ Legal guardrails for these modules (non-negotiable):
   3. **Sign-off: a designated reviewer agent** (separate from the writer) fact-checks and signs
      off each page when the batch is finished, in place of the program's mechanic sign-off.
 
+- 2026-11-06: **App renamed "River Valley Auto Sales and Market"** (owner decision) in all
+  visible text: page titles, header, about page, install name ("River Valley"), share/Google
+  previews, emails, legal pages, team author name. Unchanged for now: Render service name and URL
+  (chrystalclear.onrender.com), the repo name, and internal code identifiers.
+
 ## Open decisions (waiting on owner)
 - Project contact email for conduct/privacy reports (referenced in README "Contact").
-- Trademark check on "ChrystalClear" (free option: USPTO law school clinic) before spending on branding.
+- Trademark check on "River Valley Auto Sales and Market" (free option: USPTO law school clinic) before spending on branding.
 - CLA review: lawyer, free clinic, or switch to a standard template (Apache ICLA / Harmony) before outside contributors join.
 - Stripe account + keys (owner), lawyer review of the legal drafts, CPA answer on sales tax.
 - The GitHub repo is public: whether to move `content/` and `research/` (incl. owner notes and

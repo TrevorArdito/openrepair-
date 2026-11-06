@@ -82,6 +82,9 @@ def seed_dtcs(db: Session) -> int:
 TEAM_EMAIL = "team@chrystalclear.invalid"
 
 
+TEAM_NAME = "River Valley Auto Team"
+
+
 def team_user(db: Session) -> User:
     """Author for built-in content. It can't log in (random unknown password)."""
     user = db.scalar(select(User).where(User.email == TEAM_EMAIL))
@@ -89,12 +92,13 @@ def team_user(db: Session) -> User:
         user = User(
             email=TEAM_EMAIL,
             password_hash=hash_password(new_token()),
-            display_name="ChrystalClear Team",
+            display_name=TEAM_NAME,
             role=Role.pro,
             status=UserStatus.active,
         )
         db.add(user)
         db.flush()
+    user.display_name = TEAM_NAME  # keep the shown author name current after a rename
     return user
 
 

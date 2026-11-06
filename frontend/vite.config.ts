@@ -14,8 +14,8 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["icon.svg"],
       manifest: {
-        name: "ChrystalClear — Free Auto Repair Info",
-        short_name: "ChrystalClear",
+        name: "River Valley Auto Sales and Market",
+        short_name: "River Valley",
         description: "Free, open-source auto repair information: VIN decoder, recalls, codes, guides.",
         theme_color: "#0b1220",
         background_color: "#0b1220",

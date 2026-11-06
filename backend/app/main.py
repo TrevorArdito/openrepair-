@@ -28,7 +28,7 @@ LEGAL_DOCS = {
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
     app = FastAPI(
-        title="ChrystalClear API",
+        title="River Valley Auto Sales and Market API",
         version=__version__,
         docs_url=f"{API_PREFIX}/docs",
         openapi_url=f"{API_PREFIX}/openapi.json",
@@ -47,7 +47,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     def meta():
         # The source link is required by the AGPL for network users.
         return {
-            "name": "ChrystalClear",
+            "name": "River Valley Auto Sales and Market",
             "version": __version__,
             "source_code_url": settings.source_code_url,
             "modules": [m.name for m in modules],
