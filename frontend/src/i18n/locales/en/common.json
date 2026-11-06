@@ -911,6 +911,15 @@
     "mileage": "Mileage on the part",
     "sourceVin": "VIN it came from (optional)",
     "donorVin": "Donor vehicle VIN",
+    "inventory": {
+      "all": "Everything ({{count}})",
+      "vehicle": "Vehicles ({{count}})",
+      "part": "Parts ({{count}})",
+      "shareHint": "Put this inventory page on your website, Facebook or Google listing. It updates itself as you list and sell.",
+      "share": "Share or copy this page's link",
+      "shared": "Link ready to paste",
+      "myPage": "Your public inventory page (share it)"
+    },
     "sourceVinHint": "Helps buyers check fitment and shows it isn't stolen.",
     "compliance": "Emissions legal status",
     "carbEo": "CARB EO number",

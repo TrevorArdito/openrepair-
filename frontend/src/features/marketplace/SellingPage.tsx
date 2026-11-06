@@ -148,6 +148,11 @@ export default function SellingPage() {
       <PageTitle>{t("market.mySelling")}</PageTitle>
       {seller && <LinkButton to="/market/sell" className="w-full">{t("market.sell")}</LinkButton>}
       {seller && (
+        <LinkButton to={`/market/sellers/${seller.id}`} variant="secondary" className="w-full">
+          {t("market.inventory.myPage")}
+        </LinkButton>
+      )}
+      {seller && (
         <section className="space-y-3">
           <h2 className="text-2xl font-bold">{t("market.myListings")} ({items.length})</h2>
           {items.length === 0 && <p className="text-lg">{t("market.noListingsYet")}</p>}
