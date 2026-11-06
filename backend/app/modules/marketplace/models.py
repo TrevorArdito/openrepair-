@@ -8,10 +8,11 @@ address; seller verification stores license numbers only (no document uploads).
 """
 
 import enum
-from datetime import datetime
+from datetime import date, datetime
 
 from sqlalchemy import (
     Boolean,
+    Date,
     DateTime,
     Enum,
     Float,
@@ -222,6 +223,13 @@ class VehicleDetails(Base):
     drive: Mapped[str | None] = mapped_column(String(40))
     transmission: Mapped[str | None] = mapped_column(String(40))
     exterior_color: Mapped[str | None] = mapped_column(String(40))
+    # Yard facts buyers look for first (all optional).
+    stock_number: Mapped[str | None] = mapped_column(String(30))  # yard row / stock number
+    arrived_on: Mapped[date | None] = mapped_column(Date)  # date it arrived on the lot
+    has_keys: Mapped[bool | None] = mapped_column(Boolean)
+    damage: Mapped[str | None] = mapped_column(String(60))  # main damage, e.g. "Front end"
+    # Tow yards: an unclaimed vehicle sold under a lien after the legal notice period.
+    lien_sale_after: Mapped[date | None] = mapped_column(Date)
 
 
 class SavedListing(Base):

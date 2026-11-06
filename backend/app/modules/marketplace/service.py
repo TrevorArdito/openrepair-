@@ -296,6 +296,11 @@ def _vehicle_dict(db: Session, vd: VehicleDetails, full: bool) -> dict:
         "has_lien": vd.has_lien,
         "running": vd.running.value,
         "vehicle_id": vd.vehicle_id,
+        "stock_number": vd.stock_number,
+        "arrived_on": vd.arrived_on.isoformat() if vd.arrived_on else None,
+        "has_keys": vd.has_keys,
+        "damage": vd.damage,
+        "lien_sale_after": vd.lien_sale_after.isoformat() if vd.lien_sale_after else None,
     }
     if full:
         out.update(

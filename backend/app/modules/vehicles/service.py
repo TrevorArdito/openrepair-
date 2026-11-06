@@ -8,6 +8,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.core.errors import AppError, NotFound
+from app.modules.safety.readable import title_case
 from app.modules.vehicles.models import Make, Model, ModelYear, Vehicle, VinDecode, VpicFetch
 from app.modules.vehicles.schemas import EngineOut, NamedRef, VehicleOut, VinDecodeOut
 from app.modules.vehicles.vin import check_digit_valid, validate_vin
@@ -41,6 +42,8 @@ DETAIL_FIELDS = {
     "manufacturer": "Manufacturer",
     "plant_country": "PlantCountry",
 }
+# NHTSA sends these in ALL CAPS; trims/series ("XLT", "LTZ") stay as sent.
+TITLE_CASE_FIELDS = {"vehicle_type", "manufacturer", "plant_country"}
 NA_VALUES = {"", "Not Applicable", "null", None}
 
 
@@ -235,7 +238,11 @@ def _decode_result(vin: str, record: VinDecode) -> VinDecodeOut:
         vin=vin,
         check_digit_valid=check_digit_valid(vin),
         vehicle=vehicle_out(record.vehicle),
-        details={k: raw[src] for k, src in DETAIL_FIELDS.items() if raw.get(src)},
+        details={
+            k: title_case(raw[src]) if k in TITLE_CASE_FIELDS else raw[src]
+            for k, src in DETAIL_FIELDS.items()
+            if raw.get(src)
+        },
         warnings=warnings,
     )
 

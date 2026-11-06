@@ -56,6 +56,15 @@ DONORS = {
                   203_600, Running.not_running, TitleStatus.salvage),
 }  # fmt: skip
 
+# Yard facts for the whole-vehicle listings:
+# (row / stock #, days since it arrived, keys, main damage, lien sale opens in N days or None)
+YARD = {
+    "f150": ("Row 4 · #A1043", 2, True, "Front end", None),
+    "camry": ("Row 11 · #A1031", 9, False, "Rear end", None),
+    "accord": ("Tow lot · #T207", 5, True, "None visible", 12),  # tow-yard lien sale example
+    "silverado": ("Row 7 · #A1038", 6, True, "Engine (lifter noise)", None),
+}
+
 # (title, donor, kind, category, price_dollars, shipping, description)
 LISTINGS = [
     ("DEMO — 2012 Ford F-150 5.0L, salvage title, runs and drives", "f150", "vehicle", "vehicle",
@@ -64,15 +73,16 @@ LISTINGS = [
     ("DEMO — 2008 Toyota Camry 2.4L, parts car, non-running", "camry", "vehicle", "vehicle",
      650, Shipping.pickup, "Sample listing. Doesn't run. Good body panels, glass and interior. "
      "Junk/parts-only title. Tow-away."),
-    ("DEMO — 2006 Honda Accord 2.4L, runs, doesn't drive (transmission)", "accord", "vehicle",
-     "vehicle", 900, Shipping.pickup, "Sample listing. Engine runs well; no forward gears. "
-     "Clean title. Good candidate for a transmission swap."),
+    ("DEMO — 2006 Honda Accord 2.4L, tow-yard lien sale, runs, doesn't drive", "accord",
+     "vehicle", "vehicle", 900, Shipping.pickup, "Sample listing. Unclaimed tow, sold under a lien "
+     "after the legal notice period; buyer gets the lien-sale paperwork for the DMV. Engine runs "
+     "well; no forward gears. Good candidate for a transmission swap."),
     ("DEMO — 2010 Chevrolet Silverado 1500 5.3L, parts truck", "silverado", "vehicle", "vehicle",
      1500, Shipping.pickup, "Sample listing. Not running (lifter noise reported before parking). "
      "Bed, doors and rear axle in good shape. Salvage title."),
     ("DEMO — Automatic transmission, 2012 F-150 5.0L donor (168k miles)", "f150", "part",
-     "transmission", 950, Shipping.pickup_or_ships, "Sample listing. Pulled from the donor truck "
-     "above, which drove in. Fluid looked clean. 30-day yard warranty. Confirm the transmission "
+     "transmission", 950, Shipping.pickup_or_ships, "Sample listing. Pulled from the demo F-150 "
+     "listed under Vehicles, which drove in. Fluid looked clean. 30-day yard warranty. Confirm the transmission "
      "and part number match yours before buying."),
     ("DEMO — Automatic transmission, 2010 Silverado 1500 5.3L donor (204k miles)", "silverado",
      "part", "transmission", 700, Shipping.pickup_or_ships, "Sample listing. Shifted through all "
@@ -112,6 +122,13 @@ def load(db: Session) -> int:
                         about="Sample listings for demonstrating the marketplace. Not real inventory.")  # fmt: skip
         db.add(seller)
         db.flush()
+    # Demo stock changed since it was loaded (new wording or yard details)? Replace it all —
+    # it's sample data owned by this code, so nothing real is lost.
+    old = db.scalars(select(Listing).where(Listing.seller_id == seller.id)).all()
+    if old and {(x.title, x.description) for x in old} != {(t[0], t[6]) for t in LISTINGS}:
+        for listing in old:
+            db.delete(listing)
+        db.flush()
     added = 0
     now = datetime.now(UTC)
     for i, (title, donor, kind, category, price, shipping, desc) in enumerate(LISTINGS):
@@ -142,10 +159,13 @@ def load(db: Session) -> int:
             search_text=f"{title} {desc} {year} {make_name} {model_name} {vin}".lower(),
         )  # fmt: skip
         if kind == "vehicle":
+            stock, days, keys, damage, lien_in = YARD[donor]
             listing.vehicle = VehicleDetails(
                 year=year, make_id=make.id, model_id=model.id,
                 vehicle_id=vehicle.id if vehicle else None, vin=vin, odometer=miles,
-                title_status=title_status, running=running,
+                title_status=title_status, running=running, stock_number=stock,
+                arrived_on=(now - timedelta(days=days)).date(), has_keys=keys, damage=damage,
+                lien_sale_after=(now + timedelta(days=lien_in)).date() if lien_in else None,
             )  # fmt: skip
         else:
             listing.fitment = [ListingFitment(make_id=make.id, model_id=model.id, year_from=year,

@@ -23,7 +23,7 @@ from app.modules.safety.models import (
     name_key,
 )
 from app.modules.safety.nhtsa import NhtsaApi
-from app.modules.vehicles.models import Vehicle
+from app.modules.vehicles.models import Model, Vehicle
 
 FRESH_DAYS = 7
 
@@ -255,11 +255,16 @@ def component_counts(items: Iterable[str | None]) -> dict[str, int]:
 # ---- readable recalls ----------------------------------------------------------
 
 
-def recall_out(r: Recall, v: Vehicle):
+def make_model_names(db: Session, v: Vehicle) -> list[str]:
+    """Every model name we know for this make, so recall text keeps them capitalized."""
+    return list(db.scalars(select(Model.name).where(Model.make_id == v.model.make_id)))
+
+
+def recall_out(r: Recall, v: Vehicle, models: list[str] | None = None):
     from app.modules.safety.readable import proper_words, readable, recall_group
     from app.modules.safety.schemas import RecallOut
 
-    proper = proper_words(r.manufacturer, v.model.make.name, v.model.name)
+    proper = proper_words(r.manufacturer, v.model.make.name, v.model.name, *(models or ()))
     return RecallOut(
         campaign_number=r.campaign_number,
         manufacturer=r.manufacturer,

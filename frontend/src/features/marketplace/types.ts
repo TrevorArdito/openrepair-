@@ -15,6 +15,11 @@ export type VehicleFacts = {
   has_lien: boolean;
   running: "runs_drives" | "runs_not_drives" | "not_running";
   vehicle_id: number | null;
+  stock_number?: string | null;
+  arrived_on?: string | null; // date it arrived on the lot
+  has_keys?: boolean | null;
+  damage?: string | null;
+  lien_sale_after?: string | null; // tow-yard lien sale: available after this date
   vin?: string | null;
   make_id?: number;
   model_id?: number | null;

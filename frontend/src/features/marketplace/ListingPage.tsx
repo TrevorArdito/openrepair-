@@ -14,7 +14,7 @@ const REPORT_REASONS = ["stolen", "prohibited", "scam", "counterfeit", "wrong_fi
 
 function fitLabel(f: Listing["fitment"][number]): string {
   const years = f.year_from === f.year_to ? `${f.year_from}` : `${f.year_from}–${f.year_to}`;
-  return [years, f.make, f.model, f.engine ?? (f.displacement_l ? `${f.displacement_l}L` : null)].filter(Boolean).join(" ");
+  return [years, f.make, f.model, f.engine ?? (f.displacement_l ? `${f.displacement_l.toFixed(1)}L` : null)].filter(Boolean).join(" ");
 }
 
 function ContactSeller({ l }: { l: Listing }) {
@@ -217,6 +217,11 @@ export default function ListingPage() {
     [t("market.odometer"), v.odometer != null ? `${v.odometer.toLocaleString()} ${v.odometer_unit}` : null],
     [t("market.titleStatus"), t(`market.titleStatuses.${v.title_status}`) + (v.has_lien ? ` · ${t("market.lien")}` : "")],
     [t("market.running"), t(`market.runnings.${v.running}`)],
+    [t("market.lienSale"), v.lien_sale_after ? t("market.lienSaleAfter", { date: formatDate(v.lien_sale_after) }) : null],
+    [t("market.keys"), v.has_keys == null ? null : v.has_keys ? t("market.keysYes") : t("market.keysNo")],
+    [t("market.damage"), v.damage ?? null],
+    [t("market.stockNumber"), v.stock_number ?? null],
+    [t("market.arrivedOn"), v.arrived_on ? formatDate(v.arrived_on) : null],
     [t("market.vin"), v.vin ?? null],
     [t("market.drive"), v.drive ?? null],
     [t("market.transmission"), v.transmission ?? null],
@@ -234,7 +239,7 @@ export default function ListingPage() {
     [t("market.quantity"), String(l.quantity)],
     [t("market.shipping"), t(`market.shippings.${l.shipping}`) + (l.shipping_note ? ` — ${l.shipping_note}` : "")],
     [t("market.mileage"), l.mileage != null ? l.mileage.toLocaleString() : null],
-    [t("market.sourceVin"), l.source_vin],
+    [t("market.donorVin"), l.source_vin],
     [t("market.compliance"), l.emissions_compliance ? t(`market.compliances.${l.emissions_compliance}`) + (l.carb_eo_number ? ` (EO ${l.carb_eo_number})` : "") : null],
     [t("market.listed"), formatDate(l.created_at)],
   ];

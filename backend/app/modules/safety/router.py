@@ -36,7 +36,8 @@ def recalls(
     nhtsa: NhtsaApi = Depends(get_nhtsa),
 ):
     fresh = service.refresh(db, nhtsa, "recalls", v)
-    items = [service.recall_out(r, v) for r in service.list_recalls(db, v, q)]
+    names = service.make_model_names(db, v)
+    items = [service.recall_out(r, v, names) for r in service.list_recalls(db, v, q)]
     groups = [i.group for i in items]
     order = {"maker": 0, "other_engine": 1, "aftermarket": 2}
     items.sort(key=lambda i: order[i.group])  # maker recalls first (already newest-first)
