@@ -47,27 +47,23 @@ export default function QuickSpecs({ vehicleId, onShowAll }: { vehicleId: string
       .catch(() => setRows([]));
   }, [vehicleId, units]);
 
-  if (!rows) return null;
+  if (!rows || rows.length === 0) return null; // nothing written for this vehicle yet: no blank box
   return (
     <Card>
       <h2 className="mb-2 text-xl font-bold">{t("vehicle.quickSpecs")}</h2>
-      {rows.length === 0 ? (
-        <p>{t("vehicle.quickSpecsNone")}</p>
-      ) : (
-        <ul className="divide-y-2 divide-slate-200 dark:divide-slate-800">
-          {rows.map((r) => (
-            <li key={r.key}>
-              <Link to={`/entries/${r.entry.id}`} className="flex min-h-14 items-center gap-3 py-2">
-                <span className="flex-1">
-                  <span className="block text-lg font-semibold">{t(`vehicle.quick.${r.key}`)}</span>
-                  {r.sub && <span className="block text-base text-slate-600 dark:text-slate-400">{r.sub}</span>}
-                </span>
-                <span className="max-w-[50%] text-right font-mono text-lg font-bold">{r.value}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      <ul className="divide-y-2 divide-slate-200 dark:divide-slate-800">
+        {rows.map((r) => (
+          <li key={r.key}>
+            <Link to={`/entries/${r.entry.id}`} className="flex min-h-14 items-center gap-3 py-2">
+              <span className="flex-1">
+                <span className="block text-lg font-semibold">{t(`vehicle.quick.${r.key}`)}</span>
+                {r.sub && <span className="block text-base text-slate-600 dark:text-slate-400">{r.sub}</span>}
+              </span>
+              <span className="max-w-[50%] text-right font-mono text-lg font-bold">{r.value}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
       <button type="button" onClick={onShowAll} className="mt-2 flex min-h-12 items-center font-bold text-amber-700 underline dark:text-amber-400">
         {t("vehicle.allSpecs")}
       </button>

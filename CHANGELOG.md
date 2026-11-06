@@ -17,6 +17,9 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- Vehicle page hides empty sections instead of showing blanks: the TSB and Specs tabs only
+  appear when there's something in them, the quick-specs box only when it has numbers, and the
+  "Common codes" heading only above a list. Diagnostic guide pages now count in the Guides tab.
 - Recall count now counts only the vehicle maker's own recalls for that model and engine.
   Recalls filed by other companies (upfitters, equipment makers) and maker recalls that name a
   different engine size go in collapsed groups below. NHTSA's ALL-CAPS text is shown in normal

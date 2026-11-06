@@ -77,7 +77,6 @@
     },
     "chooseEngine": "Which engine? Pick one for engine-specific specs:",
     "quickSpecs": "Quick specs",
-    "quickSpecsNone": "No specs for this exact vehicle yet.",
     "allSpecs": "All specs",
     "quick": {
       "oil": "Engine oil",

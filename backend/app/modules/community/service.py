@@ -607,7 +607,7 @@ def register_hooks() -> None:
 
     if related_for_dtc not in RELATED_FINDERS:
         RELATED_FINDERS.append(related_for_dtc)
-    PROFILE_COUNTERS["guides"] = _count([Kind.procedure])
+    PROFILE_COUNTERS["guides"] = _count([Kind.dtc_guide, Kind.procedure])
     PROFILE_COUNTERS["specs"] = _count(
         [Kind.torque_spec, Kind.fluid_capacity, Kind.spec, Kind.part_note, Kind.labor_time]
     )
