@@ -14,6 +14,19 @@ export function loadModules(): Promise<string[]> {
   return cached;
 }
 
+/** "loading" until the server answers, then "on" or "off". */
+export function useModuleState(name: string): "loading" | "on" | "off" {
+  const [state, setState] = useState<"loading" | "on" | "off">("loading");
+  useEffect(() => {
+    let live = true;
+    void loadModules().then((m) => live && setState(m.includes(name) ? "on" : "off"));
+    return () => {
+      live = false;
+    };
+  }, [name]);
+  return state;
+}
+
 export function useModule(name: string): boolean {
   const [on, setOn] = useState(false);
   useEffect(() => {

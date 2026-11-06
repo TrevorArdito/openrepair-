@@ -1225,5 +1225,18 @@
     "costTime": "Typical repair time and parts cost",
     "hours": "Repair time: about {{min}}–{{max}} h",
     "parts": "Parts: about {{min}}–{{max}}"
+  },
+  "comingSoon": {
+    "title": "Coming soon",
+    "body": "This part of ChrystalClear isn't switched on yet. Check back soon!",
+    "home": "Back to home",
+    "marketplace": {
+      "title": "Parts & vehicles marketplace — coming soon",
+      "body": "Soon you'll be able to buy and sell used parts and whole vehicles here, matched to what they fit. Repair info, codes and recalls are all available now."
+    },
+    "market_payments": {
+      "title": "In-app payments — coming soon",
+      "body": "Paying through the app isn't switched on yet. For now, message the seller to arrange payment and pickup."
+    }
   }
 }

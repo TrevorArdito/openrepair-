@@ -17,6 +17,8 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   takes the page section and emails the admins. Team pages in `content/` publish only after a
   different reviewer agent signs off.
 ### Changed
+- Marketplace switched on in `render.yaml` (payments stay off). Pages of a switched-off module
+  show a friendly "Coming soon" instead of "Not found".
 - **Repair content is now proprietary** — free to read, all rights reserved (`content/LICENSE`,
   Content License page, README, CONTRIBUTING, CLA §5, Terms). The code stays AGPL-3.0; content
   published before 2026-11-06 stays CC BY-SA 4.0 for those who received it.

@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Layout from "../components/Layout";
+import ModuleGate from "../components/ModuleGate";
 import AccountPage from "../features/account/AccountPage";
 import CodeDetailPage from "../features/codes/CodeDetailPage";
 import CodesPage from "../features/codes/CodesPage";
@@ -50,18 +51,22 @@ export default function App() {
               <Route path="entries/:id/edit" element={<EntryEditPage />} />
               <Route path="entries/:id/history" element={<HistoryPage />} />
               <Route path="mod" element={<ModPage />} />
-              <Route path="market" element={<MarketPage />} />
-              <Route path="market/sell" element={<ListingEditPage />} />
-              <Route path="market/selling" element={<SellingPage />} />
-              <Route path="market/listings/:id" element={<ListingPage />} />
-              <Route path="market/listings/:id/edit" element={<ListingEditPage />} />
-              <Route path="market/sellers/:id" element={<SellerPage />} />
-              <Route path="market/messages" element={<MessagesPage />} />
-              <Route path="market/messages/:id" element={<ConversationPage />} />
-              <Route path="market/mod" element={<MarketModPage />} />
-              <Route path="market/saved" element={<SavedPage />} />
-              <Route path="market/orders" element={<OrdersPage />} />
-              <Route path="market/orders/:id" element={<OrderPage />} />
+              <Route element={<ModuleGate name="marketplace" />}>
+                <Route path="market" element={<MarketPage />} />
+                <Route path="market/sell" element={<ListingEditPage />} />
+                <Route path="market/selling" element={<SellingPage />} />
+                <Route path="market/listings/:id" element={<ListingPage />} />
+                <Route path="market/listings/:id/edit" element={<ListingEditPage />} />
+                <Route path="market/sellers/:id" element={<SellerPage />} />
+                <Route path="market/messages" element={<MessagesPage />} />
+                <Route path="market/messages/:id" element={<ConversationPage />} />
+                <Route path="market/mod" element={<MarketModPage />} />
+                <Route path="market/saved" element={<SavedPage />} />
+                <Route element={<ModuleGate name="market_payments" />}>
+                  <Route path="market/orders" element={<OrdersPage />} />
+                  <Route path="market/orders/:id" element={<OrderPage />} />
+                </Route>
+              </Route>
               <Route path="legal/:name" element={<LegalPage />} />
               <Route path="account" element={<AccountPage />} />
               <Route path="login" element={<LoginPage />} />

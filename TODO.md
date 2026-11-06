@@ -40,7 +40,7 @@
 - [ ] Heavy-equipment engines + equipment table (see docs/VEHICLE_CATALOG.md)
 - [ ] Bulk-prefetch NHTSA model lists for all makes/years (so the picker never waits on NHTSA)
 
-## Content Research Program (CONTENT_PROGRAM.md)
+## Content Research Program (CONTENT_PROGRAM.md) — PAUSED by owner 2026-11-06 (marketplace demo first)
 - [x] Step 1: repo/format review (`research/format-review.md`)
 - [x] Format upgrades: `dtc_guide` kind, deeper procedures, per-value sources + UNVERIFIED,
       reviewer sign-off record, disclaimer first, report-a-mistake by section + owner alert, `content/` loader
