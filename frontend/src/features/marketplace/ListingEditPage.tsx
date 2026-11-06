@@ -2,11 +2,12 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Navigate, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Input, Label, PageTitle, Select, Spinner } from "../../components/ui";
+import MakeOptions from "../../components/MakeOptions";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { useDocumentTitle } from "../../lib/title";
-import type { AppliesTo, NamedRef, VinDecode } from "../../lib/types";
+import type { AppliesTo, Make, NamedRef, VinDecode } from "../../lib/types";
 import { PhotoField, TextArea, TextField } from "../entries/fields";
 import { RangeRow } from "../entries/TagsForm";
 import { SellerForm } from "./SellingPage";
@@ -48,7 +49,7 @@ const EMPTY_V: VForm = {
   has_lien: false, running: "runs_drives", trim: "", drive: "", transmission: "", exterior_color: "",
 };
 
-function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partial<VForm>) => void; makes: NamedRef[]; onDecoded: (label: string) => void }) {
+function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partial<VForm>) => void; makes: Make[]; onDecoded: (label: string) => void }) {
   const { t } = useTranslation();
   const [models, setModels] = useState<NamedRef[]>([]);
   const [msg, setMsg] = useState<{ kind: "info" | "error"; text: string } | null>(null);
@@ -95,7 +96,7 @@ function VehicleFields({ v, set, makes, onDecoded }: { v: VForm; set: (p: Partia
           <Label htmlFor="vmk">{t("market.make")}</Label>
           <Select id="vmk" required value={v.make_id ?? ""} onChange={(e) => set({ make_id: e.target.value ? Number(e.target.value) : null, model_id: null })}>
             <option value="" />
-            {makes.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+            <MakeOptions makes={makes} />
           </Select>
         </div>
       </div>
@@ -211,7 +212,7 @@ export default function ListingEditPage() {
     id ? null : startAsVehicle ? { ...EMPTY, category: "vehicle", shipping: "pickup" } : EMPTY,
   );
   const [cats, setCats] = useState<string[]>([]);
-  const [makes, setMakes] = useState<NamedRef[]>([]);
+  const [makes, setMakes] = useState<Make[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const paymentsOn = useModule("market_payments");
@@ -224,7 +225,7 @@ export default function ListingEditPage() {
     if (!user) return;
     api<Seller | null>("/market/seller/me").then(setSeller).catch(() => setSeller(null));
     api<{ slug: string }[]>("/market/categories").then((c) => setCats(c.map((x) => x.slug))).catch(() => undefined);
-    api<NamedRef[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
+    api<Make[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
     if (id) api<Listing>(`/market/listings/${id}`).then((l) => setF(fromListing(l))).catch((e) => setError(errorMessage(t, e)));
   }, [user, id, t]);
 

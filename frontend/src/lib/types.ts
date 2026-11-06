@@ -1,4 +1,6 @@
 export type NamedRef = { id: number; name: string };
+/** A make from /vehicles/makes; `common` ranks the most common makes (1 = most common). */
+export type Make = NamedRef & { common?: number | null };
 
 export type Engine = {
   displacement_l: number | null;

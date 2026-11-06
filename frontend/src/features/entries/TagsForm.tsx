@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Input, Label, Select } from "../../components/ui";
+import MakeOptions from "../../components/MakeOptions";
 import { api } from "../../lib/api";
-import type { AppliesTo, EntryTags, NamedRef } from "../../lib/types";
+import type { AppliesTo, EntryTags, Make, NamedRef } from "../../lib/types";
 import { PlainNumber } from "./fields";
 
 type SystemRow = { slug: string; parent: string | null; safety_critical: boolean };
 
-export function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; makes: NamedRef[]; onChange: (r: AppliesTo) => void; onRemove: () => void; idx: number }) {
+export function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; makes: Make[]; onChange: (r: AppliesTo) => void; onRemove: () => void; idx: number }) {
   const { t } = useTranslation();
   const [models, setModels] = useState<NamedRef[]>([]);
   useEffect(() => {
@@ -22,7 +23,7 @@ export function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; 
       </div>
       <Label htmlFor={`mk-${idx}`}>{t("editor.make")}</Label>
       <Select id={`mk-${idx}`} value={r.make_id} onChange={(e) => onChange({ ...r, make_id: Number(e.target.value), model_id: null })}>
-        {makes.map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}
+        <MakeOptions makes={makes} />
       </Select>
       <Label htmlFor={`md-${idx}`}>{t("editor.model")}</Label>
       <Select id={`md-${idx}`} value={r.model_id ?? ""} onChange={(e) => onChange({ ...r, model_id: e.target.value ? Number(e.target.value) : null })}>
@@ -37,11 +38,11 @@ export function RangeRow({ r, makes, onChange, onRemove, idx }: { r: AppliesTo; 
 
 export default function TagsForm({ tags, set }: { tags: EntryTags; set: (t: EntryTags) => void }) {
   const { t } = useTranslation();
-  const [makes, setMakes] = useState<NamedRef[]>([]);
+  const [makes, setMakes] = useState<Make[]>([]);
   const [systems, setSystems] = useState<SystemRow[]>([]);
   const [dtcText, setDtcText] = useState(tags.dtcs.join(", "));
   useEffect(() => {
-    api<NamedRef[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
+    api<Make[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
     api<SystemRow[]>("/systems").then(setSystems).catch(() => undefined);
   }, []);
   const year = new Date().getFullYear();

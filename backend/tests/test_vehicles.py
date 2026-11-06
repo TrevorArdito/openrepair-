@@ -21,6 +21,14 @@ def test_makes_seeded(client):
     assert {"Ford", "Honda", "Toyota", "BMW", "Mercedes-Benz"} <= set(names)
 
 
+def test_common_makes_ranked_for_pickers(client):
+    makes = client.get("/api/v1/vehicles/makes").json()
+    assert [m["name"] for m in makes] == sorted(m["name"] for m in makes)  # still A-Z
+    rank = {m["name"]: m["common"] for m in makes}
+    assert rank["Ford"] == 1 and rank["Chevrolet"] == 2 and rank["Toyota"] == 3
+    assert rank["Saab"] is None
+
+
 def test_models_fetched_once_then_cached(client, vpic):
     honda = _make_id(client, "Honda")
     r1 = client.get("/api/v1/vehicles/models", params={"year": 2012, "make_id": honda}).json()

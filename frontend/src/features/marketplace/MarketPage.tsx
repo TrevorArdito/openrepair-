@@ -3,12 +3,13 @@ import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { Link, useSearchParams } from "react-router-dom";
 import { Alert, Button, Card, Input, Label, LinkButton, PageTitle, Select, Spinner } from "../../components/ui";
+import MakeOptions from "../../components/MakeOptions";
 import { api } from "../../lib/api";
 import { useAuth } from "../../lib/auth";
 import { errorMessage } from "../../lib/errors";
 import { useModule } from "../../lib/modules";
 import { useDocumentTitle } from "../../lib/title";
-import type { GarageItem, NamedRef, Vehicle } from "../../lib/types";
+import type { GarageItem, Make, Vehicle } from "../../lib/types";
 import { CONDITIONS, RUNNING, TITLE_STATUSES, US_STATES, price, type ListingSummary, type VehicleFacts } from "./types";
 
 export function vehicleLine(t: TFunction, v: VehicleFacts): string {
@@ -91,7 +92,7 @@ export default function MarketPage() {
   useDocumentTitle(t(kind === "vehicle" ? "market.vehiclesTitle" : "market.title"));
   const [q, setQ] = useState(params.get("q") ?? "");
   const [cats, setCats] = useState<string[]>([]);
-  const [makes, setMakes] = useState<NamedRef[]>([]);
+  const [makes, setMakes] = useState<Make[]>([]);
   const [garage, setGarage] = useState<Vehicle[]>([]);
   const [linked, setLinked] = useState<Vehicle | null>(null);
   const [data, setData] = useState<{ total: number; items: ListingSummary[] } | null>(null);
@@ -103,7 +104,7 @@ export default function MarketPage() {
 
   useEffect(() => {
     api<{ slug: string }[]>("/market/categories").then((c) => setCats(c.map((x) => x.slug).filter((x) => x !== "vehicle"))).catch(() => undefined);
-    api<NamedRef[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
+    api<Make[]>("/vehicles/makes").then(setMakes).catch(() => undefined);
   }, []);
   useEffect(() => {
     if (!user) return;
@@ -193,8 +194,13 @@ export default function MarketPage() {
           </>
         ) : (
           <>
-            <FilterSelect id="vmk" label={t("market.make")} value={params.get("make_id") ?? ""} onChange={(v) => set("make_id", v)}
-              options={makes.map((m) => [String(m.id), m.name])} />
+            <div>
+              <Label htmlFor="vmk">{t("market.make")}</Label>
+              <Select id="vmk" value={params.get("make_id") ?? ""} onChange={(e) => set("make_id", e.target.value)}>
+                <option value="">{t("market.all")}</option>
+                <MakeOptions makes={makes} />
+              </Select>
+            </div>
             <div className="grid grid-cols-2 gap-3">
               <FilterSelect id="vy1" label={t("market.yearMin")} value={params.get("year_min") ?? ""} onChange={(v) => set("year_min", v)} options={years.map((y) => [y, y])} />
               <FilterSelect id="vy2" label={t("market.yearMax")} value={params.get("year_max") ?? ""} onChange={(v) => set("year_max", v)} options={years.map((y) => [y, y])} />

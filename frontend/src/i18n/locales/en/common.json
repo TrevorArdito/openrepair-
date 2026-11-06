@@ -35,6 +35,8 @@
   "picker": {
     "year": "Year",
     "make": "Make",
+    "commonMakes": "Most common",
+    "allMakes": "All makes A–Z",
     "model": "Model",
     "engine": "Engine",
     "choose": "Choose…",
