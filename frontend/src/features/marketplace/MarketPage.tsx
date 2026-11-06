@@ -20,7 +20,7 @@ export function vehicleLine(t: TFunction, v: VehicleFacts): string {
 }
 
 // Per-device convenience: remember the buyer's ZIP for distance search (never sent anywhere else).
-function readZip(): string {
+export function readZip(): string {
   try {
     return localStorage.getItem("cc_market_zip") ?? "";
   } catch {

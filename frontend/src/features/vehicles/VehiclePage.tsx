@@ -11,6 +11,7 @@ import { useDocumentTitle } from "../../lib/title";
 import CodeSearch from "../codes/CodeSearch";
 import EntryList from "../entries/EntryList";
 import QuickSpecs from "../entries/QuickSpecs";
+import ForSaleNearYou from "../marketplace/ForSaleNearYou";
 import { ComplaintsTab, RecallsTab, TsbsTab } from "../safety/SafetyTabs";
 import type { RecallList, Vehicle, VehicleProfile, VinDecode } from "../../lib/types";
 
@@ -164,6 +165,7 @@ export default function VehiclePage() {
         {tab === "overview" ? (
           <div className="space-y-4">
             <QuickSpecs vehicleId={id!} onShowAll={() => setTab("specs")} />
+            {market && <ForSaleNearYou vehicle={vehicle} />}
             <Card>
             <h2 className="mb-2 text-xl font-bold">{t("vehicle.details")}</h2>
             <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-lg">

@@ -1078,7 +1078,14 @@
     "reviews": "Reviews",
     "noReviews": "No reviews yet",
     "ratingOf_one": "{{rating}} out of 5 ({{count}} review)",
-    "ratingOf_other": "{{rating}} out of 5 ({{count}} reviews)"
+    "ratingOf_other": "{{rating}} out of 5 ({{count}} reviews)",
+    "forSaleNear": "For sale near you",
+    "partsThatFit_one": "{{count}} part that fits this vehicle",
+    "partsThatFit_other": "{{count}} parts that fit this vehicle",
+    "sameModelForSale_one": "{{count}} {{model}} for sale",
+    "sameModelForSale_other": "{{count}} {{model}}s for sale",
+    "seeAllParts": "See all parts that fit",
+    "seeAllVehicles": "See all {{model}} vehicles"
   },
   "legal": {
     "title": "Terms and rules",
