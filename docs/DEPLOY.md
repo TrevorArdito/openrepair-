@@ -100,3 +100,12 @@ Render's log (Render → your service → **Logs**), so password resets need you
 ## Updating the site
 Every push to the deployed branch redeploys automatically. Database changes are applied on
 startup (`alembic upgrade head`), and built-in content is added without overwriting edits.
+
+## 5. Keep the site awake during the day (automatic)
+Free Render sites sleep after 15 minutes without visitors and take about a minute to wake.
+The **Keep site awake** GitHub job (`.github/workflows/keep-awake.yml`) visits the health check
+every 10 minutes from about 7am to 9pm Pacific. That's about 430 of Render's 750 free hours a
+month, and it doesn't wake the database. It starts by itself once the code is on `main`.
+If the repository is ever made private, GitHub's free plan counts these runs against 2,000
+minutes a month — then use a free uptime monitor (for example UptimeRobot, 5-minute checks of
+`/api/v1/health`) instead and delete the workflow.
