@@ -532,7 +532,9 @@ def test_demo_stock_is_labeled_and_removable(db_session_factory, monkeypatch):
         rows = db.scalars(select(Listing)).all()
         assert rows and all(r.title.startswith("DEMO —") for r in rows)
         newest = sorted(rows, key=lambda r: r.created_at, reverse=True)  # the market's default sort
-        assert [r.title for r in newest] == [t[0] for t in demo.LISTINGS]  # vehicles, then transmissions
+        assert [r.title for r in newest] == [
+            t[0] for t in demo.LISTINGS
+        ]  # vehicles, then transmissions
         seller = db.scalar(select(Seller))
         assert seller.display_name == demo.DEMO_NAME and seller.seller_type.value == "recycler"
         for *_head, vin, _miles, _running, _title in demo.DONORS.values():
