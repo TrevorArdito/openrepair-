@@ -5,6 +5,12 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [Unreleased]
 ### Added
+- "Add vehicles by VIN list" for yards (My selling): paste up to 25 VINs, optionally with a price
+  and row / stock # on each line; each VIN is decoded and listed. Lines without a price are saved
+  hidden until priced; a bad VIN is reported without stopping the rest.
+- Seller inventory page works as a yard's public inventory: Everything / Vehicles / Parts with
+  counts, make buttons with counts, and a "share or copy this page's link" button. Sellers get a
+  link to it from My selling.
 - Vehicle listings take yard details buyers look for first: row / stock #, date it arrived on the
   lot, keys yes/no, main damage, and for tow yards "Lien sale — available after [date]". They show
   on the search card and the listing page. Demo stock includes them (plus one lien-sale example).

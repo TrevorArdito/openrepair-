@@ -911,6 +911,28 @@
     "mileage": "Mileage on the part",
     "sourceVin": "VIN it came from (optional)",
     "donorVin": "Donor vehicle VIN",
+    "bulk": {
+      "title": "Add vehicles by VIN list",
+      "intro": "Paste VINs, one per line. Add a price and row / stock # on the same line if you have them (\"1FTFW1EF6CF000000, 3400, Row 4\"). We look up year, make, model and engine from each VIN. Lines without a price are saved hidden until you add one.",
+      "label": "VINs (one per line)",
+      "count_one": "{{count}} VIN (up to {{max}} at a time)",
+      "count_other": "{{count}} VINs (up to {{max}} at a time)",
+      "accept": "I confirm these vehicles are mine to sell and follow the marketplace rules.",
+      "submit_one": "Add {{count}} vehicle",
+      "submit_other": "Add {{count}} vehicles",
+      "working": "Looking up VINs…",
+      "published": "listed",
+      "hidden": "saved hidden — add a price"
+    },
+    "inventory": {
+      "all": "Everything ({{count}})",
+      "vehicle": "Vehicles ({{count}})",
+      "part": "Parts ({{count}})",
+      "shareHint": "Put this inventory page on your website, Facebook or Google listing. It updates itself as you list and sell.",
+      "share": "Share or copy this page's link",
+      "shared": "Link ready to paste",
+      "myPage": "Your public inventory page (share it)"
+    },
     "sourceVinHint": "Helps buyers check fitment and shows it isn't stolen.",
     "compliance": "Emissions legal status",
     "carbEo": "CARB EO number",

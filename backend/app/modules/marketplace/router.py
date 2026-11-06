@@ -27,6 +27,8 @@ from app.modules.marketplace.models import (
     VerificationStatus,
 )
 from app.modules.marketplace.schemas import (
+    BulkVinIn,
+    BulkVinResult,
     ConversationOut,
     ListingIn,
     ListingOut,
@@ -203,6 +205,22 @@ def create_listing(
     listing = service.save_listing(db, user, data, None, vpic)
     db.commit()
     return service.detail(db, listing, user)
+
+
+@router.post(
+    "/listings/bulk-vins",
+    response_model=list[BulkVinResult],
+    dependencies=[Depends(verify_csrf), Depends(rate_limit("market_bulk", 10, 3600))],
+)
+def bulk_vins(
+    data: BulkVinIn,
+    user: User = Depends(current_user),
+    db: Session = Depends(get_db),
+    vpic: VpicApi = Depends(get_vpic),
+):
+    results = service.bulk_add_vehicles(db, user, data, vpic)
+    db.commit()
+    return results
 
 
 @router.put(

@@ -53,6 +53,10 @@
 - [ ] Owner: ChrystalClear vs OpenRepair name for the pitch (app currently says ChrystalClear)
 - [ ] Merge to `main`, then check Render → Environment has ENABLE_MARKETPLACE=true and MARKET_DEMO_DATA=true
 - [ ] Before real yards list: set MARKET_DEMO_DATA=false (removes all demo listings)
+- [x] Yard details on vehicle listings (row/stock #, arrived, keys, damage, lien sale)
+- [x] Public yard inventory page (counts by type/make, share link); bulk add by VIN list
+- [ ] Owner: set MARKET_DEMO_ZIP in Render to your ZIP so demo stock shows up in "near ZIP" searches
+- [ ] Next ideas (strategy notes): photo placeholders by body style; CSV upload; "newest arrivals" alert for buyers
 - [ ] Later: Silverado/Sierra/Ram TSB model names ("SILVERADO 1500" vs "Silverado") don't match yet
 
 ## Content Research Program (CONTENT_PROGRAM.md) — PAUSED by owner 2026-11-06 (marketplace demo first)

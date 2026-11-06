@@ -392,6 +392,27 @@ def test_whole_vehicle_listing_uses_vin(mclient, db_session_factory, vpic):
     ) == ("Row 4 · #A1043", "2026-11-01", False, "Front end", "2026-11-20")
 
 
+def test_bulk_vins_add_vehicles_in_one_go(mclient, db_session_factory, vpic):
+    c = mclient
+    user(c, db_session_factory, "yard@example.com")
+    seller(c, seller_type="recycler")
+    good, also = _vin("B10001"), _vin("B10002")
+    bad = good[:8] + ("X" if good[8] != "X" else "0") + good[9:]
+    body = {"title_status": "salvage", "running": "not_running", "accept_rules": True,
+            "lines": [{"vin": good, "price_cents": 120000, "stock_number": "Row 3"},
+                      {"vin": also}, {"vin": bad}]}  # fmt: skip
+    r = c.post(f"{API}/listings/bulk-vins", json=body, headers=csrf(c))
+    assert r.status_code == 200, r.text
+    one, two, three = r.json()
+    assert one["published"] and one["title"].startswith("2015 Ford F-150")
+    assert two["listing_id"] and not two["published"]  # no price yet: saved hidden
+    assert three["error"] and three["listing_id"] is None  # bad VIN skipped, others kept
+    got = c.get(f"{API}/listings", params={"kind": "vehicle"}).json()
+    assert got["total"] == 1 and got["items"][0]["vehicle"]["stock_number"] == "Row 3"
+    body["accept_rules"] = False
+    assert c.post(f"{API}/listings/bulk-vins", json=body, headers=csrf(c)).status_code == 422
+
+
 def test_private_seller_vehicle_limit(mclient, db_session_factory):
     c = mclient
     user(c, db_session_factory, "sam@example.com")
