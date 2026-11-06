@@ -139,7 +139,7 @@ export default function VehiclePage() {
         </LinkButton>
       )}
 
-      <div role="tablist" aria-label={vehicle.label} className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1">
+      <div role="tablist" aria-label={vehicle.label} className="flex flex-wrap gap-2 pb-1">
         {TABS.map((key) => {
           const count = key === "recalls" && recallCount !== null ? recallCount : vehicle.counts[key];
           return (

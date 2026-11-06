@@ -38,12 +38,35 @@ export default function Layout() {
         {t("app.skipToContent")}
       </a>
       <header className="sticky top-0 z-10 border-b-2 border-slate-200 bg-white/95 backdrop-blur dark:border-slate-800 dark:bg-slate-950/95">
-        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
-          <Link to="/" className="flex items-center gap-2 text-xl font-extrabold">
+        <div className="mx-auto flex h-14 max-w-3xl items-center justify-between gap-4 px-4 md:h-16 lg:max-w-5xl">
+          <Link to="/" className="flex shrink-0 items-center gap-2 text-xl font-extrabold">
             <img src="/icon.svg" alt="" className="size-8" />
             {t("app.name")}
           </Link>
-          <Link to="/about" className="flex min-h-12 items-center px-2 font-semibold underline-offset-4 hover:underline">
+          {/* Wide screens: the main menu sits up here instead of the bottom tab bar. */}
+          <nav aria-label="Main" className="hidden md:block">
+            <ul className="flex items-center gap-1">
+              {nav.map((n) => (
+                <li key={n.to}>
+                  <NavLink
+                    to={n.to}
+                    end={n.to === "/"}
+                    className={({ isActive }) =>
+                      `flex min-h-12 items-center gap-2 rounded-lg px-3 text-base font-semibold ${
+                        isActive ? "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300" : "text-slate-700 hover:bg-slate-100 dark:text-slate-200 dark:hover:bg-slate-800"
+                      }`
+                    }
+                  >
+                    <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d={n.icon} />
+                    </svg>
+                    {t(`nav.${n.key}`)}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <Link to="/about" className="flex min-h-12 shrink-0 items-center px-2 font-semibold underline-offset-4 hover:underline">
             {t("nav.about")}
           </Link>
         </div>
@@ -54,13 +77,13 @@ export default function Layout() {
         )}
       </header>
 
-      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 pt-5 pb-28">
+      <main id="main" className="mx-auto w-full max-w-3xl flex-1 px-4 pt-5 pb-28 md:pb-10 lg:max-w-5xl">
         <Outlet />
       </main>
 
       <nav
         aria-label="Main"
-        className="fixed inset-x-0 bottom-0 z-10 border-t-2 border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-800 dark:bg-slate-950"
+        className="fixed inset-x-0 bottom-0 z-10 md:hidden border-t-2 border-slate-200 bg-white pb-[env(safe-area-inset-bottom)] dark:border-slate-800 dark:bg-slate-950"
       >
         <ul className={`mx-auto grid max-w-3xl ${nav.length > 5 ? "grid-cols-6" : "grid-cols-5"}`}>
           {nav.map((n) => (
