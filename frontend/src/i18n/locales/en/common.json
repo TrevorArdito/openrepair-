@@ -1,6 +1,8 @@
 {
   "app": {
     "name": "River Valley Auto Sales and Market",
+    "shortName": "River Valley",
+    "nameRest": "Auto Sales and Market",
     "tagline": "Free auto repair info. For shops, techs and DIYers.",
     "skipToContent": "Skip to content",
     "offline": "You're offline. Showing saved info.",

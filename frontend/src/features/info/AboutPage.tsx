@@ -3,9 +3,11 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Alert, Card, PageTitle } from "../../components/ui";
 import { api } from "../../lib/api";
+import { useDocumentTitle } from "../../lib/title";
 
 export default function AboutPage() {
   const { t } = useTranslation();
+  useDocumentTitle(t("about.title"));
   const [sourceUrl, setSourceUrl] = useState<string | null>(null);
 
   useEffect(() => {
