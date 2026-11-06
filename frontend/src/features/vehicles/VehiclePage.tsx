@@ -208,7 +208,7 @@ export default function VehiclePage() {
         ) : tab === "complaints" ? (
           <ComplaintsTab vehicleId={id!} />
         ) : tab === "guides" ? (
-          <EntryList vehicleId={id!} kinds={["procedure"]} addKind="procedure" />
+          <EntryList vehicleId={id!} kinds={["dtc_guide", "procedure"]} addKind="procedure" />
         ) : tab === "specs" ? (
           <EntryList vehicleId={id!} kinds={["fluid_capacity", "torque_spec", "spec", "part_note", "labor_time"]} addKind={null} />
         ) : tab === "codes" ? (

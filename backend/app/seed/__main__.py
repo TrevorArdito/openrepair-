@@ -137,6 +137,9 @@ def run(db: Session, guides: bool = True) -> dict[str, int]:
 
         result["guides_added"] = seed_guides(db)
         result["manual_specs_added"] = load_all(db, team_user(db))
+        from app.seed import content
+
+        result["content_pages"] = content.load_all(db, team_user(db))
     from app.config import get_settings
 
     if get_settings().enable_marketplace:  # optional module: ZIP points for distance search

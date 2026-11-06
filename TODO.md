@@ -42,7 +42,7 @@
 
 ## Content Research Program (CONTENT_PROGRAM.md)
 - [x] Step 1: repo/format review (`research/format-review.md`)
-- [ ] Format upgrades: `dtc_guide` kind, deeper procedures, per-value sources + UNVERIFIED,
+- [x] Format upgrades: `dtc_guide` kind, deeper procedures, per-value sources + UNVERIFIED,
       reviewer sign-off record, disclaimer first, report-a-mistake by section + owner alert, `content/` loader
 - [ ] Step 2: research notes — top US vehicles of the last 20 years, their engines, common DTCs/repairs
 - [ ] Step 3: `research/competitor-teardown.md`

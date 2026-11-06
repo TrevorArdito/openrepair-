@@ -108,7 +108,7 @@ export type Dtc = {
   related_entries: { id: number; title: string; kind: string }[];
 };
 
-export type Kind = "procedure" | "torque_spec" | "fluid_capacity" | "spec" | "part_note" | "labor_time";
+export type Kind = "procedure" | "torque_spec" | "fluid_capacity" | "spec" | "part_note" | "labor_time" | "dtc_guide";
 export const KINDS: Kind[] = ["procedure", "torque_spec", "fluid_capacity", "spec", "part_note", "labor_time"];
 export type Person = { id: number | null; display_name: string; role?: string | null };
 export type Source = { type: string; citation?: string };
@@ -124,6 +124,8 @@ export type Revision = {
   status: "approved" | "pending" | "rejected";
   author: Person;
   created_at: string;
+  fact_check?: { written_by: string; reviewed_by: string; reviewed_at: string; notes?: string } | null;
+  unverified?: number;
 };
 export type LaborCell = { reports: number; median?: number; min?: number; max?: number };
 export type Entry = {
@@ -136,6 +138,7 @@ export type Entry = {
   safety_critical: boolean;
   verification: { state: "verified" | "verified_older" | "none"; by?: Person | null; at?: string | null; revision_number?: number | null };
   open_reports: number;
+  under_review?: boolean;
   pending_revisions: number;
   revision: Revision | null;
   tags_display: { applies_to: (AppliesTo & { make: string; model: string | null })[]; systems: string[]; dtcs: string[] };

@@ -69,6 +69,8 @@ class RevisionOut(BaseModel):
     status: str
     author: Person
     created_at: datetime
+    fact_check: dict | None = None
+    unverified: int = 0  # values marked UNVERIFIED in this version
 
 
 class Verification(BaseModel):
@@ -88,6 +90,7 @@ class EntryOut(BaseModel):
     safety_critical: bool
     verification: Verification
     open_reports: int
+    under_review: bool = False  # someone reported a mistake; being checked
     pending_revisions: int
     revision: RevisionOut | None
     tags_display: dict
@@ -120,6 +123,7 @@ class VoteIn(BaseModel):
 
 class ReportIn(BaseModel):
     reason: ReportReason
+    section: Annotated[str, Field(max_length=120)] | None = None  # e.g. "Test 3" or "Causes"
     details: Annotated[str, Field(max_length=2000)] | None = None
 
 

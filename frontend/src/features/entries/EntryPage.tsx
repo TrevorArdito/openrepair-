@@ -16,12 +16,13 @@ const REASONS = ["wrong_info", "unsafe", "spam", "copyright", "other"] as const;
 function ReportForm({ entryId, onDone }: { entryId: number; onDone: () => void }) {
   const { t } = useTranslation();
   const [reason, setReason] = useState<string>("wrong_info");
+  const [section, setSection] = useState("");
   const [details, setDetails] = useState("");
   const [error, setError] = useState<string | null>(null);
   async function submit(e: FormEvent) {
     e.preventDefault();
     try {
-      await api(`/entries/${entryId}/reports`, { method: "POST", body: { reason, details: details || null } });
+      await api(`/entries/${entryId}/reports`, { method: "POST", body: { reason, section: section || null, details: details || null } });
       onDone();
     } catch (err) {
       setError(errorMessage(t, err));
@@ -38,6 +39,9 @@ function ReportForm({ entryId, onDone }: { entryId: number; onDone: () => void }
             </option>
           ))}
         </Select>
+        <Label htmlFor="rep-section">{t("entry.reportSection")}</Label>
+        <input id="rep-section" maxLength={120} value={section} onChange={(e) => setSection(e.target.value)} placeholder={t("entry.reportSectionHint")}
+          className="min-h-14 w-full rounded-xl border-2 border-slate-400 bg-white px-4 text-lg dark:border-slate-600 dark:bg-slate-900" />
         <Label htmlFor="rep-details">{t("entry.reportDetails")}</Label>
         <textarea id="rep-details" maxLength={2000} value={details} onChange={(e) => setDetails(e.target.value)}
           className="min-h-28 w-full rounded-xl border-2 border-slate-400 bg-white p-3 text-lg dark:border-slate-600 dark:bg-slate-900" />
@@ -101,9 +105,22 @@ export default function EntryPage() {
         )}
       </div>
 
+      {(entry.kind === "procedure" || entry.kind === "dtc_guide") && (
+        <Alert kind="warning">
+          <p className="font-bold">⚠ {t("entry.ownRiskTitle")}</p>
+          <p>{t("entry.ownRisk")}</p>
+        </Alert>
+      )}
+      {rev?.fact_check && (
+        <p className="inline-flex flex-wrap items-center gap-2 rounded-lg bg-sky-800 px-3 py-2 text-lg font-bold text-white">
+          ✓ {t("entry.factChecked", { date: formatDate(rev.fact_check.reviewed_at) })}
+        </p>
+      )}
+      {(rev?.unverified ?? 0) > 0 && <Alert kind="error">{t("entry.hasUnverified", { count: rev!.unverified })}</Alert>}
+      {entry.under_review && <Alert kind="warning">{t("entry.underReview")}</Alert>}
+      <p className="text-base text-slate-600 dark:text-slate-400">{t("entry.lastRevised", { date: formatDate(entry.updated_at) })}</p>
       {entry.status === "pending" && <Alert kind="info">{t("entry.pending")}</Alert>}
       {entry.status === "hidden" && <Alert>{t("entry.hidden")}</Alert>}
-      {entry.open_reports > 0 && <Alert kind="warning">{t("entry.openReports", { count: entry.open_reports })}</Alert>}
       {entry.safety_critical && (
         <Alert kind="error">
           <h2 className="text-lg font-bold">⚠ {t("entry.safetyTitle")}</h2>
@@ -144,7 +161,17 @@ export default function EntryPage() {
         )}
       </Card>
 
-      {sources.length > 0 && (
+      {entry.kind === "dtc_guide" && sources.length > 0 && (
+        <Card>
+          <h2 className="mb-2 text-xl font-bold">{t("entry.sources")}</h2>
+          <ol className="list-decimal space-y-1 pl-6 text-base">
+            {sources.map((src, i) => (
+              <li key={i} id={`src-${i + 1}`}>{t(`entry.sourceTypes.${src.type}`)}{src.citation ? ` — ${src.citation}` : ""}</li>
+            ))}
+          </ol>
+        </Card>
+      )}
+      {entry.kind !== "dtc_guide" && sources.length > 0 && (
         <p className="text-base text-slate-600 dark:text-slate-400">
           {t("entry.sourceLine")}{" "}
           {sources.map((src) => t(`entry.sourceTypes.${src.type}`) + (src.citation ? ` (${src.citation})` : "")).join(" · ")}

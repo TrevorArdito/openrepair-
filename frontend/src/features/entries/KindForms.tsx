@@ -11,7 +11,7 @@ type Props = { d: D; set: (patch: D) => void };
 const THREADS = ["unspecified", "dry", "oiled", "threadlocker", "anti_seize"];
 const FLUIDS = ["engine_oil", "coolant", "automatic_transmission", "manual_transmission", "cvt", "transfer_case", "front_differential", "rear_differential", "brake", "power_steering", "refrigerant", "refrigerant_oil", "fuel_tank", "washer", "other"];
 const QUANTITIES = ["length", "pressure", "temperature", "mass", "volume", "voltage", "resistance", "current", "speed_rpm", "percent", "time_s", "other"];
-const SOURCE_TYPES = ["owner_manual", "oem_public", "measured", "experience", "industry_standard", "other"];
+const SOURCE_TYPES = ["owner_manual", "oem_public", "oem_service_info", "service_database", "public_data", "measured", "experience", "industry_standard", "tech_channel", "forum", "other"];
 
 export function emptyData(kind: Kind): D {
   switch (kind) {
@@ -27,6 +27,8 @@ export function emptyData(kind: Kind): D {
       return { part_name: "", oem_numbers: [], aftermarket: [], sources: [] };
     case "labor_time":
       return { job: "", includes: [], excludes: [] };
+    case "dtc_guide":
+      return {};
   }
 }
 
@@ -219,6 +221,11 @@ export function SourcesForm({ d, set }: Props) {
   );
 }
 
+function TeamOnlyNotice() {
+  const { t } = useTranslation();
+  return <p className="text-lg">{t("editor.teamOnly")}</p>;
+}
+
 export function KindForm({ kind, d, set }: Props & { kind: Kind }) {
   switch (kind) {
     case "procedure": return <ProcedureForm d={d} set={set} />;
@@ -227,5 +234,6 @@ export function KindForm({ kind, d, set }: Props & { kind: Kind }) {
     case "spec": return <SpecForm d={d} set={set} />;
     case "part_note": return <PartForm d={d} set={set} />;
     case "labor_time": return <LaborForm d={d} set={set} />;
+    case "dtc_guide": return <TeamOnlyNotice />;
   }
 }

@@ -7,6 +7,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ### Added
 - **Content Research Program** adopted (`CONTENT_PROGRAM.md`): `research/` knowledge base
   (format review, owner lookups, blocked sources, review log) and `content/` for team-written pages.
+- **Diagnostic guide pages** (engine-specific DTC pages): what the computer monitors, enable
+  criteria, causes ranked for that engine with known weak spots, tests with spec values, pins and
+  good/bad results, related TSBs/recalls, common misdiagnoses, repair time and parts cost, numbered
+  sources with per-claim references, UNVERIFIED marks. Repair procedures gain applications, special
+  tools, fluids with capacities, per-step specs and sequences, and techs' gotchas.
+- Every guide shows "Work at your own risk" first, "Fact-checked by the ChrystalClear reviewer",
+  "Last revised", and an "under review" notice while a reported mistake is open. Report-a-mistake
+  takes the page section and emails the admins. Team pages in `content/` publish only after a
+  different reviewer agent signs off.
 ### Changed
 - **Repair content is now proprietary** — free to read, all rights reserved (`content/LICENSE`,
   Content License page, README, CONTRIBUTING, CLA §5, Terms). The code stays AGPL-3.0; content

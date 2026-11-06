@@ -377,7 +377,8 @@
     "fluid_capacity": "Fluid capacity",
     "spec": "Spec",
     "part_note": "Part note",
-    "labor_time": "Labor time"
+    "labor_time": "Labor time",
+    "dtc_guide": "Diagnostic guide"
   },
   "kindsPlural": {
     "procedure": "Repair guides",
@@ -385,7 +386,8 @@
     "fluid_capacity": "Capacities & fluid types",
     "spec": "Engine & tune-up specs",
     "part_note": "Parts & part numbers",
-    "labor_time": "Labor times"
+    "labor_time": "Labor times",
+    "dtc_guide": "Diagnostic guides"
   },
   "systems": {
     "maintenance": "Maintenance",
@@ -458,7 +460,12 @@
       "measured": "Measured by contributor",
       "experience": "Professional experience",
       "industry_standard": "Industry standard practice",
-      "other": "Other"
+      "other": "Other",
+      "oem_service_info": "Factory service info",
+      "service_database": "Service database",
+      "public_data": "Public data (NHTSA/EPA)",
+      "tech_channel": "Working tech",
+      "forum": "Owner forum"
     },
     "noSources": "No sources listed.",
     "lastEdit": "Version {{n}} by {{name}} · {{date}}",
@@ -510,7 +517,7 @@
       "unspecified": "Not specified"
     },
     "replaceFasteners": "One-time-use (torque-to-yield) fasteners — replace them, don't reuse.",
-    "sequence": "Tightening sequence",
+    "sequence": "Sequence",
     "fastener": "Fastener",
     "fluidSystems": {
       "engine_oil": "Engine oil",
@@ -568,7 +575,22 @@
     "notFound": "Entry not found",
     "sourceLine": "Source:",
     "safetyBodyGeneral": "This involves a safety-critical system (brakes, steering, suspension, fuel, airbags or high voltage). Follow the safety steps, and confirm specs against the manufacturer's service information.",
-    "printed": "As printed in the manual"
+    "printed": "As printed in the manual",
+    "applications": "Applies to",
+    "specialTools": "Special tools",
+    "fluids": "Fluids and capacities",
+    "gotchas": "Known gotchas from techs who've done this job",
+    "unverifiedTag": "Unverified",
+    "unverifiedHint": "This value hasn't been confirmed in two sources yet — check the manufacturer's spec.",
+    "ownRiskTitle": "Work at your own risk",
+    "ownRisk": "This information is provided as-is. Confirm specifications with the manufacturer's service information, follow every safety warning, and stop if you're not sure. You're responsible for your own work.",
+    "factChecked": "Fact-checked by the ChrystalClear reviewer · {{date}}",
+    "hasUnverified_one": "{{count}} value on this page is marked UNVERIFIED — confirm it before relying on it.",
+    "hasUnverified_other": "{{count}} values on this page are marked UNVERIFIED — confirm them before relying on them.",
+    "underReview": "Someone reported a possible mistake on this page. It's under review — double-check the numbers until it's resolved.",
+    "lastRevised": "Last revised {{date}}",
+    "reportSection": "Which part? (optional)",
+    "reportSectionHint": "e.g. \"Test 3\" or \"Causes\""
   },
   "editor": {
     "newTitle": "New {{kind}}",
@@ -663,7 +685,8 @@
     "probationNote": "New accounts: your first few contributions are reviewed by a moderator before they go public.",
     "contentRules": "By saving, you confirm this is your own wording (facts are fine, copied text is not) and you license it to ChrystalClear under the Contributor License Agreement. Repair content is free to read but all rights reserved.",
     "conflict": "Someone else saved a newer version while you were editing. Copy your changes, reload, and try again.",
-    "loginRequired": "Log in to contribute."
+    "loginRequired": "Log in to contribute.",
+    "teamOnly": "Diagnostic guides are written and fact-checked by the ChrystalClear content team. To suggest a change, use \"Report a mistake\" on the page."
   },
   "history": {
     "title": "History: {{title}}",
@@ -1180,5 +1203,27 @@
       "refunded": "Buyer refunded",
       "released": "Seller paid"
     }
+  },
+  "dtcGuide": {
+    "monitor": "What the computer is watching",
+    "enableCriteria": "When it runs the test (enable criteria)",
+    "symptoms": "Symptoms",
+    "causes": "Likely causes, most common first",
+    "pattern": "Known weak spot",
+    "tests": "Tests",
+    "testN": "Test {{n}}",
+    "pins": "Connector / pins",
+    "good": "Good",
+    "bad": "Points to the fault",
+    "related": "Related TSBs and recalls",
+    "bulletin": {
+      "tsb": "TSB",
+      "recall": "Recall",
+      "special_service": "Special service"
+    },
+    "misdiagnoses": "Common misdiagnoses — parts that usually don't fix it",
+    "costTime": "Typical repair time and parts cost",
+    "hours": "Repair time: about {{min}}–{{max}} h",
+    "parts": "Parts: about {{min}}–{{max}}"
   }
 }

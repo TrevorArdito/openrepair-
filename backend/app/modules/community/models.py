@@ -31,6 +31,7 @@ class Kind(enum.StrEnum):
     spec = "spec"  # other measured specs: gaps, pressures, resistances, clearances...
     part_note = "part_note"
     labor_time = "labor_time"
+    dtc_guide = "dtc_guide"  # engine-specific diagnostic page for one trouble code
 
 
 class EntryStatus(enum.StrEnum):
@@ -111,6 +112,9 @@ class EntryRevision(Base):
     status: Mapped[RevisionStatus] = mapped_column(_enum(RevisionStatus))
     reviewed_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    # Content-program fact-check sign-off for this exact version (team content):
+    # {"written_by", "reviewed_by", "reviewed_at", "checklist": {...}, "notes"}.
+    fact_check: Mapped[dict | None] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
     entry: Mapped[Entry] = relationship(foreign_keys=[entry_id], back_populates="revisions")
@@ -175,6 +179,7 @@ class Report(Base):
     )
     reporter_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
     reason: Mapped[ReportReason] = mapped_column(_enum(ReportReason))
+    section: Mapped[str | None] = mapped_column(String(120))  # which part of the page
     details: Mapped[str | None] = mapped_column(Text)
     status: Mapped[str] = mapped_column(String(20), default="open")  # open | resolved | dismissed
     resolved_by_id: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))

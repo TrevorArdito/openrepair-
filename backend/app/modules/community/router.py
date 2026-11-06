@@ -156,7 +156,7 @@ def report(
     entry_id: int, data: ReportIn, user: User = Depends(current_user), db: Session = Depends(get_db)
 ):
     entry = service.get_entry(db, entry_id, user)
-    r = service.report(db, user, entry, data.reason, data.details)
+    r = service.report(db, user, entry, data.reason, data.details, data.section)
     return {"id": r.id, "status": r.status}
 
 
